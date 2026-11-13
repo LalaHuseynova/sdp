@@ -1,0 +1,39 @@
+{
+  "build_pilot": "expected exit2; no reviewed Z bundles, zero real episodes",
+  "integrity": {
+    "after_aggregate_sha256": "1009e256fccc923cbe95410c9f741d0f97b674cc55dc5a3ae969d76144e08676",
+    "before_aggregate_sha256": "1009e256fccc923cbe95410c9f741d0f97b674cc55dc5a3ae969d76144e08676",
+    "changed_existing_files": [],
+    "official_data_sha256": {
+      "adversarial_data.jsonl.jsonl": "f2d23a5a2d483889eb2fdd9a2a082f0759603bc0a17664814a7caafbd318f90d",
+      "benign_data.jsonl.jsonl": "707ef7e311e147d9818a8a9e04293296fc6bf3390241e4cac23c8145765b62d5"
+    },
+    "protected_existing_files": 270,
+    "status": "passed"
+  },
+  "preparation": {
+    "files_checked": 12,
+    "inputs_checked": 6240,
+    "pilot_ready": false,
+    "raw_sha256": {
+      "adversarial_data.jsonl.jsonl": "f2d23a5a2d483889eb2fdd9a2a082f0759603bc0a17664814a7caafbd318f90d",
+      "benign_data.jsonl.jsonl": "707ef7e311e147d9818a8a9e04293296fc6bf3390241e4cac23c8145765b62d5"
+    },
+    "reason": "Validation does not create independent annotations",
+    "status": "passed"
+  },
+  "private_file_modes": "passed: files0600 directories0700",
+  "replay": {
+    "byte_identical_files": 13,
+    "identifier_key_reused": true,
+    "no_model_calls": true,
+    "status": "passed"
+  },
+  "review_exports": "passed; blank, identical packet inputs, no case-index/peer-vote files",
+  "ruff": "passed",
+  "unit_and_identity_tests": {
+    "command": "PYTHONPATH=src .venv/bin/python -m pytest -o addopts='' tests/test_mpbench_phase1.py tests/test_mpbench_identity.py -q",
+    "failed": 0,
+    "passed": 35
+  }
+}
