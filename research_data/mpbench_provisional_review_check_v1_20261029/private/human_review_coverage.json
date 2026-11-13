@@ -1,0 +1,20 @@
+{
+  "approved_reviews": [],
+  "eligible_before_final_group_checks": 0,
+  "final_bag_support_uniqueness": "pending; no pilot bags generated",
+  "human_validated_qa_candidate_ids": [],
+  "independently_verified_bundles": 0,
+  "independently_verified_record_use_labels": 0,
+  "reviewed_but_incomplete_or_historically_unverified_bundles": 0,
+  "safe_source_and_qa_validated_candidate_ids": [],
+  "safety_review": {
+    "adjudicated": 0,
+    "completed_consensus": 0,
+    "disagreements": 0,
+    "missing_two_reviews": 2114,
+    "unresolved_disagreements": []
+  },
+  "status": "pending_human_review",
+  "verified_bundle_labels": {},
+  "verified_record_use_labels": {}
+}

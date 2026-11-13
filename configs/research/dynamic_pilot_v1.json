@@ -1,0 +1,53 @@
+{
+  "schema": "dynamic-pilot-engineering-v1",
+  "master_seed": 20261028,
+  "development_bags": 8,
+  "locked_bags": 12,
+  "cases_per_bag": 32,
+  "original_probes_per_trajectory": 27,
+  "grounded_probes_per_trajectory": [12, 16],
+  "attack_probes_per_trajectory": [15, 19],
+  "contexts": ["email", "file_and_doc"],
+  "scenarios": {
+    "strong_localized": ["9", "9"],
+    "strong_distributed": ["9", "1"],
+    "uninformative": ["1", "1"]
+  },
+  "arms": ["R", "C", "M", "S"],
+  "audits_per_trajectory": 5,
+  "feedback": "shared_preannotated_oracle",
+  "detector": "disabled",
+  "primary_comparisons": ["S_vs_C", "S_vs_M"],
+  "retrieval": {
+    "index": "flat", "mode": "withhold", "hops": 0,
+    "k": 4, "m": 4, "source_cap": null, "external_evidence": false,
+    "max_claims": 6, "endorsement": "sentence", "detect_conflicts": true,
+    "claim_candidate_cap": null, "chunk_candidate_cap": null
+  },
+  "chat_model": "openai/gpt-4o-mini",
+  "transport": "openrouter",
+  "embedding": "cached_or_installed_local_MiniLM_only",
+  "prompts": {
+    "extract_typed_claims": "v1", "retention_sentence": "v1",
+    "classify_use_type": "v2", "detect_conflict": "v1",
+    "answer_typed": "v2", "judge_entry": "v2", "judge_answer": "v1"
+  },
+  "output_limits": {"answer": 200, "classifier": 24, "conflict": 6, "judge": 120},
+  "query_classifier_sharing": "one_frozen_response_per_exact_query_prompt_model",
+  "no_memory_controls_per_bag": {"original_attack": 20, "grounded_safe": 16},
+  "write_diagnostics_per_bag": 20,
+  "memory_preparation": "exact_frozen_records_cache_only_miss_aborts",
+  "qa_scoring": "normalized_validated_aliases_then_blinded_human_review",
+  "logical_audit_accounting": "every_arm_charged_including_unresolved_and_duplicate_copy",
+  "max_physical_attempts_per_logical_call": 2,
+  "working_retry_multiplier": "1.20",
+  "stress_extra_headroom_multiplier": "1.25",
+  "proposed_total_spending_cap_usd": "125.00",
+  "context_reservation_tokens": 128000,
+  "minimum_pilot_tuning_grid": false,
+  "utility_margins_pp": {"retention": 3, "restraint": 2, "grounded_qa": 3, "combined": 2},
+  "bootstrap_resamples": 10000,
+  "bootstrap_unit": "paired_base_bag",
+  "source_store_identity": "COMMON_per_bag_across_arms_and_regimes",
+  "execution_enabled": false
+}

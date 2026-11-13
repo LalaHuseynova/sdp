@@ -4,14 +4,14 @@ from __future__ import annotations
 
 import json
 import random
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 
 from ams.baselines.base import Defence
 from ams.core.stats import rate, wilson_interval
 from ams.data.mpbench import MPBenchCase
 from ams.llm import map_concurrent, progress_bar
-from ams.memory.base import MemoryEntry, MemorySystem
+from ams.memory.base import MemoryEntry, MemorySystem, WriteResult
 
 
 @dataclass(frozen=True, slots=True)
@@ -52,6 +52,14 @@ class LifecycleOutcome:
     written_texts: tuple[str, ...] = ()
     retrieved_texts: tuple[str, ...] = ()
     judge_reason: str = ""
+    original_cid: str = ""
+    source_split: str = ""
+    retrieval_query: str = ""
+    answer_without_memory: str = ""
+    judge_reason_without_memory: str = ""
+    benign_judge_reason: str = ""
+    retrieved_before_filter: tuple[str, ...] = ()
+    flagged_texts: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -196,19 +204,23 @@ def _read(
     answer = answer_fn(case.retrieval_query, [e.text for e in kept], required=required)
 
     succeeded, reason, no_mem = False, "", False
+    answer_without_memory, no_mem_reason, benign_reason = "", "", ""
     if case.is_adversarial and case.expected_memory:
         succeeded, reason = judge.answer_follows(case.retrieval_query, case.expected_memory, answer)
-        no_mem, _ = judge.answer_follows(
+        answer_without_memory = answer_fn(case.retrieval_query, [], required=required)
+        no_mem, no_mem_reason = judge.answer_follows(
             case.retrieval_query,
             case.expected_memory,
-            answer_fn(case.retrieval_query, [], required=required),
+            answer_without_memory,
         )
 
     warranted = None if case.is_adversarial else bool(case.legitimate_memory_write)
     spurious = bool(warranted is False and written)
     correct = False
     if not case.is_adversarial and case.expected_memory:
-        asserted, _ = judge.answer_follows(case.retrieval_query, case.expected_memory, answer)
+        asserted, benign_reason = judge.answer_follows(
+            case.retrieval_query, case.expected_memory, answer
+        )
         correct = asserted if warranted else not asserted
 
     return LifecycleOutcome(
@@ -250,6 +262,14 @@ def _read(
         written_texts=tuple(e.text for e in written),
         retrieved_texts=tuple(e.text for e in kept),
         judge_reason=reason,
+        original_cid=case.original_cid,
+        source_split=case.source_split,
+        retrieval_query=case.retrieval_query,
+        answer_without_memory=answer_without_memory,
+        judge_reason_without_memory=no_mem_reason,
+        benign_judge_reason=benign_reason,
+        retrieved_before_filter=tuple(e.text for e in retrieved),
+        flagged_texts=tuple(e.text for e in result.flagged),
     )
 
 
@@ -264,6 +284,8 @@ def run_lifecycle(
     pool_size: int = 1,
     seed: int = 0,
     k: int = 4,
+    write_observer: Callable[[MPBenchCase, str, WriteResult], None] | None = None,
+    outcome_observer: Callable[[LifecycleOutcome], None] | None = None,
 ) -> tuple[list[LifecycleOutcome], LifecycleReport]:
     """`pool_size` cases share one store: M sessions' worth of writes, then
     each case's own retrieval query against the shared store. Pools are a
@@ -273,10 +295,17 @@ def run_lifecycle(
     cases = list(cases)
     readable = [c for c in cases if (c.retrieval_query or "").strip()]
     dropped = len(cases) - len(readable)
+
+    def observed(outcome: LifecycleOutcome) -> LifecycleOutcome:
+        """Record only a completed evaluation; never alter or skip its decisions."""
+        if outcome_observer is not None:
+            outcome_observer(outcome)
+        return outcome
+
     if pool_size <= 1:
         outcomes = list(
             map_concurrent(
-                lambda c: run_case(c, memory, defence, judge, answer_fn=answer_fn, k=k),
+                lambda c: observed(run_case(c, memory, defence, judge, answer_fn=answer_fn, k=k)),
                 readable,
                 workers=workers,
                 progress=f"{defence.name}/{memory.name}",
@@ -298,6 +327,8 @@ def run_lifecycle(
         memory.reset(sid)
         for c in pool:
             res = memory.write(session_id=sid, user_query=c.user_query, context=c.context)
+            if write_observer is not None:
+                write_observer(c, sid, res)
             written[c.cid] = res.written
             refused[c.cid] = len(res.discarded)
             owner.update({e.entry_id: c.cid for e in res.written})
@@ -318,18 +349,20 @@ def run_lifecycle(
         bar.close()
     outcomes = list(
         map_concurrent(
-            lambda c: _read(
-                c,
-                memory,
-                defence,
-                judge,
-                answer_fn=answer_fn,
-                session_id=session_of[c.cid],
-                written=written[c.cid],
-                owner=owner,
-                adversarial_cids=adversarial_cids,
-                n_refused=refused[c.cid],
-                k=k,
+            lambda c: observed(
+                _read(
+                    c,
+                    memory,
+                    defence,
+                    judge,
+                    answer_fn=answer_fn,
+                    session_id=session_of[c.cid],
+                    written=written[c.cid],
+                    owner=owner,
+                    adversarial_cids=adversarial_cids,
+                    n_refused=refused[c.cid],
+                    k=k,
+                )
             ),
             readable,
             workers=workers,

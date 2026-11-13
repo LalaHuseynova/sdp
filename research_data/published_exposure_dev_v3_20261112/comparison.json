@@ -1,0 +1,5758 @@
+{
+  "definitions": "Combine the Sybil-k / laundering-r sweep with the published-defence rows (free).\n\n    analyse_published_comparison.py --out research_data/published_exposure_dev_v3_<date>\n\nInputs (read-only): the sweep rows (static/R/C/M/S/SL) and the published rows\n(randec, randec+R, MemLineage inputs). All metrics are RETRIEVAL EXPOSURE, not\nanswer-level ASR:\n  unaudited_exposure  scored-attack probes whose target reaches the context, over\n                      attacks that were not themselves audited\n  utility             utility probes whose fact reaches the context\n  utility[innocent]   ... the innocent contributor B's notes (in laundering-r, B is\n                      the innocent forwarder)\n  utility[attacker]   ... the attacker identities' own benign notes\nRandom-detection draws are averaged within a group; CIs are paired cluster\nbootstraps over the 8 dev groups (10,000 resamples, seed 20261112).\nMemLineage is reported as exact bounds (see `memlineage` block): its decision is\nstatic exposure on queries its SensitiveAction classifier calls ORDINARY and an\nempty context on SENSITIVE ones (when any retrieved memory is untrusted, which\nthe coarse labels decide without a model).\n",
+  "families": [
+    "localized",
+    "launder_r0",
+    "launder_r1",
+    "launder_r2",
+    "launder_r3",
+    "launder_r4",
+    "launder_r0_rand",
+    "launder_r1_rand",
+    "launder_r2_rand",
+    "launder_r3_rand",
+    "launder_r4_rand",
+    "sybil_k1",
+    "sybil_k2",
+    "sybil_k4",
+    "sybil_k8",
+    "sybil_k1_rand",
+    "sybil_k2_rand",
+    "sybil_k4_rand",
+    "sybil_k8_rand"
+  ],
+  "table": {
+    "localized": {
+      "static": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "unlinked_relay": 0.625
+      },
+      "C": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.67,
+        "unlinked_relay": 0.625
+      },
+      "M": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.67,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.925,
+        "unlinked_relay": 0.625
+      },
+      "SL": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.925,
+        "unlinked_relay": 0.0
+      },
+      "randec": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "unlinked_relay": 0.625
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.906,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "unlinked_relay": 0.875
+      }
+    },
+    "launder_r0": {
+      "static": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "C": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "M": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "SL": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.0
+      },
+      "randec": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.906,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "launder_r1": {
+      "static": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "C": {
+        "unaudited_exposure": 0.25,
+        "exposure_all": 0.25,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "M": {
+        "unaudited_exposure": 0.25,
+        "exposure_all": 0.25,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.25,
+        "exposure_all": 0.25,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "SL": {
+        "unaudited_exposure": 0.25,
+        "exposure_all": 0.25,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.0
+      },
+      "randec": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.906,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "launder_r2": {
+      "static": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "C": {
+        "unaudited_exposure": 0.469,
+        "exposure_all": 0.469,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "M": {
+        "unaudited_exposure": 0.469,
+        "exposure_all": 0.469,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.469,
+        "exposure_all": 0.469,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "SL": {
+        "unaudited_exposure": 0.469,
+        "exposure_all": 0.469,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.0
+      },
+      "randec": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.906,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "launder_r3": {
+      "static": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "C": {
+        "unaudited_exposure": 0.719,
+        "exposure_all": 0.719,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "M": {
+        "unaudited_exposure": 0.719,
+        "exposure_all": 0.719,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.719,
+        "exposure_all": 0.719,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "SL": {
+        "unaudited_exposure": 0.719,
+        "exposure_all": 0.719,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.0
+      },
+      "randec": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.906,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "launder_r4": {
+      "static": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "C": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "M": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "SL": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.0
+      },
+      "randec": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.906,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "launder_r0_rand": {
+      "static": {
+        "unaudited_exposure": 0.958,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.958,
+        "exposure_all": 0.458,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.771
+      },
+      "C": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "M": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "SL": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.229
+      },
+      "randec": {
+        "unaudited_exposure": 0.958,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.958,
+        "exposure_all": 0.458,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.771
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.669,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.719,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.936,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "launder_r1_rand": {
+      "static": {
+        "unaudited_exposure": 0.971,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.971,
+        "exposure_all": 0.516,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.833
+      },
+      "C": {
+        "unaudited_exposure": 0.409,
+        "exposure_all": 0.219,
+        "utility": 0.716,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.164,
+        "unlinked_relay": 0.688
+      },
+      "M": {
+        "unaudited_exposure": 0.293,
+        "exposure_all": 0.156,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.409,
+        "exposure_all": 0.219,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.688
+      },
+      "SL": {
+        "unaudited_exposure": 0.409,
+        "exposure_all": 0.219,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.312
+      },
+      "randec": {
+        "unaudited_exposure": 0.971,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.971,
+        "exposure_all": 0.516,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.833
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.707,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.706,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.895,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "launder_r2_rand": {
+      "static": {
+        "unaudited_exposure": 0.971,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.971,
+        "exposure_all": 0.479,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.75
+      },
+      "C": {
+        "unaudited_exposure": 0.796,
+        "exposure_all": 0.385,
+        "utility": 0.79,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.429,
+        "unlinked_relay": 0.708
+      },
+      "M": {
+        "unaudited_exposure": 0.492,
+        "exposure_all": 0.24,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.796,
+        "exposure_all": 0.385,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.708
+      },
+      "SL": {
+        "unaudited_exposure": 0.796,
+        "exposure_all": 0.385,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.542
+      },
+      "randec": {
+        "unaudited_exposure": 0.971,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.971,
+        "exposure_all": 0.479,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.75
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.689,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.652,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.903,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "launder_r3_rand": {
+      "static": {
+        "unaudited_exposure": 0.973,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.973,
+        "exposure_all": 0.49,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.854
+      },
+      "C": {
+        "unaudited_exposure": 0.899,
+        "exposure_all": 0.448,
+        "utility": 0.781,
+        "utility[innocent]": 0.875,
+        "utility[attacker]": 0.539,
+        "unlinked_relay": 0.854
+      },
+      "M": {
+        "unaudited_exposure": 0.817,
+        "exposure_all": 0.401,
+        "utility": 0.65,
+        "utility[innocent]": 0.869,
+        "utility[attacker]": 0.083,
+        "unlinked_relay": 0.708
+      },
+      "S": {
+        "unaudited_exposure": 0.899,
+        "exposure_all": 0.448,
+        "utility": 0.902,
+        "utility[innocent]": 0.903,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.854
+      },
+      "SL": {
+        "unaudited_exposure": 0.899,
+        "exposure_all": 0.448,
+        "utility": 0.902,
+        "utility[innocent]": 0.903,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.583
+      },
+      "randec": {
+        "unaudited_exposure": 0.973,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.973,
+        "exposure_all": 0.49,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.854
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.648,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.687,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.912,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "launder_r4_rand": {
+      "static": {
+        "unaudited_exposure": 0.981,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.981,
+        "exposure_all": 0.479,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.812
+      },
+      "C": {
+        "unaudited_exposure": 0.981,
+        "exposure_all": 0.479,
+        "utility": 0.854,
+        "utility[innocent]": 0.876,
+        "utility[attacker]": 0.798,
+        "unlinked_relay": 0.812
+      },
+      "M": {
+        "unaudited_exposure": 0.981,
+        "exposure_all": 0.479,
+        "utility": 0.666,
+        "utility[innocent]": 0.871,
+        "utility[attacker]": 0.137,
+        "unlinked_relay": 0.667
+      },
+      "S": {
+        "unaudited_exposure": 0.981,
+        "exposure_all": 0.479,
+        "utility": 0.902,
+        "utility[innocent]": 0.903,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.812
+      },
+      "SL": {
+        "unaudited_exposure": 0.981,
+        "exposure_all": 0.479,
+        "utility": 0.902,
+        "utility[innocent]": 0.903,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.479
+      },
+      "randec": {
+        "unaudited_exposure": 0.981,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.981,
+        "exposure_all": 0.479,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.812
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.706,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.675,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.929,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "sybil_k1": {
+      "static": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "C": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "M": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "SL": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.0
+      },
+      "randec": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.906,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "sybil_k2": {
+      "static": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "C": {
+        "unaudited_exposure": 0.812,
+        "exposure_all": 0.812,
+        "utility": 0.84,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.607,
+        "unlinked_relay": 0.625
+      },
+      "M": {
+        "unaudited_exposure": 0.281,
+        "exposure_all": 0.281,
+        "utility": 0.73,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.214,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.812,
+        "exposure_all": 0.812,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "SL": {
+        "unaudited_exposure": 0.812,
+        "exposure_all": 0.812,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.0
+      },
+      "randec": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.906,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "sybil_k4": {
+      "static": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "C": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.885,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.768,
+        "unlinked_relay": 0.625
+      },
+      "M": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.835,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.589,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "SL": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.0
+      },
+      "randec": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.906,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "sybil_k8": {
+      "static": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "C": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "M": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "SL": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.0
+      },
+      "randec": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.969,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.688,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.906,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "sybil_k1_rand": {
+      "static": {
+        "unaudited_exposure": 0.964,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.964,
+        "exposure_all": 0.479,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.792
+      },
+      "C": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "M": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.67,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.0,
+        "unlinked_relay": 0.625
+      },
+      "S": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "SL": {
+        "unaudited_exposure": 0.0,
+        "exposure_all": 0.0,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.271
+      },
+      "randec": {
+        "unaudited_exposure": 0.964,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.964,
+        "exposure_all": 0.479,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.792
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.664,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.648,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.885,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "sybil_k2_rand": {
+      "static": {
+        "unaudited_exposure": 0.962,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.962,
+        "exposure_all": 0.474,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      },
+      "C": {
+        "unaudited_exposure": 0.851,
+        "exposure_all": 0.411,
+        "utility": 0.857,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.67,
+        "unlinked_relay": 0.833
+      },
+      "M": {
+        "unaudited_exposure": 0.329,
+        "exposure_all": 0.161,
+        "utility": 0.712,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.152,
+        "unlinked_relay": 0.688
+      },
+      "S": {
+        "unaudited_exposure": 0.851,
+        "exposure_all": 0.411,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.833
+      },
+      "SL": {
+        "unaudited_exposure": 0.851,
+        "exposure_all": 0.411,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.562
+      },
+      "randec": {
+        "unaudited_exposure": 0.962,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.962,
+        "exposure_all": 0.474,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.658,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.702,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.883,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "sybil_k4_rand": {
+      "static": {
+        "unaudited_exposure": 0.973,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.973,
+        "exposure_all": 0.49,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.812
+      },
+      "C": {
+        "unaudited_exposure": 0.964,
+        "exposure_all": 0.484,
+        "utility": 0.905,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.839,
+        "unlinked_relay": 0.812
+      },
+      "M": {
+        "unaudited_exposure": 0.973,
+        "exposure_all": 0.49,
+        "utility": 0.875,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.732,
+        "unlinked_relay": 0.812
+      },
+      "S": {
+        "unaudited_exposure": 0.954,
+        "exposure_all": 0.479,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.812
+      },
+      "SL": {
+        "unaudited_exposure": 0.964,
+        "exposure_all": 0.484,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.542
+      },
+      "randec": {
+        "unaudited_exposure": 0.973,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.973,
+        "exposure_all": 0.49,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.812
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.675,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.715,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.914,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    },
+    "sybil_k8_rand": {
+      "static": {
+        "unaudited_exposure": 0.958,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "R": {
+        "unaudited_exposure": 0.958,
+        "exposure_all": 0.479,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.771
+      },
+      "C": {
+        "unaudited_exposure": 0.958,
+        "exposure_all": 0.479,
+        "utility": 0.922,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.899,
+        "unlinked_relay": 0.771
+      },
+      "M": {
+        "unaudited_exposure": 0.958,
+        "exposure_all": 0.479,
+        "utility": 0.923,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.905,
+        "unlinked_relay": 0.771
+      },
+      "S": {
+        "unaudited_exposure": 0.958,
+        "exposure_all": 0.479,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.771
+      },
+      "SL": {
+        "unaudited_exposure": 0.958,
+        "exposure_all": 0.479,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.542
+      },
+      "randec": {
+        "unaudited_exposure": 0.958,
+        "exposure_all": 0.969,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 1.0
+      },
+      "randec+R": {
+        "unaudited_exposure": 0.958,
+        "exposure_all": 0.479,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.771
+      },
+      "memlineage": {
+        "unaudited_exposure": 0.633,
+        "exposure_all": 0.688,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.625
+      },
+      "a_memguard": {
+        "unaudited_exposure": 0.676,
+        "exposure_all": 0.688,
+        "utility": 0.9,
+        "utility[innocent]": 0.917,
+        "utility[attacker]": 0.893,
+        "unlinked_relay": 0.625
+      },
+      "llm_sanitiser": {
+        "unaudited_exposure": 0.9,
+        "exposure_all": 0.906,
+        "utility": 0.925,
+        "utility[innocent]": 0.942,
+        "utility[attacker]": 0.911,
+        "unlinked_relay": 0.875
+      }
+    }
+  },
+  "contrasts": {
+    "localized|unaudited_exposure|S-static": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "localized|unaudited_exposure|S-R": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "localized|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|unaudited_exposure|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|unaudited_exposure|S-randec": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "localized|unaudited_exposure|S-randec+R": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "localized|unaudited_exposure|S-memlineage": {
+      "estimate": -0.688,
+      "ci95": [
+        -0.875,
+        -0.5
+      ]
+    },
+    "localized|unaudited_exposure|S-a_memguard": {
+      "estimate": -0.688,
+      "ci95": [
+        -0.844,
+        -0.5
+      ]
+    },
+    "localized|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": -0.906,
+      "ci95": [
+        -1.0,
+        -0.781
+      ]
+    },
+    "localized|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility|S-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "localized|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "localized|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "localized|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|unaudited_exposure|S-static": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "launder_r0|unaudited_exposure|S-R": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "launder_r0|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|unaudited_exposure|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|unaudited_exposure|S-randec": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "launder_r0|unaudited_exposure|S-randec+R": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "launder_r0|unaudited_exposure|S-memlineage": {
+      "estimate": -0.688,
+      "ci95": [
+        -0.875,
+        -0.5
+      ]
+    },
+    "launder_r0|unaudited_exposure|S-a_memguard": {
+      "estimate": -0.688,
+      "ci95": [
+        -0.844,
+        -0.5
+      ]
+    },
+    "launder_r0|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": -0.906,
+      "ci95": [
+        -1.0,
+        -0.781
+      ]
+    },
+    "launder_r0|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility|S-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r0|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r0|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "launder_r0|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "launder_r0|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|unaudited_exposure|S-static": {
+      "estimate": -0.719,
+      "ci95": [
+        -0.75,
+        -0.656
+      ]
+    },
+    "launder_r1|unaudited_exposure|S-R": {
+      "estimate": -0.719,
+      "ci95": [
+        -0.75,
+        -0.656
+      ]
+    },
+    "launder_r1|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|unaudited_exposure|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|unaudited_exposure|S-randec": {
+      "estimate": -0.719,
+      "ci95": [
+        -0.75,
+        -0.656
+      ]
+    },
+    "launder_r1|unaudited_exposure|S-randec+R": {
+      "estimate": -0.719,
+      "ci95": [
+        -0.75,
+        -0.656
+      ]
+    },
+    "launder_r1|unaudited_exposure|S-memlineage": {
+      "estimate": -0.438,
+      "ci95": [
+        -0.625,
+        -0.25
+      ]
+    },
+    "launder_r1|unaudited_exposure|S-a_memguard": {
+      "estimate": -0.438,
+      "ci95": [
+        -0.594,
+        -0.25
+      ]
+    },
+    "launder_r1|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": -0.656,
+      "ci95": [
+        -0.75,
+        -0.531
+      ]
+    },
+    "launder_r1|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility|S-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r1|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r1|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "launder_r1|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "launder_r1|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|unaudited_exposure|S-static": {
+      "estimate": -0.5,
+      "ci95": [
+        -0.5,
+        -0.5
+      ]
+    },
+    "launder_r2|unaudited_exposure|S-R": {
+      "estimate": -0.5,
+      "ci95": [
+        -0.5,
+        -0.5
+      ]
+    },
+    "launder_r2|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|unaudited_exposure|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|unaudited_exposure|S-randec": {
+      "estimate": -0.5,
+      "ci95": [
+        -0.5,
+        -0.5
+      ]
+    },
+    "launder_r2|unaudited_exposure|S-randec+R": {
+      "estimate": -0.5,
+      "ci95": [
+        -0.5,
+        -0.5
+      ]
+    },
+    "launder_r2|unaudited_exposure|S-memlineage": {
+      "estimate": -0.219,
+      "ci95": [
+        -0.406,
+        -0.031
+      ]
+    },
+    "launder_r2|unaudited_exposure|S-a_memguard": {
+      "estimate": -0.219,
+      "ci95": [
+        -0.344,
+        -0.094
+      ]
+    },
+    "launder_r2|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": -0.438,
+      "ci95": [
+        -0.5,
+        -0.344
+      ]
+    },
+    "launder_r2|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility|S-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r2|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r2|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "launder_r2|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "launder_r2|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|unaudited_exposure|S-static": {
+      "estimate": -0.25,
+      "ci95": [
+        -0.25,
+        -0.25
+      ]
+    },
+    "launder_r3|unaudited_exposure|S-R": {
+      "estimate": -0.25,
+      "ci95": [
+        -0.25,
+        -0.25
+      ]
+    },
+    "launder_r3|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|unaudited_exposure|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|unaudited_exposure|S-randec": {
+      "estimate": -0.25,
+      "ci95": [
+        -0.25,
+        -0.25
+      ]
+    },
+    "launder_r3|unaudited_exposure|S-randec+R": {
+      "estimate": -0.25,
+      "ci95": [
+        -0.25,
+        -0.25
+      ]
+    },
+    "launder_r3|unaudited_exposure|S-memlineage": {
+      "estimate": 0.031,
+      "ci95": [
+        -0.156,
+        0.219
+      ]
+    },
+    "launder_r3|unaudited_exposure|S-a_memguard": {
+      "estimate": 0.031,
+      "ci95": [
+        -0.094,
+        0.156
+      ]
+    },
+    "launder_r3|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": -0.188,
+      "ci95": [
+        -0.25,
+        -0.094
+      ]
+    },
+    "launder_r3|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility|S-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r3|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r3|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "launder_r3|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "launder_r3|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|unaudited_exposure|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|unaudited_exposure|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|unaudited_exposure|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|unaudited_exposure|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|unaudited_exposure|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|unaudited_exposure|S-memlineage": {
+      "estimate": 0.281,
+      "ci95": [
+        0.094,
+        0.469
+      ]
+    },
+    "launder_r4|unaudited_exposure|S-a_memguard": {
+      "estimate": 0.281,
+      "ci95": [
+        0.156,
+        0.406
+      ]
+    },
+    "launder_r4|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": 0.062,
+      "ci95": [
+        0.0,
+        0.156
+      ]
+    },
+    "launder_r4|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility|S-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r4|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r4|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "launder_r4|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "launder_r4|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|unaudited_exposure|S-static": {
+      "estimate": -0.958,
+      "ci95": [
+        -1.0,
+        -0.875
+      ]
+    },
+    "launder_r0_rand|unaudited_exposure|S-R": {
+      "estimate": -0.958,
+      "ci95": [
+        -1.0,
+        -0.875
+      ]
+    },
+    "launder_r0_rand|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|unaudited_exposure|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|unaudited_exposure|S-randec": {
+      "estimate": -0.958,
+      "ci95": [
+        -1.0,
+        -0.875
+      ]
+    },
+    "launder_r0_rand|unaudited_exposure|S-randec+R": {
+      "estimate": -0.958,
+      "ci95": [
+        -1.0,
+        -0.875
+      ]
+    },
+    "launder_r0_rand|unaudited_exposure|S-memlineage": {
+      "estimate": -0.669,
+      "ci95": [
+        -0.863,
+        -0.477
+      ]
+    },
+    "launder_r0_rand|unaudited_exposure|S-a_memguard": {
+      "estimate": -0.719,
+      "ci95": [
+        -0.886,
+        -0.552
+      ]
+    },
+    "launder_r0_rand|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": -0.936,
+      "ci95": [
+        -1.0,
+        -0.848
+      ]
+    },
+    "launder_r0_rand|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility|S-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r0_rand|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r0_rand|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "launder_r0_rand|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r0_rand|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "launder_r0_rand|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|unaudited_exposure|S-static": {
+      "estimate": -0.562,
+      "ci95": [
+        -0.633,
+        -0.476
+      ]
+    },
+    "launder_r1_rand|unaudited_exposure|S-R": {
+      "estimate": -0.562,
+      "ci95": [
+        -0.633,
+        -0.476
+      ]
+    },
+    "launder_r1_rand|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|unaudited_exposure|S-M": {
+      "estimate": 0.117,
+      "ci95": [
+        0.062,
+        0.184
+      ]
+    },
+    "launder_r1_rand|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|unaudited_exposure|S-randec": {
+      "estimate": -0.562,
+      "ci95": [
+        -0.633,
+        -0.476
+      ]
+    },
+    "launder_r1_rand|unaudited_exposure|S-randec+R": {
+      "estimate": -0.562,
+      "ci95": [
+        -0.633,
+        -0.476
+      ]
+    },
+    "launder_r1_rand|unaudited_exposure|S-memlineage": {
+      "estimate": -0.298,
+      "ci95": [
+        -0.51,
+        -0.102
+      ]
+    },
+    "launder_r1_rand|unaudited_exposure|S-a_memguard": {
+      "estimate": -0.297,
+      "ci95": [
+        -0.45,
+        -0.12
+      ]
+    },
+    "launder_r1_rand|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": -0.486,
+      "ci95": [
+        -0.595,
+        -0.331
+      ]
+    },
+    "launder_r1_rand|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility|S-C": {
+      "estimate": 0.209,
+      "ci95": [
+        0.184,
+        0.232
+      ]
+    },
+    "launder_r1_rand|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r1_rand|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "launder_r1_rand|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r1_rand|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "launder_r1_rand|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|unaudited_exposure|S-static": {
+      "estimate": -0.175,
+      "ci95": [
+        -0.24,
+        -0.104
+      ]
+    },
+    "launder_r2_rand|unaudited_exposure|S-R": {
+      "estimate": -0.175,
+      "ci95": [
+        -0.24,
+        -0.104
+      ]
+    },
+    "launder_r2_rand|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|unaudited_exposure|S-M": {
+      "estimate": 0.304,
+      "ci95": [
+        0.214,
+        0.401
+      ]
+    },
+    "launder_r2_rand|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|unaudited_exposure|S-randec": {
+      "estimate": -0.175,
+      "ci95": [
+        -0.24,
+        -0.104
+      ]
+    },
+    "launder_r2_rand|unaudited_exposure|S-randec+R": {
+      "estimate": -0.175,
+      "ci95": [
+        -0.24,
+        -0.104
+      ]
+    },
+    "launder_r2_rand|unaudited_exposure|S-memlineage": {
+      "estimate": 0.107,
+      "ci95": [
+        -0.083,
+        0.31
+      ]
+    },
+    "launder_r2_rand|unaudited_exposure|S-a_memguard": {
+      "estimate": 0.144,
+      "ci95": [
+        0.013,
+        0.259
+      ]
+    },
+    "launder_r2_rand|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": -0.107,
+      "ci95": [
+        -0.176,
+        -0.042
+      ]
+    },
+    "launder_r2_rand|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility|S-C": {
+      "estimate": 0.135,
+      "ci95": [
+        0.102,
+        0.168
+      ]
+    },
+    "launder_r2_rand|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "launder_r2_rand|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "launder_r2_rand|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r2_rand|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "launder_r2_rand|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3_rand|unaudited_exposure|S-static": {
+      "estimate": -0.074,
+      "ci95": [
+        -0.119,
+        -0.027
+      ]
+    },
+    "launder_r3_rand|unaudited_exposure|S-R": {
+      "estimate": -0.074,
+      "ci95": [
+        -0.119,
+        -0.027
+      ]
+    },
+    "launder_r3_rand|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3_rand|unaudited_exposure|S-M": {
+      "estimate": 0.083,
+      "ci95": [
+        0.03,
+        0.142
+      ]
+    },
+    "launder_r3_rand|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3_rand|unaudited_exposure|S-randec": {
+      "estimate": -0.074,
+      "ci95": [
+        -0.119,
+        -0.027
+      ]
+    },
+    "launder_r3_rand|unaudited_exposure|S-randec+R": {
+      "estimate": -0.074,
+      "ci95": [
+        -0.119,
+        -0.027
+      ]
+    },
+    "launder_r3_rand|unaudited_exposure|S-memlineage": {
+      "estimate": 0.252,
+      "ci95": [
+        0.027,
+        0.478
+      ]
+    },
+    "launder_r3_rand|unaudited_exposure|S-a_memguard": {
+      "estimate": 0.213,
+      "ci95": [
+        0.066,
+        0.355
+      ]
+    },
+    "launder_r3_rand|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": -0.013,
+      "ci95": [
+        -0.104,
+        0.09
+      ]
+    },
+    "launder_r3_rand|utility|S-static": {
+      "estimate": -0.023,
+      "ci95": [
+        -0.05,
+        -0.003
+      ]
+    },
+    "launder_r3_rand|utility|S-R": {
+      "estimate": -0.023,
+      "ci95": [
+        -0.05,
+        -0.003
+      ]
+    },
+    "launder_r3_rand|utility|S-C": {
+      "estimate": 0.121,
+      "ci95": [
+        0.099,
+        0.144
+      ]
+    },
+    "launder_r3_rand|utility|S-M": {
+      "estimate": 0.252,
+      "ci95": [
+        0.23,
+        0.27
+      ]
+    },
+    "launder_r3_rand|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3_rand|utility|S-randec": {
+      "estimate": -0.023,
+      "ci95": [
+        -0.05,
+        -0.003
+      ]
+    },
+    "launder_r3_rand|utility|S-randec+R": {
+      "estimate": -0.023,
+      "ci95": [
+        -0.05,
+        -0.003
+      ]
+    },
+    "launder_r3_rand|utility|S-memlineage": {
+      "estimate": -0.023,
+      "ci95": [
+        -0.05,
+        -0.003
+      ]
+    },
+    "launder_r3_rand|utility|S-a_memguard": {
+      "estimate": 0.002,
+      "ci95": [
+        -0.027,
+        0.032
+      ]
+    },
+    "launder_r3_rand|utility|S-llm_sanitiser": {
+      "estimate": -0.023,
+      "ci95": [
+        -0.05,
+        -0.003
+      ]
+    },
+    "launder_r3_rand|utility[innocent]|S-static": {
+      "estimate": -0.039,
+      "ci95": [
+        -0.083,
+        -0.006
+      ]
+    },
+    "launder_r3_rand|utility[innocent]|S-R": {
+      "estimate": -0.039,
+      "ci95": [
+        -0.083,
+        -0.006
+      ]
+    },
+    "launder_r3_rand|utility[innocent]|S-C": {
+      "estimate": 0.028,
+      "ci95": [
+        -0.011,
+        0.078
+      ]
+    },
+    "launder_r3_rand|utility[innocent]|S-M": {
+      "estimate": 0.033,
+      "ci95": [
+        0.006,
+        0.078
+      ]
+    },
+    "launder_r3_rand|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r3_rand|utility[innocent]|S-randec": {
+      "estimate": -0.039,
+      "ci95": [
+        -0.083,
+        -0.006
+      ]
+    },
+    "launder_r3_rand|utility[innocent]|S-randec+R": {
+      "estimate": -0.039,
+      "ci95": [
+        -0.083,
+        -0.006
+      ]
+    },
+    "launder_r3_rand|utility[innocent]|S-memlineage": {
+      "estimate": -0.039,
+      "ci95": [
+        -0.083,
+        -0.006
+      ]
+    },
+    "launder_r3_rand|utility[innocent]|S-a_memguard": {
+      "estimate": -0.014,
+      "ci95": [
+        -0.05,
+        0.019
+      ]
+    },
+    "launder_r3_rand|utility[innocent]|S-llm_sanitiser": {
+      "estimate": -0.039,
+      "ci95": [
+        -0.083,
+        -0.006
+      ]
+    },
+    "launder_r4_rand|unaudited_exposure|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4_rand|unaudited_exposure|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4_rand|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4_rand|unaudited_exposure|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4_rand|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4_rand|unaudited_exposure|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4_rand|unaudited_exposure|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4_rand|unaudited_exposure|S-memlineage": {
+      "estimate": 0.275,
+      "ci95": [
+        0.094,
+        0.489
+      ]
+    },
+    "launder_r4_rand|unaudited_exposure|S-a_memguard": {
+      "estimate": 0.306,
+      "ci95": [
+        0.152,
+        0.459
+      ]
+    },
+    "launder_r4_rand|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": 0.052,
+      "ci95": [
+        0.0,
+        0.126
+      ]
+    },
+    "launder_r4_rand|utility|S-static": {
+      "estimate": -0.023,
+      "ci95": [
+        -0.037,
+        -0.01
+      ]
+    },
+    "launder_r4_rand|utility|S-R": {
+      "estimate": -0.023,
+      "ci95": [
+        -0.037,
+        -0.01
+      ]
+    },
+    "launder_r4_rand|utility|S-C": {
+      "estimate": 0.048,
+      "ci95": [
+        0.029,
+        0.065
+      ]
+    },
+    "launder_r4_rand|utility|S-M": {
+      "estimate": 0.236,
+      "ci95": [
+        0.203,
+        0.263
+      ]
+    },
+    "launder_r4_rand|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4_rand|utility|S-randec": {
+      "estimate": -0.023,
+      "ci95": [
+        -0.037,
+        -0.01
+      ]
+    },
+    "launder_r4_rand|utility|S-randec+R": {
+      "estimate": -0.023,
+      "ci95": [
+        -0.037,
+        -0.01
+      ]
+    },
+    "launder_r4_rand|utility|S-memlineage": {
+      "estimate": -0.023,
+      "ci95": [
+        -0.037,
+        -0.01
+      ]
+    },
+    "launder_r4_rand|utility|S-a_memguard": {
+      "estimate": 0.002,
+      "ci95": [
+        -0.025,
+        0.027
+      ]
+    },
+    "launder_r4_rand|utility|S-llm_sanitiser": {
+      "estimate": -0.023,
+      "ci95": [
+        -0.037,
+        -0.01
+      ]
+    },
+    "launder_r4_rand|utility[innocent]|S-static": {
+      "estimate": -0.039,
+      "ci95": [
+        -0.061,
+        -0.017
+      ]
+    },
+    "launder_r4_rand|utility[innocent]|S-R": {
+      "estimate": -0.039,
+      "ci95": [
+        -0.061,
+        -0.017
+      ]
+    },
+    "launder_r4_rand|utility[innocent]|S-C": {
+      "estimate": 0.026,
+      "ci95": [
+        -0.003,
+        0.056
+      ]
+    },
+    "launder_r4_rand|utility[innocent]|S-M": {
+      "estimate": 0.032,
+      "ci95": [
+        0.008,
+        0.06
+      ]
+    },
+    "launder_r4_rand|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "launder_r4_rand|utility[innocent]|S-randec": {
+      "estimate": -0.039,
+      "ci95": [
+        -0.061,
+        -0.017
+      ]
+    },
+    "launder_r4_rand|utility[innocent]|S-randec+R": {
+      "estimate": -0.039,
+      "ci95": [
+        -0.061,
+        -0.017
+      ]
+    },
+    "launder_r4_rand|utility[innocent]|S-memlineage": {
+      "estimate": -0.039,
+      "ci95": [
+        -0.061,
+        -0.017
+      ]
+    },
+    "launder_r4_rand|utility[innocent]|S-a_memguard": {
+      "estimate": -0.014,
+      "ci95": [
+        -0.05,
+        0.022
+      ]
+    },
+    "launder_r4_rand|utility[innocent]|S-llm_sanitiser": {
+      "estimate": -0.039,
+      "ci95": [
+        -0.061,
+        -0.017
+      ]
+    },
+    "sybil_k1|unaudited_exposure|S-static": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "sybil_k1|unaudited_exposure|S-R": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "sybil_k1|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|unaudited_exposure|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|unaudited_exposure|S-randec": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "sybil_k1|unaudited_exposure|S-randec+R": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "sybil_k1|unaudited_exposure|S-memlineage": {
+      "estimate": -0.688,
+      "ci95": [
+        -0.875,
+        -0.5
+      ]
+    },
+    "sybil_k1|unaudited_exposure|S-a_memguard": {
+      "estimate": -0.688,
+      "ci95": [
+        -0.844,
+        -0.5
+      ]
+    },
+    "sybil_k1|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": -0.906,
+      "ci95": [
+        -1.0,
+        -0.781
+      ]
+    },
+    "sybil_k1|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility|S-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "sybil_k1|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "sybil_k1|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "sybil_k1|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "sybil_k1|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|unaudited_exposure|S-static": {
+      "estimate": -0.156,
+      "ci95": [
+        -0.312,
+        -0.031
+      ]
+    },
+    "sybil_k2|unaudited_exposure|S-R": {
+      "estimate": -0.156,
+      "ci95": [
+        -0.312,
+        -0.031
+      ]
+    },
+    "sybil_k2|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|unaudited_exposure|S-M": {
+      "estimate": 0.531,
+      "ci95": [
+        0.281,
+        0.812
+      ]
+    },
+    "sybil_k2|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|unaudited_exposure|S-randec": {
+      "estimate": -0.156,
+      "ci95": [
+        -0.312,
+        -0.031
+      ]
+    },
+    "sybil_k2|unaudited_exposure|S-randec+R": {
+      "estimate": -0.156,
+      "ci95": [
+        -0.312,
+        -0.031
+      ]
+    },
+    "sybil_k2|unaudited_exposure|S-memlineage": {
+      "estimate": 0.125,
+      "ci95": [
+        -0.031,
+        0.312
+      ]
+    },
+    "sybil_k2|unaudited_exposure|S-a_memguard": {
+      "estimate": 0.125,
+      "ci95": [
+        -0.031,
+        0.281
+      ]
+    },
+    "sybil_k2|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": -0.094,
+      "ci95": [
+        -0.25,
+        0.062
+      ]
+    },
+    "sybil_k2|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility|S-C": {
+      "estimate": 0.085,
+      "ci95": [
+        0.035,
+        0.13
+      ]
+    },
+    "sybil_k2|utility|S-M": {
+      "estimate": 0.195,
+      "ci95": [
+        0.115,
+        0.265
+      ]
+    },
+    "sybil_k2|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "sybil_k2|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "sybil_k2|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|unaudited_exposure|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|unaudited_exposure|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|unaudited_exposure|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|unaudited_exposure|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|unaudited_exposure|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|unaudited_exposure|S-memlineage": {
+      "estimate": 0.281,
+      "ci95": [
+        0.094,
+        0.469
+      ]
+    },
+    "sybil_k4|unaudited_exposure|S-a_memguard": {
+      "estimate": 0.281,
+      "ci95": [
+        0.156,
+        0.406
+      ]
+    },
+    "sybil_k4|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": 0.062,
+      "ci95": [
+        0.0,
+        0.156
+      ]
+    },
+    "sybil_k4|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility|S-C": {
+      "estimate": 0.04,
+      "ci95": [
+        0.005,
+        0.085
+      ]
+    },
+    "sybil_k4|utility|S-M": {
+      "estimate": 0.09,
+      "ci95": [
+        0.02,
+        0.175
+      ]
+    },
+    "sybil_k4|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "sybil_k4|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "sybil_k4|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|unaudited_exposure|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|unaudited_exposure|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|unaudited_exposure|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|unaudited_exposure|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|unaudited_exposure|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|unaudited_exposure|S-memlineage": {
+      "estimate": 0.281,
+      "ci95": [
+        0.094,
+        0.469
+      ]
+    },
+    "sybil_k8|unaudited_exposure|S-a_memguard": {
+      "estimate": 0.281,
+      "ci95": [
+        0.156,
+        0.406
+      ]
+    },
+    "sybil_k8|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": 0.062,
+      "ci95": [
+        0.0,
+        0.156
+      ]
+    },
+    "sybil_k8|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "sybil_k8|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "sybil_k8|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|unaudited_exposure|S-static": {
+      "estimate": -0.964,
+      "ci95": [
+        -1.0,
+        -0.893
+      ]
+    },
+    "sybil_k1_rand|unaudited_exposure|S-R": {
+      "estimate": -0.964,
+      "ci95": [
+        -1.0,
+        -0.893
+      ]
+    },
+    "sybil_k1_rand|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|unaudited_exposure|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|unaudited_exposure|S-randec": {
+      "estimate": -0.964,
+      "ci95": [
+        -1.0,
+        -0.893
+      ]
+    },
+    "sybil_k1_rand|unaudited_exposure|S-randec+R": {
+      "estimate": -0.964,
+      "ci95": [
+        -1.0,
+        -0.893
+      ]
+    },
+    "sybil_k1_rand|unaudited_exposure|S-memlineage": {
+      "estimate": -0.664,
+      "ci95": [
+        -0.867,
+        -0.464
+      ]
+    },
+    "sybil_k1_rand|unaudited_exposure|S-a_memguard": {
+      "estimate": -0.648,
+      "ci95": [
+        -0.823,
+        -0.465
+      ]
+    },
+    "sybil_k1_rand|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": -0.885,
+      "ci95": [
+        -1.0,
+        -0.719
+      ]
+    },
+    "sybil_k1_rand|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility|S-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "sybil_k1_rand|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "sybil_k1_rand|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "sybil_k1_rand|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k1_rand|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "sybil_k1_rand|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|unaudited_exposure|S-static": {
+      "estimate": -0.111,
+      "ci95": [
+        -0.23,
+        -0.019
+      ]
+    },
+    "sybil_k2_rand|unaudited_exposure|S-R": {
+      "estimate": -0.111,
+      "ci95": [
+        -0.23,
+        -0.019
+      ]
+    },
+    "sybil_k2_rand|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|unaudited_exposure|S-M": {
+      "estimate": 0.521,
+      "ci95": [
+        0.366,
+        0.655
+      ]
+    },
+    "sybil_k2_rand|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|unaudited_exposure|S-randec": {
+      "estimate": -0.111,
+      "ci95": [
+        -0.23,
+        -0.019
+      ]
+    },
+    "sybil_k2_rand|unaudited_exposure|S-randec+R": {
+      "estimate": -0.111,
+      "ci95": [
+        -0.23,
+        -0.019
+      ]
+    },
+    "sybil_k2_rand|unaudited_exposure|S-memlineage": {
+      "estimate": 0.193,
+      "ci95": [
+        0.029,
+        0.379
+      ]
+    },
+    "sybil_k2_rand|unaudited_exposure|S-a_memguard": {
+      "estimate": 0.148,
+      "ci95": [
+        0.035,
+        0.282
+      ]
+    },
+    "sybil_k2_rand|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": -0.032,
+      "ci95": [
+        -0.19,
+        0.119
+      ]
+    },
+    "sybil_k2_rand|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility|S-C": {
+      "estimate": 0.067,
+      "ci95": [
+        0.047,
+        0.09
+      ]
+    },
+    "sybil_k2_rand|utility|S-M": {
+      "estimate": 0.212,
+      "ci95": [
+        0.182,
+        0.241
+      ]
+    },
+    "sybil_k2_rand|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "sybil_k2_rand|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k2_rand|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "sybil_k2_rand|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|unaudited_exposure|S-static": {
+      "estimate": -0.019,
+      "ci95": [
+        -0.058,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|unaudited_exposure|S-R": {
+      "estimate": -0.019,
+      "ci95": [
+        -0.058,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|unaudited_exposure|S-C": {
+      "estimate": -0.01,
+      "ci95": [
+        -0.029,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|unaudited_exposure|S-M": {
+      "estimate": -0.019,
+      "ci95": [
+        -0.058,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|unaudited_exposure|S-SL": {
+      "estimate": -0.01,
+      "ci95": [
+        -0.029,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|unaudited_exposure|S-randec": {
+      "estimate": -0.019,
+      "ci95": [
+        -0.058,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|unaudited_exposure|S-randec+R": {
+      "estimate": -0.019,
+      "ci95": [
+        -0.058,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|unaudited_exposure|S-memlineage": {
+      "estimate": 0.279,
+      "ci95": [
+        0.106,
+        0.456
+      ]
+    },
+    "sybil_k4_rand|unaudited_exposure|S-a_memguard": {
+      "estimate": 0.239,
+      "ci95": [
+        0.083,
+        0.388
+      ]
+    },
+    "sybil_k4_rand|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": 0.04,
+      "ci95": [
+        -0.04,
+        0.143
+      ]
+    },
+    "sybil_k4_rand|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility|S-C": {
+      "estimate": 0.02,
+      "ci95": [
+        0.005,
+        0.035
+      ]
+    },
+    "sybil_k4_rand|utility|S-M": {
+      "estimate": 0.05,
+      "ci95": [
+        0.018,
+        0.084
+      ]
+    },
+    "sybil_k4_rand|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "sybil_k4_rand|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k4_rand|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "sybil_k4_rand|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|unaudited_exposure|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|unaudited_exposure|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|unaudited_exposure|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|unaudited_exposure|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|unaudited_exposure|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|unaudited_exposure|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|unaudited_exposure|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|unaudited_exposure|S-memlineage": {
+      "estimate": 0.325,
+      "ci95": [
+        0.102,
+        0.575
+      ]
+    },
+    "sybil_k8_rand|unaudited_exposure|S-a_memguard": {
+      "estimate": 0.283,
+      "ci95": [
+        0.156,
+        0.397
+      ]
+    },
+    "sybil_k8_rand|unaudited_exposure|S-llm_sanitiser": {
+      "estimate": 0.058,
+      "ci95": [
+        0.0,
+        0.142
+      ]
+    },
+    "sybil_k8_rand|utility|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility|S-C": {
+      "estimate": 0.003,
+      "ci95": [
+        0.0,
+        0.008
+      ]
+    },
+    "sybil_k8_rand|utility|S-M": {
+      "estimate": 0.002,
+      "ci95": [
+        0.0,
+        0.005
+      ]
+    },
+    "sybil_k8_rand|utility|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.005,
+        0.045
+      ]
+    },
+    "sybil_k8_rand|utility|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility[innocent]|S-static": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility[innocent]|S-SL": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility[innocent]|S-randec": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility[innocent]|S-randec+R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility[innocent]|S-memlineage": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil_k8_rand|utility[innocent]|S-a_memguard": {
+      "estimate": 0.025,
+      "ci95": [
+        0.008,
+        0.05
+      ]
+    },
+    "sybil_k8_rand|utility[innocent]|S-llm_sanitiser": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "memlineage": {
+    "attack_probes_with_untrusted_context": 32,
+    "attack_probes": 32,
+    "utility_probes_with_untrusted_context": 200,
+    "utility_probes": 200,
+    "static_attack_exposure": 0.969,
+    "static_utility_exposure": 0.925,
+    "rule": "exposure(q) = static exposure(q) if SensitiveAction(q) == ORDINARY else 0 (Deny), for every condition; invariant to k, r and audit draws",
+    "status": "SensitiveAction verdicts not cached for the 216 distinct dev questions; exact values need one paid classifier call per question"
+  },
+  "groups_per_arm": {
+    "static": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ],
+    "R": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ],
+    "C": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ],
+    "M": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ],
+    "S": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ],
+    "SL": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ],
+    "randec": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ],
+    "randec+R": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ],
+    "memlineage": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ],
+    "a_memguard": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ],
+    "llm_sanitiser": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ]
+  }
+}

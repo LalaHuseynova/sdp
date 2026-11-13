@@ -1,0 +1,28 @@
+{
+  "method": "amemguard",
+  "purpose": "published_amemguard",
+  "mode": "live",
+  "cap_usd": "1.00",
+  "task_spend_usd": "0.3150183",
+  "calls_this_run": 2184,
+  "groups": [
+    "G-D00",
+    "G-D01",
+    "G-D02",
+    "G-D03",
+    "G-D04",
+    "G-D05",
+    "G-D06",
+    "G-D07"
+  ],
+  "budget_before": {
+    "used_usd": 0.95226975,
+    "remaining_usd": 29.04773025,
+    "held_usd": 0.0
+  },
+  "budget_after": {
+    "used_usd": 1.2282747,
+    "remaining_usd": 28.7717253,
+    "held_usd": 0.0
+  }
+}

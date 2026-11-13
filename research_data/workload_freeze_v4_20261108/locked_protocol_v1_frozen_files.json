@@ -1,0 +1,14 @@
+{
+  "protocol": "research_data/workload_freeze_v4_20261108/locked_protocol_v1.json",
+  "protocol_digest": "921cf7f53c5e292243d3efa368c60e39f70091ffea9934f6dbcbd9d3bffd97eb",
+  "archive": "research_data/workload_freeze_v4_20261108/locked_protocol_v1_frozen_files.tar.gz",
+  "archive_sha256": "e0c6a131146518e4c10db4b76af075710498fe856b2865c4bed68289bfcd8895",
+  "files": 224,
+  "by_group": {
+    "dataset_files": 10,
+    "source_files": 172,
+    "prompt_files": 35,
+    "scripts": 6,
+    "configs": 1
+  }
+}

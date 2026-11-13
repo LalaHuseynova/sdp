@@ -1,0 +1,56 @@
+{
+  "status": "estimate_only_no_paid_call",
+  "conditions": [
+    "random_concentrate_d0_fu",
+    "random_concentrate_d1_fu",
+    "random_concentrate_d2_fu",
+    "random_concentrate_d3_fu",
+    "random_concentrate_d4_fu",
+    "random_concentrate_d5_fu",
+    "random_concentrate_d6_fu",
+    "random_concentrate_d7_fu",
+    "random_spread_d0_fu",
+    "random_spread_d1_fu",
+    "random_spread_d2_fu",
+    "random_spread_d3_fu",
+    "random_spread_d4_fu",
+    "random_spread_d5_fu",
+    "random_spread_d6_fu",
+    "random_spread_d7_fu"
+  ],
+  "arms": [
+    "static",
+    "R",
+    "C",
+    "M",
+    "S",
+    "SL"
+  ],
+  "tau": 0.8,
+  "outcome_rows": 3360,
+  "replayed_from_paid_ledger": {
+    "replay:workload_answer": 3282,
+    "replay:workload_judge": 522,
+    "replay:workload_conflict": 440,
+    "forward:workload_answer": 78,
+    "forward:workload_judge": 54
+  },
+  "new_distinct_requests": {
+    "workload_answer:requests": 17,
+    "workload_answer:chars": 46700,
+    "workload_judge:requests": 10,
+    "workload_judge:chars": 8103
+  },
+  "mean_actual_cost_per_request_usd": {
+    "workload_retention": "0.00006704355555555555555555555556",
+    "workload_extraction": "0.0001796123227917121046892039258",
+    "workload_classifier": "0.00005384038128249566724436741768",
+    "workload_answer": "0.000128391375",
+    "workload_judge": "0.00004734498069498069498069498069",
+    "workload_conflict": "0.00001575258620689655172413793103",
+    "workload_no_memory_answer": "0.00005334937027707808564231738035"
+  },
+  "expected_cost_usd": "0.0027",
+  "expected_cost_with_30pct_allowance_usd": "0.0035",
+  "note": "Judge requests follow mock answers here; real answers can differ, so the judge count is approximate. Answers and conflicts are exact."
+}

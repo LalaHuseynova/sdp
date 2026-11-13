@@ -1,0 +1,29 @@
+{
+  "status": "estimate_only_no_api_call_no_outcome",
+  "bundle": "research_data/controlled_workload_v4_20261108",
+  "split": "test",
+  "groups": 24,
+  "stage1": {
+    "requests_free_from_cache_or_paid_replay": 986,
+    "requests_to_pay_by_stage": {
+      "workload_retention": 578,
+      "workload_extraction": 697,
+      "workload_classifier": 499
+    },
+    "expected_usd": "0.1988",
+    "method": "chars x 0.2194 tokens/char; measured mean output per stage"
+  },
+  "stage3": {
+    "dev_measured": {
+      "groups": 8,
+      "usd": "0.1397682",
+      "unique_requests": 1354
+    },
+    "expected_usd": "0.4193",
+    "expected_unique_requests": 4062,
+    "method": "dev Stage 3 USD per group x test groups"
+  },
+  "total_expected_usd": "0.6181",
+  "total_with_20pct_allowance_usd": "0.7417",
+  "stage2": "free (offline)"
+}

@@ -1,0 +1,28 @@
+{
+  "method": "memlineage",
+  "purpose": "published_memlineage",
+  "mode": "live",
+  "cap_usd": "0.05",
+  "task_spend_usd": "0.0047586",
+  "calls_this_run": 216,
+  "groups": [
+    "G-D00",
+    "G-D01",
+    "G-D02",
+    "G-D03",
+    "G-D04",
+    "G-D05",
+    "G-D06",
+    "G-D07"
+  ],
+  "budget_before": {
+    "used_usd": 0.9084978,
+    "remaining_usd": 29.0915022,
+    "held_usd": 0.0
+  },
+  "budget_after": {
+    "used_usd": 0.9132564,
+    "remaining_usd": 29.0867436,
+    "held_usd": 0.0
+  }
+}

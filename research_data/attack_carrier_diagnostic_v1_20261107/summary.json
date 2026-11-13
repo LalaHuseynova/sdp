@@ -1,0 +1,61 @@
+{
+  "status": "complete_offline_diagnostic",
+  "paid_api_calls": 0,
+  "saved_outcomes_verified": 3888,
+  "attack_successes": {
+    "static_events": 15,
+    "distinct_group_inputs": 7,
+    "identical_success_set_across_static_R_C_M_S": true,
+    "by_carrier_bucket": {
+      "principal_context_target_absent": 9,
+      "unknown": 4,
+      "external": 2
+    },
+    "carrier_from_probe_input": 0
+  },
+  "workload_reachability": {
+    "static_attack_probes": 405,
+    "attack_probes_with_admitted_attributed_external_candidate": 18,
+    "static_attack_selected_occurrences_by_kind_origin": {
+      "claim:principal": 394,
+      "evidence_chunk:principal": 963,
+      "claim:external": 46,
+      "claim:unknown": 26
+    },
+    "attack_probes_with_target_in_retrieved_context": 11,
+    "record_origin_distribution_all_episodes": {
+      "external": 17751,
+      "principal": 111,
+      "unknown": 1113
+    }
+  },
+  "changed_contexts_vs_static": {
+    "R": 0,
+    "C": 24,
+    "M": 29,
+    "S": 23,
+    "S_subset_of_M": true,
+    "S_in_C": 19,
+    "S_identical_context_to_C": 14,
+    "S_identical_context_to_M": 16,
+    "S_order_only_changes": 2,
+    "S_removed_by_reason": {
+      "source_ranking_penalty": 16,
+      "source_risk_gate": 12
+    },
+    "S_removed_by_origin": {
+      "external": 28
+    },
+    "S_added_by_origin": {
+      "external": 14,
+      "unknown": 14
+    },
+    "S_outcome_transitions": {
+      "restraint:False->False": 10,
+      "attack:False->False": 4,
+      "restraint:True->True": 3,
+      "restraint:False->True": 2,
+      "attack:True->True": 4
+    }
+  }
+}

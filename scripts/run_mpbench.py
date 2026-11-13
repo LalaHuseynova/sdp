@@ -4,7 +4,12 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import json
 import sys
+import threading
+from dataclasses import asdict
+from pathlib import Path
 
 from ams.core.env import load_env
 from ams.data.mpbench import load_mpbench
@@ -48,6 +53,11 @@ def main(argv=None) -> int:
     )
     ap.add_argument("--yes", action="store_true", help="confirm a run above ~1k calls")
     ap.add_argument("--backbone", help="a name in configs/backbones.yaml (gpt56 | 4omini)")
+    ap.add_argument(
+        "--require-full",
+        action="store_true",
+        help="require the official 6240-case shared pool and save all ingestion artifacts",
+    )
     args = ap.parse_args(argv)
 
     load_env()
@@ -68,6 +78,23 @@ def main(argv=None) -> int:
     if args.limit:
         cfg.raw["limit"] = args.limit
     cfg.raw["pool_size"] = pool_size
+    if args.require_full:
+        counts = (
+            len(cases),
+            sum(c.is_adversarial for c in cases),
+            sum(c.is_adversarial and bool(c.retrieval_query.strip()) for c in cases),
+            sum(not c.is_adversarial and bool(c.retrieval_query.strip()) for c in cases),
+        )
+        if args.limit or counts != (6240, 3241, 2999, 2997) or pool_size != 6240:
+            ap.error(
+                "--require-full needs all 6240 ingestions, 2999 attack/2997 benign reads, "
+                "pool_size=6240, and no --limit"
+            )
+        if len({c.cid for c in cases}) != len(cases):
+            ap.error("full evaluation requires unique internal case IDs")
+        if cfg.get("adaptive.variant"):
+            ap.error("the published full dataset must not use adaptive payload transformations")
+        cfg.raw["require_full"] = True
     if pool_size > 1:
         cfg.raw["name"] = f"{cfg.get('name')}_pool{pool_size}"
     workers = cfg.get("runtime.workers", 6)
@@ -82,6 +109,40 @@ def main(argv=None) -> int:
         return 1
 
     ctx = RunContext(cfg)
+    if args.require_full:
+        dataset_root = Path(cfg.get("dataset.root", "data/mpbench"))
+        ctx.write_json(
+            "dataset_integrity.json",
+            {
+                "files": {
+                    p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+                    for p in sorted(dataset_root.glob("*.jsonl*"))
+                },
+                "ingestions": len(cases),
+                "pool_size": pool_size,
+                "internal_id_scheme": "source-split-qualified; original raw IDs preserved",
+            },
+        )
+        with ctx.path("case_catalog.jsonl").open("w", encoding="utf-8") as fh:
+            for case in cases:
+                fh.write(
+                    json.dumps(
+                        {
+                            "cid": case.cid,
+                            "original_cid": case.original_cid,
+                            "source_split": case.source_split,
+                            "is_adversarial": case.is_adversarial,
+                            "retrieval_query": case.retrieval_query,
+                            "expected_memory": case.expected_memory,
+                            "legitimate_memory_write": case.legitimate_memory_write,
+                            "attack_type": case.attack_type,
+                            "attack_signal": case.attack_signal,
+                            "domain": case.domain,
+                        },
+                        ensure_ascii=False,
+                    )
+                    + "\n"
+                )
     m = {r: cfg.require(f"models.{r}") for r in ("memory", "agent", "judge", "embed")}
     memory = build_memory(cfg, ctx)
     system = cfg.get("memory_system", "simple")
@@ -116,19 +177,72 @@ def main(argv=None) -> int:
         ).text.strip()
 
     rows, reports = [], []
+    ingestion_counts = {}
     for kind in defences:
         defence = build_defence(kind, cfg, m["agent"], ctx)
-        out, rep = run_lifecycle(
-            cases,
-            memory,
-            defence,
-            judge,
-            answer_fn=answer_fn,
-            workers=workers,
-            pool_size=pool_size,
-            seed=cfg.get("seed", 0),
-            k=cfg.get("retrieve_k", 4),
+        write_log = (
+            ctx.path(f"written_memories-{kind}.jsonl").open("w", encoding="utf-8")
+            if args.require_full
+            else None
         )
+        outcome_log = (
+            ctx.path(f"outcome_progress-{kind}.jsonl").open("w", encoding="utf-8")
+            if args.require_full
+            else None
+        )
+        outcome_lock = threading.Lock()
+        observed_ingestions = set()
+
+        def record_write(case, session_id, result, *, _log=write_log, _seen=observed_ingestions):
+            assert _log is not None
+            _seen.add(case.cid)
+            _log.write(
+                json.dumps(
+                    {
+                        "cid": case.cid,
+                        "original_cid": case.original_cid,
+                        "source_split": case.source_split,
+                        "session_id": session_id,
+                        "written": [asdict(entry) for entry in result.written],
+                        "discarded": list(result.discarded),
+                    },
+                    ensure_ascii=False,
+                )
+                + "\n"
+            )
+            _log.flush()
+
+        def record_outcome(outcome, *, _log=outcome_log, _lock=outcome_lock):
+            # This journal records completed cases for interrupted-run auditing.
+            # It is not a resume skip list: rebuild/replay through the same cache.
+            assert _log is not None
+            with _lock:
+                _log.write(json.dumps(asdict(outcome), ensure_ascii=False) + "\n")
+                _log.flush()
+
+        try:
+            out, rep = run_lifecycle(
+                cases,
+                memory,
+                defence,
+                judge,
+                answer_fn=answer_fn,
+                workers=workers,
+                pool_size=pool_size,
+                seed=cfg.get("seed", 0),
+                k=cfg.get("retrieve_k", 4),
+                write_observer=record_write if write_log is not None else None,
+                outcome_observer=record_outcome if outcome_log is not None else None,
+            )
+        finally:
+            if write_log is not None:
+                write_log.close()
+            if outcome_log is not None:
+                outcome_log.close()
+        if args.require_full:
+            if observed_ingestions != {case.cid for case in cases}:
+                raise RuntimeError("full ingestion coverage was not observed")
+            ingestion_counts[kind] = len(observed_ingestions)
         rows += out
         reports.append(rep)
         print("  " + rep.line())
@@ -142,13 +256,15 @@ def main(argv=None) -> int:
         {
             "n_cases": len(cases),
             "pool_size": pool_size,
+            "n_pool_cases": len(cases) if args.require_full else None,
+            "observed_ingestions": ingestion_counts,
             "write_gate": cfg.get("write_gate"),
             "reports": [r.to_dict() for r in reports],
             "canonicalisation": canon.to_dict(),
         },
     )
     print("\n" + "\n".join(r.line() for r in reports))
-    ctx.finalise()
+    ctx.finalise({"n_pool_cases": len(cases)} if args.require_full else None)
     u = ctx.ledger.summary()
     print(
         f"\napi calls {u['total_calls'] - u['total_cache_hits']}  cost ${u['total_cost_usd']:.2f}"

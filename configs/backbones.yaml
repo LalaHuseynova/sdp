@@ -8,6 +8,14 @@
 # the SAME model on a second Azure resource. Key: AZURE_AI_KEY_MAG_SECURITY_HAOMING_RESOURCE.
 x-4omini-fallback: &mini_fb
   "openai:gpt-4o-mini": "aiservices:gpt-4o-mini@https://mag-security-haoming-resource.services.ai.azure.com/openai/v1"
+# Same GPT-4o-mini memory, agent, and judge through the user's OpenRouter account.
+# No dependency on the authors' OpenAI or Azure accounts.
+openrouter_4omini:
+  models:
+    memory: "openrouter:openai/gpt-4o-mini"
+    agent: "openrouter:openai/gpt-4o-mini"
+    judge: "openrouter:openai/gpt-4o-mini"
+  workers: 8
 gpt56:
   models: {memory: "aiservices:gpt-5.6-terra", agent: "aiservices:gpt-5.6-terra"}
   # Azure first; a refusal or hard failure retries the SAME model at OpenAI.

@@ -1,0 +1,15 @@
+{
+  "purpose": "Snapshot of all implementation and results before protocol v2 (13 Nov 2026)",
+  "created": "2026-11-13T00:19:43",
+  "git_head": "bac6090985647d7aeff3b44da68e528607a89e0f",
+  "note": "Research code is untracked in git; this archive is the authoritative copy.",
+  "code_and_docs": {
+    "files": 491,
+    "sha256": "d2e262cc056f5bedb2a11b47dd9fa9a4edffd997fd6c41b9c559b5a1ecfc93fd"
+  },
+  "results_small": {
+    "files": 493,
+    "sha256": "9d7fc58d1311b529a69b50719eb414b1d17e87660b04676447031436bd212ee5"
+  },
+  "fingerprinted_result_files": 3910
+}

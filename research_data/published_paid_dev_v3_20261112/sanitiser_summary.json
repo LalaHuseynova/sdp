@@ -1,0 +1,21 @@
+{
+  "method": "sanitiser",
+  "purpose": "published_sanitiser_resume",
+  "mode": "live",
+  "cap_usd": "0.03",
+  "task_spend_usd": "0.00495630",
+  "calls_this_run": 278,
+  "groups": [
+    "G-D07"
+  ],
+  "budget_before": {
+    "used_usd": 0.00022215,
+    "remaining_usd": 29.99977785,
+    "held_usd": 0.0
+  },
+  "budget_after": {
+    "used_usd": 0.00517845,
+    "remaining_usd": 29.99482155,
+    "held_usd": 0.0
+  }
+}

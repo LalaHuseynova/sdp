@@ -87,6 +87,15 @@ class MPBenchCase:
     legitimate_memory_write: bool | None = None
     raw: dict = field(default_factory=dict, repr=False)
 
+    @property
+    def original_cid(self) -> str:
+        """The release's identifier, preserved separately from the internal key."""
+        return self.raw.get("id", self.cid)
+
+    @property
+    def source_split(self) -> str:
+        return "adversarial" if self.is_adversarial else "benign"
+
 
 @dataclass
 class CanonReport:
@@ -179,7 +188,10 @@ def load_mpbench(
 
             cases.append(
                 MPBenchCase(
-                    cid=r.get("id", ""),
+                    # The official files reuse 300 IDs across their two splits.
+                    # Qualify only the internal bookkeeping key; keep the raw
+                    # record, payload, labels, and order exactly as released.
+                    cid=f"{'adversarial' if is_adv else 'benign'}:{r.get('id', '')}",
                     is_adversarial=is_adv,
                     attack_type=at,
                     attack_signal=sig,

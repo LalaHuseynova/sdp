@@ -1,0 +1,19 @@
+{
+  "status": "mock_dry_run_complete",
+  "paid_calls": 0,
+  "bundle_manifest_hash": "5e39b995d66fee73202209171d03a182cf253fbdc0be8c33ac8e2bf2c05712bb",
+  "split": "dev",
+  "groups": [
+    "G-D00",
+    "G-D01",
+    "G-D02",
+    "G-D03",
+    "G-D04",
+    "G-D05",
+    "G-D06",
+    "G-D07"
+  ],
+  "outcome_rows": 4480,
+  "mock_dispatches": 6297,
+  "warning": "Mock answers/judges: outcomes test the software path only."
+}

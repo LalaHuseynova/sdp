@@ -1,0 +1,175 @@
+{
+  "status": "stage1_complete",
+  "bundle": "research_data/controlled_workload_v3_20261108",
+  "split": "dev",
+  "groups": [
+    "G-D00",
+    "G-D01",
+    "G-D02",
+    "G-D03",
+    "G-D04",
+    "G-D05",
+    "G-D06",
+    "G-D07"
+  ],
+  "bundle_manifest_hash": "cc2f98aff08a23f0d2361cce7beec87bfafbe93b06251fb7b8980c515b946367",
+  "task_cap_usd": "0.15",
+  "actual_task_spend_usd": "0.05540805",
+  "paid_dispatches_by_stage": {
+    "workload_classifier": {
+      "calls": 154,
+      "usd": 0.0082992
+    },
+    "workload_extraction": {
+      "calls": 241,
+      "usd": 0.0432003
+    },
+    "workload_retention": {
+      "calls": 203,
+      "usd": 0.0136416
+    }
+  },
+  "failed_or_unresolved_dispatches": 0,
+  "paid_this_run_by_stage": {
+    "workload_retention": 171,
+    "workload_extraction": 198,
+    "workload_classifier": 162
+  },
+  "note": "paid_dispatches_by_stage counts every workload dispatch in the session (including pilots); actual_task_spend_usd is this Stage-1 scope only",
+  "budget_before": {
+    "used_usd": 0.00973305,
+    "remaining_usd": 29.99026695,
+    "held_usd": 0.0
+  },
+  "budget_after": {
+    "used_usd": 0.0651411,
+    "remaining_usd": 29.9348589,
+    "held_usd": 0.0
+  },
+  "per_group_requests": {
+    "G-D00": {
+      "chat": {
+        "retention:cache": 18,
+        "extraction:cache": 15,
+        "retention:fallback": 22,
+        "extraction:fallback": 25,
+        "classifier:fallback": 13,
+        "classifier:cache": 22
+      },
+      "embed": {
+        "fallback": 156,
+        "cache": 86
+      }
+    },
+    "G-D01": {
+      "chat": {
+        "retention:cache": 17,
+        "extraction:cache": 16,
+        "retention:fallback": 23,
+        "extraction:fallback": 24,
+        "classifier:fallback": 13,
+        "classifier:cache": 22
+      },
+      "embed": {
+        "cache": 92,
+        "fallback": 129
+      }
+    },
+    "G-D02": {
+      "chat": {
+        "retention:cache": 19,
+        "extraction:cache": 17,
+        "retention:fallback": 21,
+        "extraction:fallback": 23,
+        "classifier:fallback": 13,
+        "classifier:cache": 22
+      },
+      "embed": {
+        "cache": 98,
+        "fallback": 132
+      }
+    },
+    "G-D03": {
+      "chat": {
+        "retention:cache": 20,
+        "extraction:cache": 18,
+        "retention:fallback": 20,
+        "extraction:fallback": 22,
+        "classifier:fallback": 25,
+        "classifier:cache": 10
+      },
+      "embed": {
+        "cache": 93,
+        "fallback": 145
+      }
+    },
+    "G-D04": {
+      "chat": {
+        "retention:fallback": 22,
+        "extraction:fallback": 27,
+        "retention:cache": 18,
+        "extraction:cache": 13,
+        "classifier:fallback": 24,
+        "classifier:cache": 11
+      },
+      "embed": {
+        "fallback": 138,
+        "cache": 74
+      }
+    },
+    "G-D05": {
+      "chat": {
+        "retention:fallback": 20,
+        "extraction:fallback": 24,
+        "retention:cache": 20,
+        "extraction:cache": 16,
+        "classifier:fallback": 25,
+        "classifier:cache": 10
+      },
+      "embed": {
+        "fallback": 147,
+        "cache": 105
+      }
+    },
+    "G-D06": {
+      "chat": {
+        "retention:cache": 17,
+        "extraction:cache": 13,
+        "retention:fallback": 23,
+        "extraction:fallback": 27,
+        "classifier:fallback": 24,
+        "classifier:cache": 11
+      },
+      "embed": {
+        "fallback": 135,
+        "cache": 93
+      }
+    },
+    "G-D07": {
+      "chat": {
+        "retention:fallback": 20,
+        "extraction:fallback": 26,
+        "retention:cache": 20,
+        "extraction:cache": 14,
+        "classifier:fallback": 25,
+        "classifier:cache": 10
+      },
+      "embed": {
+        "fallback": 153,
+        "cache": 89
+      }
+    }
+  },
+  "embeddings": "local MiniLM (cache first); no paid embeddings",
+  "session": "research_data/controlled_workload_session_v2_20261108",
+  "replayed_paid_replies_from": [
+    "research_data/dynamic_execution_prep_v1_20261031/session/dispatch.sqlite",
+    "research_data/controlled_workload_session_v2_20261108/dispatch.sqlite"
+  ],
+  "cache_hits": {
+    "layer1_chat_hit": 138,
+    "chat_miss": 531,
+    "layer2_chat_hit": 75,
+    "layer0_chat_hit": 176
+  }
+}

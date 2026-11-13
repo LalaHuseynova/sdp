@@ -1,0 +1,466 @@
+{
+  "status": "prepared_not_run",
+  "paid_calls": 0,
+  "bundle": "research_data/controlled_workload_v2_20261108",
+  "bundle_manifest_hash": "fc40ad46de42ec0f045fbce11312f4ca526a2a6c14b33ba3b7f008d7a6301887",
+  "contributions": [
+    {
+      "contribution_id": "c_3975adabd6ad53b52dfc",
+      "group_id": "G-D04",
+      "role": "benign_with_fact",
+      "domain": "calendar",
+      "family": "day"
+    },
+    {
+      "contribution_id": "c_b36e22d5847fb3695208",
+      "group_id": "G-D02",
+      "role": "benign_with_fact",
+      "domain": "file_and_doc",
+      "family": "day"
+    },
+    {
+      "contribution_id": "c_7ee19fbb6534e4dbdc83",
+      "group_id": "G-D03",
+      "role": "benign_with_fact",
+      "domain": "email",
+      "family": "day"
+    },
+    {
+      "contribution_id": "c_335159499b6acbc869db",
+      "group_id": "G-D07",
+      "role": "benign_with_fact",
+      "domain": "email",
+      "family": "lead"
+    },
+    {
+      "contribution_id": "c_549c225f471da7ca9193",
+      "group_id": "G-D06",
+      "role": "benign_with_fact",
+      "domain": "calendar",
+      "family": "lead"
+    },
+    {
+      "contribution_id": "c_303743d188e48b53a756",
+      "group_id": "G-D02",
+      "role": "benign_with_fact",
+      "domain": "calendar",
+      "family": "lead"
+    },
+    {
+      "contribution_id": "c_6cf2e2a517fa4b2f7a4b",
+      "group_id": "G-D07",
+      "role": "benign_with_fact",
+      "domain": "calendar",
+      "family": "room"
+    },
+    {
+      "contribution_id": "c_3fe49f2f7364737c4535",
+      "group_id": "G-D00",
+      "role": "benign_with_fact",
+      "domain": "calendar",
+      "family": "room"
+    },
+    {
+      "contribution_id": "c_58e8eb53c6e9f2344245",
+      "group_id": "G-D03",
+      "role": "benign_with_fact",
+      "domain": "email",
+      "family": "room"
+    },
+    {
+      "contribution_id": "c_5bf71bfd4e6e6d98e549",
+      "group_id": "G-D07",
+      "role": "benign_with_fact",
+      "domain": "email",
+      "family": "month"
+    },
+    {
+      "contribution_id": "c_90d5aecb17e56aa665de",
+      "group_id": "G-D04",
+      "role": "benign_with_fact",
+      "domain": "calendar",
+      "family": "month"
+    },
+    {
+      "contribution_id": "c_806395e3c6ee679da50e",
+      "group_id": "G-D05",
+      "role": "benign_with_fact",
+      "domain": "slack",
+      "family": "month"
+    },
+    {
+      "contribution_id": "c_124b8de0595e1f57df52",
+      "group_id": "G-D05",
+      "role": "benign_with_fact",
+      "domain": "email",
+      "family": "version"
+    },
+    {
+      "contribution_id": "c_9f31112101096e4998bf",
+      "group_id": "G-D01",
+      "role": "benign_with_fact",
+      "domain": "slack",
+      "family": "version"
+    },
+    {
+      "contribution_id": "c_41e3e16db3c419cba9d6",
+      "group_id": "G-D00",
+      "role": "benign_with_fact",
+      "domain": "calendar",
+      "family": "version"
+    },
+    {
+      "contribution_id": "c_a848fcc3072b4a7f0439",
+      "group_id": "G-D04",
+      "role": "benign_with_fact",
+      "domain": "file_and_doc",
+      "family": "count"
+    },
+    {
+      "contribution_id": "c_83f773e07b8a44994f52",
+      "group_id": "G-D07",
+      "role": "benign_with_fact",
+      "domain": "email",
+      "family": "count"
+    },
+    {
+      "contribution_id": "c_ecb2b87ce4b26cf61e2d",
+      "group_id": "G-D06",
+      "role": "benign_with_fact",
+      "domain": "file_and_doc",
+      "family": "count"
+    },
+    {
+      "contribution_id": "c_1d0a9eb9d4e8d396f6d3",
+      "group_id": "G-D02",
+      "role": "unlinked_copy",
+      "domain": "calendar",
+      "family": null
+    },
+    {
+      "contribution_id": "c_e7d6f053078b54b065cd",
+      "group_id": "G-D01",
+      "role": "unlinked_copy",
+      "domain": "calendar",
+      "family": null
+    },
+    {
+      "contribution_id": "c_1743c5cb17ebc5862d60",
+      "group_id": "G-D03",
+      "role": "unlinked_copy",
+      "domain": "slack",
+      "family": null
+    },
+    {
+      "contribution_id": "c_65bd327b00c0b0d89348",
+      "group_id": "G-D04",
+      "role": "unlinked_copy",
+      "domain": "file_and_doc",
+      "family": null
+    }
+  ],
+  "planned_requests": [
+    {
+      "stage": "workload_retention",
+      "key": "1fd02c95826bfed294ed44120c09614b297578a1a088087c5b8b82cd68907c27",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "10e80ca6c8dab98c752f64c1abbeffdc14ad008a0186320f25cc84de616680b3",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "f096f8cca0a48e85251de23e25e93668f06d6d4e28c8f250a96834f7397d1d40",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "5ba702ecac63532fd1417df9a3a17f1a12ffaf1fa883003b4ae2c5e7b4a7c9e5",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "234d210e80f2cd2506aff4556fc6bca12b58fa4c5aecd429914a95dd7aeddcdb",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "e263bf1ca31ab29a8b031ba117c1a20a36a1b6e0dbdcd83c7e84e847024e26de",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "f0311132327110bf3c0ea17e4a67026c223b94687ac6a7c8d9c01d785175d052",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "f592de9e380ecb05d5ce5b2dd5fd230889a283d9470b4c1c0d37cbadb67f0f84",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "7417daa06c988d761608933a00f7edd7fb3f2e40767b29b59bfca30f9acaf615",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "b7be548e153a2ef0c7e6a984841023d4a28a0ce037f847fa3f97f6bcb9650939",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "634d185926a93d1e0dd56af8655a486c7ab61d32ff1a38f9a590a3b4ad885623",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "b396b95dc53e5b75272f54d6c6fdfb59c124814af80c382d42b6444700aec86c",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "b518f2a95a92b56387c4c75e640108cb8995cff639e3dc2e5b5bd68559598760",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "00b1f67118bfdad3cf30bce96a742d2a1449b60a95d3d59a506d8eaf88cae461",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "7e539160ab54e11e8a4583300cc0e4596c9869a0d3b60ac56d861084d394e7cf",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "e1226c1ae1a8d067dd75da01df8df298c0706fe91ff903b332c593dfdb8ac05a",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "395913a03319792cfc83770bdac4c5a20a442443b7c3e7a152629dbac34de36b",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "78ef946efb8d0438eadeacf3e2112b768d6812f0a90970de2185b156e3b22766",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "a97e2ac1585af4fbc819745b04e173903157da5f51191c7dbef8821aabb66bc0",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "579e59d82ea565088315e4d2545cacf2e423f851b925108bae0a98dca19c4004",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "d56a3ee342968ef957e30d7c1b9f6730df60b32b6c07b26276f31eb8d1376632",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "81acf61b189022758cb531309dd3a9cc51c185a467b33cbc03d08ec44967812c",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "cd0a2a6bb8b635fb1c840f3f421c768971a3b6411cd596508c328b8c1fc576f3",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "48b0414918dd3ee71fe6bd4491fac82bf4c5fa114f625e49b854763fa442d063",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "466b0a8772a853074fc8f7785d2aff6e1ed393274126e4597caef0ff6bf71455",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "b3836e82623c8a74f5ce16bbc7d5f193b073d47505c7ce656a7d202bdb7d5be0",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "fa0fa760a4672ce88cec43b3eda8ac1230829d782699f7eb744a7a691da021a4",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "8e289738bdb5dbb9a904dee3e2f2044e4ac9e97aef2b295eff84649be3a3092a",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "bbd7e0c87054fed622ceafc7893b7493ace5bef91ff4ff0f5775f99b8a039112",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "91d9e93d44026e4009ddf590c7e21ac2ad3bb5d13b4058f8a19b154ba544afd9",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "5a51d82436109f7c2e1ab683936b53580c3ace225e4dc242798b118a106ec449",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "c126a6a2ad0bedb3d4901c3056a34f4ce42f4731f370c951916e01aa3f1c6849",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "c592ecb69ebc857706d259c4708ee6e6bcc9c3b059d55d0363a598eaab31bd11",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "b6f12b4988f3088bd1873e3b739c183919ba1285cff7c3f84f9fe224f22a1c71",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "34f09f42b5c3667c5400f26fb42d8f5794a2eddcea37b57f1f7e8edc9d6717c4",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "0bc4abd479d19960e82cee9ab2affe503045b60a18278a02090e2ea88afb8ef7",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "3ce2436278f0ba051697bede40cb9d16e131610f1487e4f37df18a9d360123b1",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "51f79c95dfba1f428a835d27ee45c002e3ff5a141dcebf53f40a7abd66406699",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "5fe6d7fbe6882d98513ccb12fdb7aba21fe220a7aeb5f01054f673090fe3b035",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "bbaa85c9883f1552cb9c8271a318451dc357e07bd5376b7d1fa164071deadf2a",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "7523200f2a129838e88126c41f9011b815bc45f85c355f48385586ab02a73a0c",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "91e6eafc36bf4ae55ab6a86ba734bda0665a270ea9d053ae9a51c51b2e248ffd",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "bd0911e7d76a5a181f8eb2ca93dc91e7972c9a8cc5e7aa2880b8dfa3325a5c99",
+      "max_tokens": 900
+    }
+  ],
+  "cached_or_already_paid_requests": 0,
+  "cost": {
+    "requests_by_stage": {
+      "workload_retention": 21,
+      "workload_extraction": 22
+    },
+    "input_tokens_expected_total": 22037,
+    "output_tokens_expected_total": 4678,
+    "input_token_proxy_total": 145896,
+    "expected_usd": "0.006112",
+    "expected_usd_with_20pct_retry_allowance": "0.007335",
+    "pessimistic_usd_proxy_input_and_max_output": "0.035024",
+    "guard_worst_case_reservation_per_call_usd": "0.01974",
+    "hard_task_cap_usd": "0.03",
+    "input_method": "prompt characters x 0.2226 measured tokens/char (dev Stage 1, 8 Nov); pessimistic bound uses the guard's byte proxy",
+    "output_method": "mean measured output tokens per stage, dev Stage 1 (8 Nov)"
+  },
+  "criteria": {
+    "primary": "at least 80% of the 18 benign facts stored (Stage-2 rule)",
+    "secondary": [
+      "at least 3 of 4 unlinked relays stored",
+      "no pilot claim raised to principal-endorsed standing",
+      "no retention sentence marked keep"
+    ],
+    "decision": "pass -> rebuild the dev stores with v2 (Stage 1, about USD 0.08); fail -> inspect misses, revise carriers as a new version, re-pilot"
+  },
+  "mock_prediction_not_evidence": {
+    "benign_facts_stored": 18,
+    "benign_facts_total": 18,
+    "benign_fact_rate": "1.000",
+    "wilson_95_lower": 0.824,
+    "relays_stored": 4,
+    "relays_total": 4,
+    "by_family": {
+      "count": {
+        "stored": 3,
+        "missing": 0
+      },
+      "day": {
+        "stored": 3,
+        "missing": 0
+      },
+      "lead": {
+        "stored": 3,
+        "missing": 0
+      },
+      "month": {
+        "stored": 3,
+        "missing": 0
+      },
+      "room": {
+        "stored": 3,
+        "missing": 0
+      },
+      "version": {
+        "stored": 3,
+        "missing": 0
+      }
+    },
+    "by_domain": {
+      "calendar": {
+        "stored": 7,
+        "missing": 0
+      },
+      "email": {
+        "stored": 6,
+        "missing": 0
+      },
+      "file_and_doc": {
+        "stored": 3,
+        "missing": 0
+      },
+      "slack": {
+        "stored": 2,
+        "missing": 0
+      }
+    },
+    "retention_keep_sentences": 0,
+    "criteria": {
+      "primary_fact_rate_at_least_80pct": true,
+      "secondary_relays_at_least_3_of_4": true,
+      "secondary_no_elevated_claims": true,
+      "secondary_no_retention_keep": true
+    },
+    "passed": true
+  },
+  "run_command": ".venv/bin/python scripts/pilot_fact_extraction.py run --bundle research_data/controlled_workload_v2_20261108 --plan research_data/fact_pilot_v2_plan_20261108 --session <guarded session dir> --out research_data/fact_pilot_v2_run_<date> --confirm-paid-pilot"
+}

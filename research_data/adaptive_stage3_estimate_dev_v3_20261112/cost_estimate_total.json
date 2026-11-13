@@ -1,0 +1,13 @@
+{
+  "status": "estimate_only_no_paid_call",
+  "outcome_rows": 67200,
+  "new_distinct_requests": {
+    "workload_answer": 855,
+    "workload_judge": 98,
+    "workload_conflict": 3
+  },
+  "expected_cost_usd": "0.1145",
+  "expected_with_30pct_allowance_usd": "0.1488",
+  "proposed_hard_cap_usd": "0.25",
+  "note": "Union over shards A (base+placement+framing+random, 24 conditions) and B (16 follow-up conditions); arms static,R,C,M,S,SL; 8 dev groups. Judge count follows mock answers (approximate)."
+}

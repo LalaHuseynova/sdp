@@ -1,0 +1,26 @@
+{
+  "status": "complete_verified_and_visually_checked",
+  "deliverables": [
+    "table_1_original_safemem_reproduction.pdf",
+    "table_1_original_safemem_reproduction.png",
+    "table_2_selective_propagation_pilot.pdf",
+    "table_2_selective_propagation_pilot.png"
+  ],
+  "files": {
+    "CAPTIONS.md": "be37341c0ebf62059c149d9a807059ecf9db6e37e44151b48085194e0c20a5c0",
+    "README.md": "de392d5c08bd4ee87703a92036b367f2ccb2e014f63fecf54234e5fbdf6247e2",
+    "delivery_validation.json": "5c60990c34ba48ed777f7d3d2b3abcb099cfa1ef4eca8fbceec0614e2bcf3ce5",
+    "render_research_result_tables.py": "bc9227f7b959c1a1604b463b8c6e06923586c4280116cdd822650cd62f8ada38",
+    "source_data.json": "446fe0fa81263d96874736d9332c9932ed459a4db68d72e130617c1bf671e368",
+    "table_1_original_safemem_reproduction.pdf": "7eb0e3d958aa00511102689f0434ee8cb6fc346553991d27c4c407a9a87db57e",
+    "table_1_original_safemem_reproduction.png": "2ce3f15734ad04881b9950cad38d5b8490d8241f186fe56df5a18d3638e52ee1",
+    "table_2_selective_propagation_pilot.pdf": "b99f149f91b6b2dcc6ed7a7ae7e4be928a74f13e614eb15966533fd0e6e86455",
+    "table_2_selective_propagation_pilot.png": "576beee77e09c9f60aef0afc60b95a2bc17da115c80759e21a9bc295a9cb56ca",
+    "validation.json": "281190f9426b50421e73d533f49167121a19f5e3e638b2a05ddd9767a5b9592e"
+  },
+  "source_files_unchanged": true,
+  "prior_research_audit_delivery_files_unchanged": 12,
+  "main_research_lockfile_unchanged": true,
+  "new_model_calls": 0,
+  "paid_model_cost_usd": "0"
+}

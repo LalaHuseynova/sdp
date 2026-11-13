@@ -1,0 +1,459 @@
+{
+  "status": "prepared_not_run",
+  "paid_calls": 0,
+  "bundle": "research_data/controlled_workload_v3_20261108",
+  "bundle_manifest_hash": "cc2f98aff08a23f0d2361cce7beec87bfafbe93b06251fb7b8980c515b946367",
+  "selection_seed": "fact-pilot-v3-20261108",
+  "excluded_earlier_pilot_contributions": 22,
+  "exclude_from": [
+    "research_data/fact_pilot_v2_plan_20261108/pilot_plan.json"
+  ],
+  "replay": [
+    "research_data/controlled_workload_session_v2_20261108/dispatch.sqlite"
+  ],
+  "contributions": [
+    {
+      "contribution_id": "c_5a65fd2d1e554404310c",
+      "group_id": "G-D01",
+      "role": "benign_with_fact",
+      "domain": "calendar",
+      "family": "day"
+    },
+    {
+      "contribution_id": "c_e8b37149a442bca354b9",
+      "group_id": "G-D00",
+      "role": "benign_with_fact",
+      "domain": "calendar",
+      "family": "day"
+    },
+    {
+      "contribution_id": "c_2afe2c0e2279e6a8ba9b",
+      "group_id": "G-D05",
+      "role": "benign_with_fact",
+      "domain": "email",
+      "family": "day"
+    },
+    {
+      "contribution_id": "c_789b89d2c366ebcd4b57",
+      "group_id": "G-D07",
+      "role": "benign_with_fact",
+      "domain": "email",
+      "family": "lead"
+    },
+    {
+      "contribution_id": "c_6afdceee0962625a38c3",
+      "group_id": "G-D04",
+      "role": "benign_with_fact",
+      "domain": "calendar",
+      "family": "lead"
+    },
+    {
+      "contribution_id": "c_fafb3d1833f94a2b0c5c",
+      "group_id": "G-D03",
+      "role": "benign_with_fact",
+      "domain": "email",
+      "family": "lead"
+    },
+    {
+      "contribution_id": "c_757c35c02d5be2ff402b",
+      "group_id": "G-D06",
+      "role": "benign_with_fact",
+      "domain": "file_and_doc",
+      "family": "room"
+    },
+    {
+      "contribution_id": "c_29ff553c7610033c6c80",
+      "group_id": "G-D02",
+      "role": "benign_with_fact",
+      "domain": "file_and_doc",
+      "family": "room"
+    },
+    {
+      "contribution_id": "c_e47d34edacb9d99cdfeb",
+      "group_id": "G-D05",
+      "role": "benign_with_fact",
+      "domain": "email",
+      "family": "room"
+    },
+    {
+      "contribution_id": "c_a5a28fff70f51469ea2d",
+      "group_id": "G-D02",
+      "role": "benign_with_fact",
+      "domain": "file_and_doc",
+      "family": "month"
+    },
+    {
+      "contribution_id": "c_f38976b8608962a0106d",
+      "group_id": "G-D05",
+      "role": "benign_with_fact",
+      "domain": "email",
+      "family": "month"
+    },
+    {
+      "contribution_id": "c_31d61ca371376499a0bb",
+      "group_id": "G-D03",
+      "role": "benign_with_fact",
+      "domain": "slack",
+      "family": "month"
+    },
+    {
+      "contribution_id": "c_8d53d711e8ef2cc3f21b",
+      "group_id": "G-D03",
+      "role": "benign_with_fact",
+      "domain": "slack",
+      "family": "version"
+    },
+    {
+      "contribution_id": "c_0c11d85305c84d943dea",
+      "group_id": "G-D02",
+      "role": "benign_with_fact",
+      "domain": "file_and_doc",
+      "family": "version"
+    },
+    {
+      "contribution_id": "c_a5fc4e7a4043fc333026",
+      "group_id": "G-D07",
+      "role": "benign_with_fact",
+      "domain": "email",
+      "family": "version"
+    },
+    {
+      "contribution_id": "c_3843c8a0f530153c459f",
+      "group_id": "G-D03",
+      "role": "benign_with_fact",
+      "domain": "email",
+      "family": "count"
+    },
+    {
+      "contribution_id": "c_dac70d9e012e6b1b2ae7",
+      "group_id": "G-D01",
+      "role": "benign_with_fact",
+      "domain": "calendar",
+      "family": "count"
+    },
+    {
+      "contribution_id": "c_a0dfd22075ac1f9eee29",
+      "group_id": "G-D05",
+      "role": "benign_with_fact",
+      "domain": "slack",
+      "family": "count"
+    },
+    {
+      "contribution_id": "c_9c6561652bc41086ee14",
+      "group_id": "G-D05",
+      "role": "unlinked_copy",
+      "domain": "slack",
+      "family": null
+    },
+    {
+      "contribution_id": "c_ba9c1ba07db4f454e62b",
+      "group_id": "G-D07",
+      "role": "unlinked_copy",
+      "domain": "email",
+      "family": null
+    },
+    {
+      "contribution_id": "c_d2f24fead8012fa661fd",
+      "group_id": "G-D00",
+      "role": "unlinked_copy",
+      "domain": "email",
+      "family": null
+    },
+    {
+      "contribution_id": "c_2e7851cdb1a21db3bcb3",
+      "group_id": "G-D06",
+      "role": "unlinked_copy",
+      "domain": "file_and_doc",
+      "family": null
+    }
+  ],
+  "planned_requests": [
+    {
+      "stage": "workload_retention",
+      "key": "cc32e1b42c30c410f1bf49541ad083a232f5c99825c6fb9043dc1ecab340ffd9",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "011bde811e5280e2d881fae7afa29f8c47d41d9edc0323591e52f5f092869a0e",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "81a8de6e27232fa09549d4dd976b7d09162c38d5273a2982e245d88f934b83de",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "e358bc529f47bd55b2e341f7370fa15ba6779b0af4869e737b8012dd3f8a7062",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "d98fdc8fb645b6d81135edfccdc6fc436b29f93659a8f90ecc9749672f3dddc9",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "6d78622226413201fde412661bf6e4d5c2b541c21fa2ce035ca718e824b0a459",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "3571de43e35630cd3647ca8cef6c8e208f9274c7191f046f50d92229c646e7c0",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "ec6604c24c873abe0b9a396173338f1475f5a58bef13be4063fc8ebca2e03706",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "f52525b1d7c801e2a75d31a6643cb8e359aa6caf76f4dec893fbc8d84b3083fd",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "0318fbc54b2789da48e57af0c81785da5b04abe44c94be89e8dcfe9b5e7290fc",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "7391c4bb1334e5a5e94d3444d91a83941c5b6a478e6418b1e573b379843fa8c2",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "fd0368ebea6b7d9a76cc14c59a35e0a5241fc703da0fd4b474f5253f09743402",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "cfbaa5515884d334bc112db4a6b9bdc2a36a8630db7ef93e608fbbc43b71084e",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "44d6c1e2d5c66eb2c18228bf58fa1d807360d9d8936b4e053ede7b405b9bf855",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "20efca0c4ff6c3d4f8e1e822ab068dbcce044380f6920a1ea27c6ce18906cc28",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "11827f83ca4a56c32bc5adb1d589a160e5b9f8e13e5af4013db914c2c6f8580b",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "2c076da356342c16e440bc550038c0142f159a1d1041e2c49c26e1a93cd74919",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "91a512e5335de44b181d7a9608c94dc4582da770fd46d8e829f4b972faa7f6cc",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "43c49f4316e5c33c2a86688cf46b483b7965959205e90f7b2af8deb0cb167adf",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "16b39885fd72c0b646fa4503de1640d701a3b8d1480962e2e93d92bc184662a0",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "4a8212b6510699ab222064d9c0e33c29c9e3298705c918726273887df3412aa0",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "fc7bf2014696a93b62c4d9e6c632ff31bb68ce74d4029beac5d8bb796089040d",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "8f6c9f6dc9f40ca2d1a6c84e2011a6ba09780f53d477f367b09b81fa5b79454f",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "ecd9d9fd4b88659f675ea0502bc3de934fa98eec18323af3430bbd37019096e6",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "3e1a359c839f10374d77aff0c9abe4bdca2b3c145025c7caeae78a63de4947c7",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "f7a0e84ff92de5cd8c9cf73bcfbaec2506a845c130c3b9d9e1a2baba3693b80a",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "da56d06dc57c73644cc5ddf3893f124b8298477f9e075d3e6964d5315692e6cb",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "efd4a46b7809f4ceb2b2ebe589487ca55a88a800b975c495f33bf5e826c460d9",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "378cdda0c4f4560fcab51ae8ed0bb12d3359e9b354bbf127b075909c887a21a8",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "fcb1c1b47b457fae04803a6a8de42b4f37de7b7526ee96ebe5b9922f5c678f72",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "21a34e51049456823a143786d27f1251fddf8cd7d88839848cc9e6fd6b016ba5",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "f204b069e24adc548aeaa01d94f92bc1ba6bdc47489f79f341ad9ebf352c7882",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "a4c90f7601b1e80eda1e96a0cf68dfaf442a12bd4aff8227706340b3ec9bce1a",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "cd57be2bb101335ede6bdd7d02451fd654e867897de2b5f108c8646a6cde6598",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_retention",
+      "key": "e668af584628149a82c3c4b83add6bdf6100c8d44fb539254ea8f46f1b1bd574",
+      "max_tokens": 100
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "e9d23787f995d8ac3920bef8125e84ef14385d7a38709480a547b0fb9fce09a2",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "d683135ec5489da77a360df2bfe9dfde996b6102675a96c9c120f2eb09f4d03a",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "84a52e2c06663c4fc9b53eef5307efa660512d51e6e94670e36769f02cad3301",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "54cff6718696a518b98c51f5d883b15fe7922a5a290a2f82f9d377c106406954",
+      "max_tokens": 900
+    },
+    {
+      "stage": "workload_extraction",
+      "key": "e2cebefd4893e6dd2eb30fef2f05872349c88c610e9e53244e64b48a8b0a4dc6",
+      "max_tokens": 900
+    }
+  ],
+  "cached_or_already_paid_requests": 3,
+  "cost": {
+    "requests_by_stage": {
+      "workload_retention": 18,
+      "workload_extraction": 22
+    },
+    "input_tokens_expected_total": 21199,
+    "output_tokens_expected_total": 4588,
+    "input_token_proxy_total": 138837,
+    "expected_usd": "0.005933",
+    "expected_usd_with_20pct_retry_allowance": "0.007119",
+    "pessimistic_usd_proxy_input_and_max_output": "0.033786",
+    "guard_worst_case_reservation_per_call_usd": "0.01974",
+    "hard_task_cap_usd": "0.03",
+    "input_method": "prompt characters x 0.2226 measured tokens/char (dev Stage 1, 8 Nov); pessimistic bound uses the guard's byte proxy",
+    "output_method": "mean measured output tokens per stage, dev Stage 1 (8 Nov)"
+  },
+  "criteria": {
+    "primary": "at least 80% of the 18 benign facts stored (Stage-2 rule)",
+    "secondary": [
+      "at least 3 of 4 unlinked relays stored",
+      "no pilot claim raised to principal-endorsed standing",
+      "no retention sentence marked keep"
+    ],
+    "decision": "pass -> rebuild the dev stores with v2 (Stage 1, about USD 0.08); fail -> inspect misses, revise carriers as a new version, re-pilot"
+  },
+  "mock_prediction_not_evidence": {
+    "benign_facts_stored": 18,
+    "benign_facts_total": 18,
+    "benign_fact_rate": "1.000",
+    "wilson_95_lower": 0.824,
+    "relays_stored": 4,
+    "relays_total": 4,
+    "by_family": {
+      "count": {
+        "stored": 3,
+        "missing": 0
+      },
+      "day": {
+        "stored": 3,
+        "missing": 0
+      },
+      "lead": {
+        "stored": 3,
+        "missing": 0
+      },
+      "month": {
+        "stored": 3,
+        "missing": 0
+      },
+      "room": {
+        "stored": 3,
+        "missing": 0
+      },
+      "version": {
+        "stored": 3,
+        "missing": 0
+      }
+    },
+    "by_domain": {
+      "calendar": {
+        "stored": 4,
+        "missing": 0
+      },
+      "email": {
+        "stored": 7,
+        "missing": 0
+      },
+      "file_and_doc": {
+        "stored": 4,
+        "missing": 0
+      },
+      "slack": {
+        "stored": 3,
+        "missing": 0
+      }
+    },
+    "retention_keep_sentences": 0,
+    "criteria": {
+      "primary_fact_rate_at_least_80pct": true,
+      "secondary_relays_at_least_3_of_4": true,
+      "secondary_no_elevated_claims": true,
+      "secondary_no_retention_keep": true
+    },
+    "passed": true
+  },
+  "run_command": ".venv/bin/python scripts/pilot_fact_extraction.py run --bundle research_data/controlled_workload_v3_20261108 --plan research_data/fact_pilot_v3_plan_20261108 --session <guarded session dir> --out research_data/fact_pilot_v2_run_<date> --confirm-paid-pilot"
+}

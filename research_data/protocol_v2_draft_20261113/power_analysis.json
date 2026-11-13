@@ -1,0 +1,499 @@
+{
+  "definitions": "Power analysis for the protocol-v2 fresh held-out test (free, offline, read-only).\n\n    power_protocol_v2.py --out research_data/protocol_v2_draft_20261113/power_analysis.json\n\nUnit of analysis = test GROUP (cluster): attacks and probes inside a group share\ncontributors, contexts and audits, so they are dependent. Every hypothesis is a\npaired, group-level contrast d_g = metric(method A, g) - metric(method B, g).\nEffect sizes and between-group SDs come only from results ALREADY REPORTED:\n  * locked test v1 (24 groups, real answers): H1/H2 analogues, attack-level ICC;\n  * dev paid adaptive run (8 groups, real answers): random-detection contrasts;\n  * dev exposure runs (8 groups): S2-ID vs S, SL vs S, S vs published methods,\n    converted to ASR scale where noted.\nNothing here touches a new held-out group (none exist yet).\n\nPower for N groups is estimated by Monte-Carlo (20,000 sims per N): draw N group\ndeltas (a) by resampling the observed group deltas and (b) from a normal with the\nobserved mean and SD (inflated x1.25 for estimation uncertainty); test with a\none-sided t-interval at Bonferroni level alpha = 0.05 / 6 (conservative stand-in\nfor the pre-registered Holm procedure over H1-H6). Reported: power per N, smallest\nN with power >= 0.90 under the worse of (a)/(b).\n",
+  "alpha_per_test": 0.008333333333333333,
+  "simulations": 10000,
+  "icc": {
+    "locked_test_static_attack_ASR": {
+      "icc": -0.092,
+      "items_per_group": 4.0,
+      "design_effect": 0.723
+    },
+    "locked_test_static_utility": {
+      "icc": 0.071,
+      "items_per_group": 25.0,
+      "design_effect": 2.711
+    }
+  },
+  "hypotheses": {
+    "H1 localized: S - C strict key-stratum utility (superiority, margin +0.03)": {
+      "source": "locked test v1 (24 groups, real answers)",
+      "groups_observed": 24,
+      "mean_delta": 0.899,
+      "sd_delta_between_groups": 0.146,
+      "power_by_groups": {
+        "16": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "24": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "32": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "48": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "64": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "96": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "128": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "160": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        }
+      },
+      "min_groups_for_power_0.90": 16,
+      "pessimistic_power_by_groups (effect x0.5, SD x1.5)": {
+        "16": 0.999,
+        "24": 1.0,
+        "32": 1.0,
+        "48": 1.0,
+        "64": 1.0,
+        "96": 1.0,
+        "128": 1.0,
+        "160": 1.0
+      },
+      "pessimistic_min_groups_for_power_0.90": 16
+    },
+    "H2 distributed: S - M ASR (non-inferiority, margin +0.02)": {
+      "source": "locked test v1 (24 groups, real answers)",
+      "groups_observed": 24,
+      "mean_delta": 0.0,
+      "sd_delta_between_groups": 0.0,
+      "power_by_groups": {
+        "16": {
+          "power": 0.011,
+          "resample": 0.011,
+          "normal": 0.034
+        },
+        "24": {
+          "power": 0.049,
+          "resample": 0.088,
+          "normal": 0.049
+        },
+        "32": {
+          "power": 0.047,
+          "resample": 0.047,
+          "normal": 0.058
+        },
+        "48": {
+          "power": 0.049,
+          "resample": 0.049,
+          "normal": 0.091
+        },
+        "64": {
+          "power": 0.129,
+          "resample": 0.331,
+          "normal": 0.129
+        },
+        "96": {
+          "power": 0.032,
+          "resample": 0.032,
+          "normal": 0.2
+        },
+        "128": {
+          "power": 0.003,
+          "resample": 0.003,
+          "normal": 0.275
+        },
+        "160": {
+          "power": 0.354,
+          "resample": 0.962,
+          "normal": 0.354
+        }
+      },
+      "min_groups_for_power_0.90": null,
+      "pessimistic_power_by_groups (effect x0.5, SD x1.5)": {
+        "16": 0.02,
+        "24": 0.036,
+        "32": 0.053,
+        "48": 0.003,
+        "64": 0.091,
+        "96": 0.135,
+        "128": 0.19,
+        "160": 0.231
+      },
+      "pessimistic_min_groups_for_power_0.90": null
+    },
+    "H3 localized: S - best published ASR (superiority, margin 0)": {
+      "source": "dev exposure x ASR/exposure ratio 0.80 (8 groups)",
+      "groups_observed": 8,
+      "mean_delta": -0.547,
+      "sd_delta_between_groups": 0.217,
+      "power_by_groups": {
+        "16": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "24": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "32": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "48": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "64": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "96": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "128": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "160": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        }
+      },
+      "min_groups_for_power_0.90": 16,
+      "pessimistic_power_by_groups (effect x0.5, SD x1.5)": {
+        "16": 0.724,
+        "24": 0.928,
+        "32": 0.985,
+        "48": 1.0,
+        "64": 1.0,
+        "96": 1.0,
+        "128": 1.0,
+        "160": 1.0
+      },
+      "pessimistic_min_groups_for_power_0.90": 24
+    },
+    "H4 hard families: S2-ID - S ASR (superiority, margin 0)": {
+      "source": "dev exposure x 0.80 (8 groups), mean over hard families",
+      "groups_observed": 8,
+      "mean_delta": -0.23,
+      "sd_delta_between_groups": 0.21,
+      "power_by_groups": {
+        "16": {
+          "power": 0.781,
+          "resample": 0.806,
+          "normal": 0.781
+        },
+        "24": {
+          "power": 0.95,
+          "resample": 0.975,
+          "normal": 0.95
+        },
+        "32": {
+          "power": 0.989,
+          "resample": 0.998,
+          "normal": 0.989
+        },
+        "48": {
+          "power": 0.999,
+          "resample": 1.0,
+          "normal": 0.999
+        },
+        "64": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "96": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "128": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "160": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        }
+      },
+      "min_groups_for_power_0.90": 24,
+      "pessimistic_power_by_groups (effect x0.5, SD x1.5)": {
+        "16": 0.109,
+        "24": 0.2,
+        "32": 0.314,
+        "48": 0.514,
+        "64": 0.674,
+        "96": 0.868,
+        "128": 0.958,
+        "160": 0.986
+      },
+      "pessimistic_min_groups_for_power_0.90": 128
+    },
+    "H4b utility: S2-ID - S strict utility (non-inferiority, margin -0.03)": {
+      "source": "dev exposure (8 groups)",
+      "groups_observed": 8,
+      "mean_delta": 0.0,
+      "sd_delta_between_groups": 0.0,
+      "power_by_groups": {
+        "16": {
+          "power": 0.018,
+          "resample": 0.018,
+          "normal": 0.064
+        },
+        "24": {
+          "power": 0.057,
+          "resample": 0.057,
+          "normal": 0.102
+        },
+        "32": {
+          "power": 0.107,
+          "resample": 0.107,
+          "normal": 0.139
+        },
+        "48": {
+          "power": 0.215,
+          "resample": 0.48,
+          "normal": 0.215
+        },
+        "64": {
+          "power": 0.299,
+          "resample": 0.786,
+          "normal": 0.299
+        },
+        "96": {
+          "power": 0.381,
+          "resample": 0.381,
+          "normal": 0.472
+        },
+        "128": {
+          "power": 0.613,
+          "resample": 1.0,
+          "normal": 0.613
+        },
+        "160": {
+          "power": 0.736,
+          "resample": 0.996,
+          "normal": 0.736
+        }
+      },
+      "min_groups_for_power_0.90": null,
+      "pessimistic_power_by_groups (effect x0.5, SD x1.5)": {
+        "16": 0.032,
+        "24": 0.074,
+        "32": 0.098,
+        "48": 0.023,
+        "64": 0.101,
+        "96": 0.161,
+        "128": 0.428,
+        "160": 0.546
+      },
+      "pessimistic_min_groups_for_power_0.90": null
+    },
+    "H5 relay: SL - S relay ASR (superiority, margin 0)": {
+      "source": "dev exposure x 0.80 (8 groups; 1 relay probe per group)",
+      "groups_observed": 8,
+      "mean_delta": -0.497,
+      "sd_delta_between_groups": 0.385,
+      "power_by_groups": {
+        "16": {
+          "power": 0.904,
+          "resample": 0.904,
+          "normal": 0.907
+        },
+        "24": {
+          "power": 0.989,
+          "resample": 0.989,
+          "normal": 0.992
+        },
+        "32": {
+          "power": 0.999,
+          "resample": 1.0,
+          "normal": 0.999
+        },
+        "48": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "64": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "96": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "128": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "160": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        }
+      },
+      "min_groups_for_power_0.90": 16,
+      "pessimistic_power_by_groups (effect x0.5, SD x1.5)": {
+        "16": 0.199,
+        "24": 0.267,
+        "32": 0.44,
+        "48": 0.676,
+        "64": 0.816,
+        "96": 0.959,
+        "128": 0.989,
+        "160": 0.998
+      },
+      "pessimistic_min_groups_for_power_0.90": 96
+    },
+    "H6 proxy: S - C innocent utility under concentrated framing (superiority, margin 0)": {
+      "source": "dev exposure (8 groups); proxy for the new imperfect-audit test",
+      "groups_observed": 8,
+      "mean_delta": 0.158,
+      "sd_delta_between_groups": 0.141,
+      "power_by_groups": {
+        "16": {
+          "power": 0.785,
+          "resample": 0.785,
+          "normal": 0.802
+        },
+        "24": {
+          "power": 0.947,
+          "resample": 0.947,
+          "normal": 0.959
+        },
+        "32": {
+          "power": 0.988,
+          "resample": 0.988,
+          "normal": 0.992
+        },
+        "48": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "64": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "96": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "128": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        },
+        "160": {
+          "power": 1.0,
+          "resample": 1.0,
+          "normal": 1.0
+        }
+      },
+      "min_groups_for_power_0.90": 24,
+      "pessimistic_power_by_groups (effect x0.5, SD x1.5)": {
+        "16": 0.151,
+        "24": 0.248,
+        "32": 0.353,
+        "48": 0.528,
+        "64": 0.698,
+        "96": 0.879,
+        "128": 0.954,
+        "160": 0.986
+      },
+      "pessimistic_min_groups_for_power_0.90": 128
+    },
+    "random spread: S - C target ASR (descriptive, real answers)": {
+      "source": "dev paid run, draw 0 (8 groups) - context only",
+      "groups_observed": 8,
+      "mean_delta": 0.094,
+      "sd_delta_between_groups": 0.174,
+      "power_by_groups": {
+        "16": {
+          "power": 0.073,
+          "resample": 0.073,
+          "normal": 0.206
+        },
+        "24": {
+          "power": 0.222,
+          "resample": 0.222,
+          "normal": 0.339
+        },
+        "32": {
+          "power": 0.406,
+          "resample": 0.406,
+          "normal": 0.478
+        },
+        "48": {
+          "power": 0.681,
+          "resample": 0.753,
+          "normal": 0.681
+        },
+        "64": {
+          "power": 0.84,
+          "resample": 0.917,
+          "normal": 0.84
+        },
+        "96": {
+          "power": 0.964,
+          "resample": 0.993,
+          "normal": 0.964
+        },
+        "128": {
+          "power": 0.993,
+          "resample": 1.0,
+          "normal": 0.993
+        },
+        "160": {
+          "power": 0.999,
+          "resample": 1.0,
+          "normal": 0.999
+        }
+      },
+      "min_groups_for_power_0.90": 96,
+      "pessimistic_power_by_groups (effect x0.5, SD x1.5)": {
+        "16": 0.006,
+        "24": 0.016,
+        "32": 0.032,
+        "48": 0.054,
+        "64": 0.098,
+        "96": 0.203,
+        "128": 0.316,
+        "160": 0.42
+      },
+      "pessimistic_min_groups_for_power_0.90": null
+    }
+  }
+}

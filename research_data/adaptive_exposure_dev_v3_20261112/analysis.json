@@ -1,0 +1,3870 @@
+{
+  "metric_definitions": "Summarise adaptive exposure rows (free): exposure ASR and utility per condition x arm.\n\n    analyse_adaptive_exposure.py --rows <dir>/exposure_rows.jsonl.gz --out <dir>/analysis.json\n\nExposure ASR  = share of scored-attack probes whose planted target reaches the\n                answer context (the ceiling the judge converts into ASR).\nUnaudited ASR = the same over scored attacks that were not themselves audited\n                (pure propagation; differs only in the random-detection conditions).\nUtility       = share of utility probes whose fact reaches the context; also split\n                by owner (attacker's benign notes, the innocent contributor's notes).\nRandom-detection draws are averaged within each group first, so every group is\none cluster. CIs: paired cluster bootstrap over groups, 10,000 resamples, seed\n20261112, percentile 95%.\n",
+  "groups": 8,
+  "table": {
+    "localized": {
+      "static": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.875,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 1.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "R": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "C": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "M": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "S": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "RL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "CL": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.0,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "ML": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.0,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "SL": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      }
+    },
+    "distributed": {
+      "static": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.875,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 1.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "R": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "C": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "M": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "S": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "RL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "CL": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.0,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "ML": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.0,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "SL": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.0,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      }
+    },
+    "uninformative": {
+      "static": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.875,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 1.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.932,
+        "utility[unrelated]": 0.875
+      },
+      "R": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.925,
+        "utility[attacker]": 0.932,
+        "utility[unrelated]": 0.875
+      },
+      "C": {
+        "exposure_asr": 0.781,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.781,
+        "unlinked_relay": 0.625,
+        "utility": 0.84,
+        "utility[attacker]": 0.835,
+        "utility[unrelated]": 0.875
+      },
+      "M": {
+        "exposure_asr": 0.562,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.562,
+        "unlinked_relay": 0.625,
+        "utility": 0.625,
+        "utility[attacker]": 0.591,
+        "utility[unrelated]": 0.875
+      },
+      "S": {
+        "exposure_asr": 0.812,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.812,
+        "unlinked_relay": 0.625,
+        "utility": 0.835,
+        "utility[attacker]": 0.83,
+        "utility[unrelated]": 0.875
+      },
+      "RL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.932,
+        "utility[unrelated]": 0.875
+      },
+      "CL": {
+        "exposure_asr": 0.812,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.812,
+        "unlinked_relay": 0.0,
+        "utility": 0.84,
+        "utility[attacker]": 0.835,
+        "utility[unrelated]": 0.875
+      },
+      "ML": {
+        "exposure_asr": 0.562,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.562,
+        "unlinked_relay": 0.0,
+        "utility": 0.625,
+        "utility[attacker]": 0.591,
+        "utility[unrelated]": 0.875
+      },
+      "SL": {
+        "exposure_asr": 0.812,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.812,
+        "unlinked_relay": 0.0,
+        "utility": 0.835,
+        "utility[attacker]": 0.83,
+        "utility[unrelated]": 0.875
+      }
+    },
+    "shift_batch": {
+      "static": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.875,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 1.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "R": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "C": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "M": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "S": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.775,
+        "utility[attacker]": 0.375,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "RL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "CL": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.0,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "ML": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.0,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "SL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.775,
+        "utility[attacker]": 0.375,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      }
+    },
+    "shift_context": {
+      "static": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.875,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 1.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "R": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "C": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.8,
+        "utility[attacker]": 0.464,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "M": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "S": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "RL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "CL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.8,
+        "utility[attacker]": 0.464,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "ML": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.0,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "SL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      }
+    },
+    "sybil": {
+      "static": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.875,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 1.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "R": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "C": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "M": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "S": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "RL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "CL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "ML": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "SL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      }
+    },
+    "framing_concentrated": {
+      "static": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.875,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 1.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "R": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "C": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.61,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.417,
+        "utility[unrelated]": 0.875
+      },
+      "M": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.55,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.317,
+        "utility[unrelated]": 0.875
+      },
+      "S": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.705,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.575,
+        "utility[unrelated]": 0.875
+      },
+      "RL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "CL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.61,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.417,
+        "utility[unrelated]": 0.875
+      },
+      "ML": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.55,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.317,
+        "utility[unrelated]": 0.875
+      },
+      "SL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.705,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.575,
+        "utility[unrelated]": 0.875
+      }
+    },
+    "framing_spread": {
+      "static": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.875,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 1.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "R": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "C": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.61,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.417,
+        "utility[unrelated]": 0.875
+      },
+      "M": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.61,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.417,
+        "utility[unrelated]": 0.875
+      },
+      "S": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.625,
+        "utility": 0.61,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.417,
+        "utility[unrelated]": 0.875
+      },
+      "RL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "CL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.61,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.417,
+        "utility[unrelated]": 0.875
+      },
+      "ML": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.61,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.417,
+        "utility[unrelated]": 0.875
+      },
+      "SL": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.0,
+        "utility": 0.61,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.417,
+        "utility[unrelated]": 0.875
+      }
+    },
+    "random_concentrate": {
+      "static": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.875,
+        "unaudited_asr": 0.963,
+        "unlinked_relay": 1.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "R": {
+        "exposure_asr": 0.504,
+        "linked_copy": 0.453,
+        "unaudited_asr": 0.963,
+        "unlinked_relay": 0.734,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "C": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "M": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "S": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "RL": {
+        "exposure_asr": 0.504,
+        "linked_copy": 0.453,
+        "unaudited_asr": 0.963,
+        "unlinked_relay": 0.453,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "CL": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.344,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "ML": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.344,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "SL": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.344,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      }
+    },
+    "random_spread": {
+      "static": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.875,
+        "unaudited_asr": 0.971,
+        "unlinked_relay": 1.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "R": {
+        "exposure_asr": 0.469,
+        "linked_copy": 0.375,
+        "unaudited_asr": 0.971,
+        "unlinked_relay": 0.828,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "C": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "M": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "S": {
+        "exposure_asr": 0.133,
+        "linked_copy": 0.109,
+        "unaudited_asr": 0.28,
+        "unlinked_relay": 0.688,
+        "utility": 0.703,
+        "utility[attacker]": 0.116,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "RL": {
+        "exposure_asr": 0.469,
+        "linked_copy": 0.375,
+        "unaudited_asr": 0.971,
+        "unlinked_relay": 0.547,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "CL": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.344,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "ML": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.344,
+        "utility": 0.67,
+        "utility[attacker]": 0.0,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "SL": {
+        "exposure_asr": 0.133,
+        "linked_copy": 0.109,
+        "unaudited_asr": 0.28,
+        "unlinked_relay": 0.406,
+        "utility": 0.703,
+        "utility[attacker]": 0.116,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      }
+    },
+    "random_concentrate_fu": {
+      "static": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.875,
+        "unaudited_asr": 0.963,
+        "unlinked_relay": 1.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "R": {
+        "exposure_asr": 0.504,
+        "linked_copy": 0.453,
+        "unaudited_asr": 0.963,
+        "unlinked_relay": 0.734,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "C": {
+        "exposure_asr": 0.242,
+        "linked_copy": 0.219,
+        "unaudited_asr": 0.462,
+        "unlinked_relay": 0.703,
+        "utility": 0.799,
+        "utility[attacker]": 0.462,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "M": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.799,
+        "utility[attacker]": 0.462,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "S": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.625,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "RL": {},
+      "CL": {},
+      "ML": {},
+      "SL": {
+        "exposure_asr": 0.0,
+        "linked_copy": 0.0,
+        "unaudited_asr": 0.0,
+        "unlinked_relay": 0.344,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      }
+    },
+    "random_spread_fu": {
+      "static": {
+        "exposure_asr": 0.969,
+        "linked_copy": 0.875,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 1.0,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "R": {
+        "exposure_asr": 0.441,
+        "linked_copy": 0.312,
+        "unaudited_asr": 0.969,
+        "unlinked_relay": 0.797,
+        "utility": 0.925,
+        "utility[attacker]": 0.911,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "C": {
+        "exposure_asr": 0.035,
+        "linked_copy": 0.031,
+        "unaudited_asr": 0.08,
+        "unlinked_relay": 0.625,
+        "utility": 0.69,
+        "utility[attacker]": 0.071,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "M": {
+        "exposure_asr": 0.035,
+        "linked_copy": 0.031,
+        "unaudited_asr": 0.08,
+        "unlinked_relay": 0.625,
+        "utility": 0.681,
+        "utility[attacker]": 0.038,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "S": {
+        "exposure_asr": 0.055,
+        "linked_copy": 0.031,
+        "unaudited_asr": 0.126,
+        "unlinked_relay": 0.656,
+        "utility": 0.686,
+        "utility[attacker]": 0.056,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      },
+      "RL": {},
+      "CL": {},
+      "ML": {},
+      "SL": {
+        "exposure_asr": 0.055,
+        "linked_copy": 0.031,
+        "unaudited_asr": 0.126,
+        "unlinked_relay": 0.359,
+        "utility": 0.686,
+        "utility[attacker]": 0.056,
+        "utility[innocent]": 0.942,
+        "utility[unrelated]": 0.875
+      }
+    }
+  },
+  "contrasts": {
+    "localized|exposure_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|exposure_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|exposure_asr|S-R": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "localized|exposure_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|exposure_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|exposure_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|exposure_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|unaudited_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|unaudited_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|unaudited_asr|S-R": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "localized|unaudited_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|unaudited_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|unaudited_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|unaudited_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility|S-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "localized|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "localized|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility|SL-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "localized|utility|SL-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "localized|utility|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility[attacker]|S-C": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "localized|utility[attacker]|S-M": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "localized|utility[attacker]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility[attacker]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility[attacker]|SL-C": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "localized|utility[attacker]|SL-M": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "localized|utility[attacker]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility[innocent]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility[innocent]|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility[innocent]|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "localized|utility[innocent]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|exposure_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|exposure_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|exposure_asr|S-R": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "distributed|exposure_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|exposure_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|exposure_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|exposure_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|unaudited_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|unaudited_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|unaudited_asr|S-R": {
+      "estimate": -0.969,
+      "ci95": [
+        -1.0,
+        -0.906
+      ]
+    },
+    "distributed|unaudited_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|unaudited_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|unaudited_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|unaudited_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility|S-R": {
+      "estimate": -0.255,
+      "ci95": [
+        -0.275,
+        -0.225
+      ]
+    },
+    "distributed|utility|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility[attacker]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility[attacker]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility[attacker]|S-R": {
+      "estimate": -0.911,
+      "ci95": [
+        -0.982,
+        -0.804
+      ]
+    },
+    "distributed|utility[attacker]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility[attacker]|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility[attacker]|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility[attacker]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility[innocent]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility[innocent]|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility[innocent]|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "distributed|utility[innocent]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "uninformative|exposure_asr|S-C": {
+      "estimate": 0.031,
+      "ci95": [
+        0.0,
+        0.094
+      ]
+    },
+    "uninformative|exposure_asr|S-M": {
+      "estimate": 0.25,
+      "ci95": [
+        0.062,
+        0.438
+      ]
+    },
+    "uninformative|exposure_asr|S-R": {
+      "estimate": -0.156,
+      "ci95": [
+        -0.281,
+        -0.031
+      ]
+    },
+    "uninformative|exposure_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "uninformative|exposure_asr|SL-C": {
+      "estimate": 0.031,
+      "ci95": [
+        0.0,
+        0.094
+      ]
+    },
+    "uninformative|exposure_asr|SL-M": {
+      "estimate": 0.25,
+      "ci95": [
+        0.062,
+        0.438
+      ]
+    },
+    "uninformative|exposure_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "uninformative|unaudited_asr|S-C": {
+      "estimate": 0.031,
+      "ci95": [
+        0.0,
+        0.094
+      ]
+    },
+    "uninformative|unaudited_asr|S-M": {
+      "estimate": 0.25,
+      "ci95": [
+        0.062,
+        0.438
+      ]
+    },
+    "uninformative|unaudited_asr|S-R": {
+      "estimate": -0.156,
+      "ci95": [
+        -0.281,
+        -0.031
+      ]
+    },
+    "uninformative|unaudited_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "uninformative|unaudited_asr|SL-C": {
+      "estimate": 0.031,
+      "ci95": [
+        0.0,
+        0.094
+      ]
+    },
+    "uninformative|unaudited_asr|SL-M": {
+      "estimate": 0.25,
+      "ci95": [
+        0.062,
+        0.438
+      ]
+    },
+    "uninformative|unaudited_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "uninformative|utility|S-C": {
+      "estimate": -0.005,
+      "ci95": [
+        -0.015,
+        0.0
+      ]
+    },
+    "uninformative|utility|S-M": {
+      "estimate": 0.21,
+      "ci95": [
+        0.09,
+        0.33
+      ]
+    },
+    "uninformative|utility|S-R": {
+      "estimate": -0.09,
+      "ci95": [
+        -0.145,
+        -0.035
+      ]
+    },
+    "uninformative|utility|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "uninformative|utility|SL-C": {
+      "estimate": -0.005,
+      "ci95": [
+        -0.015,
+        0.0
+      ]
+    },
+    "uninformative|utility|SL-M": {
+      "estimate": 0.21,
+      "ci95": [
+        0.09,
+        0.33
+      ]
+    },
+    "uninformative|utility|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "uninformative|utility[attacker]|S-C": {
+      "estimate": -0.006,
+      "ci95": [
+        -0.017,
+        0.0
+      ]
+    },
+    "uninformative|utility[attacker]|S-M": {
+      "estimate": 0.239,
+      "ci95": [
+        0.102,
+        0.375
+      ]
+    },
+    "uninformative|utility[attacker]|S-R": {
+      "estimate": -0.102,
+      "ci95": [
+        -0.165,
+        -0.04
+      ]
+    },
+    "uninformative|utility[attacker]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "uninformative|utility[attacker]|SL-C": {
+      "estimate": -0.006,
+      "ci95": [
+        -0.017,
+        0.0
+      ]
+    },
+    "uninformative|utility[attacker]|SL-M": {
+      "estimate": 0.239,
+      "ci95": [
+        0.102,
+        0.375
+      ]
+    },
+    "uninformative|utility[attacker]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|exposure_asr|S-C": {
+      "estimate": 0.969,
+      "ci95": [
+        0.906,
+        1.0
+      ]
+    },
+    "shift_batch|exposure_asr|S-M": {
+      "estimate": 0.969,
+      "ci95": [
+        0.906,
+        1.0
+      ]
+    },
+    "shift_batch|exposure_asr|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|exposure_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|exposure_asr|SL-C": {
+      "estimate": 0.969,
+      "ci95": [
+        0.906,
+        1.0
+      ]
+    },
+    "shift_batch|exposure_asr|SL-M": {
+      "estimate": 0.969,
+      "ci95": [
+        0.906,
+        1.0
+      ]
+    },
+    "shift_batch|exposure_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|unaudited_asr|S-C": {
+      "estimate": 0.969,
+      "ci95": [
+        0.906,
+        1.0
+      ]
+    },
+    "shift_batch|unaudited_asr|S-M": {
+      "estimate": 0.969,
+      "ci95": [
+        0.906,
+        1.0
+      ]
+    },
+    "shift_batch|unaudited_asr|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|unaudited_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|unaudited_asr|SL-C": {
+      "estimate": 0.969,
+      "ci95": [
+        0.906,
+        1.0
+      ]
+    },
+    "shift_batch|unaudited_asr|SL-M": {
+      "estimate": 0.969,
+      "ci95": [
+        0.906,
+        1.0
+      ]
+    },
+    "shift_batch|unaudited_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|utility|S-C": {
+      "estimate": 0.105,
+      "ci95": [
+        0.09,
+        0.115
+      ]
+    },
+    "shift_batch|utility|S-M": {
+      "estimate": 0.105,
+      "ci95": [
+        0.09,
+        0.115
+      ]
+    },
+    "shift_batch|utility|S-R": {
+      "estimate": -0.15,
+      "ci95": [
+        -0.16,
+        -0.13
+      ]
+    },
+    "shift_batch|utility|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|utility|SL-C": {
+      "estimate": 0.105,
+      "ci95": [
+        0.09,
+        0.115
+      ]
+    },
+    "shift_batch|utility|SL-M": {
+      "estimate": 0.105,
+      "ci95": [
+        0.09,
+        0.115
+      ]
+    },
+    "shift_batch|utility|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|utility[attacker]|S-C": {
+      "estimate": 0.375,
+      "ci95": [
+        0.321,
+        0.411
+      ]
+    },
+    "shift_batch|utility[attacker]|S-M": {
+      "estimate": 0.375,
+      "ci95": [
+        0.321,
+        0.411
+      ]
+    },
+    "shift_batch|utility[attacker]|S-R": {
+      "estimate": -0.536,
+      "ci95": [
+        -0.571,
+        -0.464
+      ]
+    },
+    "shift_batch|utility[attacker]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|utility[attacker]|SL-C": {
+      "estimate": 0.375,
+      "ci95": [
+        0.321,
+        0.411
+      ]
+    },
+    "shift_batch|utility[attacker]|SL-M": {
+      "estimate": 0.375,
+      "ci95": [
+        0.321,
+        0.411
+      ]
+    },
+    "shift_batch|utility[attacker]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|utility[innocent]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|utility[innocent]|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|utility[innocent]|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_batch|utility[innocent]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|exposure_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|exposure_asr|S-M": {
+      "estimate": 0.969,
+      "ci95": [
+        0.906,
+        1.0
+      ]
+    },
+    "shift_context|exposure_asr|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|exposure_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|exposure_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|exposure_asr|SL-M": {
+      "estimate": 0.969,
+      "ci95": [
+        0.906,
+        1.0
+      ]
+    },
+    "shift_context|exposure_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|unaudited_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|unaudited_asr|S-M": {
+      "estimate": 0.969,
+      "ci95": [
+        0.906,
+        1.0
+      ]
+    },
+    "shift_context|unaudited_asr|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|unaudited_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|unaudited_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|unaudited_asr|SL-M": {
+      "estimate": 0.969,
+      "ci95": [
+        0.906,
+        1.0
+      ]
+    },
+    "shift_context|unaudited_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|utility|S-C": {
+      "estimate": 0.125,
+      "ci95": [
+        0.095,
+        0.145
+      ]
+    },
+    "shift_context|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "shift_context|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|utility|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|utility|SL-C": {
+      "estimate": 0.125,
+      "ci95": [
+        0.095,
+        0.145
+      ]
+    },
+    "shift_context|utility|SL-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "shift_context|utility|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|utility[attacker]|S-C": {
+      "estimate": 0.446,
+      "ci95": [
+        0.339,
+        0.518
+      ]
+    },
+    "shift_context|utility[attacker]|S-M": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "shift_context|utility[attacker]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|utility[attacker]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|utility[attacker]|SL-C": {
+      "estimate": 0.446,
+      "ci95": [
+        0.339,
+        0.518
+      ]
+    },
+    "shift_context|utility[attacker]|SL-M": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "shift_context|utility[attacker]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|utility[innocent]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|utility[innocent]|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|utility[innocent]|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "shift_context|utility[innocent]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|exposure_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|exposure_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|exposure_asr|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|exposure_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|exposure_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|exposure_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|exposure_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|unaudited_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|unaudited_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|unaudited_asr|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|unaudited_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|unaudited_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|unaudited_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|unaudited_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|utility|S-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "sybil|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "sybil|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|utility|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|utility|SL-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "sybil|utility|SL-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "sybil|utility|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|utility[attacker]|S-C": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "sybil|utility[attacker]|S-M": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "sybil|utility[attacker]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|utility[attacker]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|utility[attacker]|SL-C": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "sybil|utility[attacker]|SL-M": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "sybil|utility[attacker]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|utility[innocent]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|utility[innocent]|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|utility[innocent]|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sybil|utility[innocent]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|exposure_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|exposure_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|exposure_asr|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|exposure_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|exposure_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|exposure_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|exposure_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|unaudited_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|unaudited_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|unaudited_asr|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|unaudited_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|unaudited_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|unaudited_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|unaudited_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|utility|S-C": {
+      "estimate": 0.095,
+      "ci95": [
+        0.03,
+        0.14
+      ]
+    },
+    "framing_concentrated|utility|S-M": {
+      "estimate": 0.155,
+      "ci95": [
+        0.145,
+        0.16
+      ]
+    },
+    "framing_concentrated|utility|S-R": {
+      "estimate": -0.22,
+      "ci95": [
+        -0.28,
+        -0.18
+      ]
+    },
+    "framing_concentrated|utility|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|utility|SL-C": {
+      "estimate": 0.095,
+      "ci95": [
+        0.03,
+        0.14
+      ]
+    },
+    "framing_concentrated|utility|SL-M": {
+      "estimate": 0.155,
+      "ci95": [
+        0.145,
+        0.16
+      ]
+    },
+    "framing_concentrated|utility|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|utility[attacker]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|utility[attacker]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|utility[attacker]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|utility[attacker]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|utility[attacker]|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|utility[attacker]|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|utility[attacker]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|utility[innocent]|S-C": {
+      "estimate": 0.158,
+      "ci95": [
+        0.05,
+        0.233
+      ]
+    },
+    "framing_concentrated|utility[innocent]|S-M": {
+      "estimate": 0.258,
+      "ci95": [
+        0.242,
+        0.267
+      ]
+    },
+    "framing_concentrated|utility[innocent]|S-R": {
+      "estimate": -0.367,
+      "ci95": [
+        -0.467,
+        -0.3
+      ]
+    },
+    "framing_concentrated|utility[innocent]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_concentrated|utility[innocent]|SL-C": {
+      "estimate": 0.158,
+      "ci95": [
+        0.05,
+        0.233
+      ]
+    },
+    "framing_concentrated|utility[innocent]|SL-M": {
+      "estimate": 0.258,
+      "ci95": [
+        0.242,
+        0.267
+      ]
+    },
+    "framing_concentrated|utility[innocent]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|exposure_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|exposure_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|exposure_asr|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|exposure_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|exposure_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|exposure_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|exposure_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|unaudited_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|unaudited_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|unaudited_asr|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|unaudited_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|unaudited_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|unaudited_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|unaudited_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility|S-R": {
+      "estimate": -0.315,
+      "ci95": [
+        -0.32,
+        -0.305
+      ]
+    },
+    "framing_spread|utility|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility[attacker]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility[attacker]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility[attacker]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility[attacker]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility[attacker]|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility[attacker]|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility[attacker]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility[innocent]|S-R": {
+      "estimate": -0.525,
+      "ci95": [
+        -0.533,
+        -0.508
+      ]
+    },
+    "framing_spread|utility[innocent]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility[innocent]|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility[innocent]|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "framing_spread|utility[innocent]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|exposure_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|exposure_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|exposure_asr|S-R": {
+      "estimate": -0.504,
+      "ci95": [
+        -0.539,
+        -0.469
+      ]
+    },
+    "random_concentrate|exposure_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|exposure_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|exposure_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|exposure_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|unaudited_asr|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|unaudited_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|unaudited_asr|S-R": {
+      "estimate": -0.963,
+      "ci95": [
+        -1.0,
+        -0.888
+      ]
+    },
+    "random_concentrate|unaudited_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|unaudited_asr|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|unaudited_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|unaudited_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|utility|S-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "random_concentrate|utility|S-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "random_concentrate|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|utility|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|utility|SL-C": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "random_concentrate|utility|SL-M": {
+      "estimate": 0.255,
+      "ci95": [
+        0.225,
+        0.275
+      ]
+    },
+    "random_concentrate|utility|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|utility[attacker]|S-C": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "random_concentrate|utility[attacker]|S-M": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "random_concentrate|utility[attacker]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|utility[attacker]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|utility[attacker]|SL-C": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "random_concentrate|utility[attacker]|SL-M": {
+      "estimate": 0.911,
+      "ci95": [
+        0.804,
+        0.982
+      ]
+    },
+    "random_concentrate|utility[attacker]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|utility[innocent]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|utility[innocent]|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|utility[innocent]|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate|utility[innocent]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|exposure_asr|S-C": {
+      "estimate": 0.133,
+      "ci95": [
+        0.102,
+        0.168
+      ]
+    },
+    "random_spread|exposure_asr|S-M": {
+      "estimate": 0.133,
+      "ci95": [
+        0.102,
+        0.168
+      ]
+    },
+    "random_spread|exposure_asr|S-R": {
+      "estimate": -0.336,
+      "ci95": [
+        -0.391,
+        -0.277
+      ]
+    },
+    "random_spread|exposure_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|exposure_asr|SL-C": {
+      "estimate": 0.133,
+      "ci95": [
+        0.102,
+        0.168
+      ]
+    },
+    "random_spread|exposure_asr|SL-M": {
+      "estimate": 0.133,
+      "ci95": [
+        0.102,
+        0.168
+      ]
+    },
+    "random_spread|exposure_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|unaudited_asr|S-C": {
+      "estimate": 0.28,
+      "ci95": [
+        0.203,
+        0.375
+      ]
+    },
+    "random_spread|unaudited_asr|S-M": {
+      "estimate": 0.28,
+      "ci95": [
+        0.203,
+        0.375
+      ]
+    },
+    "random_spread|unaudited_asr|S-R": {
+      "estimate": -0.69,
+      "ci95": [
+        -0.788,
+        -0.583
+      ]
+    },
+    "random_spread|unaudited_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|unaudited_asr|SL-C": {
+      "estimate": 0.28,
+      "ci95": [
+        0.203,
+        0.375
+      ]
+    },
+    "random_spread|unaudited_asr|SL-M": {
+      "estimate": 0.28,
+      "ci95": [
+        0.203,
+        0.375
+      ]
+    },
+    "random_spread|unaudited_asr|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|utility|S-C": {
+      "estimate": 0.033,
+      "ci95": [
+        0.026,
+        0.04
+      ]
+    },
+    "random_spread|utility|S-M": {
+      "estimate": 0.033,
+      "ci95": [
+        0.026,
+        0.04
+      ]
+    },
+    "random_spread|utility|S-R": {
+      "estimate": -0.222,
+      "ci95": [
+        -0.247,
+        -0.192
+      ]
+    },
+    "random_spread|utility|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|utility|SL-C": {
+      "estimate": 0.033,
+      "ci95": [
+        0.026,
+        0.04
+      ]
+    },
+    "random_spread|utility|SL-M": {
+      "estimate": 0.033,
+      "ci95": [
+        0.026,
+        0.04
+      ]
+    },
+    "random_spread|utility|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|utility[attacker]|S-C": {
+      "estimate": 0.116,
+      "ci95": [
+        0.092,
+        0.143
+      ]
+    },
+    "random_spread|utility[attacker]|S-M": {
+      "estimate": 0.116,
+      "ci95": [
+        0.092,
+        0.143
+      ]
+    },
+    "random_spread|utility[attacker]|S-R": {
+      "estimate": -0.795,
+      "ci95": [
+        -0.882,
+        -0.685
+      ]
+    },
+    "random_spread|utility[attacker]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|utility[attacker]|SL-C": {
+      "estimate": 0.116,
+      "ci95": [
+        0.092,
+        0.143
+      ]
+    },
+    "random_spread|utility[attacker]|SL-M": {
+      "estimate": 0.116,
+      "ci95": [
+        0.092,
+        0.143
+      ]
+    },
+    "random_spread|utility[attacker]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|utility[innocent]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|utility[innocent]|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|utility[innocent]|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread|utility[innocent]|RL-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|exposure_asr|S-C": {
+      "estimate": -0.242,
+      "ci95": [
+        -0.273,
+        -0.211
+      ]
+    },
+    "random_concentrate_fu|exposure_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|exposure_asr|S-R": {
+      "estimate": -0.504,
+      "ci95": [
+        -0.539,
+        -0.469
+      ]
+    },
+    "random_concentrate_fu|exposure_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|exposure_asr|SL-C": {
+      "estimate": -0.242,
+      "ci95": [
+        -0.273,
+        -0.211
+      ]
+    },
+    "random_concentrate_fu|exposure_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|unaudited_asr|S-C": {
+      "estimate": -0.462,
+      "ci95": [
+        -0.513,
+        -0.401
+      ]
+    },
+    "random_concentrate_fu|unaudited_asr|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|unaudited_asr|S-R": {
+      "estimate": -0.963,
+      "ci95": [
+        -1.0,
+        -0.888
+      ]
+    },
+    "random_concentrate_fu|unaudited_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|unaudited_asr|SL-C": {
+      "estimate": -0.462,
+      "ci95": [
+        -0.513,
+        -0.401
+      ]
+    },
+    "random_concentrate_fu|unaudited_asr|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|utility|S-C": {
+      "estimate": 0.126,
+      "ci95": [
+        0.113,
+        0.136
+      ]
+    },
+    "random_concentrate_fu|utility|S-M": {
+      "estimate": 0.126,
+      "ci95": [
+        0.113,
+        0.136
+      ]
+    },
+    "random_concentrate_fu|utility|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|utility|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|utility|SL-C": {
+      "estimate": 0.126,
+      "ci95": [
+        0.113,
+        0.136
+      ]
+    },
+    "random_concentrate_fu|utility|SL-M": {
+      "estimate": 0.126,
+      "ci95": [
+        0.113,
+        0.136
+      ]
+    },
+    "random_concentrate_fu|utility[attacker]|S-C": {
+      "estimate": 0.449,
+      "ci95": [
+        0.404,
+        0.487
+      ]
+    },
+    "random_concentrate_fu|utility[attacker]|S-M": {
+      "estimate": 0.449,
+      "ci95": [
+        0.404,
+        0.487
+      ]
+    },
+    "random_concentrate_fu|utility[attacker]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|utility[attacker]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|utility[attacker]|SL-C": {
+      "estimate": 0.449,
+      "ci95": [
+        0.404,
+        0.487
+      ]
+    },
+    "random_concentrate_fu|utility[attacker]|SL-M": {
+      "estimate": 0.449,
+      "ci95": [
+        0.404,
+        0.487
+      ]
+    },
+    "random_concentrate_fu|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|utility[innocent]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|utility[innocent]|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_concentrate_fu|utility[innocent]|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread_fu|exposure_asr|S-C": {
+      "estimate": 0.02,
+      "ci95": [
+        0.008,
+        0.027
+      ]
+    },
+    "random_spread_fu|exposure_asr|S-M": {
+      "estimate": 0.02,
+      "ci95": [
+        0.008,
+        0.027
+      ]
+    },
+    "random_spread_fu|exposure_asr|S-R": {
+      "estimate": -0.387,
+      "ci95": [
+        -0.441,
+        -0.332
+      ]
+    },
+    "random_spread_fu|exposure_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread_fu|exposure_asr|SL-C": {
+      "estimate": 0.02,
+      "ci95": [
+        0.008,
+        0.027
+      ]
+    },
+    "random_spread_fu|exposure_asr|SL-M": {
+      "estimate": 0.02,
+      "ci95": [
+        0.008,
+        0.027
+      ]
+    },
+    "random_spread_fu|unaudited_asr|S-C": {
+      "estimate": 0.045,
+      "ci95": [
+        0.019,
+        0.07
+      ]
+    },
+    "random_spread_fu|unaudited_asr|S-M": {
+      "estimate": 0.045,
+      "ci95": [
+        0.019,
+        0.07
+      ]
+    },
+    "random_spread_fu|unaudited_asr|S-R": {
+      "estimate": -0.843,
+      "ci95": [
+        -0.921,
+        -0.765
+      ]
+    },
+    "random_spread_fu|unaudited_asr|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread_fu|unaudited_asr|SL-C": {
+      "estimate": 0.045,
+      "ci95": [
+        0.019,
+        0.07
+      ]
+    },
+    "random_spread_fu|unaudited_asr|SL-M": {
+      "estimate": 0.045,
+      "ci95": [
+        0.019,
+        0.07
+      ]
+    },
+    "random_spread_fu|utility|S-C": {
+      "estimate": -0.004,
+      "ci95": [
+        -0.013,
+        0.003
+      ]
+    },
+    "random_spread_fu|utility|S-M": {
+      "estimate": 0.005,
+      "ci95": [
+        0.002,
+        0.008
+      ]
+    },
+    "random_spread_fu|utility|S-R": {
+      "estimate": -0.239,
+      "ci95": [
+        -0.263,
+        -0.208
+      ]
+    },
+    "random_spread_fu|utility|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread_fu|utility|SL-C": {
+      "estimate": -0.004,
+      "ci95": [
+        -0.013,
+        0.003
+      ]
+    },
+    "random_spread_fu|utility|SL-M": {
+      "estimate": 0.005,
+      "ci95": [
+        0.002,
+        0.008
+      ]
+    },
+    "random_spread_fu|utility[attacker]|S-C": {
+      "estimate": -0.016,
+      "ci95": [
+        -0.045,
+        0.009
+      ]
+    },
+    "random_spread_fu|utility[attacker]|S-M": {
+      "estimate": 0.018,
+      "ci95": [
+        0.007,
+        0.029
+      ]
+    },
+    "random_spread_fu|utility[attacker]|S-R": {
+      "estimate": -0.855,
+      "ci95": [
+        -0.938,
+        -0.743
+      ]
+    },
+    "random_spread_fu|utility[attacker]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread_fu|utility[attacker]|SL-C": {
+      "estimate": -0.016,
+      "ci95": [
+        -0.045,
+        0.009
+      ]
+    },
+    "random_spread_fu|utility[attacker]|SL-M": {
+      "estimate": 0.018,
+      "ci95": [
+        0.007,
+        0.029
+      ]
+    },
+    "random_spread_fu|utility[innocent]|S-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread_fu|utility[innocent]|S-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread_fu|utility[innocent]|S-R": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread_fu|utility[innocent]|SL-S": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread_fu|utility[innocent]|SL-C": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "random_spread_fu|utility[innocent]|SL-M": {
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    }
+  }
+}

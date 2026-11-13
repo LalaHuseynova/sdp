@@ -1,0 +1,152 @@
+[
+  {
+    "slide": 1,
+    "title": "When Should Distrust Spread?",
+    "notesWords": 83
+  },
+  {
+    "slide": 2,
+    "title": "A real MPBench memory-poisoning example",
+    "notesWords": 107
+  },
+  {
+    "slide": 3,
+    "title": "Our Original SAFE-Mem reproduction",
+    "notesWords": 131
+  },
+  {
+    "slide": 4,
+    "title": "Full-release reproduction versus the paper",
+    "notesWords": 127
+  },
+  {
+    "slide": 5,
+    "title": "Our question: how far should evidence spread?",
+    "notesWords": 121
+  },
+  {
+    "slide": 6,
+    "title": "The research layer we added",
+    "notesWords": 114
+  },
+  {
+    "slide": 7,
+    "title": "Recovering the memories we actually evaluate",
+    "notesWords": 145
+  },
+  {
+    "slide": 8,
+    "title": "Provisional group composition and planned balance",
+    "notesWords": 129
+  },
+  {
+    "slide": 9,
+    "title": "The provenance objects and their boundaries",
+    "notesWords": 126
+  },
+  {
+    "slide": 10,
+    "title": "One 32-case group: identities, contexts and batches",
+    "notesWords": 121
+  },
+  {
+    "slide": 11,
+    "title": "Three arrangements of the same real cases",
+    "notesWords": 149
+  },
+  {
+    "slide": 12,
+    "title": "How the controlled assignments are drawn",
+    "notesWords": 133
+  },
+  {
+    "slide": 13,
+    "title": "The matched five-ticket experiment",
+    "notesWords": 138
+  },
+  {
+    "slide": 14,
+    "title": "The evidence ledger records events, not a source blacklist",
+    "notesWords": 141
+  },
+  {
+    "slide": 15,
+    "title": "Reputation is a score derived from direct audits",
+    "notesWords": 143
+  },
+  {
+    "slide": 16,
+    "title": "R, C, M and S differ in propagation scope",
+    "notesWords": 141
+  },
+  {
+    "slide": 17,
+    "title": "A recorded audit sequence shows why the policies differ",
+    "notesWords": 134
+  },
+  {
+    "slide": 18,
+    "title": "Selective support grows only when evidence spans scopes",
+    "notesWords": 157
+  },
+  {
+    "slide": 19,
+    "title": "Where the defense enters retrieval",
+    "notesWords": 132
+  },
+  {
+    "slide": 20,
+    "title": "Code we introduced and code we preserved",
+    "notesWords": 125
+  },
+  {
+    "slide": 21,
+    "title": "Ordered execution, replay and spending checks",
+    "notesWords": 163
+  },
+  {
+    "slide": 22,
+    "title": "The evaluation we actually completed",
+    "notesWords": 144
+  },
+  {
+    "slide": 23,
+    "title": "Attack success and combined benign utility",
+    "notesWords": 117
+  },
+  {
+    "slide": 24,
+    "title": "Retention and restraint must be read separately",
+    "notesWords": 122
+  },
+  {
+    "slide": 25,
+    "title": "The rule ran, but had few external candidates to affect",
+    "notesWords": 144
+  },
+  {
+    "slide": 26,
+    "title": "What we observed, and what remains unexplained",
+    "notesWords": 139
+  },
+  {
+    "slide": 27,
+    "title": "What the preliminary comparison cannot establish",
+    "notesWords": 142
+  },
+  {
+    "slide": 28,
+    "title": "Next study: test transfer where external memory is usable",
+    "notesWords": 162
+  },
+  {
+    "slide": 29,
+    "title": "Technical appendix: evidence and accounting checks",
+    "notesWords": 132
+  },
+  {
+    "slide": 30,
+    "title": "Source map for supervisor questions",
+    "notesWords": 123
+  }
+]

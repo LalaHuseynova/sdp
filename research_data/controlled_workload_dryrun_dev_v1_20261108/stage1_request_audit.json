@@ -1,0 +1,31 @@
+{
+  "split": "dev",
+  "chat_requests_cache_hits": {
+    "retention": 280,
+    "extraction": 99,
+    "classifier": 48
+  },
+  "chat_requests_would_be_paid": {
+    "retention": 40,
+    "extraction": 256,
+    "classifier": 232
+  },
+  "would_be_paid_input_tokens_est": {
+    "retention": 15533,
+    "extraction": 228712,
+    "classifier": 98060
+  },
+  "would_be_paid_output_tokens_est": {
+    "retention": 4800,
+    "extraction": 30720,
+    "classifier": 928
+  },
+  "verbatim_contributions": 64,
+  "estimated_cost_usd": "0.0732",
+  "estimated_cost_with_20pct_retry_usd": "0.0879",
+  "budget_remaining_before_usd": "27.90587655",
+  "budget_remaining_after_usd": "27.81797655",
+  "embeddings": "local MiniLM in the paid stage ($0); mock vectors in this dry run",
+  "token_method": "input = rendered prompt characters / 4; output = full-run measured mean",
+  "pricing_checked_on": "2026-10-30"
+}

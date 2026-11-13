@@ -1,0 +1,16 @@
+{
+  "schema": "dynamic-pricing-observation-v1",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "currency": "USD",
+  "input_usd_per_million": "0.15",
+  "output_usd_per_million": "0.60",
+  "checked_on": "2026-11-01",
+  "model_page": "https://openrouter.ai/openai/gpt-4o-mini",
+  "observation": "Standard model-page rates; no credential or completion request. Recheck provider route and ceilings before paid dispatch.",
+  "not_included": [
+    "provider taxes or account fees",
+    "audit-verifier inference until its frozen requests and resource receipts exist",
+    "human annotation labor"
+  ]
+}

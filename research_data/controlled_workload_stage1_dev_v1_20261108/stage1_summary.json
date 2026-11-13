@@ -1,0 +1,101 @@
+{
+  "status": "stage1_halted_partial_unknown_billing",
+  "note": "Written after the run from the read-only shared ledgers; the run halted before writing its own summary.",
+  "split": "dev",
+  "groups_completed": [
+    "G-D00",
+    "G-D01",
+    "G-D02"
+  ],
+  "groups_not_built": [
+    "G-D03",
+    "G-D04",
+    "G-D05",
+    "G-D06",
+    "G-D07"
+  ],
+  "task_cap_usd": "0.15",
+  "scope_start_used_usd": "2.09412345",
+  "settled_task_spend_usd": "0.03251535",
+  "settled_tokens": {
+    "input": 127529,
+    "output": 22310
+  },
+  "paid_dispatches_by_stage": {
+    "workload_retention": {
+      "calls": 13,
+      "usd": "0.00091395"
+    },
+    "workload_extraction": {
+      "calls": 118,
+      "usd": "0.02741700"
+    },
+    "workload_classifier": {
+      "calls": 78,
+      "usd": "0.00418440"
+    }
+  },
+  "settled_calls_belonging_to_unfinished_G-D03": 11,
+  "unknown_attempt": [
+    {
+      "reservation_id": "f7f247cbaa2e453b928b909d879cfb77",
+      "worst_case_held_usd": "0.01974",
+      "error_type": "APITimeoutError",
+      "created_utc": "2026-11-07T22:55:57.549087+00:00",
+      "marked_unknown_utc": "2026-11-08T02:00:04.597368+00:00",
+      "stage": "workload_extraction",
+      "native_response_captured": false
+    }
+  ],
+  "shared_budget_after": {
+    "used_usd": "2.1266388",
+    "held_usd": "0.01974",
+    "blocked": true,
+    "blocked_reason": "unresolved_workload_construction_billing"
+  },
+  "per_group_requests": {
+    "G-D00": {
+      "chat": {
+        "retention:fallback": 5,
+        "extraction:fallback": 32,
+        "retention:cache": 35,
+        "extraction:cache": 12,
+        "classifier:fallback": 29,
+        "classifier:cache": 6
+      },
+      "embed": {
+        "fallback": 113,
+        "cache": 216
+      }
+    },
+    "G-D01": {
+      "chat": {
+        "retention:cache": 35,
+        "extraction:cache": 12,
+        "extraction:fallback": 32,
+        "retention:fallback": 5,
+        "classifier:fallback": 29,
+        "classifier:cache": 6
+      },
+      "embed": {
+        "cache": 188,
+        "fallback": 108
+      }
+    },
+    "G-D02": {
+      "chat": {
+        "retention:cache": 35,
+        "extraction:cache": 13,
+        "extraction:fallback": 32,
+        "retention:fallback": 5,
+        "classifier:fallback": 29,
+        "classifier:cache": 6
+      },
+      "embed": {
+        "cache": 193,
+        "fallback": 110
+      }
+    }
+  },
+  "embeddings": "local MiniLM (cache first); no paid embeddings"
+}

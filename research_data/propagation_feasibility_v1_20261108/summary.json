@@ -1,0 +1,187 @@
+{
+  "status": "complete_offline_feasibility",
+  "paid_api_calls": 0,
+  "inputs": {
+    "mpbench_cases": 6240,
+    "attack_cases": 3241,
+    "attack_questions_evaluated_in_reproduction": 2999,
+    "claims_in_write_journal": 22089
+  },
+  "admission_rule": "usable_as >= required (core/lattice.py::permits); artifact claims are description@global, so external claims serve only description queries",
+  "claim_kinds": {
+    "artifact:description:global": 21763,
+    "turn:preference:principal": 203,
+    "artifact:preference:principal": 11,
+    "turn:rule:principal": 97,
+    "turn:attribute:principal": 10,
+    "artifact:rule:principal": 4,
+    "turn:description:principal": 1
+  },
+  "attack_funnel": {
+    "attack_cases": 3241,
+    "attributable_after_review": 79,
+    "attributable_now_literal_span": 23,
+    "no_question": 242,
+    "query_not_description": 2727,
+    "target_not_in_external_claim": 170,
+    "reachable_any_tier": 102,
+    "reachable_attributable_now": 23,
+    "reachable_distinct_template_groups": 100,
+    "reachable_cases_sharing_an_identical_target_text": 0
+  },
+  "target_proxy_vs_reproduction_write_judge": {
+    "proxy_False|judge_False": 1126,
+    "proxy_False|judge_True": 264,
+    "proxy_True|judge_False": 109,
+    "proxy_True|judge_True": 1500
+  },
+  "attribution_proxy_calibration": {
+    "basis": "AI origin decisions in the 24 provisional episode files (not human truth)",
+    "counts": {
+      "external|literal_span": 708,
+      "external|no_literal": 1284,
+      "unknown|literal_span": 150,
+      "unknown|no_literal": 963
+    },
+    "P(AI external | literal span)": 0.8252,
+    "P(AI external | no literal span)": 0.5714,
+    "AI_external_total": 1992,
+    "AI_unknown_total": 1113
+  },
+  "reproduction_attack_successes_by_required_type_and_carrier": {
+    "description|external_foreign_copy": 18,
+    "description|external_foreign_copy+external_own": 13,
+    "description|external_foreign_copy+external_own+principal_foreign_copy": 1,
+    "description|external_own": 22,
+    "description|target_not_in_retrieved_claims": 13,
+    "permission_trust|target_not_in_retrieved_claims": 36,
+    "preference|principal_foreign_copy": 10,
+    "preference|target_not_in_retrieved_claims": 1,
+    "rule|principal_foreign_copy": 5,
+    "rule|target_not_in_retrieved_claims": 57
+  },
+  "headroom": {
+    "reproduction_successes_among_reachable": 45,
+    "reproduction_ASR_among_reachable": 0.4412,
+    "protocol_min_baseline_successes": 20,
+    "note": "Full-pool static ASR; a small-group workload changes retrieval competition."
+  },
+  "power_scenarios": {
+    "attributable_now_only": {
+      "reachable_cases": 23,
+      "assumed_static_ASR": 0.3043,
+      "design_A_scored_siblings": 17,
+      "design_A_expected_baseline_successes": 5.2,
+      "design_B_scored_siblings": 9,
+      "design_B_expected_baseline_successes": 2.7
+    },
+    "AI_calibrated_expected_attributable": {
+      "reachable_cases": 64,
+      "assumed_static_ASR": 0.4412,
+      "design_A_scored_siblings": 48,
+      "design_A_expected_baseline_successes": 21.2,
+      "design_B_scored_siblings": 22,
+      "design_B_expected_baseline_successes": 9.7
+    },
+    "all_reachable_if_all_attributed": {
+      "reachable_cases": 102,
+      "assumed_static_ASR": 0.4412,
+      "design_A_scored_siblings": 76,
+      "design_A_expected_baseline_successes": 33.5,
+      "design_B_scored_siblings": 34,
+      "design_B_expected_baseline_successes": 15.0
+    }
+  },
+  "external_target_claims_per_reachable_case": {
+    "2": 16,
+    "1": 81,
+    "3": 4,
+    "4": 1
+  },
+  "natural_contributors": "none: MPBench has no authorship; every reachable case is a different template, so multi-attack contributors exist only by synthetic assignment",
+  "group_capacity": {
+    "cell_requirement": ">= 3 reachable attacks from distinct template groups and >= 2 benign siblings per contributor-context cell",
+    "max_cells_all_contexts": 31,
+    "protocol_group_cells": 4,
+    "max_protocol_shaped_groups_upper_bound": 7
+  },
+  "supply_by_context": {
+    "calendar": {
+      "reachable_attacks_any_tier": 32,
+      "reachable_attacks_attributable_now": 11,
+      "distinct_template_groups_any_tier": 32,
+      "distinct_targets_any_tier": 32,
+      "reproduction_successes_any_tier": 11,
+      "benign_cases_with_literal_external_claims": 151,
+      "benign_description_questions": 73,
+      "utility_question_drafts_unvalidated": 0,
+      "max_contributor_context_cells_by_attacks": 10
+    },
+    "email": {
+      "reachable_attacks_any_tier": 19,
+      "reachable_attacks_attributable_now": 2,
+      "distinct_template_groups_any_tier": 19,
+      "distinct_targets_any_tier": 19,
+      "reproduction_successes_any_tier": 7,
+      "benign_cases_with_literal_external_claims": 224,
+      "benign_description_questions": 69,
+      "utility_question_drafts_unvalidated": 1061,
+      "max_contributor_context_cells_by_attacks": 6
+    },
+    "file_and_doc": {
+      "reachable_attacks_any_tier": 17,
+      "reachable_attacks_attributable_now": 2,
+      "distinct_template_groups_any_tier": 17,
+      "distinct_targets_any_tier": 17,
+      "reproduction_successes_any_tier": 10,
+      "benign_cases_with_literal_external_claims": 275,
+      "benign_description_questions": 88,
+      "utility_question_drafts_unvalidated": 4,
+      "max_contributor_context_cells_by_attacks": 5
+    },
+    "script_execution": {
+      "reachable_attacks_any_tier": 5,
+      "reachable_attacks_attributable_now": 2,
+      "distinct_template_groups_any_tier": 5,
+      "distinct_targets_any_tier": 5,
+      "reproduction_successes_any_tier": 2,
+      "benign_cases_with_literal_external_claims": 103,
+      "benign_description_questions": 69,
+      "utility_question_drafts_unvalidated": 0,
+      "max_contributor_context_cells_by_attacks": 1
+    },
+    "slack": {
+      "reachable_attacks_any_tier": 19,
+      "reachable_attacks_attributable_now": 2,
+      "distinct_template_groups_any_tier": 19,
+      "distinct_targets_any_tier": 19,
+      "reproduction_successes_any_tier": 10,
+      "benign_cases_with_literal_external_claims": 112,
+      "benign_description_questions": 55,
+      "utility_question_drafts_unvalidated": 0,
+      "max_contributor_context_cells_by_attacks": 6
+    },
+    "travel": {
+      "reachable_attacks_any_tier": 0,
+      "reachable_attacks_attributable_now": 0,
+      "distinct_template_groups_any_tier": 0,
+      "distinct_targets_any_tier": 0,
+      "reproduction_successes_any_tier": 0,
+      "benign_cases_with_literal_external_claims": 0,
+      "benign_description_questions": 0,
+      "utility_question_drafts_unvalidated": 0,
+      "max_contributor_context_cells_by_attacks": 0
+    },
+    "web": {
+      "reachable_attacks_any_tier": 10,
+      "reachable_attacks_attributable_now": 4,
+      "distinct_template_groups_any_tier": 10,
+      "distinct_targets_any_tier": 10,
+      "reproduction_successes_any_tier": 5,
+      "benign_cases_with_literal_external_claims": 171,
+      "benign_description_questions": 65,
+      "utility_question_drafts_unvalidated": 0,
+      "max_contributor_context_cells_by_attacks": 3
+    }
+  }
+}

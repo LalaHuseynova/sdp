@@ -1,0 +1,14 @@
+{
+  "approved_by": "owner",
+  "approved_on": "2026-11-08",
+  "approval_text": "I approve the locked v4 held-out test evaluation. Hard caps of $0.30 for Stage 1 and $0.60 for Stage 3. Do not modify the frozen dataset, algorithms, prompts, hypotheses, or analysis plan. Do not run additional paid experiments without my approval.",
+  "split": "test",
+  "bundle": "research_data/controlled_workload_v4_20261108",
+  "bundle_manifest_hash": "e4ba3e17de8a2beb2567f3c02d4728c6fa4f4019f692415c7327dc2313e2dc79",
+  "protocol_path": "research_data/workload_freeze_v4_20261108/locked_protocol_v1.json",
+  "protocol_digest": "921cf7f53c5e292243d3efa368c60e39f70091ffea9934f6dbcbd9d3bffd97eb",
+  "protocol_file_sha256": "7232e56f555e8005511721ea0aeb14a4d37fc33cd67c843ef4987690d2d964e0",
+  "caps_usd": {"stage1": "0.30", "stage3": "0.60"},
+  "session": "research_data/controlled_workload_session_v2_20261108",
+  "old_session_reservation": "preserved untouched (USD 0.01974 held in research_data/dynamic_execution_prep_v1_20261031/session)"
+}

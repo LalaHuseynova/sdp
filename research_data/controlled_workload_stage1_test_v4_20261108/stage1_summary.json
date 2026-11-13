@@ -1,0 +1,431 @@
+{
+  "status": "stage1_complete",
+  "bundle": "research_data/controlled_workload_v4_20261108",
+  "split": "test",
+  "groups": [
+    "G-T00",
+    "G-T01",
+    "G-T02",
+    "G-T03",
+    "G-T04",
+    "G-T05",
+    "G-T06",
+    "G-T07",
+    "G-T08",
+    "G-T09",
+    "G-T10",
+    "G-T11",
+    "G-T12",
+    "G-T13",
+    "G-T14",
+    "G-T15",
+    "G-T16",
+    "G-T17",
+    "G-T18",
+    "G-T19",
+    "G-T20",
+    "G-T21",
+    "G-T22",
+    "G-T23"
+  ],
+  "bundle_manifest_hash": "e4ba3e17de8a2beb2567f3c02d4728c6fa4f4019f692415c7327dc2313e2dc79",
+  "task_cap_usd": "0.30",
+  "actual_task_spend_usd": "0.1758837",
+  "paid_dispatches_by_stage": {
+    "workload_answer": {
+      "calls": 919,
+      "usd": 0.1181124
+    },
+    "workload_classifier": {
+      "calls": 577,
+      "usd": 0.0310659
+    },
+    "workload_conflict": {
+      "calls": 16,
+      "usd": 0.0002508
+    },
+    "workload_extraction": {
+      "calls": 917,
+      "usd": 0.1647045
+    },
+    "workload_judge": {
+      "calls": 203,
+      "usd": 0.0099084
+    },
+    "workload_no_memory_answer": {
+      "calls": 216,
+      "usd": 0.0114966
+    },
+    "workload_retention": {
+      "calls": 675,
+      "usd": 0.0452544
+    }
+  },
+  "failed_or_unresolved_dispatches": 0,
+  "paid_this_run_by_stage": {
+    "workload_retention": 578,
+    "workload_extraction": 697,
+    "workload_classifier": 499
+  },
+  "note": "paid_dispatches_by_stage counts every workload dispatch in the session (including pilots); actual_task_spend_usd is this Stage-1 scope only",
+  "budget_before": {
+    "used_usd": 0.2049093,
+    "remaining_usd": 29.7950907,
+    "held_usd": 0.0
+  },
+  "budget_after": {
+    "used_usd": 0.380793,
+    "remaining_usd": 29.619207,
+    "held_usd": 0.0
+  },
+  "per_group_requests": {
+    "G-T00": {
+      "chat": {
+        "retention:fallback": 26,
+        "extraction:fallback": 29,
+        "retention:cache": 14,
+        "extraction:cache": 11,
+        "classifier:fallback": 19,
+        "classifier:cache": 16
+      },
+      "embed": {
+        "fallback": 149,
+        "cache": 88
+      }
+    },
+    "G-T01": {
+      "chat": {
+        "retention:fallback": 25,
+        "extraction:fallback": 28,
+        "retention:cache": 15,
+        "extraction:cache": 12,
+        "classifier:fallback": 23,
+        "classifier:cache": 12
+      },
+      "embed": {
+        "fallback": 127,
+        "cache": 78
+      }
+    },
+    "G-T02": {
+      "chat": {
+        "retention:fallback": 21,
+        "extraction:fallback": 28,
+        "retention:cache": 19,
+        "extraction:cache": 12,
+        "classifier:fallback": 22,
+        "classifier:cache": 13
+      },
+      "embed": {
+        "fallback": 128,
+        "cache": 61
+      }
+    },
+    "G-T03": {
+      "chat": {
+        "retention:fallback": 26,
+        "extraction:fallback": 30,
+        "retention:cache": 14,
+        "extraction:cache": 10,
+        "classifier:fallback": 19,
+        "classifier:cache": 16
+      },
+      "embed": {
+        "fallback": 152,
+        "cache": 73
+      }
+    },
+    "G-T04": {
+      "chat": {
+        "retention:cache": 16,
+        "extraction:cache": 12,
+        "retention:fallback": 24,
+        "extraction:fallback": 28,
+        "classifier:cache": 13,
+        "classifier:fallback": 22
+      },
+      "embed": {
+        "fallback": 133,
+        "cache": 72
+      }
+    },
+    "G-T05": {
+      "chat": {
+        "retention:fallback": 21,
+        "extraction:fallback": 29,
+        "retention:cache": 19,
+        "extraction:cache": 11,
+        "classifier:fallback": 20,
+        "classifier:cache": 15
+      },
+      "embed": {
+        "fallback": 149,
+        "cache": 86
+      }
+    },
+    "G-T06": {
+      "chat": {
+        "retention:fallback": 24,
+        "extraction:fallback": 28,
+        "retention:cache": 16,
+        "extraction:cache": 12,
+        "classifier:fallback": 21,
+        "classifier:cache": 14
+      },
+      "embed": {
+        "fallback": 130,
+        "cache": 56
+      }
+    },
+    "G-T07": {
+      "chat": {
+        "retention:cache": 16,
+        "extraction:cache": 10,
+        "retention:fallback": 24,
+        "extraction:fallback": 30,
+        "classifier:fallback": 22,
+        "classifier:cache": 13
+      },
+      "embed": {
+        "cache": 77,
+        "fallback": 130
+      }
+    },
+    "G-T08": {
+      "chat": {
+        "retention:cache": 17,
+        "extraction:cache": 12,
+        "retention:fallback": 23,
+        "extraction:fallback": 28,
+        "classifier:fallback": 22,
+        "classifier:cache": 13
+      },
+      "embed": {
+        "fallback": 123,
+        "cache": 39
+      }
+    },
+    "G-T09": {
+      "chat": {
+        "retention:fallback": 22,
+        "extraction:fallback": 29,
+        "retention:cache": 18,
+        "extraction:cache": 11,
+        "classifier:fallback": 20,
+        "classifier:cache": 15
+      },
+      "embed": {
+        "fallback": 146,
+        "cache": 100
+      }
+    },
+    "G-T10": {
+      "chat": {
+        "retention:cache": 16,
+        "extraction:cache": 11,
+        "retention:fallback": 24,
+        "extraction:fallback": 29,
+        "classifier:fallback": 22,
+        "classifier:cache": 13
+      },
+      "embed": {
+        "fallback": 130,
+        "cache": 94
+      }
+    },
+    "G-T11": {
+      "chat": {
+        "retention:cache": 17,
+        "extraction:fallback": 30,
+        "extraction:cache": 10,
+        "retention:fallback": 23,
+        "classifier:fallback": 22,
+        "classifier:cache": 13
+      },
+      "embed": {
+        "fallback": 150,
+        "cache": 73
+      }
+    },
+    "G-T12": {
+      "chat": {
+        "retention:cache": 16,
+        "extraction:cache": 12,
+        "retention:fallback": 24,
+        "extraction:fallback": 28,
+        "classifier:fallback": 22,
+        "classifier:cache": 13
+      },
+      "embed": {
+        "cache": 92,
+        "fallback": 133
+      }
+    },
+    "G-T13": {
+      "chat": {
+        "retention:cache": 16,
+        "extraction:cache": 12,
+        "retention:fallback": 24,
+        "extraction:fallback": 28,
+        "classifier:fallback": 22,
+        "classifier:cache": 13
+      },
+      "embed": {
+        "cache": 83,
+        "fallback": 128
+      }
+    },
+    "G-T14": {
+      "chat": {
+        "retention:cache": 15,
+        "extraction:cache": 9,
+        "extraction:fallback": 31,
+        "retention:fallback": 25,
+        "classifier:fallback": 18,
+        "classifier:cache": 17
+      },
+      "embed": {
+        "fallback": 156,
+        "cache": 88
+      }
+    },
+    "G-T15": {
+      "chat": {
+        "retention:fallback": 25,
+        "extraction:fallback": 29,
+        "retention:cache": 15,
+        "extraction:cache": 11,
+        "classifier:fallback": 21,
+        "classifier:cache": 14
+      },
+      "embed": {
+        "fallback": 132,
+        "cache": 84
+      }
+    },
+    "G-T16": {
+      "chat": {
+        "retention:cache": 17,
+        "extraction:cache": 12,
+        "retention:fallback": 23,
+        "extraction:fallback": 28,
+        "classifier:cache": 15,
+        "classifier:fallback": 20
+      },
+      "embed": {
+        "fallback": 131,
+        "cache": 71
+      }
+    },
+    "G-T17": {
+      "chat": {
+        "retention:fallback": 28,
+        "extraction:fallback": 31,
+        "retention:cache": 12,
+        "extraction:cache": 9,
+        "classifier:fallback": 20,
+        "classifier:cache": 15
+      },
+      "embed": {
+        "fallback": 140,
+        "cache": 64
+      }
+    },
+    "G-T18": {
+      "chat": {
+        "retention:cache": 15,
+        "extraction:fallback": 29,
+        "retention:fallback": 25,
+        "extraction:cache": 11,
+        "classifier:fallback": 20,
+        "classifier:cache": 15
+      },
+      "embed": {
+        "fallback": 128,
+        "cache": 53
+      }
+    },
+    "G-T19": {
+      "chat": {
+        "retention:fallback": 24,
+        "extraction:fallback": 29,
+        "retention:cache": 16,
+        "extraction:cache": 11,
+        "classifier:cache": 15,
+        "classifier:fallback": 20
+      },
+      "embed": {
+        "fallback": 131,
+        "cache": 76
+      }
+    },
+    "G-T20": {
+      "chat": {
+        "retention:fallback": 23,
+        "extraction:fallback": 29,
+        "retention:cache": 17,
+        "extraction:cache": 11,
+        "classifier:fallback": 20,
+        "classifier:cache": 15
+      },
+      "embed": {
+        "fallback": 144,
+        "cache": 103
+      }
+    },
+    "G-T21": {
+      "chat": {
+        "retention:cache": 15,
+        "extraction:cache": 10,
+        "retention:fallback": 25,
+        "extraction:fallback": 30,
+        "classifier:fallback": 19,
+        "classifier:cache": 16
+      },
+      "embed": {
+        "cache": 68,
+        "fallback": 126
+      }
+    },
+    "G-T22": {
+      "chat": {
+        "retention:cache": 16,
+        "extraction:cache": 12,
+        "extraction:fallback": 28,
+        "retention:fallback": 24,
+        "classifier:cache": 15,
+        "classifier:fallback": 20
+      },
+      "embed": {
+        "cache": 44,
+        "fallback": 131
+      }
+    },
+    "G-T23": {
+      "chat": {
+        "retention:cache": 15,
+        "extraction:fallback": 31,
+        "retention:fallback": 25,
+        "extraction:cache": 9,
+        "classifier:fallback": 23,
+        "classifier:cache": 12
+      },
+      "embed": {
+        "fallback": 149,
+        "cache": 110
+      }
+    }
+  },
+  "embeddings": "local MiniLM (cache first); no paid embeddings",
+  "session": "research_data/controlled_workload_session_v2_20261108",
+  "replayed_paid_replies_from": [
+    "research_data/dynamic_execution_prep_v1_20261031/session/dispatch.sqlite",
+    "research_data/controlled_workload_session_v2_20261108/dispatch.sqlite"
+  ],
+  "cache_hits": {
+    "chat_miss": 1774,
+    "layer2_chat_hit": 201,
+    "layer1_chat_hit": 257,
+    "layer0_chat_hit": 528
+  }
+}

@@ -69,7 +69,6 @@ if [ -f "$REPO/.env" ]; then
     case "$key" in OPENAI_API_KEY|OPENAI_BASE_URL|OPENROUTER_API_KEY|AMEMGUARD_MODEL|AZURE_AI_KEY|AZURE_OPENAI_ENDPOINT|AZURE_AI_KEY_MAG_SECURITY_HAOMING_RESOURCE) export "$key=$val";; esac
   done < "$REPO/.env"
 fi
-[ -n "${OPENAI_API_KEY:-}" ] || { echo "OPENAI_API_KEY not set (looked in $REPO/.env)"; exit 1; }
 
 # Backbone (configs/backbones.yaml names). gpt56 runs the agent and A-MemGuard on
 # the Azure gpt-5.6-terra deployment. autogen 0.2 has no per-request fallback, so
@@ -77,6 +76,12 @@ fi
 # UNVERIFIED end to end: the parameter patches in minja_patch.py were checked
 # against the API directly, not through autogen 0.2.
 case "${BACKBONE:-4omini}" in
+  openrouter_4omini)
+    LLM=openai/gpt-4o-mini
+    export AMEMGUARD_MODEL="$LLM"
+    export OPENAI_BASE_URL=https://openrouter.ai/api/v1
+    export OPENAI_API_KEY="${OPENROUTER_API_KEY:?OPENROUTER_API_KEY not set}"
+    ;;
   gpt56)
     LLM=gpt-5.6-terra
     export AMEMGUARD_MODEL=gpt-5.6-terra MINJA_REASONING_EFFORT=none
@@ -103,6 +108,8 @@ case "${BACKBONE:-4omini}" in
     ;;
   *) echo "unknown BACKBONE=${BACKBONE}"; exit 1 ;;
 esac
+[ -n "${OPENAI_API_KEY:-}" ] || { echo "API key not set for backbone ${BACKBONE:-4omini} (looked in $REPO/.env)"; exit 1; }
+export PYTHONPATH="$REPO/src${PYTHONPATH:+:$PYTHONPATH}"
 
 # MINJA is built on the autogen 0.2 agent API, which is not source-compatible
 # with anything later, so it needs its own environment:
@@ -282,7 +289,8 @@ for arm in $ARMS; do
   echo "== $arm: started (log $A/run.log)"
   run_arm "$arm" &
   running=$((running + 1))
-  if [ "$running" -ge "$ARM_JOBS" ]; then wait -n || true; running=$((running - 1)); fi
+  # Batch waits also work with macOS's system Bash 3.2, which has no `wait -n`.
+  if [ "$running" -ge "$ARM_JOBS" ]; then wait || true; running=0; fi
 done
 wait
 for arm in $ARMS; do

@@ -1,0 +1,5 @@
+# Regenerable local research artifacts and human annotation files stay out of Git.
+mpbench_phase1*/
+review_exports/
+annotations/
+pilot_build*/

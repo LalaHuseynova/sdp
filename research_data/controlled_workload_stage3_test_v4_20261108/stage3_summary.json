@@ -1,0 +1,73 @@
+{
+  "status": "stage3_complete",
+  "mode": "live",
+  "bundle": "research_data/controlled_workload_v4_20261108",
+  "bundle_manifest_hash": "e4ba3e17de8a2beb2567f3c02d4728c6fa4f4019f692415c7327dc2313e2dc79",
+  "groups": [
+    "G-T00",
+    "G-T01",
+    "G-T02",
+    "G-T03",
+    "G-T04",
+    "G-T05",
+    "G-T06",
+    "G-T07",
+    "G-T08",
+    "G-T09",
+    "G-T10",
+    "G-T11",
+    "G-T12",
+    "G-T13",
+    "G-T14",
+    "G-T15",
+    "G-T16",
+    "G-T17",
+    "G-T18",
+    "G-T19",
+    "G-T20",
+    "G-T21",
+    "G-T22",
+    "G-T23"
+  ],
+  "outcome_rows": 13440,
+  "task_cap_usd": "0.60",
+  "actual_task_spend_usd": "0.40250085",
+  "dispatches_by_stage_and_status": [
+    [
+      "workload_answer",
+      "completed",
+      3600
+    ],
+    [
+      "workload_conflict",
+      "completed",
+      58
+    ],
+    [
+      "workload_judge",
+      "completed",
+      777
+    ],
+    [
+      "workload_no_memory_answer",
+      "completed",
+      794
+    ]
+  ],
+  "budget_before": {
+    "used_usd": 0.380793,
+    "remaining_usd": 29.619207,
+    "held_usd": 0.0
+  },
+  "budget_after": {
+    "used_usd": 0.78329385,
+    "remaining_usd": 29.21670615,
+    "held_usd": 0.0
+  },
+  "session": "research_data/controlled_workload_session_v2_20261108",
+  "integrity": {
+    "issues": [],
+    "principal_probes_without_their_record_in_context_static": 0,
+    "ok": true
+  }
+}

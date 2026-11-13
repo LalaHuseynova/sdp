@@ -1,0 +1,29 @@
+{
+  "status": "mock_dry_run_complete",
+  "paid_calls": 0,
+  "bundle_manifest_hash": "fc40ad46de42ec0f045fbce11312f4ca526a2a6c14b33ba3b7f008d7a6301887",
+  "split": "dev",
+  "groups": [
+    "G-D00",
+    "G-D01",
+    "G-D02",
+    "G-D03",
+    "G-D04",
+    "G-D05",
+    "G-D06",
+    "G-D07"
+  ],
+  "outcome_rows": 4480,
+  "mock_dispatches": 5637,
+  "mock_extraction": "request_guided",
+  "cache_layers": {
+    "frozen_reproduction_cache": true,
+    "paid_replay": true
+  },
+  "cache_hits": {
+    "layer1_chat_hit": 181,
+    "chat_miss": 563,
+    "layer0_chat_hit": 176
+  },
+  "warning": "Mock answers/judges: outcomes test the software path only."
+}

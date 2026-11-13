@@ -1,0 +1,24 @@
+# OpenRouter transport for configs/mpbench.yaml.
+# Original SAFE-Mem settings and prompt versions are preserved.
+# All configured chat roles use the same GPT-4o-mini model through OpenRouter.
+name: openrouter_mpbench_baseline
+dataset:
+  root: data/mpbench
+models:
+  memory: openrouter:openai/gpt-4o-mini
+  agent: openrouter:openai/gpt-4o-mini
+  judge: openrouter:openai/gpt-4o-mini
+  embed: 'local:'
+prompts:
+  judge_entry: v2
+  judge_answer: v1
+  answer: v1
+  memory_extract: v1
+memory:
+  max_facts: 6
+defences:
+- no_defence
+- a_memguard
+retrieve_k: 4
+runtime:
+  workers: 8

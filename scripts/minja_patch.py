@@ -474,6 +474,16 @@ def openai_config(model):
     return config''',
     )
 
+    sub(
+        EHR / "config.py",
+        "def llm_config_list(seed, config_list):\n",
+        '''def llm_config_list(seed, config_list):
+    if "openrouter.ai" in os.environ.get("OPENAI_BASE_URL", ""):
+        from ams.llm.openrouter_legacy import install
+        install()
+''',
+    )
+
     tab = EHR / "tools" / "tabtools.py"
     sub(
         tab,

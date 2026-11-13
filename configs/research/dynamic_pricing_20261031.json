@@ -1,0 +1,22 @@
+{
+  "schema": "dynamic-pricing-observation-v1",
+  "checked_on": "2026-10-31",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "currency": "USD",
+  "input_usd_per_million": "0.15",
+  "output_usd_per_million": "0.60",
+  "context_tokens": 128000,
+  "model_page": "https://openrouter.ai/openai/gpt-4o-mini/overview",
+  "provider_controls_reference": "https://openrouter.ai/docs/guides/routing/provider-selection",
+  "observation": "Public official model page rechecked 31 October 2026: USD 0.15 input / 0.60 output per million tokens, 128K context. No provider-cache discounts assumed.",
+  "routing_requirement": "Enforce maximum prompt/completion rates; no higher-rate fallback or per-request fee.",
+  "recheck_before_paid_execution": true,
+  "not_included": [
+    "taxes",
+    "credit_purchase_fees",
+    "human_annotation_labor",
+    "local_compute"
+  ],
+  "paid_api_calls_for_this_observation": 0
+}

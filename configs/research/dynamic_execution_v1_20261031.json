@@ -1,0 +1,21 @@
+{
+  "schema": "dynamic-execution-preparation-v1",
+  "date": "2026-10-31",
+  "total_api_limit_usd": "30.00",
+  "scope": "combined development, pilot, controls, judgments and any smoke calls",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "input_usd_per_million_ceiling": "0.15",
+  "output_usd_per_million_ceiling": "0.60",
+  "context_token_bound": 128000,
+  "automatic_retries": 0,
+  "physical_attempts_per_dispatch_id": 1,
+  "live_query_stages": {"answer": 200, "conflict": 6},
+  "classifier": "shared exact frozen catalog only; miss stops",
+  "writes": "offline exact replay only; miss stops",
+  "embeddings": "offline exact replay only; miss stops",
+  "unknown_outcome": "retain full reservation, halt session, never automatically redispatch",
+  "scientific_execution_enabled": false,
+  "amends": "The user's USD 30 limit supersedes the inactive USD 125 proposal without changing scientific settings.",
+  "fees_scope": "API usage charges only; no credit purchase, taxes, or other account services are initiated"
+}

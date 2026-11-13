@@ -1,0 +1,10 @@
+# OpenRouter transport for configs/minja_typed.yaml.
+# Original SAFE-Mem settings and prompt versions are preserved.
+# All configured chat roles use the same GPT-4o-mini model through OpenRouter.
+name: openrouter_minja_use_types
+models:
+  memory: openrouter:openai/gpt-4o-mini
+prompts:
+  classify_use_type: v2
+runtime:
+  workers: 8

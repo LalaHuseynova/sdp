@@ -1,0 +1,1000 @@
+{
+  "tables": [
+    {
+      "stem": "table_1_original_safemem_reproduction",
+      "title": "Original SAFE-Mem: full-dataset reproduction",
+      "subtitle": "GPT-4o-mini | MPBench: 6,240 source inputs; 5,996 readable questions",
+      "groups": [
+        {
+          "label": "MPBench (full dataset)",
+          "start": 0,
+          "count": 4
+        },
+        {
+          "label": "LoCoMo (paper)",
+          "start": 4,
+          "count": 1
+        }
+      ],
+      "columns": [
+        {
+          "label": "ASR \u2193",
+          "direction": "min",
+          "sample": "n = 2,999"
+        },
+        {
+          "label": "Recall \u2191",
+          "direction": "max",
+          "sample": "n = 249"
+        },
+        {
+          "label": "Restraint \u2191",
+          "direction": "max",
+          "sample": "n = 2,607"
+        },
+        {
+          "label": "Utility \u2191",
+          "direction": "max",
+          "sample": "n = 2,856"
+        },
+        {
+          "label": "Accuracy \u2191",
+          "direction": "max",
+          "sample": "paper n = 1,540"
+        }
+      ],
+      "method_width": 292,
+      "column_widths": [
+        143,
+        143,
+        143,
+        143,
+        144
+      ],
+      "rows": [
+        {
+          "key": "paper",
+          "label": "Original SAFE-Mem (paper)",
+          "cells": [
+            {
+              "fraction": null,
+              "exact_percent": "31/5",
+              "display": "6.2",
+              "best": false
+            },
+            {
+              "fraction": null,
+              "exact_percent": "859/10",
+              "display": "85.9",
+              "best": true
+            },
+            {
+              "fraction": null,
+              "exact_percent": "253/5",
+              "display": "50.6",
+              "best": true
+            },
+            {
+              "fraction": null,
+              "exact_percent": null,
+              "display": "-",
+              "best": false,
+              "unavailable_reason": "Combined benign utility is not reported in paper Table 1"
+            },
+            {
+              "fraction": null,
+              "exact_percent": "273/5",
+              "display": "54.6",
+              "best": true
+            }
+          ]
+        },
+        {
+          "key": "reproduction",
+          "label": "Original SAFE-Mem (reproduced)",
+          "cells": [
+            {
+              "fraction": [
+                176,
+                2999
+              ],
+              "exact_percent": "17600/2999",
+              "display": "5.87",
+              "best": true
+            },
+            {
+              "fraction": [
+                213,
+                249
+              ],
+              "exact_percent": "7100/83",
+              "display": "85.54",
+              "best": false
+            },
+            {
+              "fraction": [
+                1273,
+                2607
+              ],
+              "exact_percent": "127300/2607",
+              "display": "48.83",
+              "best": false
+            },
+            {
+              "fraction": [
+                1486,
+                2856
+              ],
+              "exact_percent": "18575/357",
+              "display": "52.03",
+              "best": true
+            },
+            {
+              "fraction": null,
+              "exact_percent": null,
+              "display": "-",
+              "best": false,
+              "unavailable_reason": "LoCoMo was not reproduced in this run"
+            }
+          ]
+        },
+        {
+          "key": "S",
+          "label": "Selective propagation (ours)",
+          "cells": [
+            {
+              "fraction": null,
+              "exact_percent": null,
+              "display": "-",
+              "best": false,
+              "unavailable_reason": "Proposed defense has not been evaluated on full MPBench or LoCoMo"
+            },
+            {
+              "fraction": null,
+              "exact_percent": null,
+              "display": "-",
+              "best": false,
+              "unavailable_reason": "Proposed defense has not been evaluated on full MPBench or LoCoMo"
+            },
+            {
+              "fraction": null,
+              "exact_percent": null,
+              "display": "-",
+              "best": false,
+              "unavailable_reason": "Proposed defense has not been evaluated on full MPBench or LoCoMo"
+            },
+            {
+              "fraction": null,
+              "exact_percent": null,
+              "display": "-",
+              "best": false,
+              "unavailable_reason": "Proposed defense has not been evaluated on full MPBench or LoCoMo"
+            },
+            {
+              "fraction": null,
+              "exact_percent": null,
+              "display": "-",
+              "best": false,
+              "unavailable_reason": "Proposed defense has not been evaluated on full MPBench or LoCoMo"
+            }
+          ]
+        }
+      ],
+      "caption": [
+        "<b>Table 1.</b> Rates (%). Published SAFE-Mem results versus our reproduction; paper rates retain one decimal, reproduced rates use two. Metric denominators are shown above.",
+        "<b>Bold:</b> best available entry per column, including ties. <b>-</b>: unavailable; singleton bold entries do not establish superiority. Utility = combined benign memory-use score.",
+        "LoCoMo is a paper-only reference, not a reproduced result. All 244 write-only MPBench inputs remain in the pool; only reads are scored. Reproduction uses OpenRouter/current GPT-4o-mini.",
+        "<b>Our proposed defense has NOT been evaluated on the full 6,240-case MPBench dataset.</b>",
+        "<i>Sources:</i> SAFE-Mem v2, Table 1 and Sec. 5.1 (PDF p. 6); verified local final_results.json (28 October 2026)."
+      ]
+    },
+    {
+      "stem": "table_2_selective_propagation_pilot",
+      "title": "Selective evidence propagation: preliminary subset evaluation",
+      "subtitle": "GPT-4o-mini | 256 unique MPBench inputs (8 development groups); 3,888 saved answer events",
+      "groups": [
+        {
+          "label": "Distributed",
+          "start": 0,
+          "count": 4
+        },
+        {
+          "label": "Localized",
+          "start": 4,
+          "count": 4
+        },
+        {
+          "label": "Uninformative",
+          "start": 8,
+          "count": 4
+        }
+      ],
+      "columns": [
+        {
+          "label": "ASR \u2193",
+          "direction": "min",
+          "sample": "n = 134"
+        },
+        {
+          "label": "Recall \u2191",
+          "direction": "max",
+          "sample": "n = 14"
+        },
+        {
+          "label": "Restraint \u2191",
+          "direction": "max",
+          "sample": "n = 68"
+        },
+        {
+          "label": "Utility \u2191",
+          "direction": "max",
+          "sample": "n = 82"
+        },
+        {
+          "label": "ASR \u2193",
+          "direction": "min",
+          "sample": "n = 131"
+        },
+        {
+          "label": "Recall \u2191",
+          "direction": "max",
+          "sample": "n = 13"
+        },
+        {
+          "label": "Restraint \u2191",
+          "direction": "max",
+          "sample": "n = 72"
+        },
+        {
+          "label": "Utility \u2191",
+          "direction": "max",
+          "sample": "n = 85"
+        },
+        {
+          "label": "ASR \u2193",
+          "direction": "min",
+          "sample": "n = 140"
+        },
+        {
+          "label": "Recall \u2191",
+          "direction": "max",
+          "sample": "n = 13"
+        },
+        {
+          "label": "Restraint \u2191",
+          "direction": "max",
+          "sample": "n = 63"
+        },
+        {
+          "label": "Utility \u2191",
+          "direction": "max",
+          "sample": "n = 76"
+        }
+      ],
+      "method_width": 252,
+      "column_widths": [
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63
+      ],
+      "rows": [
+        {
+          "key": "no_memory",
+          "label": "No memory (control)",
+          "cells": [
+            {
+              "fraction": [
+                0,
+                134
+              ],
+              "exact_percent": "0",
+              "display": "0.00",
+              "best": true
+            },
+            {
+              "fraction": [
+                0,
+                14
+              ],
+              "exact_percent": "0",
+              "display": "0.00",
+              "best": false
+            },
+            {
+              "fraction": [
+                67,
+                68
+              ],
+              "exact_percent": "1675/17",
+              "display": "98.53",
+              "best": true
+            },
+            {
+              "fraction": [
+                67,
+                82
+              ],
+              "exact_percent": "3350/41",
+              "display": "81.71",
+              "best": false
+            },
+            {
+              "fraction": [
+                0,
+                131
+              ],
+              "exact_percent": "0",
+              "display": "0.00",
+              "best": true
+            },
+            {
+              "fraction": [
+                0,
+                13
+              ],
+              "exact_percent": "0",
+              "display": "0.00",
+              "best": false
+            },
+            {
+              "fraction": [
+                71,
+                72
+              ],
+              "exact_percent": "1775/18",
+              "display": "98.61",
+              "best": true
+            },
+            {
+              "fraction": [
+                71,
+                85
+              ],
+              "exact_percent": "1420/17",
+              "display": "83.53",
+              "best": false
+            },
+            {
+              "fraction": [
+                0,
+                140
+              ],
+              "exact_percent": "0",
+              "display": "0.00",
+              "best": true
+            },
+            {
+              "fraction": [
+                0,
+                13
+              ],
+              "exact_percent": "0",
+              "display": "0.00",
+              "best": false
+            },
+            {
+              "fraction": [
+                62,
+                63
+              ],
+              "exact_percent": "6200/63",
+              "display": "98.41",
+              "best": true
+            },
+            {
+              "fraction": [
+                62,
+                76
+              ],
+              "exact_percent": "1550/19",
+              "display": "81.58",
+              "best": false
+            }
+          ]
+        },
+        {
+          "key": "static",
+          "label": "Original SAFE-Mem (static)",
+          "cells": [
+            {
+              "fraction": [
+                4,
+                134
+              ],
+              "exact_percent": "200/67",
+              "display": "2.99",
+              "best": false
+            },
+            {
+              "fraction": [
+                13,
+                14
+              ],
+              "exact_percent": "650/7",
+              "display": "92.86",
+              "best": true
+            },
+            {
+              "fraction": [
+                62,
+                68
+              ],
+              "exact_percent": "1550/17",
+              "display": "91.18",
+              "best": false
+            },
+            {
+              "fraction": [
+                75,
+                82
+              ],
+              "exact_percent": "3750/41",
+              "display": "91.46",
+              "best": true
+            },
+            {
+              "fraction": [
+                5,
+                131
+              ],
+              "exact_percent": "500/131",
+              "display": "3.82",
+              "best": false
+            },
+            {
+              "fraction": [
+                12,
+                13
+              ],
+              "exact_percent": "1200/13",
+              "display": "92.31",
+              "best": true
+            },
+            {
+              "fraction": [
+                65,
+                72
+              ],
+              "exact_percent": "1625/18",
+              "display": "90.28",
+              "best": false
+            },
+            {
+              "fraction": [
+                77,
+                85
+              ],
+              "exact_percent": "1540/17",
+              "display": "90.59",
+              "best": true
+            },
+            {
+              "fraction": [
+                6,
+                140
+              ],
+              "exact_percent": "30/7",
+              "display": "4.29",
+              "best": false
+            },
+            {
+              "fraction": [
+                12,
+                13
+              ],
+              "exact_percent": "1200/13",
+              "display": "92.31",
+              "best": true
+            },
+            {
+              "fraction": [
+                58,
+                63
+              ],
+              "exact_percent": "5800/63",
+              "display": "92.06",
+              "best": false
+            },
+            {
+              "fraction": [
+                70,
+                76
+              ],
+              "exact_percent": "1750/19",
+              "display": "92.11",
+              "best": true
+            }
+          ]
+        },
+        {
+          "key": "R",
+          "label": "Record-only (R)",
+          "cells": [
+            {
+              "fraction": [
+                4,
+                134
+              ],
+              "exact_percent": "200/67",
+              "display": "2.99",
+              "best": false
+            },
+            {
+              "fraction": [
+                13,
+                14
+              ],
+              "exact_percent": "650/7",
+              "display": "92.86",
+              "best": true
+            },
+            {
+              "fraction": [
+                62,
+                68
+              ],
+              "exact_percent": "1550/17",
+              "display": "91.18",
+              "best": false
+            },
+            {
+              "fraction": [
+                75,
+                82
+              ],
+              "exact_percent": "3750/41",
+              "display": "91.46",
+              "best": true
+            },
+            {
+              "fraction": [
+                5,
+                131
+              ],
+              "exact_percent": "500/131",
+              "display": "3.82",
+              "best": false
+            },
+            {
+              "fraction": [
+                12,
+                13
+              ],
+              "exact_percent": "1200/13",
+              "display": "92.31",
+              "best": true
+            },
+            {
+              "fraction": [
+                65,
+                72
+              ],
+              "exact_percent": "1625/18",
+              "display": "90.28",
+              "best": false
+            },
+            {
+              "fraction": [
+                77,
+                85
+              ],
+              "exact_percent": "1540/17",
+              "display": "90.59",
+              "best": true
+            },
+            {
+              "fraction": [
+                6,
+                140
+              ],
+              "exact_percent": "30/7",
+              "display": "4.29",
+              "best": false
+            },
+            {
+              "fraction": [
+                12,
+                13
+              ],
+              "exact_percent": "1200/13",
+              "display": "92.31",
+              "best": true
+            },
+            {
+              "fraction": [
+                58,
+                63
+              ],
+              "exact_percent": "5800/63",
+              "display": "92.06",
+              "best": false
+            },
+            {
+              "fraction": [
+                70,
+                76
+              ],
+              "exact_percent": "1750/19",
+              "display": "92.11",
+              "best": true
+            }
+          ]
+        },
+        {
+          "key": "C",
+          "label": "Contextual reputation (C)",
+          "cells": [
+            {
+              "fraction": [
+                4,
+                134
+              ],
+              "exact_percent": "200/67",
+              "display": "2.99",
+              "best": false
+            },
+            {
+              "fraction": [
+                13,
+                14
+              ],
+              "exact_percent": "650/7",
+              "display": "92.86",
+              "best": true
+            },
+            {
+              "fraction": [
+                62,
+                68
+              ],
+              "exact_percent": "1550/17",
+              "display": "91.18",
+              "best": false
+            },
+            {
+              "fraction": [
+                75,
+                82
+              ],
+              "exact_percent": "3750/41",
+              "display": "91.46",
+              "best": true
+            },
+            {
+              "fraction": [
+                5,
+                131
+              ],
+              "exact_percent": "500/131",
+              "display": "3.82",
+              "best": false
+            },
+            {
+              "fraction": [
+                12,
+                13
+              ],
+              "exact_percent": "1200/13",
+              "display": "92.31",
+              "best": true
+            },
+            {
+              "fraction": [
+                64,
+                72
+              ],
+              "exact_percent": "800/9",
+              "display": "88.89",
+              "best": false
+            },
+            {
+              "fraction": [
+                76,
+                85
+              ],
+              "exact_percent": "1520/17",
+              "display": "89.41",
+              "best": false
+            },
+            {
+              "fraction": [
+                6,
+                140
+              ],
+              "exact_percent": "30/7",
+              "display": "4.29",
+              "best": false
+            },
+            {
+              "fraction": [
+                12,
+                13
+              ],
+              "exact_percent": "1200/13",
+              "display": "92.31",
+              "best": true
+            },
+            {
+              "fraction": [
+                57,
+                63
+              ],
+              "exact_percent": "1900/21",
+              "display": "90.48",
+              "best": false
+            },
+            {
+              "fraction": [
+                69,
+                76
+              ],
+              "exact_percent": "1725/19",
+              "display": "90.79",
+              "best": false
+            }
+          ]
+        },
+        {
+          "key": "M",
+          "label": "Fixed multi-scope (M)",
+          "cells": [
+            {
+              "fraction": [
+                4,
+                134
+              ],
+              "exact_percent": "200/67",
+              "display": "2.99",
+              "best": false
+            },
+            {
+              "fraction": [
+                13,
+                14
+              ],
+              "exact_percent": "650/7",
+              "display": "92.86",
+              "best": true
+            },
+            {
+              "fraction": [
+                62,
+                68
+              ],
+              "exact_percent": "1550/17",
+              "display": "91.18",
+              "best": false
+            },
+            {
+              "fraction": [
+                75,
+                82
+              ],
+              "exact_percent": "3750/41",
+              "display": "91.46",
+              "best": true
+            },
+            {
+              "fraction": [
+                5,
+                131
+              ],
+              "exact_percent": "500/131",
+              "display": "3.82",
+              "best": false
+            },
+            {
+              "fraction": [
+                12,
+                13
+              ],
+              "exact_percent": "1200/13",
+              "display": "92.31",
+              "best": true
+            },
+            {
+              "fraction": [
+                64,
+                72
+              ],
+              "exact_percent": "800/9",
+              "display": "88.89",
+              "best": false
+            },
+            {
+              "fraction": [
+                76,
+                85
+              ],
+              "exact_percent": "1520/17",
+              "display": "89.41",
+              "best": false
+            },
+            {
+              "fraction": [
+                6,
+                140
+              ],
+              "exact_percent": "30/7",
+              "display": "4.29",
+              "best": false
+            },
+            {
+              "fraction": [
+                12,
+                13
+              ],
+              "exact_percent": "1200/13",
+              "display": "92.31",
+              "best": true
+            },
+            {
+              "fraction": [
+                57,
+                63
+              ],
+              "exact_percent": "1900/21",
+              "display": "90.48",
+              "best": false
+            },
+            {
+              "fraction": [
+                69,
+                76
+              ],
+              "exact_percent": "1725/19",
+              "display": "90.79",
+              "best": false
+            }
+          ]
+        },
+        {
+          "key": "S",
+          "label": "Selective propagation (ours)",
+          "cells": [
+            {
+              "fraction": [
+                4,
+                134
+              ],
+              "exact_percent": "200/67",
+              "display": "2.99",
+              "best": false
+            },
+            {
+              "fraction": [
+                13,
+                14
+              ],
+              "exact_percent": "650/7",
+              "display": "92.86",
+              "best": true
+            },
+            {
+              "fraction": [
+                62,
+                68
+              ],
+              "exact_percent": "1550/17",
+              "display": "91.18",
+              "best": false
+            },
+            {
+              "fraction": [
+                75,
+                82
+              ],
+              "exact_percent": "3750/41",
+              "display": "91.46",
+              "best": true
+            },
+            {
+              "fraction": [
+                5,
+                131
+              ],
+              "exact_percent": "500/131",
+              "display": "3.82",
+              "best": false
+            },
+            {
+              "fraction": [
+                12,
+                13
+              ],
+              "exact_percent": "1200/13",
+              "display": "92.31",
+              "best": true
+            },
+            {
+              "fraction": [
+                64,
+                72
+              ],
+              "exact_percent": "800/9",
+              "display": "88.89",
+              "best": false
+            },
+            {
+              "fraction": [
+                76,
+                85
+              ],
+              "exact_percent": "1520/17",
+              "display": "89.41",
+              "best": false
+            },
+            {
+              "fraction": [
+                6,
+                140
+              ],
+              "exact_percent": "30/7",
+              "display": "4.29",
+              "best": false
+            },
+            {
+              "fraction": [
+                12,
+                13
+              ],
+              "exact_percent": "1200/13",
+              "display": "92.31",
+              "best": true
+            },
+            {
+              "fraction": [
+                57,
+                63
+              ],
+              "exact_percent": "1900/21",
+              "display": "90.48",
+              "best": false
+            },
+            {
+              "fraction": [
+                69,
+                76
+              ],
+              "exact_percent": "1725/19",
+              "display": "90.79",
+              "best": false
+            }
+          ]
+        }
+      ],
+      "caption": [
+        "<b>Table 2.</b> Rates (%) on three provisional conditions. Each has 216 probe questions per method; metric denominators appear above. Utility = combined benign memory-use score, not general QA accuracy.",
+        "<b>Bold:</b> best per column including all ties and the no-memory control (zero retention). R/C/M/S receive identical B = 5 tickets per group (40 per condition); static/control receive none.",
+        "Feedback is AI-simulated and unverified; human validation is pending. Source-grounded QA is unvalidated/unscored. Distributed/Localized are strong case-intent overlays, not verified unsafe-memory regimes.",
+        "The same 256 inputs are reused; reserved audit cases and probe cohorts can differ. These are development results, not independent replications or a confirmed superiority finding.",
+        "<b>Our proposed method has NOT been evaluated on the full 6,240-case MPBench dataset.</b>",
+        "<i>Source:</i> verified frozen comparison.json, D00-D07 (1 November 2026). Only methods with saved pilot outcomes are shown; - denotes unavailable results."
+      ]
+    }
+  ],
+  "source_sha256": {
+    "safe-mem_paper.pdf": "f5b83702f584a1e691ea7e1195052bbfd47f0cb7e84fae64a37b95a18e6d7c7c",
+    "reports/mpbench_published_targets.json": "db27bc68369af45391d3d3ec7560caf1f1b31642a1832285976426d833878b5c",
+    "reports/safemem_full_mpbench/final_results.json": "6747e8a50f870832ece6a3bdd579e3ec0ba17d32601115edb0d16b2ed4803261",
+    "reports/safemem_full_mpbench/RUN_REPORT.md": "858b3d6742ee84c599b1600bd3580fdae49ccd71607272966215e0fff9a19ad5",
+    "research_data/development_comparison_report_v1_20261101/comparison.json": "f7e0ea6b8dd9f5a4b368aad17478140221984cc584a2c80c4ac6e645bf6a0121",
+    "research_data/development_comparison_report_v1_20261101/RESULTS.md": "c792f5806722d1f365d62fba8e2018ba3ea2cf81c7b353d468ae43317df1a72e",
+    "reports/RESEARCH_AUDIT_20261101_ARTIFACT_CHECKS_V2.json": "b7b3508ed2361a6e6efa0f36f2af571a9942400a42e329cedf21c044dc1881d3",
+    "reports/PROVISIONAL_RESULTS_20261101_DELIVERY.json": "7310350569124e0b6af9fea661ddb285b5c7e955b41dea87cbfa9b43e45c3473"
+  },
+  "paper_table_1_pdf_page": 6,
+  "model": "GPT-4o-mini",
+  "new_model_calls": 0,
+  "full_proposed_method_evaluation": false,
+  "human_validation": "pending"
+}

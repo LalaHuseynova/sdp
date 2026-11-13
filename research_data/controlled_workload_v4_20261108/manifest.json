@@ -1,0 +1,189 @@
+{
+  "version": "controlled-workload-v4",
+  "seed": "controlled-workload-v1-20261108",
+  "design_hash": "5c900a073ed4a348796ff3e7e11edce22a576fcaf1900c0546be70c32f48ed90",
+  "inputs": {
+    "adversarial_data": "6acafcc601e99c21eb3c69d8297eb0d457f39e84009eff85e59bd18bf63fc84e",
+    "benign_data": "d0fdbda457fb3444e3971405de17aeddd8bfa71af007d18d0c37277be485d384",
+    "feasibility_attack_cases": "12cfde5dc9ab3c44be1287324ed3842ee5572a12d2df46b05be19bfd335a7768",
+    "case_index": "0ee5fb654e76c70954448a71bbc8d9983a070cb5c59f9fb0b1250fb08f971f66",
+    "pool_sizes": {
+      "reachable": 102,
+      "seeds": 1671,
+      "benign_bases": 1986
+    },
+    "near_duplicate_rule": {
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "cosine_threshold": 0.6,
+      "cases_with_near_duplicates": 1610,
+      "pairs_hash": "6faddb9ea0f95e440892bc740cf47f6f357ae11f32617ba458c747fbf1b4443a"
+    }
+  },
+  "files": {
+    "private/audit_schedule.jsonl": "1b34c4e55fb802be160a136bb9af77c79e5ed6cc4520c4146370d156af88bf66",
+    "private/contributions.jsonl": "978dfee1df4b096f020f15d68419010072fc581249d6da098338203a2cfe716c",
+    "private/probes.jsonl": "236d4b25806b1c57abdd62bd55d91400c88954bd021d9229c1280d03d17c2fb8",
+    "public/audit_tickets.jsonl": "7e3dedbcac4ebb5dce3ebb2a9b1f4bc66fb85f4e332dc3a1c8235867d25e753a",
+    "public/contributions.jsonl": "8ee7d69f5dd75822d20f0f00967c4d8a9f18ffe5fb316184616c7f667f5fd23c",
+    "public/overlays/distributed.jsonl": "8c0bfd2a80f5c4c48624ffc541baf7b8ddd5aeecc4defdbf860798b7e8703a3f",
+    "public/overlays/localized.jsonl": "410151f38ee442e362094cb9bd95abe9df1df8fa998515871eda7c35c2893308",
+    "public/overlays/uninformative.jsonl": "10befcd3a3dcd6878e90c8155e35dba5502310268e57944f8c4a23c887fff9f7",
+    "public/probes.jsonl": "2b8d62324db571b3704ac6b93270ff4a012e06d4a7e0d350da17962bceea4327"
+  },
+  "summary": {
+    "dev": {
+      "groups": 8,
+      "contributions": 320,
+      "contributions_by_role": {
+        "benign_with_fact": 208,
+        "attack_scored": 32,
+        "attack_seed": 32,
+        "linked_copy": 8,
+        "unlinked_copy": 8,
+        "principal_control": 32
+      },
+      "contributions_by_extraction": {
+        "new_text_paid": 256,
+        "verbatim_mpbench_cache_expected": 64
+      },
+      "probes_by_kind": {
+        "attack": 32,
+        "copy_linked": 8,
+        "copy_unlinked": 8,
+        "utility": 200,
+        "utility_principal": 32
+      },
+      "scored_attack_probes_per_condition": 32,
+      "context_pairs": {
+        "('calendar', 'email')": 2,
+        "('calendar', 'slack')": 1,
+        "('calendar', 'file_and_doc')": 3,
+        "('email', 'slack')": 2
+      },
+      "template_groups_available": 25,
+      "attack_template_groups_used": 38,
+      "max_template_group_reuse_across_groups": 4,
+      "utility_strata": {
+        "localized": {
+          "same_contributor_context_other_batch": 56,
+          "other_contributor": 120,
+          "unrelated_source": 24,
+          "principal": 32
+        },
+        "distributed": {
+          "same_batch_as_unsafe_seed": 56,
+          "other_contributor": 120,
+          "unrelated_source": 24,
+          "principal": 32
+        },
+        "uninformative": {
+          "same_batch_as_unsafe_seed": 75,
+          "same_contributor_context_other_batch": 69,
+          "unrelated_source": 24,
+          "same_contributor_other_context": 32,
+          "principal": 32
+        }
+      },
+      "power_baseline_successes": {
+        "0.20": {
+          "expected_baseline_successes": 6.4,
+          "P(successes >= 20)": 0.0
+        },
+        "0.25": {
+          "expected_baseline_successes": 8.0,
+          "P(successes >= 20)": 0.0
+        },
+        "0.30": {
+          "expected_baseline_successes": 9.6,
+          "P(successes >= 20)": 0.0001
+        },
+        "0.44": {
+          "expected_baseline_successes": 14.1,
+          "P(successes >= 20)": 0.0271
+        }
+      }
+    },
+    "test": {
+      "groups": 24,
+      "contributions": 960,
+      "contributions_by_role": {
+        "benign_with_fact": 624,
+        "attack_scored": 96,
+        "attack_seed": 96,
+        "linked_copy": 24,
+        "unlinked_copy": 24,
+        "principal_control": 96
+      },
+      "contributions_by_extraction": {
+        "new_text_paid": 768,
+        "verbatim_mpbench_cache_expected": 192
+      },
+      "probes_by_kind": {
+        "attack": 96,
+        "copy_linked": 24,
+        "copy_unlinked": 24,
+        "utility": 600,
+        "utility_principal": 96
+      },
+      "scored_attack_probes_per_condition": 96,
+      "context_pairs": {
+        "('calendar', 'email')": 5,
+        "('file_and_doc', 'slack')": 2,
+        "('calendar', 'web')": 2,
+        "('calendar', 'slack')": 3,
+        "('calendar', 'file_and_doc')": 5,
+        "('script_execution', 'web')": 1,
+        "('email', 'slack')": 3,
+        "('file_and_doc', 'web')": 1,
+        "('email', 'script_execution')": 1,
+        "('slack', 'web')": 1
+      },
+      "template_groups_available": 77,
+      "attack_template_groups_used": 123,
+      "max_template_group_reuse_across_groups": 5,
+      "utility_strata": {
+        "localized": {
+          "same_contributor_context_other_batch": 168,
+          "other_contributor": 360,
+          "unrelated_source": 72,
+          "principal": 96
+        },
+        "distributed": {
+          "same_batch_as_unsafe_seed": 168,
+          "other_contributor": 360,
+          "unrelated_source": 72,
+          "principal": 96
+        },
+        "uninformative": {
+          "same_contributor_context_other_batch": 182,
+          "same_batch_as_unsafe_seed": 207,
+          "unrelated_source": 72,
+          "principal": 96,
+          "same_contributor_other_context": 102,
+          "other_contributor": 37
+        }
+      },
+      "power_baseline_successes": {
+        "0.20": {
+          "expected_baseline_successes": 19.2,
+          "P(successes >= 20)": 0.4594
+        },
+        "0.25": {
+          "expected_baseline_successes": 24.0,
+          "P(successes >= 20)": 0.8563
+        },
+        "0.30": {
+          "expected_baseline_successes": 28.8,
+          "P(successes >= 20)": 0.9835
+        },
+        "0.44": {
+          "expected_baseline_successes": 42.2,
+          "P(successes >= 20)": 1.0
+        }
+      }
+    }
+  },
+  "labels_basis": "planted content and utility facts are known by construction; no human or AI annotation is claimed",
+  "paid_calls_made": 0,
+  "carriers": "durable_fact_centred_v3"
+}

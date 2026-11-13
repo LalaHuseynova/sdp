@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import os
+import re
 from collections.abc import Callable
+from decimal import ROUND_CEILING, Decimal, InvalidOperation
 from typing import Any
+from urllib.parse import urlparse
 
 from ams.llm import pricing
 from ams.llm.base import ContentFiltered, ProviderError
@@ -29,11 +32,32 @@ class OpenAIClient:
         timeout: float = 120.0,
         require_key: bool = True,
         sdk_client: Any = None,
+        budget_guard: Any = None,
+        allow_estimated_billing: bool = False,
     ) -> None:
         """`sdk_client` lets a subclass supply an already-built SDK object."""
+        self._budget_guard = budget_guard
+        self._allow_estimated_billing = (
+            allow_estimated_billing or os.environ.get("AMS_BUDGET_ALLOW_ESTIMATED_USAGE") == "1"
+        )
+        budget_path = os.environ.get("AMS_STRICT_BUDGET_PATH")
+        if self._budget_guard is None and budget_path:
+            from ams.llm.budget import BudgetGuard
+
+            self._budget_guard = BudgetGuard(
+                budget_path, limit_usd=os.environ.get("AMS_STRICT_BUDGET_LIMIT_USD", "25")
+            )
+        if self._budget_guard is not None and provider != "openrouter":
+            raise ValueError("strict experiment billing is supported only for OpenRouter")
         if sdk_client is not None:
             self._provider = provider
-            self._client = sdk_client
+            self._client = (
+                sdk_client.with_options(max_retries=0)
+                if self._budget_guard is not None
+                else sdk_client
+            )
+            self.base_url = str(getattr(self._client, "base_url", ""))
+            self._check_budget_endpoint()
             return
 
         try:
@@ -59,9 +83,23 @@ class OpenAIClient:
             )
         self._provider = provider
         self.base_url = resolved_base_url
+        sdk_options = {"max_retries": 0} if self._budget_guard is not None else {}
         self._client = OpenAI(
-            api_key=key or "not-needed", base_url=resolved_base_url, timeout=timeout
+            api_key=key or "not-needed", base_url=resolved_base_url, timeout=timeout, **sdk_options
         )
+        self._check_budget_endpoint()
+
+    def _check_budget_endpoint(self) -> None:
+        if self._budget_guard is not None:
+            endpoint = urlparse(str(self.base_url))
+            if (
+                endpoint.scheme != "https"
+                or endpoint.hostname != "openrouter.ai"
+                or endpoint.path.rstrip("/") != "/api/v1"
+                or endpoint.query
+                or endpoint.fragment
+            ):
+                raise ValueError("strict billing requires the official HTTPS OpenRouter endpoint")
 
     @property
     def provider(self) -> str:
@@ -84,13 +122,47 @@ class OpenAIClient:
             kwargs["reasoning_effort"] = request.reasoning_effort
         if request.stop:
             kwargs["stop"] = list(request.stop)
+        reservation = None
+        if self._budget_guard is not None:
+            from ams.llm.budget import BudgetAccountingError
+
+            if request.reasoning_effort not in (None, "none"):
+                raise BudgetAccountingError("unbudgeted reasoning is forbidden")
+            extra = kwargs.setdefault("extra_body", {})
+            extra["provider"] = {
+                "max_price": {"prompt": 0.15, "completion": 0.60, "request": 0},
+                "allow_fallbacks": False,
+                "require_parameters": True,
+            }
+            # Explicit disabled entries override defaults unless the account prevents overrides.
+            # The software guard remains scoped to requests dispatched by this run.
+            extra["plugins"] = [
+                {"id": plugin, "enabled": False}
+                for plugin in ("web", "file-parser", "response-healing")
+            ]
+            reservation = self._budget_guard.reserve(
+                request.model, request.max_tokens, stage="chat"
+            )
         try:
             resp = self._client.chat.completions.create(**kwargs)
         except Exception as exc:
+            if reservation is not None:
+                self._budget_guard.mark_unknown(
+                    reservation,
+                    type(exc).__name__,
+                    metadata={
+                        "request_id": request.cache_key(self.provider),
+                        "requested_model": request.model,
+                    },
+                )
             raise self._wrap(exc) from exc
 
+        estimated_usage = None
+        if reservation is not None:
+            estimated_usage = self._account_response(resp, request, reservation)
+
         choice = resp.choices[0]
-        usage = self._usage(getattr(resp, "usage", None), request.model)
+        usage = estimated_usage or self._usage(getattr(resp, "usage", None), request.model)
         return ChatResponse(
             text=choice.message.content or "",
             model=resp.model,
@@ -99,7 +171,142 @@ class OpenAIClient:
             raw_finish_reason=choice.finish_reason,
         )
 
+    def _account_response(self, resp: Any, request: ChatRequest, reservation: str) -> Usage | None:
+        """Keep unverified attempts reserved; only authoritative charges release holds."""
+        raw = getattr(resp, "usage", None)
+        metadata = self._billing_metadata(resp, request)
+        if getattr(raw, "is_byok", False):
+            self._stop_billing(reservation, "byok_billing", metadata)
+        raw_cost = getattr(raw, "cost", None)
+        cost = None
+        if raw_cost is not None:
+            try:
+                cost = Decimal(str(raw_cost))
+                if not cost.is_finite() or cost < 0:
+                    raise ValueError("invalid charge")
+            except (InvalidOperation, ValueError, TypeError):
+                self._stop_billing(reservation, "invalid_billing", metadata)
+        if metadata["usage_details"]["native_usage_invalid"]:
+            self._stop_billing(reservation, "invalid_billing", metadata)
+
+        returned_model = getattr(resp, "model", None)
+        model_matches = isinstance(returned_model, str) and (
+            returned_model == request.model
+            or re.fullmatch(re.escape(request.model) + r"-\d{4}-\d{2}-\d{2}", returned_model)
+        )
+        if returned_model and not model_matches:
+            self._stop_billing(reservation, "unexpected_response_model", metadata)
+
+        choices = getattr(resp, "choices", None)
+        if (
+            getattr(resp, "error", None)
+            or not choices
+            or getattr(choices[0], "message", None) is None
+        ):
+            # A parsed HTTP 200 error is not a model refusal. Retrying must reserve again.
+            if cost is not None and cost > self._reservation_ceiling(request):
+                self._budget_guard.settle(reservation, cost, metadata=metadata)
+            self._budget_guard.mark_unknown(reservation, "IncompleteResponse", metadata=metadata)
+            raise ProviderError(
+                self.provider,
+                "provider returned no completion; billing hold retained",
+                retryable=True,
+            )
+        if not model_matches:
+            self._stop_billing(reservation, "unexpected_response_model", metadata)
+
+        if cost is None:
+            if not self._allow_estimated_billing:
+                self._stop_billing(reservation, "unverified_billing", metadata)
+            settings = self._budget_guard.snapshot()
+            ceiling = self._reservation_ceiling(request, settings)
+            inp = metadata.get("input_tokens", 0)
+            out = metadata.get("output_tokens", 0)
+            details = metadata["usage_details"]
+            native_estimate = Decimal(
+                str(pricing.estimate_cost(self.provider, request.model, inp, out))
+            )
+            if (
+                native_estimate > ceiling
+                or inp > settings["context_token_bound"]
+                or out > request.max_tokens
+            ):
+                self._stop_billing(reservation, "usage_price_breach", metadata)
+            if details["input_tokens_known"] and details["output_tokens_known"]:
+                # Native token counts are reported, never inferred from prompt text.
+                estimated_cost = native_estimate
+            else:
+                # Unknown counts remain zero in Usage; charge its full hold in the ledger.
+                estimated_cost = ceiling
+            metadata.update(
+                estimated_cost_usd=float(estimated_cost), cost_missing=True, billing_verified=False
+            )
+            self._budget_guard.mark_unknown(reservation, "MissingBillingCost", metadata=metadata)
+            return Usage(inp, out, float(estimated_cost))
+
+        # Preserve the existing authoritative receipt format for complete billed responses.
+        self._budget_guard.settle(
+            reservation,
+            cost,
+            metadata={
+                "generation_id": getattr(resp, "id", ""),
+                "model": returned_model,
+                "input_tokens": getattr(raw, "prompt_tokens", 0),
+                "output_tokens": getattr(raw, "completion_tokens", 0),
+            },
+        )
+        return None
+
+    def _reservation_ceiling(
+        self, request: ChatRequest, settings: dict[str, Any] | None = None
+    ) -> Decimal:
+        settings = settings if settings is not None else self._budget_guard.snapshot()
+        amount = (
+            Decimal(settings["max_input_per_mtok"]) * settings["context_token_bound"]
+            + Decimal(settings["max_output_per_mtok"]) * request.max_tokens
+        ) / 1_000_000
+        return amount.quantize(Decimal("0.000000001"), rounding=ROUND_CEILING)
+
+    def _billing_metadata(self, resp: Any, request: ChatRequest) -> dict[str, Any]:
+        raw = getattr(resp, "usage", None)
+        metadata: dict[str, Any] = {
+            "request_id": request.cache_key(self.provider),
+            "requested_model": request.model,
+            "usage_details": {"native_usage_invalid": False},
+        }
+        for key, value in (
+            ("generation_id", getattr(resp, "id", None)),
+            ("model", getattr(resp, "model", None)),
+        ):
+            if (
+                isinstance(value, str)
+                and re.fullmatch(r"[A-Za-z0-9_.:/-]{1,128}", value)
+                and "sk-" not in value.lower()
+            ):
+                metadata[key] = value
+        for native, key in (
+            ("prompt_tokens", "input_tokens"),
+            ("completion_tokens", "output_tokens"),
+        ):
+            value = getattr(raw, native, None)
+            known = isinstance(value, int) and not isinstance(value, bool) and value >= 0
+            metadata["usage_details"][f"{key}_known"] = known
+            if known:
+                metadata[key] = value
+            elif value is not None:
+                metadata["usage_details"]["native_usage_invalid"] = True
+        return metadata
+
+    def _stop_billing(self, reservation: str, reason: str, metadata: dict[str, Any]) -> None:
+        from ams.llm.budget import BudgetAccountingError
+
+        self._budget_guard.mark_unknown(reservation, reason, metadata=metadata)
+        self._budget_guard.halt(reason)
+        raise BudgetAccountingError("provider billing could not be verified; dispatch stopped")
+
     def embed(self, request: EmbedRequest) -> EmbedResponse:
+        if self._budget_guard is not None:
+            raise ValueError("paid embeddings are forbidden in the approved experiment")
         try:
             resp = self._client.embeddings.create(model=request.model, input=list(request.texts))
         except Exception as exc:
@@ -116,7 +323,17 @@ class OpenAIClient:
             return Usage()
         inp = getattr(raw, "prompt_tokens", 0) or 0
         out = getattr(raw, "completion_tokens", 0) or 0
-        return Usage(inp, out, pricing.estimate_cost(self._provider, model, inp, out))
+        cost = pricing.estimate_cost(self._provider, model, inp, out)
+        if self._provider == "openrouter":
+            reported = getattr(raw, "cost", None)
+            if reported is not None:
+                try:
+                    parsed = Decimal(str(reported))
+                    if parsed.is_finite() and parsed >= 0:
+                        cost = float(parsed)
+                except InvalidOperation:
+                    pass
+        return Usage(inp, out, cost)
 
     def _wrap(self, exc: Exception) -> Exception:
         text = str(exc)

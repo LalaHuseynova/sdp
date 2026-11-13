@@ -1,0 +1,1598 @@
+{
+  "metrics": {
+    "localized": {
+      "static": {
+        "asr_scored": {
+          "k": 14,
+          "n": 32,
+          "value": 0.4375
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 186,
+          "n": 200,
+          "value": 0.93
+        },
+        "utility_by_stratum": {
+          "other_contributor": {
+            "k": 114,
+            "n": 120,
+            "value": 0.95
+          },
+          "same_contributor_context_other_batch": {
+            "k": 51,
+            "n": 56,
+            "value": 0.9107142857142857
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 185,
+          "n": 200,
+          "value": 0.925
+        },
+        "utility_by_stratum_strict": {
+          "other_contributor": {
+            "k": 113,
+            "n": 120,
+            "value": 0.9416666666666667
+          },
+          "same_contributor_context_other_batch": {
+            "k": 51,
+            "n": 56,
+            "value": 0.9107142857142857
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 1,
+        "attack_target_in_context": {
+          "k": 28,
+          "n": 32
+        }
+      },
+      "R": {
+        "asr_scored": {
+          "k": 14,
+          "n": 32,
+          "value": 0.4375
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 186,
+          "n": 200,
+          "value": 0.93
+        },
+        "utility_by_stratum": {
+          "other_contributor": {
+            "k": 114,
+            "n": 120,
+            "value": 0.95
+          },
+          "same_contributor_context_other_batch": {
+            "k": 51,
+            "n": 56,
+            "value": 0.9107142857142857
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 185,
+          "n": 200,
+          "value": 0.925
+        },
+        "utility_by_stratum_strict": {
+          "other_contributor": {
+            "k": 113,
+            "n": 120,
+            "value": 0.9416666666666667
+          },
+          "same_contributor_context_other_batch": {
+            "k": 51,
+            "n": 56,
+            "value": 0.9107142857142857
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 1,
+        "attack_target_in_context": {
+          "k": 28,
+          "n": 32
+        }
+      },
+      "C": {
+        "asr_scored": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 146,
+          "n": 200,
+          "value": 0.73
+        },
+        "utility_by_stratum": {
+          "other_contributor": {
+            "k": 114,
+            "n": 120,
+            "value": 0.95
+          },
+          "same_contributor_context_other_batch": {
+            "k": 11,
+            "n": 56,
+            "value": 0.19642857142857142
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 134,
+          "n": 200,
+          "value": 0.67
+        },
+        "utility_by_stratum_strict": {
+          "other_contributor": {
+            "k": 113,
+            "n": 120,
+            "value": 0.9416666666666667
+          },
+          "same_contributor_context_other_batch": {
+            "k": 0,
+            "n": 56,
+            "value": 0.0
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 12,
+        "attack_target_in_context": {
+          "k": 0,
+          "n": 32
+        }
+      },
+      "M": {
+        "asr_scored": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 146,
+          "n": 200,
+          "value": 0.73
+        },
+        "utility_by_stratum": {
+          "other_contributor": {
+            "k": 114,
+            "n": 120,
+            "value": 0.95
+          },
+          "same_contributor_context_other_batch": {
+            "k": 11,
+            "n": 56,
+            "value": 0.19642857142857142
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 134,
+          "n": 200,
+          "value": 0.67
+        },
+        "utility_by_stratum_strict": {
+          "other_contributor": {
+            "k": 113,
+            "n": 120,
+            "value": 0.9416666666666667
+          },
+          "same_contributor_context_other_batch": {
+            "k": 0,
+            "n": 56,
+            "value": 0.0
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 12,
+        "attack_target_in_context": {
+          "k": 0,
+          "n": 32
+        }
+      },
+      "S": {
+        "asr_scored": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 186,
+          "n": 200,
+          "value": 0.93
+        },
+        "utility_by_stratum": {
+          "other_contributor": {
+            "k": 114,
+            "n": 120,
+            "value": 0.95
+          },
+          "same_contributor_context_other_batch": {
+            "k": 51,
+            "n": 56,
+            "value": 0.9107142857142857
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 185,
+          "n": 200,
+          "value": 0.925
+        },
+        "utility_by_stratum_strict": {
+          "other_contributor": {
+            "k": 113,
+            "n": 120,
+            "value": 0.9416666666666667
+          },
+          "same_contributor_context_other_batch": {
+            "k": 51,
+            "n": 56,
+            "value": 0.9107142857142857
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 1,
+        "attack_target_in_context": {
+          "k": 0,
+          "n": 32
+        }
+      },
+      "no_memory": {
+        "asr_scored": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "utility_external": {
+          "k": 0,
+          "n": 200,
+          "value": 0.0
+        },
+        "utility_by_stratum": {
+          "other_contributor": {
+            "k": 0,
+            "n": 120,
+            "value": 0.0
+          },
+          "same_contributor_context_other_batch": {
+            "k": 0,
+            "n": 56,
+            "value": 0.0
+          },
+          "unrelated_source": {
+            "k": 0,
+            "n": 24,
+            "value": 0.0
+          }
+        },
+        "utility_principal": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "utility_external_strict": {
+          "k": 0,
+          "n": 200,
+          "value": 0.0
+        },
+        "utility_by_stratum_strict": {
+          "other_contributor": {
+            "k": 0,
+            "n": 120,
+            "value": 0.0
+          },
+          "same_contributor_context_other_batch": {
+            "k": 0,
+            "n": 56,
+            "value": 0.0
+          },
+          "unrelated_source": {
+            "k": 0,
+            "n": 24,
+            "value": 0.0
+          }
+        },
+        "utility_principal_strict": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "utility_coincidental_passes": 0,
+        "attack_target_in_context": {
+          "k": 0,
+          "n": 0
+        }
+      }
+    },
+    "distributed": {
+      "static": {
+        "asr_scored": {
+          "k": 14,
+          "n": 32,
+          "value": 0.4375
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 186,
+          "n": 200,
+          "value": 0.93
+        },
+        "utility_by_stratum": {
+          "other_contributor": {
+            "k": 114,
+            "n": 120,
+            "value": 0.95
+          },
+          "same_batch_as_unsafe_seed": {
+            "k": 51,
+            "n": 56,
+            "value": 0.9107142857142857
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 185,
+          "n": 200,
+          "value": 0.925
+        },
+        "utility_by_stratum_strict": {
+          "other_contributor": {
+            "k": 113,
+            "n": 120,
+            "value": 0.9416666666666667
+          },
+          "same_batch_as_unsafe_seed": {
+            "k": 51,
+            "n": 56,
+            "value": 0.9107142857142857
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 1,
+        "attack_target_in_context": {
+          "k": 28,
+          "n": 32
+        }
+      },
+      "R": {
+        "asr_scored": {
+          "k": 14,
+          "n": 32,
+          "value": 0.4375
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 186,
+          "n": 200,
+          "value": 0.93
+        },
+        "utility_by_stratum": {
+          "other_contributor": {
+            "k": 114,
+            "n": 120,
+            "value": 0.95
+          },
+          "same_batch_as_unsafe_seed": {
+            "k": 51,
+            "n": 56,
+            "value": 0.9107142857142857
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 185,
+          "n": 200,
+          "value": 0.925
+        },
+        "utility_by_stratum_strict": {
+          "other_contributor": {
+            "k": 113,
+            "n": 120,
+            "value": 0.9416666666666667
+          },
+          "same_batch_as_unsafe_seed": {
+            "k": 51,
+            "n": 56,
+            "value": 0.9107142857142857
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 1,
+        "attack_target_in_context": {
+          "k": 28,
+          "n": 32
+        }
+      },
+      "C": {
+        "asr_scored": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 146,
+          "n": 200,
+          "value": 0.73
+        },
+        "utility_by_stratum": {
+          "other_contributor": {
+            "k": 114,
+            "n": 120,
+            "value": 0.95
+          },
+          "same_batch_as_unsafe_seed": {
+            "k": 11,
+            "n": 56,
+            "value": 0.19642857142857142
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 134,
+          "n": 200,
+          "value": 0.67
+        },
+        "utility_by_stratum_strict": {
+          "other_contributor": {
+            "k": 113,
+            "n": 120,
+            "value": 0.9416666666666667
+          },
+          "same_batch_as_unsafe_seed": {
+            "k": 0,
+            "n": 56,
+            "value": 0.0
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 12,
+        "attack_target_in_context": {
+          "k": 0,
+          "n": 32
+        }
+      },
+      "M": {
+        "asr_scored": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 146,
+          "n": 200,
+          "value": 0.73
+        },
+        "utility_by_stratum": {
+          "other_contributor": {
+            "k": 114,
+            "n": 120,
+            "value": 0.95
+          },
+          "same_batch_as_unsafe_seed": {
+            "k": 11,
+            "n": 56,
+            "value": 0.19642857142857142
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 134,
+          "n": 200,
+          "value": 0.67
+        },
+        "utility_by_stratum_strict": {
+          "other_contributor": {
+            "k": 113,
+            "n": 120,
+            "value": 0.9416666666666667
+          },
+          "same_batch_as_unsafe_seed": {
+            "k": 0,
+            "n": 56,
+            "value": 0.0
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 12,
+        "attack_target_in_context": {
+          "k": 0,
+          "n": 32
+        }
+      },
+      "S": {
+        "asr_scored": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 146,
+          "n": 200,
+          "value": 0.73
+        },
+        "utility_by_stratum": {
+          "other_contributor": {
+            "k": 114,
+            "n": 120,
+            "value": 0.95
+          },
+          "same_batch_as_unsafe_seed": {
+            "k": 11,
+            "n": 56,
+            "value": 0.19642857142857142
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 134,
+          "n": 200,
+          "value": 0.67
+        },
+        "utility_by_stratum_strict": {
+          "other_contributor": {
+            "k": 113,
+            "n": 120,
+            "value": 0.9416666666666667
+          },
+          "same_batch_as_unsafe_seed": {
+            "k": 0,
+            "n": 56,
+            "value": 0.0
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 12,
+        "attack_target_in_context": {
+          "k": 0,
+          "n": 32
+        }
+      },
+      "no_memory": {
+        "asr_scored": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "utility_external": {
+          "k": 0,
+          "n": 200,
+          "value": 0.0
+        },
+        "utility_by_stratum": {
+          "other_contributor": {
+            "k": 0,
+            "n": 120,
+            "value": 0.0
+          },
+          "same_batch_as_unsafe_seed": {
+            "k": 0,
+            "n": 56,
+            "value": 0.0
+          },
+          "unrelated_source": {
+            "k": 0,
+            "n": 24,
+            "value": 0.0
+          }
+        },
+        "utility_principal": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "utility_external_strict": {
+          "k": 0,
+          "n": 200,
+          "value": 0.0
+        },
+        "utility_by_stratum_strict": {
+          "other_contributor": {
+            "k": 0,
+            "n": 120,
+            "value": 0.0
+          },
+          "same_batch_as_unsafe_seed": {
+            "k": 0,
+            "n": 56,
+            "value": 0.0
+          },
+          "unrelated_source": {
+            "k": 0,
+            "n": 24,
+            "value": 0.0
+          }
+        },
+        "utility_principal_strict": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "utility_coincidental_passes": 0,
+        "attack_target_in_context": {
+          "k": 0,
+          "n": 0
+        }
+      }
+    },
+    "uninformative": {
+      "static": {
+        "asr_scored": {
+          "k": 14,
+          "n": 32,
+          "value": 0.4375
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 186,
+          "n": 200,
+          "value": 0.93
+        },
+        "utility_by_stratum": {
+          "same_batch_as_unsafe_seed": {
+            "k": 69,
+            "n": 75,
+            "value": 0.92
+          },
+          "same_contributor_context_other_batch": {
+            "k": 67,
+            "n": 69,
+            "value": 0.9710144927536232
+          },
+          "same_contributor_other_context": {
+            "k": 29,
+            "n": 32,
+            "value": 0.90625
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 185,
+          "n": 200,
+          "value": 0.925
+        },
+        "utility_by_stratum_strict": {
+          "same_batch_as_unsafe_seed": {
+            "k": 68,
+            "n": 75,
+            "value": 0.9066666666666666
+          },
+          "same_contributor_context_other_batch": {
+            "k": 67,
+            "n": 69,
+            "value": 0.9710144927536232
+          },
+          "same_contributor_other_context": {
+            "k": 29,
+            "n": 32,
+            "value": 0.90625
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 1,
+        "attack_target_in_context": {
+          "k": 28,
+          "n": 32
+        }
+      },
+      "R": {
+        "asr_scored": {
+          "k": 14,
+          "n": 32,
+          "value": 0.4375
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 186,
+          "n": 200,
+          "value": 0.93
+        },
+        "utility_by_stratum": {
+          "same_batch_as_unsafe_seed": {
+            "k": 69,
+            "n": 75,
+            "value": 0.92
+          },
+          "same_contributor_context_other_batch": {
+            "k": 67,
+            "n": 69,
+            "value": 0.9710144927536232
+          },
+          "same_contributor_other_context": {
+            "k": 29,
+            "n": 32,
+            "value": 0.90625
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 185,
+          "n": 200,
+          "value": 0.925
+        },
+        "utility_by_stratum_strict": {
+          "same_batch_as_unsafe_seed": {
+            "k": 68,
+            "n": 75,
+            "value": 0.9066666666666666
+          },
+          "same_contributor_context_other_batch": {
+            "k": 67,
+            "n": 69,
+            "value": 0.9710144927536232
+          },
+          "same_contributor_other_context": {
+            "k": 29,
+            "n": 32,
+            "value": 0.90625
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 1,
+        "attack_target_in_context": {
+          "k": 28,
+          "n": 32
+        }
+      },
+      "C": {
+        "asr_scored": {
+          "k": 11,
+          "n": 32,
+          "value": 0.34375
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 174,
+          "n": 200,
+          "value": 0.87
+        },
+        "utility_by_stratum": {
+          "same_batch_as_unsafe_seed": {
+            "k": 57,
+            "n": 75,
+            "value": 0.76
+          },
+          "same_contributor_context_other_batch": {
+            "k": 67,
+            "n": 69,
+            "value": 0.9710144927536232
+          },
+          "same_contributor_other_context": {
+            "k": 29,
+            "n": 32,
+            "value": 0.90625
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 169,
+          "n": 200,
+          "value": 0.845
+        },
+        "utility_by_stratum_strict": {
+          "same_batch_as_unsafe_seed": {
+            "k": 52,
+            "n": 75,
+            "value": 0.6933333333333334
+          },
+          "same_contributor_context_other_batch": {
+            "k": 67,
+            "n": 69,
+            "value": 0.9710144927536232
+          },
+          "same_contributor_other_context": {
+            "k": 29,
+            "n": 32,
+            "value": 0.90625
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 5,
+        "attack_target_in_context": {
+          "k": 23,
+          "n": 32
+        }
+      },
+      "M": {
+        "asr_scored": {
+          "k": 9,
+          "n": 32,
+          "value": 0.28125
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 136,
+          "n": 200,
+          "value": 0.68
+        },
+        "utility_by_stratum": {
+          "same_batch_as_unsafe_seed": {
+            "k": 41,
+            "n": 75,
+            "value": 0.5466666666666666
+          },
+          "same_contributor_context_other_batch": {
+            "k": 45,
+            "n": 69,
+            "value": 0.6521739130434783
+          },
+          "same_contributor_other_context": {
+            "k": 29,
+            "n": 32,
+            "value": 0.90625
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 125,
+          "n": 200,
+          "value": 0.625
+        },
+        "utility_by_stratum_strict": {
+          "same_batch_as_unsafe_seed": {
+            "k": 33,
+            "n": 75,
+            "value": 0.44
+          },
+          "same_contributor_context_other_batch": {
+            "k": 42,
+            "n": 69,
+            "value": 0.6086956521739131
+          },
+          "same_contributor_other_context": {
+            "k": 29,
+            "n": 32,
+            "value": 0.90625
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 11,
+        "attack_target_in_context": {
+          "k": 15,
+          "n": 32
+        }
+      },
+      "S": {
+        "asr_scored": {
+          "k": 11,
+          "n": 32,
+          "value": 0.34375
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 4,
+          "n": 8,
+          "value": 0.5
+        },
+        "utility_external": {
+          "k": 174,
+          "n": 200,
+          "value": 0.87
+        },
+        "utility_by_stratum": {
+          "same_batch_as_unsafe_seed": {
+            "k": 57,
+            "n": 75,
+            "value": 0.76
+          },
+          "same_contributor_context_other_batch": {
+            "k": 67,
+            "n": 69,
+            "value": 0.9710144927536232
+          },
+          "same_contributor_other_context": {
+            "k": 29,
+            "n": 32,
+            "value": 0.90625
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_external_strict": {
+          "k": 169,
+          "n": 200,
+          "value": 0.845
+        },
+        "utility_by_stratum_strict": {
+          "same_batch_as_unsafe_seed": {
+            "k": 52,
+            "n": 75,
+            "value": 0.6933333333333334
+          },
+          "same_contributor_context_other_batch": {
+            "k": 67,
+            "n": 69,
+            "value": 0.9710144927536232
+          },
+          "same_contributor_other_context": {
+            "k": 29,
+            "n": 32,
+            "value": 0.90625
+          },
+          "unrelated_source": {
+            "k": 21,
+            "n": 24,
+            "value": 0.875
+          }
+        },
+        "utility_principal_strict": {
+          "k": 32,
+          "n": 32,
+          "value": 1.0
+        },
+        "utility_coincidental_passes": 5,
+        "attack_target_in_context": {
+          "k": 23,
+          "n": 32
+        }
+      },
+      "no_memory": {
+        "asr_scored": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "copy_linked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "asr_target_specific": null,
+        "copy_linked_leak_target_specific": null,
+        "copy_unlinked_leak_target_specific": null,
+        "copy_unlinked_leak": {
+          "k": 0,
+          "n": 8,
+          "value": 0.0
+        },
+        "utility_external": {
+          "k": 0,
+          "n": 200,
+          "value": 0.0
+        },
+        "utility_by_stratum": {
+          "same_batch_as_unsafe_seed": {
+            "k": 0,
+            "n": 75,
+            "value": 0.0
+          },
+          "same_contributor_context_other_batch": {
+            "k": 0,
+            "n": 69,
+            "value": 0.0
+          },
+          "same_contributor_other_context": {
+            "k": 0,
+            "n": 32,
+            "value": 0.0
+          },
+          "unrelated_source": {
+            "k": 0,
+            "n": 24,
+            "value": 0.0
+          }
+        },
+        "utility_principal": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "utility_external_strict": {
+          "k": 0,
+          "n": 200,
+          "value": 0.0
+        },
+        "utility_by_stratum_strict": {
+          "same_batch_as_unsafe_seed": {
+            "k": 0,
+            "n": 75,
+            "value": 0.0
+          },
+          "same_contributor_context_other_batch": {
+            "k": 0,
+            "n": 69,
+            "value": 0.0
+          },
+          "same_contributor_other_context": {
+            "k": 0,
+            "n": 32,
+            "value": 0.0
+          },
+          "unrelated_source": {
+            "k": 0,
+            "n": 24,
+            "value": 0.0
+          }
+        },
+        "utility_principal_strict": {
+          "k": 0,
+          "n": 32,
+          "value": 0.0
+        },
+        "utility_coincidental_passes": 0,
+        "attack_target_in_context": {
+          "k": 0,
+          "n": 0
+        }
+      }
+    }
+  },
+  "hypotheses": {
+    "H1_localized_selectivity": {
+      "contrasts": {
+        "S_minus_C_key_utility": {
+          "estimate": 0.7142857142857143,
+          "ci95": [
+            0.5892857142857143,
+            0.8392857142857143
+          ],
+          "p_le_zero": 0.0,
+          "groups": 8
+        },
+        "S_minus_M_key_utility": {
+          "estimate": 0.7142857142857143,
+          "ci95": [
+            0.5892857142857143,
+            0.8392857142857143
+          ],
+          "p_le_zero": 0.0,
+          "groups": 8
+        },
+        "S_minus_C_asr": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "p_le_zero": 1.0,
+          "groups": 8
+        },
+        "S_minus_M_asr": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "p_le_zero": 1.0,
+          "groups": 8
+        },
+        "S_minus_R_asr": {
+          "estimate": -0.4375,
+          "ci95": [
+            -0.5625,
+            -0.28125
+          ],
+          "p_le_zero": 1.0,
+          "groups": 8
+        }
+      },
+      "holm_rejects": {
+        "S_minus_C_key_utility": true,
+        "S_minus_M_key_utility": true
+      },
+      "supported": true
+    },
+    "H2_distributed_asr_noninferior_to_M": {
+      "contrast": {
+        "estimate": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "p_le_zero": 1.0,
+        "groups": 8
+      },
+      "supported": true
+    },
+    "H3_uninformative_excess_loss_vs_R": {
+      "contrast_R_minus_S_utility": {
+        "estimate": 0.06000000000000005,
+        "ci95": [
+          0.015000000000000013,
+          0.11499999999999999
+        ],
+        "p_le_zero": 0.0035,
+        "groups": 8
+      },
+      "supported": false
+    },
+    "secondary_H1_strict_key_utility": {
+      "S_minus_C_key_utility_strict": {
+        "estimate": 0.9107142857142857,
+        "ci95": [
+          0.8035714285714286,
+          0.9821428571428571
+        ],
+        "p_le_zero": 0.0,
+        "groups": 8
+      },
+      "S_minus_M_key_utility_strict": {
+        "estimate": 0.9107142857142857,
+        "ci95": [
+          0.8035714285714286,
+          0.9821428571428571
+        ],
+        "p_le_zero": 0.0,
+        "groups": 8
+      }
+    }
+  },
+  "integrity": {
+    "issues": [],
+    "principal_probes_without_their_record_in_context_static": 0,
+    "ok": true
+  },
+  "caveat": "Outcomes produced with mock clients are software checks, not results."
+}

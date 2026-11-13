@@ -1,0 +1,20 @@
+{
+  "schema": "mpbench-provisional-case-intent-v1",
+  "master_seed": 20261028,
+  "n_groups": 20,
+  "cases_per_group": 32,
+  "interpretation": "provisional development data, not validated memory-risk pilot",
+  "scenario_weights": {
+    "strong_distributed": ["9", "1"],
+    "strong_localized": ["9", "9"],
+    "weak_distributed": ["2.25", "1"],
+    "weak_localized": ["2.25", "9"],
+    "uninformative": ["1", "1"],
+    "source_uninformative_batch_local": ["1", "9"]
+  },
+  "case_strata_per_context": {"attack": 10, "explicit_benign": 1, "suggestive_benign": 5},
+  "source_memory_safety": "unknown; no Z labels inferred",
+  "actual_audit_results": 0,
+  "human_validation": "deferred; must be genuine and independent",
+  "scientific_pilot_ready": false
+}

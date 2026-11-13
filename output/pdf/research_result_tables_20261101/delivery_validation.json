@@ -1,0 +1,69 @@
+{
+  "status": "passed",
+  "tables": [
+    {
+      "pdf": "table_1_original_safemem_reproduction.pdf",
+      "png": "table_1_original_safemem_reproduction.png",
+      "pdf_points": [
+        1056,
+        358.0
+      ],
+      "dpi": 600,
+      "numeric_or_missing_cells_verified": 15,
+      "bold_best_including_ties_verified": true,
+      "proposed_method_last": true,
+      "font_files": {
+        "regular": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3",
+        "bold": "50f5b1f27b7d34621090e437e8b1dd4510a22d2823fc876b3286bed327b64bbb",
+        "italic": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      },
+      "pdf_sha256": "7eb0e3d958aa00511102689f0434ee8cb6fc346553991d27c4c407a9a87db57e",
+      "png_sha256": "2ce3f15734ad04881b9950cad38d5b8490d8241f186fe56df5a18d3638e52ee1",
+      "png_pixels": [
+        8800,
+        2984
+      ],
+      "png_dpi_metadata": [
+        599.9988,
+        599.9988
+      ],
+      "pdf_vector_text_no_raster_table": true,
+      "visual_review": "passed: final PDF-rendered previews inspected; no clipping, overlaps or missing glyphs"
+    },
+    {
+      "pdf": "table_2_selective_propagation_pilot.pdf",
+      "png": "table_2_selective_propagation_pilot.png",
+      "pdf_points": [
+        1056,
+        463.6
+      ],
+      "dpi": 600,
+      "numeric_or_missing_cells_verified": 72,
+      "bold_best_including_ties_verified": true,
+      "proposed_method_last": true,
+      "font_files": {
+        "regular": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3",
+        "bold": "50f5b1f27b7d34621090e437e8b1dd4510a22d2823fc876b3286bed327b64bbb",
+        "italic": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      },
+      "pdf_sha256": "b99f149f91b6b2dcc6ed7a7ae7e4be928a74f13e614eb15966533fd0e6e86455",
+      "png_sha256": "576beee77e09c9f60aef0afc60b95a2bc17da115c80759e21a9bc295a9cb56ca",
+      "png_pixels": [
+        8800,
+        3864
+      ],
+      "png_dpi_metadata": [
+        599.9988,
+        599.9988
+      ],
+      "pdf_vector_text_no_raster_table": true,
+      "visual_review": "passed: final PDF-rendered previews inspected; no clipping, overlaps or missing glyphs"
+    }
+  ],
+  "source_files_unchanged": true,
+  "tool_versions": {
+    "reportlab": "5.1.0",
+    "pymupdf": "2.0"
+  },
+  "generator_sha256": "bc9227f7b959c1a1604b463b8c6e06923586c4280116cdd822650cd62f8ada38"
+}

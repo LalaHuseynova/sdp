@@ -1,0 +1,52 @@
+{
+  "status": "test_untouched",
+  "bundles_checked": [
+    "research_data/controlled_workload_v1_20261108",
+    "research_data/controlled_workload_v2_20261108",
+    "research_data/controlled_workload_v3_20261108",
+    "research_data/controlled_workload_v4_20261108"
+  ],
+  "test_only_strings": 1732,
+  "ledger_requests_scanned": 2162,
+  "ledger_requests_with_test_text": [],
+  "output_files_scanned": 48,
+  "output_files_with_test_ids_or_text": [],
+  "stage_summaries_groups": {
+    "research_data/controlled_workload_stage1_dev_v1_20261108/stage1_summary.json": [
+      "G-D00",
+      "G-D01",
+      "G-D02"
+    ],
+    "research_data/controlled_workload_stage1_dev_v3_20261108/stage1_summary.json": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ],
+    "research_data/controlled_workload_stage3_dev_v3_20261108/stage3_summary.json": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ],
+    "research_data/controlled_workload_stage3_dev_v3_mock_20261108/stage3_summary.json": [
+      "G-D00",
+      "G-D01",
+      "G-D02",
+      "G-D03",
+      "G-D04",
+      "G-D05",
+      "G-D06",
+      "G-D07"
+    ]
+  },
+  "note": "The frozen MPBench reproduction cache predates this project and holds the original SAFE-Mem reproduction of every MPBench case; it contains no workload test outcome (workload test texts are new and never sent)."
+}

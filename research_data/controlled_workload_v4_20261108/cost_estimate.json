@@ -1,0 +1,249 @@
+{
+  "model": "openai/gpt-4o-mini via OpenRouter",
+  "pricing": {
+    "input_per_million": "0.15",
+    "output_per_million": "0.60",
+    "checked_on": "2026-10-30"
+  },
+  "measured_token_averages": {
+    "memory_write": {
+      "calls": 26158,
+      "avg_input": 595,
+      "avg_output": 120
+    },
+    "use_type": {
+      "calls": 4844,
+      "avg_input": 339,
+      "avg_output": 4
+    },
+    "judge": {
+      "calls": 14216,
+      "avg_input": 356,
+      "avg_output": 27
+    },
+    "agent_answer": {
+      "calls": 8995,
+      "avg_input": 501,
+      "avg_output": 32
+    }
+  },
+  "stages": {
+    "stage1_construct_dev": {
+      "lines": [
+        {
+          "item": "memory extraction, new text",
+          "paid": true,
+          "calls": 1073,
+          "input_tokens": 638523,
+          "output_tokens": 128777,
+          "usd": "0.173045",
+          "note": "256 contributions x 4.19 write calls"
+        },
+        {
+          "item": "memory extraction, verbatim MPBench (cache expected; priced as miss)",
+          "paid": true,
+          "calls": 268,
+          "input_tokens": 159630,
+          "output_tokens": 32194,
+          "usd": "0.043261",
+          "note": "expected $0 if the frozen reproduction cache hits"
+        },
+        {
+          "item": "query-type classification, new questions",
+          "paid": true,
+          "calls": 232,
+          "input_tokens": 78648,
+          "output_tokens": 928,
+          "usd": "0.012354",
+          "note": ""
+        },
+        {
+          "item": "query-type classification, MPBench questions (cache expected)",
+          "paid": true,
+          "calls": 48,
+          "input_tokens": 16272,
+          "output_tokens": 192,
+          "usd": "0.002556",
+          "note": ""
+        },
+        {
+          "item": "embeddings (local MiniLM)",
+          "paid": false,
+          "calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "usd": "0.000000",
+          "note": "local, $0"
+        }
+      ],
+      "subtotal_usd": "0.2312",
+      "with_20pct_retry_usd": "0.2775"
+    },
+    "stage3_compare_dev": {
+      "lines": [
+        {
+          "item": "answers, memory arms (static,R,C,M,S x 3 conditions)",
+          "paid": true,
+          "calls": 4200,
+          "input_tokens": 2104200,
+          "output_tokens": 134400,
+          "usd": "0.396270",
+          "note": "upper bound: no reuse of identical requests across arms"
+        },
+        {
+          "item": "answers, no-memory reference",
+          "paid": true,
+          "calls": 280,
+          "input_tokens": 140280,
+          "output_tokens": 8960,
+          "usd": "0.026418",
+          "note": ""
+        },
+        {
+          "item": "attack/copy judges",
+          "paid": true,
+          "calls": 768,
+          "input_tokens": 273408,
+          "output_tokens": 20736,
+          "usd": "0.053453",
+          "note": ""
+        },
+        {
+          "item": "conflict checks (upper bound)",
+          "paid": true,
+          "calls": 4200,
+          "input_tokens": 630000,
+          "output_tokens": 8400,
+          "usd": "0.099540",
+          "note": ""
+        },
+        {
+          "item": "utility grading (deterministic alias match)",
+          "paid": false,
+          "calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "usd": "0.000000",
+          "note": "$0"
+        }
+      ],
+      "subtotal_usd": "0.5757",
+      "with_20pct_retry_usd": "0.6908"
+    },
+    "stage1_construct_test": {
+      "lines": [
+        {
+          "item": "memory extraction, new text",
+          "paid": true,
+          "calls": 3219,
+          "input_tokens": 1915570,
+          "output_tokens": 386333,
+          "usd": "0.519136",
+          "note": "768 contributions x 4.19 write calls"
+        },
+        {
+          "item": "memory extraction, verbatim MPBench (cache expected; priced as miss)",
+          "paid": true,
+          "calls": 805,
+          "input_tokens": 478892,
+          "output_tokens": 96583,
+          "usd": "0.129784",
+          "note": "expected $0 if the frozen reproduction cache hits"
+        },
+        {
+          "item": "query-type classification, new questions",
+          "paid": true,
+          "calls": 696,
+          "input_tokens": 235944,
+          "output_tokens": 2784,
+          "usd": "0.037062",
+          "note": ""
+        },
+        {
+          "item": "query-type classification, MPBench questions (cache expected)",
+          "paid": true,
+          "calls": 144,
+          "input_tokens": 48816,
+          "output_tokens": 576,
+          "usd": "0.007668",
+          "note": ""
+        },
+        {
+          "item": "embeddings (local MiniLM)",
+          "paid": false,
+          "calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "usd": "0.000000",
+          "note": "local, $0"
+        }
+      ],
+      "subtotal_usd": "0.6936",
+      "with_20pct_retry_usd": "0.8324"
+    },
+    "stage3_compare_test": {
+      "lines": [
+        {
+          "item": "answers, memory arms (static,R,C,M,S x 3 conditions)",
+          "paid": true,
+          "calls": 12600,
+          "input_tokens": 6312600,
+          "output_tokens": 403200,
+          "usd": "1.188810",
+          "note": "upper bound: no reuse of identical requests across arms"
+        },
+        {
+          "item": "answers, no-memory reference",
+          "paid": true,
+          "calls": 840,
+          "input_tokens": 420840,
+          "output_tokens": 26880,
+          "usd": "0.079254",
+          "note": ""
+        },
+        {
+          "item": "attack/copy judges",
+          "paid": true,
+          "calls": 2304,
+          "input_tokens": 820224,
+          "output_tokens": 62208,
+          "usd": "0.160358",
+          "note": ""
+        },
+        {
+          "item": "conflict checks (upper bound)",
+          "paid": true,
+          "calls": 12600,
+          "input_tokens": 1890000,
+          "output_tokens": 25200,
+          "usd": "0.298620",
+          "note": ""
+        },
+        {
+          "item": "utility grading (deterministic alias match)",
+          "paid": false,
+          "calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "usd": "0.000000",
+          "note": "$0"
+        }
+      ],
+      "subtotal_usd": "1.7270",
+      "with_20pct_retry_usd": "2.0725"
+    }
+  },
+  "total_upper_bound_usd": "3.8732",
+  "budget": {
+    "cap_usd": "30",
+    "used_usd": "2.09412345",
+    "remaining_before_usd": "27.90587655",
+    "remaining_after_upper_bound_usd": "24.03267655"
+  },
+  "caveats": [
+    "Upper bound: identical requests shared across arms are priced repeatedly.",
+    "Verbatim MPBench extraction/classification is priced although cache hits are expected.",
+    "Rates must be re-checked against OpenRouter before any paid run.",
+    "The BudgetGuard additionally reserves full-context holds per in-flight request; holds are released on settlement and are not spend."
+  ]
+}

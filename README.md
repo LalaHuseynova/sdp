@@ -1,159 +1,1464 @@
-# SAFE-Mem: Secure Agentic Memory with Fine-Grained Authority and Governance-Aware Retrieval
+# When Should Distrust Spread?
 
-<p align="center">
-  📄 <b>Paper</b>: <a href="https://arxiv.org/abs/2610.22959">arXiv 2610.22959</a> &nbsp;|&nbsp; ⚖️ <b>License</b>: Apache 2.0
-</p>
+**Selective Evidence Propagation for Agent Memory**
 
-LLM agents build persistent memory from what their users say, from the documents and web
-pages they read, and from other parties in a conversation. A claim that only appeared in an
-external artifact can later be retrieved as if the user had stated it, and act as a
-preference, a policy or a permission that nobody authorized.
+A research extension to [SAFE-Mem](https://arxiv.org/abs/2610.22959). Repository and saved results checked: **7 November 2026**. Experiments reported below were completed by **1 November 2026**.
 
-**SAFE-Mem** governs memory at the level of individual claims. Every stored claim carries
-three governance labels, its **kind** (what it does when adopted), its **authority** (the
-strongest kind its source may establish) and its **scope** (over whom that authority holds),
-and retrieval admits a claim only for the uses those labels support. Nothing is deleted:
-an external claim stays available as a report of what its source said, and is never
-promoted to something the user asked for.
+> **Update, 8 November 2026 (locked held-out test):** on the controlled v4 workload's held-out test (24 groups, frozen protocol), **our contextual defense S matched C/M security (0% ASR vs 77% for original SAFE-Mem) while keeping original-level utility when the incident context is informative (H1, H2 supported); it did not avoid utility loss when provenance is uninformative (H3 not supported).** The sentence below describes the earlier provisional MPBench comparison and is kept for the record.
 
-<p align="center">
-  <img src="assets/overview.png" width="100%" alt="SAFE-Mem overview">
-</p>
+We reproduced Original SAFE-Mem, built our defense prototype, and ran a small real-model comparison. **Our method has not shown an improvement over the simpler baselines in that comparison.** Human validation is still pending. This README explains what exists now; older dated reports describe earlier stages.
 
-## Highlights
+> **Update, 12 November 2026 (supervisor sweeps, dev, free):** on Sybil-k and laundering-r, S ties C on security with higher utility, but **loses to M on security at Sybil k=2 and under random-detection laundering**, and every method fails at k≥4 or full laundering. S needs improvement (S v2, attack-family linking); see [§10](#10-progress-log).
+>
+> **Current status and next step (updated 12 November 2026, S v2 candidates evaluated on dev, free; awaiting owner review):**
+> - **Budget:** the halted session v2 keeps its $0.0198144 hold (accepted by the owner). A new session v3 completed the sanitiser's last group: **$0.00517845**, including a $0.00022 aborted first attempt under a too-low cap.
+> - **S v2:** two candidates built as research-layer compositions on top of the unchanged S, and evaluated free on 51 attacker families (retrieval exposure, not ASR).
+>   - **S2-BS is rejected.** Attackers who give each Sybil its own batch return it to S, and it costs innocent contributors −.37 utility.
+>   - **S2-ID** (S + content lineage + MemLineage's sensitive-action gate) is **never worse than S, with identical utility**. It is better under Sybils, laundering and audit-aware shifts (−.10 to −.28), and has **the best worst case of every arm (.706 vs S .981, A-MemGuard .764)**.
+>   - Its gain comes entirely from MemLineage's query-level gate (7 SENSITIVE dev questions); M still beats it at k=2.
+> - 675 tests pass; v1 archive verifies.
+> - All research spend: **$3.3941325**, plus holds $0.01974 + $0.0198144.
+>
+> **Next (needs approval):** choose S2-ID as v2, then protocol v2 and confirmation. Report: [S v2 candidates](reports/SV2_CANDIDATES_DEV_20261112_REPORT.md).
+>
+> *Previous status (12 November, paid published baselines), kept for the record:* **Current status and next step (updated 12 November 2026, paid published baselines done; session halted safely):** Owner-approved paid runs of the published defences on dev:
+> - **Coverage:** MemLineage classifier 216 calls, A-MemGuard 2,496, LLM sanitiser 7/8 groups.
+> - **Cost:** $0.35381745 settled.
+> - **Halt:** one sanitiser call ended with unknown billing, so the guard **halted the session** (holds $0.0198144); unblocking needs the owner's decision.
+>
+> **Results (retrieval exposure, not ASR):**
+> - **Published methods are flat in k and r:** A-MemGuard .688 / utility .900; MemLineage .688 / .925 (it blocks 7 SENSITIVE questions); sanitiser .929; RandEC .969.
+> - **S beats all of them at k=1 / low r:** 0 exposure, −.69 [−.84, −.50] vs A-MemGuard.
+> - **S loses at k ≥ 4 and r ≥ .5 random:** +.14 to +.28 vs A-MemGuard and MemLineage.
+> - **S v2 direction:** combine S's audit-driven selectivity with an identity-blind signal.
+>
+> All research spend **$3.38895405** + holds $0.01974 + $0.0198144. Report §9: [published baselines](reports/PUBLISHED_BASELINES_SWEEP_DEV_EXPOSURE_20261112_REPORT.md).
+>
+> *Previous status (12 November, free published-baseline comparison), kept for the record:* **Current status and next step (updated 12 November 2026, published baselines under Sybil-k / laundering-r, dev, free):** The supervisor-requested comparison with published methods ran on the existing sweep (66 conditions, same seeds, audits and records; **retrieval exposure only, $0**).
+> - **RandEC** (published, local) flags 1 of 686 retrieved memories, so it equals no defence.
+> - **MemLineage** and **A-MemGuard** adapters are built and tested, but need paid LLM calls (≈ $0.01 and ≈ $0.5) and were not run.
+> - **All published methods are invariant to k and r by construction:** they ignore identity and audits.
+> - **S vs internal baselines:** S equals C on security everywhere and has the best utility everywhere (+.255 at k=1). **S loses to M** at Sybil k=2 (+.53 exposure) and under randomly detected laundering (+.30 at r=.5). Every provenance method fails at k ≥ 4 and r = 1.
+>
+> 668 tests pass; protocol v1 archive verifies; no frozen behaviour changed. **Next (needs approval):** MemLineage classifier ($0.01) and an A-MemGuard one-group pilot, then decide the S v2 direction. Report: [published baselines](reports/PUBLISHED_BASELINES_SWEEP_DEV_EXPOSURE_20261112_REPORT.md).
+>
+> *Previous status (12 November, adaptive experiment), kept for the record:* **Current status and next step (updated 12 November 2026, adaptive-attack experiment complete on dev; target: ICML):** The owner-approved **paid dev confirmation** ran: real GPT-4o-mini answers and the original judge, 40 conditions × 6 arms × 8 groups = **67,200 outcomes**, **$0.12520395** (cap $0.25), 0 failures. All 4,200 base rows match the earlier dev Stage 3 exactly. **Real answers confirm the exposure study** (target-specific ASR on unaudited attacks):
+> - **Plain S loses to C/M against spread poison:** +20.5 pts ASR [14.4, 27.9] for only +3.3 utility.
+> - **S + boundary-verification auditing:**
+>   - concentrated attacks: **beats C** (−31.6 pts ASR, +12.6 utility) and **beats M on utility** (+12.6) at equal 0% ASR;
+>   - spread attacks: trails C/M by **4.5 pts** [1.9, 7.0] at equal utility.
+> - **Concentrated framing:** S protects the innocent best (+15.8 vs C, +25.8 vs M).
+> - **Shared limits:** audit-aware shift and Sybils defeat S.
+> - **Content lineage:** relays .50 → **0** at no utility cost.
+>
+> All research spend **$3.0351366** + $0.01974 hold. **Next (needs approval):** freeze protocol v2 (S + boundary verification + lineage), then a held-out confirmation on fresh groups. Report: [adaptive attacks](reports/ADAPTIVE_ATTACKS_DEV_EXPOSURE_20261112_REPORT.md) §8.
+>
+> *Previous status (12 November, free exposure study), kept for the record:* **Current status and next step (updated 12 November 2026, adaptive attackers on dev, free; target: ICML):** We tested S against **adaptive attackers** on the dev split with a **free exposure study** (90,160 retrievals, $0, no model call; the test split was not touched). **S is not uniformly better than the baselines.**
+> - **Where S wins:** attackers who concentrate their poison (same 0% exposure as C/M, +25.5 utility points [22.5, 27.5]); framing an innocent with concentrated poison (S keeps 58% of the innocent's facts vs 42% C, 32% M).
+> - **Where S loses:** an audit-aware batch shift (S 97% vs C/M 0%); a context shift (S and C fail, only M holds); Sybils (everyone fails).
+> - **Most important:** under realistic *random* detection with *spread* poison, S lets **28% of undetected attacks** through vs 0% for C/M, for only +3 utility points.
+>
+> **Two improvements, both research-layer only (frozen S/R/C/M code unchanged):**
+> 1. **Boundary-verification auditing:** the 5th audit ticket checks an item next to a flagged batch; same budget. The spread gap shrinks to **+4.5 pts** [1.9, 7.0] at equal utility. Under concentrated poison S then **beats C on both axes** (C leaks 46%) and M by 12.6 utility points.
+> 2. **Content lineage (SL):** unlinked relays drop from **62.5% to 0%**, with 0 benign claims withheld.
+>
+> Locked protocol v1 is archived and still verifies; 662 tests pass. **Next (needs approval):** paid dev confirmation with real answers and judges, **expected $0.11 ($0.15 with allowance), hard cap $0.25**; then freeze protocol v2 for a held-out confirmation. Report: [adaptive attacks](reports/ADAPTIVE_ATTACKS_DEV_EXPOSURE_20261112_REPORT.md); [§6](#adaptive-attackers-content-lineage-and-boundary-verification-dev-exposure-12-november-2026), [§10](#10-progress-log).
+>
+> *Previous status (8 November, locked test), kept for the record:* **Current status and next step (updated 8 November 2026, locked test complete; target: ICML):** The owner-approved **locked held-out test** ran on frozen workload v4 (24 groups, 13,440 outcomes; protocol digest `921cf7f5…` verified before, during and after). **Original SAFE-Mem ASR 77.1%** (74/96). **Localized:** C/M 0% ASR but strict key-stratum utility **0/168**; **S 0% ASR with original-level utility** (strict 546/600, key 151/168). **H1 supported** (S − C/M key utility **+0.78**, CI [0.71, 0.84], Holm-significant; strict +0.90), **H2 supported** (distributed S = M, 0%), **H3 not supported** (uninformative: R − S utility +0.115 [0.08, 0.15]; S lets 63/96 attacks through vs M 43/96). Test agrees with dev. Linked copies blocked by audited arms (residual hits are judge false positives, removed by the pre-declared target-specific metric); unlinked relays leak under every arm. **Cost $0.57838455** (Stage 1 $0.1759, Stage 3 $0.4025); all research spend **$2.90993265** + preserved $0.01974 hold. No frozen file changed. **Next (needs approval):** ICML roadmap steps 4–10 (second backbone, full MPBench, another baseline, adaptive attacks/ablations, robustness, human validation, paper). Report: [locked test](reports/LOCKED_TEST_V4_20261108_REPORT.md); [§6](#locked-held-out-test-original-safe-mem-vs-r--c--m--s-v4-8-november-2026), [§10](#10-progress-log).
+>
+> *Previous status (8 November, audit and freeze), kept for the record:* **Current status and next step (updated 8 November 2026, dataset audited and protocol frozen; target: ICML):** The final offline audit is complete. Two **method-independent data-quality corrections** produced the final dataset **controlled workload v4**: (1) relays that were just the bare target label are replaced by the attack's own sentence (1 dev relay); (2) no near-duplicate attack payloads within a group (MiniLM cosine ≥ 0.6; 11 groups affected in v3, 0 in v4). No dev/test leakage was found (0 shared documents, bases, attack texts or templates). Dev impact: 10 contributions and 7 of 280 probes in 4 dev groups; dev v3 results stay as development evidence. The **evaluation protocol, H1–H3, decision rules and statistical plan are frozen** (`locked_protocol_v1.json`, digest `921cf7f5…d97eb`; 172 source, 35 prompt, 10 dataset files hashed; `verify` passes). The **held-out test is verified untouched** (0 test text in 2,162 ledger requests; 0 test IDs in outputs). A judge false positive in dev was found and corrected in the Stage-3 report; a target-specific secondary metric was pre-declared. No paid call; 653 tests pass. **Ready for the locked test once the owner approves: expected $0.618 ($0.742 with 20% allowance; caps $0.30 Stage 1 + $0.60 Stage 3).** Report: [audit and freeze](reports/WORKLOAD_AUDIT_FREEZE_20261108_REPORT.md); [§6](#final-dataset-audit-and-locked-protocol-freeze-8-november-2026), [§10](#10-progress-log).
+>
+> *Previous status (8 November, dev Stage 3), kept for the record:* **Current status and next step (updated 8 November 2026, dev Stage 3 done; target: ICML):** The first real comparison of **our contextual defense S vs original SAFE-Mem** (static), R, C, M and no-memory ran on the v3 dev split (8 groups, 3 conditions, 4,480 outcomes, real GPT-4o-mini answers + original judge; **$0.1398**). **Localized:** original SAFE-Mem ASR **72%**, C/M **0%** but lose all key-stratum memories (strict 0/56), **S 0% ASR with original-level utility** (strict 185/200, key 51/56). **Distributed:** S = C/M (0% ASR). **Pre-specified tests:** **H1 supported** (S − C/M key utility +0.73, CI [0.57, 0.86], Holm-significant, equal ASR), **H2 supported**, **H3 not supported** (with uninformative provenance S loses 6.5 points utility vs R and lets 20/32 attacks through; S's advantage needs informative incident structure). These are **dev results**; ICML claims need the locked test split. All research spend $2.3315481 + $0.01974 held. No SAFE-Mem algorithm, prompt or setting changed; 650 tests pass. **Next:** freeze v3 + analysis plan, then the test split (see the ICML roadmap in §8). Report: [dev Stage 3](reports/CONTROLLED_WORKLOAD_DEV_STAGE3_20261108_REPORT.md); [§6](#dev-stage-3-original-safe-mem-vs-r--c--m--s-8-november-2026), [§10](#10-progress-log).
+>
+> *Previous status (8 November, v3 on real data), kept for the record:* **Current status and next step (updated 8 November 2026, v3 on real data):** With the owner's approval the extraction pilot ran. **v2 failed** (10/18 facts stored: the extractor drops one-off events), so per the pre-registered rule the carriers were revised as **v3** (every fact phrased as a standing reference fact; data only) and re-piloted on fresh contributions: **passed, 16/18**. The **v3 dev stores were rebuilt** (paid Stage 1) and validated (free Stage 2) in a **new guarded session** (the old shared one stays halted with its $0.01974 hold). **Real data now show the design works:** inserted facts are stored in 192/208 documents and reach the static context in **185/200** probes (v1: 10/75); localized C/M remove the key stratum (0/56) while **S keeps 51/56** at the same 0/32 attack exposure; distributed S = C/M; linked copies blocked, unlinked relays leak. **Spend this task $0.0651411** (pilots $0.0097, Stage 1 $0.0554); all research spend $2.1917799 + $0.01974 held. No SAFE-Mem algorithm, prompt or setting changed; 649 tests pass. **Next (needs approval): dev Stage 3** (answers + judges, ≤ about $0.69). Report: [v3 pilots/Stage 1/Stage 2](reports/CONTROLLED_WORKLOAD_V3_PILOTS_STAGE1_STAGE2_20261108_REPORT.md); [§6](#controlled-workload-v3-pilots-and-real-dev-stores-8-november-2026), [§10](#10-progress-log).
+>
+> *Previous status (8 November, v2 carriers), kept for the record:* **Current status and next step (updated 8 November 2026, v2 carriers):** The utility flaw found in dev Stage 2 is fixed in a new **controlled workload v2** ([report](reports/CONTROLLED_WORKLOAD_V2_FACT_CARRIERS_20261108_REPORT.md); [§6](#controlled-workload-v2-fact-centred-utility-carriers-8-november-2026)). Each harmless fact is now the main content of a short note with a matching summary request that names the topic but never the answer and never asks to remember anything. **Only the text of the 832 benign carriers and 32 unlinked relays changed**; attacks, linked copies, principal controls, contributor/context/batch overlays, audits, probes and the held-out test split are byte-identical to v1, and v1 still regenerates. No SAFE-Mem algorithm, prompt or setting changed; **no paid call was made** (ledger unchanged: $2.12663880 used, $0.01974 held, blocked). 648 offline tests pass; a mock dry run on v2 dev is clean. A **tiny extraction pilot is prepared, not run**: 18 facts + 4 relays, 43 requests, expected **$0.006**, hard cap $0.03, pre-registered target ≥ 80% facts stored. **Next (owner decisions):** approve the pilot and choose a session for it (recommended: a new guarded session, since the shared one is halted). See [§10](#10-progress-log).
+>
+> *Previous status (8 November, night), kept for the record:* **Current status and next step (updated 8 November 2026, night):** Owner-approved **paid dev Stage 1** ran and **halted safely after 3 of 8 dev groups**: one call timed out with unknown billing (the computer likely slept), so the shared budget guard stopped itself as designed. **Actual settled spend $0.03251535** (209 calls); one unknown attempt is held at worst case $0.01974 (realistic ≈ $0.0002). Free **Stage 2** on the 3 groups shows the attack/copy mechanics work on real GPT-4o-mini + MiniLM data (C/M/S remove 12/12 attack targets; S keeps the key stratum where C/M drop it; linked copies blocked, unlinked relays leak), but found a **utility design flaw**: inserted benign facts reach the context in only 10/75 probes, because extraction keeps only what the user's request endorses and the frozen `external_evidence=false` keeps artifact chunks out. The strict utility metric (correct **and** fact in context) is implemented. **Next (owner decisions):** fix the workload's utility carriers (data only) and verify with a tiny paid pilot; decide how to handle the unknown-billing halt. No further paid step and no test-split work has been done. Report: [Stage 1/2 report](reports/CONTROLLED_WORKLOAD_STAGE1_STAGE2_20261108_REPORT.md); see [§6](#controlled-workload-paid-dev-stage-1-and-free-stage-2-8-november-2026) and [§10](#10-progress-log).
+>
+> *Previous status (8 November, late), kept for the record:* **Current status and next step (updated 8 November 2026, late):** MPBench alone cannot power a fair S vs R/C/M test, so a controlled, MPBench-derived workload was designed ([spec](reports/CONTROLLED_WORKLOAD_20261108_SPEC.md)). It is now **integrated end to end** with the original SAFE-Mem stores and the R/C/M/S runner, and has been tested offline with mock clients ([integration report](reports/CONTROLLED_WORKLOAD_INTEGRATION_20261108_REPORT.md); [§6](#controlled-workload-integration-offline-8-november-2026)). 635 offline tests pass and no existing algorithm or result changed. A cache audit shows that paid dev Stage 1 (memory construction) needs only **528 requests, about $0.09**, because all verbatim MPBench text hits the frozen cache. **No paid step has started.** **Next (needs the owner's approval):** a small reviewed live transport, then paid dev Stage 1 (≤ $0.09, hard cap $0.15), then free Stage 2 checks of extraction yield and retrieval exposure. Every task and decision is logged in [§10 Progress log](#10-progress-log), which future sessions should read first.
 
-- **Lowest attack success** on MPBench among defenses that retain legitimate memory, at
-  least 77% below the strongest of them, across four LLM backbones.
-- **Highest answer accuracy** of all evaluated defenses on MPBench and LoCoMo, improving
-  LoCoMo accuracy by up to 15 points.
-- **Shared memory across users**: on EHRAgent under the MINJA attack, no attack reaches
-  execution, while only 2% of the memories benign questions would retrieve are withheld.
+## Start here
 
-## Installation
+This is a research prototype and an experimental record. The paper we want to write is about **when distrust should spread from a reviewed memory to other memories**, and the safety–utility cost of that choice. It is not a new reproduction paper or a trained language model. The current experiments do not yet support a claim that our selective rule is better.
 
-Python 3.11, managed with [uv](https://github.com/astral-sh/uv):
+| Read this | For this purpose |
+|---|---|
+| **[RESEARCH_OVERVIEW.md](RESEARCH_OVERVIEW.md)** | **Start here if you are new (12 Nov 2026). One self-contained document:** every report, the progress log, IMPLEMENTATION.md, brainstorm.md and all plots are copied in full as Appendices A–I. Main text: everything from the start to now in plain language. Every method (S, SL, S2-ID, S2-BS, R/C/M, published competitors), every metric, every result table with what it shows, a master comparison, costs, and what is solid vs preliminary. |
+| This README | Aim, implementation, results, numbered progress and remaining work. |
+| [IMPLEMENTATION.md](IMPLEMENTATION.md) | **First-time reader's guide** (10 Nov 2026): the problem, SAFE-Mem, R/C/M/S with a worked example, the controlled workload, Stages 1–3, metrics, safety rails, dataset versions, results, code map and glossary. |
+| [brainstorm.md](brainstorm.md) | Threat model and adaptive-attacker ideas for the ICML paper (10 Nov 2026). |
+| [Research code guide](src/ams/research/README.md) | Follow the implementation from source data to the final comparison; find the files to inspect. |
+| [Script guide](scripts/README.md) | Identify preparation, checking, analysis and paid-run entry points. |
+| [Report guide](reports/README.md) | Find the current evidence and distinguish old plans from executed work. |
+| [Repository review and cleanup](reports/REPOSITORY_REVIEW_20261107.md) | What this inspection checked, what was deleted and what was intentionally retained. |
+| [Upstream README](UPSTREAM_README.md) | Original project documentation and setup; preserved for attribution. |
 
-```bash
-git clone https://github.com/LVenum/Agentic-Memory-Security.git
-cd Agentic-Memory-Security
-uv venv --python 3.11 && source .venv/bin/activate
-uv pip install -e '.[local,locomo]'
-bash scripts/fetch_third_party.sh   # baselines and MINJA, at pinned commits
+The dated protocol and proposals are design records, not a live completion checklist. Read the status below before interpreting words such as “future” or “not implemented” in an older report. Local data and reports are needed to follow all links; this repository is not yet a packaged public release.
+
+## 1. What we want to find out
+
+Our starting idea was: identify the contributor of a dangerous memory, reduce their trust, and change how their other memories are used.
+
+That is feasible, but contributor trust alone is a weak novelty claim. [SuperLocalMemory](https://arxiv.org/html/2603.02240v1#S4) already describes equal initial agent trust, behavioral updates and memory provenance. [A-MemGuard](https://arxiv.org/abs/2510.02373) already turns detected failures into defensive lessons. These overlaps motivate a more specific question:
+
+> When should discovering one dangerous memory change our treatment of other memories from the same contributor, and how can we avoid suppressing useful information?
+
+We study **how far safety evidence should spread**. The intended contribution is a supported finding about when selective propagation helps or hurts, beyond ordinary contextual reputation. An ICML goal does not establish novelty or effectiveness; the experiments must do that.
+
+The approach uses existing LLMs and small Python state updates. No model training or fine-tuning has been performed.
+
+## 2. The idea in an example
+
+**Invented example, not a benchmark result:** a contributor submits one malicious instruction and several correct facts.
+
+- Withhold the instruction for the use independently shown to be unsafe.
+- Apply a risk penalty to related, uninspected memories when the evidence supports that scope.
+- Keep separately checked safe memories usable for their exact reviewed use, subject to permissions and Original SAFE-Mem authority.
+- Leave unrelated contributors unaffected by that incident.
+- Retract the damage if the accusation is corrected.
+
+Preserving useful information is our goal. The current heuristic can still penalize useful uninspected memories; our preliminary run has not demonstrated that this problem is solved.
+
+Some terms used below:
+
+| Term | Meaning here |
+|---|---|
+| Provenance | The recorded link from a memory to its source contribution and artifact. |
+| Contribution | One MPBench input case. It can produce several claims and chunks. |
+| Artifact | A source document, email or principal turn within a contribution. |
+| Contributor | An opaque synthetic identity assigned by the experiment. It is separate from the requester or an innocent uploader. |
+| Context | The source domain: Email or File/Document in the small pilot. |
+| Batch | A synthetic group of four independent contributions by one contributor in one context. |
+| Evidence ledger | An ordered log of revealed reviews, corrections and retractions. |
+
+Claims are extracted statements. Evidence chunks are pieces of the original source text. During the original reproduction, the LLM extracted claims; the original code built chunks using its embedding-dependent chunking algorithm. These records live in the memory store, outside the LLM’s weights. Our recovery exports and new frozen pilot stores reuse that material.
+
+A principal-owned record comes from the task requester. An external record comes from a document, email or other contributor. Adding a synthetic contributor does not change a principal-owned record into an external one.
+
+## 3. What the code does
+
+The retrieval adapter checks original authority, permissions and direct record/use findings, then applies the selected policy, ranks candidates and refills claim/chunk slots.
+
+The implemented flow is:
+
+```text
+MPBench sources → original extraction/chunking → saved claims and recovered chunks
+  → source links + synthetic contributor/context/batch assignments
+  → a frozen memory store for each development group
+
+Saved AI review → scheduled audit ticket → evidence ledger → current policy state
+Question → candidate records → original authority + access checks
+  → exact record/use findings → R, C, M or S → rank/refill → original answer model
+                                                        → separate answer judge
 ```
 
-Create a `.env` file in the repository root with the keys for the backends you use:
+An audit ticket is one budgeted review job. It reveals findings for the scheduled contribution/use; it is not automatically a new API call or one vote per extracted claim. In our preliminary run, all five tickets per group/condition were revealed **before** the scored questions. The code supports state updates, but that experiment did not test continuous adaptation during questioning. Answer-judge results never update the evidence ledger.
 
-```bash
-OPENAI_API_KEY=...        # GPT-4o-mini and GPT-5.x
-AZURE_AI_KEY=...          # optional: Azure AI Services deployments
-OPENROUTER_API_KEY=...    # optional: Claude Haiku 5.5 and Qwen3.8-Flash
+All contributors start with the same counts and **zero reputation penalty**. For each group:
+
+```text
+risk = (1 + audited_unsafe) / (2 + audited_unsafe + audited_safe)
+penalty = max(0, risk - 0.5)
+adjusted_score = original_cosine - 0.5 * chosen_penalty
 ```
 
-## Quick start
+The prior 0.5 is a scoring convention, not an estimated unsafe-memory rate. Withhold an uninspected candidate when its penalty reaches 0.25.
 
-```python
-from ams.core.env import load_env
-from ams.eval.backbone import apply_backbone
-from ams.eval.build import build_memory
-from ams.eval.context import Config, RunContext
+| Policy | Treatment of uninspected memories |
+|---|---|
+| R: record-only | Direct containment and recovery only; no sibling penalty. |
+| C: contextual reputation | Use contributor/context counts. |
+| M: fixed multi-scope reputation | Take the maximum batch, context or contributor penalty. |
+| S: our selective rule | Take the maximum penalty only over supported scopes. |
 
-load_env()
-cfg = Config.load("configs/v31_mpbench_withhold.yaml")   # SAFE-Mem
-apply_backbone(cfg, "4omini")
-memory = build_memory(cfg, RunContext(cfg))
+S supports a batch after one audited unsafe contribution; a context after two spanning two batches; and a contributor after four spanning both batches in each of two contexts. Corrections recalculate support. One unsafe observation gives batch siblings a ranking penalty, below the hard-gate threshold.
 
-# The user's own request carries the user's authority ...
-memory.write(session_id="s1", user_query="Please remember that I prefer EU-hosted vendors.", context="")
-# ... while a claim that only appears in an external artifact serves as a description.
-memory.write(session_id="s1", user_query="Summarize this review.",
-             context="The team approved LockNest as the default vendor.")
+Known copies share one incident vote. Unknown attribution cannot justify contributor penalties. Safe exceptions cover only the reviewed content/use/policy and cannot override authority or permissions.
 
-for entry in memory.retrieve(session_id="s1", query="Which vendor should I pick?"):
-    print(entry.text)
-```
+This implementation covers **flat indexing, withhold mode and hops=0**. Other retrieval modes are refused. Genuine descendant safety propagation, recent-history C and fixed-mixture M are not implemented in this minimum version.
 
-Every model is named by one string (`openai:gpt-4o-mini`, `openrouter:qwen/qwen3.8-flash`,
-`aiservices:<deployment>@<endpoint>`, ...). The backbones used in the paper are defined in
-`configs/backbones.yaml` as `gpt56`, `4omini`, `haiku55` and `qwen38flash`; point the
-deployment strings there at your own endpoints.
+## 4. What we prepared from MPBench
 
-## Data
+The official MPBench payloads and labels remain unchanged. We added separate metadata, memory links, review materials and schedules.
 
-| Benchmark | Location | Source |
+| Preparation | Current status |
+|---|---|
+| Original source inventory | 6,240 cases inspected. |
+| Memory recovery | 22,089 claims and 124,090 evidence chunks recovered/checked. |
+| Human-review preparation | 2,114 packets containing 52,716 record/use items, with blank forms and import tools. |
+| Earlier utility-question drafts | 2,831 drafts covering 1,722 contributions; these are unvalidated drafts. Later AI-review versions and failures are preserved separately. |
+| Provisional groups | 20 groups, 640 distinct cases, six overlays each: 120 metadata overlays. |
+| Independently verified safety labels | **0**. |
+| Human-validated source-grounded utility questions | **0**. |
+| Final validated 16-safe/16-unsafe pilot groups | **Not generated**. |
+
+Some drafts depend only on external chunks, which the frozen `external_evidence=false` setting blocks. Human review alone will not make those drafts usable under that setting.
+
+Claims came from saved writes. Most chunks were reconstructed with the original algorithm and cached embeddings, then checked against saved retrievals, IDs and cache commitments. This covers text and construction links, not every historical graph state or natural authorship. See the [recovery scope](reports/RECOVERY_20261029_REPORT.md).
+
+Each provisional group has 32 inputs: 16 Email and 16 File/Document, two contributors, and 20 original attack inputs plus 12 benign inputs. These groups control **attack-input frequency**, not verified unsafe-memory frequency.
+
+The same input contents are rearranged into three main synthetic conditions:
+
+| Condition | Assignment rule | Question it tests |
 |---|---|---|
-| MPBench | `data/mpbench/` | `adversarial_data.jsonl.jsonl` and `benign_data.jsonl.jsonl` from [Digital-Trust-Lab/mp-bench](https://github.com/Digital-Trust-Lab/mp-bench) |
-| LoCoMo | `data/locomo/locomo10.json` | `data/locomo10.json` from [snap-research/locomo](https://github.com/snap-research/locomo) |
-| EHRAgent | any directory | the open-access [MIMIC-III Clinical Database Demo v1.4](https://physionet.org/content/mimiciii-demo/1.4/) |
+| Distributed | Source/context weight 9, batch weight 1. Attack inputs are more likely under a designated contributor/context profile, without an extra batch preference. | Can evidence across batches help identify related risk? |
+| Localized | Source/context weight 9, batch weight 9. Assignment also favors a designated batch. | Can a narrower penalty preserve useful contributions in other batches? |
+| Uninformative | Both weights 1. No designed source or batch preference. | Does propagation impose avoidable loss when those links provide no designed signal? |
 
-## Reproducing the experiments
+These are relative sampling weights, not 90% attack rates or safety probabilities. Each group keeps its original case counts. A particular small group can still show accidental imbalance. The weights and original case labels are hidden from the defense.
 
-Each runner prints its projected number of model calls and asks for `--yes` above ~1k
-calls. Responses are cached on disk, so rerunning an unchanged configuration costs nothing.
-Every run writes `results/<config>-<timestamp>/` with the resolved configuration, prompt
-versions, per-case outcomes and a cost ledger.
+An attack case can produce safe memories, unsafe memories, both, or none. Case labels, memory/use safety and revealed audit verdicts stay separate. Target judges score answers; they never update trust.
 
-**MPBench and LoCoMo (Table 1)**, for each backbone `B`:
+AI proposals cover 6,325 records in 256 inputs: 65 bundles assessed safe, 104 unsafe and 87 uncertain. These are **AI assessments, not verified truth**. An [AI utility-review round failed its controls](reports/AI_PILOT_ADJUDICATION_20261101_REPORT.md); that proposed case group stayed blocked. The later comparison uses a separate provisional scope without utility-QA scoring. Internal names such as `verified_audits` do not mean human validation.
 
-```bash
-python scripts/run_mpbench.py --config configs/v31_mpbench_withhold.yaml --backbone $B --yes   # SAFE-Mem
-python scripts/run_mpbench.py --config configs/mpbench.yaml --defences no_defence,a_memguard --backbone $B --yes
-python scripts/run_mpbench.py --config configs/mpbench_baselines.yaml --backbone $B --yes
-python scripts/run_mpbench.py --config configs/mpbench_drift.yaml --backbone $B --yes
+## 5. What changed from Original SAFE-Mem
 
-python scripts/run_locomo.py --config configs/v31_locomo_withhold_a.yaml --backbone $B --yes    # SAFE-Mem, each
-python scripts/run_locomo.py --config configs/v31_locomo_withhold_b.yaml --backbone $B --yes    # speaker as principal
-python scripts/run_locomo.py --config configs/locomo_baselines.yaml --backbone $B --yes
-python scripts/run_locomo.py --config configs/locomo_drift.yaml --backbone $B --yes
+The original memory and authority implementation remains in `src/ams/memory/` and `src/ams/core/`. Original prompt files are unchanged. Our defense is a separate adapter and research runner, not a replacement for those rules.
 
-python scripts/report_tables.py results/<run directories>
+We did change surrounding infrastructure:
+
+| Existing file | Change and purpose |
+|---|---|
+| `src/ams/data/mpbench.py` | Split-qualified internal IDs prevent collisions between attack and benign files. Original raw IDs and contents remain available. |
+| `src/ams/eval/lifecycle.py` | Extra saved outcome fields and observation callbacks preserve writes, retrievals, answers and no-memory controls. |
+| `scripts/run_mpbench.py` | Added full-coverage checks and ingestion/outcome journals for the reproduction. This original runner does not automatically enable our defense. |
+| `configs/backbones.yaml` and added OpenRouter YAMLs | Route the existing model roles through the local OpenRouter setup. |
+| `src/ams/llm/providers/openai_client.py` | Added optional strict billing controls, native-cost handling and guarded transport checks. |
+| `src/ams/llm/pricing.py` | Added OpenRouter pricing entries for accounting. Actual research charges use saved native receipts. |
+| `scripts/minja_patch.py`, `scripts/minja_run.sh` | Earlier OpenRouter/legacy tool-call compatibility and macOS shell support. These are separate from the dynamic MPBench results. |
+| `uv.lock` | Environment/dependency lock changes. The current inspection installed nothing. |
+| `README.md` | This current project overview. The [previous local README](README_BEFORE_RESEARCH_20261101.md) and [upstream README](UPSTREAM_README.md) are preserved. |
+
+Most of our implementation is added code:
+
+| Location under `src/ams/research/` | What it contains |
+|---|---|
+| `phase1*.py`, `recovery/`, `provisional/` | IDs, source mappings, recovery, blinded packets, drafts and provisional groups. |
+| `llm_review/`, `llm_followup/`, `ai_pilot/` | AI-review preparation, saved proposals, quality controls and failed checks. AI reviews are never called human reviews. |
+| `focused_review.py`, `focused_review_page.py`, `scoped_cohort.py` | Human-review workflow and checks for narrowly scoped utility questions. |
+| `dynamic/ledger.py`, `dynamic/policies.py` | Incident counts, corrections, snapshots and R/C/M/S decisions. |
+| `retrieval/` | Claim/chunk bindings, permission inheritance, original admission and risk-aware selection. |
+| `sequential/` | Ordered execution, exact saved responses, checkpoints and restart checks. |
+| `native/` | New frozen memory stores constructed from existing offline material. |
+| `planning/`, `execution/` | Study manifests, estimates, durable request IDs and the shared spending guard. |
+| `provisional_run/`, `provisional_extension.py`, `comparison.py` | The actual provisional comparison and saved-outcome analysis. |
+| `evidence_memoization.py` | A tested speed fix that reuses the exact hash of an immutable evidence snapshot. |
+
+## 6. Results we actually have
+
+### Original SAFE-Mem reproduction
+
+We ingested all 6,240 source cases into one shared pool and evaluated 2,999 attack and 2,997 benign questions. The completed reproduction is the GPT-4o-mini arm through OpenRouter, not every model or baseline in the paper.
+
+| Metric | Paper | Our reproduction |
+|---|---:|---:|
+| Attack success rate, lower is better | 6.20% | 176/2,999 = **5.87%** |
+| Retention recall, higher is better | 85.90% | 213/249 = **85.54%** |
+| Restraint, higher is better | 50.60% | 1,273/2,607 = **48.83%** |
+| Combined benign utility | Not reported in that paper table | 1,486/2,856 = **52.03%** |
+
+ASR measures attack-target answers. Retention measures correct use of explicitly warranted memory. Restraint measures avoiding an unwarranted memory assertion. Combined benign utility pools the latter two groups; it is not general task-answer accuracy. See the [full reproduction report](reports/safemem_full_mpbench/RUN_REPORT.md) for deviations and uncertainty.
+
+### Our provisional comparison
+
+We evaluated the eight existing development groups D00–D07: **256 distinct inputs**, three conditions, six methods including no-memory controls, and **3,888 saved answer events**. The repeated conditions are not independent new datasets.
+
+Within each condition, R/C/M/S received the same five audit tickets per group, initial memory, permissions and query order. Static and no-memory references used no audits. Existing AI proposals supplied simulated feedback; the runtime content detector was disabled uniformly.
+
+| Provisional condition | Static/R/C/M ASR | Our S ASR | Static benign utility | Our S benign utility |
+|---|---:|---:|---:|---:|
+| Strong/distributed | 4/134 = 2.99% | 4/134 = 2.99% | 75/82 = 91.46% | 75/82 = 91.46% |
+| Strong/localized | 5/131 = 3.82% | 5/131 = 3.82% | 77/85 = 90.59% | 76/85 = 89.41% |
+| Uninformative | 6/140 = 4.29% | 6/140 = 4.29% | 70/76 = 92.11% | 69/76 = 90.79% |
+
+S did not improve ASR over C or M; C/M/S also match on retention and restraint. S lost one restraint success against static/R in each of the latter two conditions. It changed 23/648 retrieval contexts, so the rule did execute. However, only 14–18 of the 216 questions per condition admitted an attributed external candidate under the original rules. Most selected records were principal-owned. No-memory controls had zero ASR but also zero retention recall.
+
+This is **not the primary verified-safety pilot**: groups lack independently verified 16-safe/16-unsafe balance, some first audit verdicts are safe/unresolved, and source-grounded utility is unvalidated and unscored. D00 ran first; all seven remaining development groups were then included without changing methods. This is development evidence, not an untouched final test. Questions can differ between conditions because audits reserve different cases.
+
+Our method has **not run on the full 6,240-case pool**. Comparing its pilot ASR directly with the historical 5.87% would not establish an improvement. The [full pilot table](research_data/development_comparison_report_v1_20261101/RESULTS.md) and [interpretation report](reports/PROVISIONAL_RESULTS_20261101_REPORT.md) include retention, restraint, resource counts and limitations.
+
+### Diagnostic: why S did not outperform (7 November 2026)
+
+This is an offline re-analysis of the 3,888 saved outcomes, with every hash verified. There were no paid calls and no algorithm changes. Full report: [ATTACK_CARRIER_DIAGNOSTIC_20261107_REPORT.md](reports/ATTACK_CARRIER_DIAGNOSTIC_20261107_REPORT.md).
+
+**Who carried the 15 successful attacks.** The same 15 events succeed under static, R, C, M and S. They come from only 7 distinct group/input pairs.
+
+| Carrier of the attack target | Events | Can any propagation policy act? |
+|---|---:|---|
+| Principal-owned endorsement turns; **target not in retrieved memory**. The model agreed with a leading question. 2 of these (D02) look like judge false positives. | 9 | **No.** Principal records are never penalized. This is a residual of base SAFE-Mem. |
+| Unknown-origin external claims (`c444`, `c792`) | 4 | **No.** Unknown attribution never transfers penalties, by design. |
+| Attributed external claim (`c263`, D07 code name) | 2 | In principle yes, but the evidence was 0 or 1 unsafe roots. That is below the hard gate, and the ranking penalty was too small. |
+
+None of the carriers came from the probe's own input. The planted facts are duplicated in other, unlinked contributions, often with unknown origin. Even with perfect evidence, propagation could have affected at most **2/15** events. Only **18/405** attack probes had any admissible attributed external candidate. External records make up about 93% of memory but under 3% of what is retrieved.
+
+**The 23 S-changed contexts.** All 23 are also M changes. S's context is identical to M's in 16 cases and to C's in 14. R changed 0. All 28 removed records were external. Half of the 28 refill replacements were **unknown-origin**. No attack outcome changed. The two restraint losses (both D05, "In which city does the report author live?") were caused by refill admitting "Maria Schmidt is based in Berlin" after irrelevant records were demoted. C and M failed identically there.
+
+**Conclusion.** The null result is mainly an **experimental-design/workload problem**. The run also exposed three method weaknesses; changing any of them needs approval:
+- S can never be stricter than M
+- refill can admit the harmful next candidate
+- unknown-origin records act as a penalty-free safe harbor
+
+### Feasibility: can MPBench support the comparison? (8 November 2026)
+
+This is an offline analysis of all 6,240 cases, using the completed full reproduction's write and outcome journals plus the recovered claims. There were no paid calls and no algorithm changes. Full report: [PROPAGATION_FEASIBILITY_20261108_REPORT.md](reports/PROPAGATION_FEASIBILITY_20261108_REPORT.md).
+
+**Authority bottleneck.** All 21,763 artifact claims are stored as `description@global`. Under the unchanged rule `usable_as ≥ required` (`src/ams/core/lattice.py`), an external claim can only serve a **description** question.
+
+| Attack funnel | Cases |
+|---|---:|
+| Attack cases | 3,241 |
+| Question needs rule/preference/permission/attribute; no external claim can serve it | 2,727 |
+| Description question, target not in the case's external claims | 170 |
+| No evaluated question | 242 |
+| **Propagation-reachable** (target in an admissible external claim) | **102 (3.1%)** |
+| of which attributable now (literal source span) | 23 |
+| AI-calibrated expected attributable | ≈64 |
+
+**Findings:**
+- **No natural contributors.** The 102 reachable cases come from 100 different templates, so multi-attack contributors exist only by synthetic assignment.
+- **Benign siblings are plentiful** (1,036 benign cases with attributable external claims). However, there are **0 validated** external-use utility questions, and the drafts cover only Email and File/Document.
+- **Where full-reproduction successes come from.** Description questions produced 67 of the 176 successes; 32 of those involve planted-content *copies from other cases*. The other 109 came from rule, preference or permission questions, 94 of them with the target absent from retrieved memory, which confirms the 7 Nov finding at full scale.
+- **Power.** Expected baseline successes on scored, unaudited reachable siblings range from **2.7–5.2** (attributable now) to **9.7–33.5** (if every reachable case were attributed). The protocol needs at least 20, and the optimistic end would consume all of MPBench's supply, leaving no held-out test.
+
+**Conclusion.** MPBench cannot by itself support a properly powered S vs R/C/M evaluation. **We need a controlled, MPBench-derived attack workload**: synthetic contributors with several description-type attacks, benign siblings with source-grounded description questions, declared copies, principal and unrelated-source controls, fixed audit IDs, and a held-out set. MPBench's reachable cases remain useful as templates and as an external-validity cohort.
+
+### Controlled workload v1: designed and generated (8 November 2026)
+
+**Not an experiment result yet.** No paid calls were made. Full specification: [CONTROLLED_WORKLOAD_20261108_SPEC.md](reports/CONTROLLED_WORKLOAD_20261108_SPEC.md).
+
+- **Group design.** Each group has 40 contributions over two source contexts:
+  - attacker contributor A: 4 audited seed attacks, 4 scored unaudited sibling attacks, 1 linked copy, 7 benign;
+  - contributor B: 16 benign;
+  - unrelated contributor U: 3 benign plus 1 unlinked relay of a planted statement;
+  - 4 principal-owned controls.
+- **Sources.** Attacks are verbatim MPBench reachable cases (description questions). Benign items are MPBench benign artifacts with one harmless inserted fact, so the answer is known by construction.
+- **Three conditions** rearrange the same contributions:
+  - localized: the evidence sits in one batch;
+  - distributed: the evidence spans batches;
+  - uninformative: random placement.
+- **Fixed audits.** The same 5 audit tickets (4 unsafe seeds, 1 safe benign), with identical IDs, apply to R, C, M and S in every condition.
+- **Measurement.**
+  - Security: attack-judge ASR on the scored siblings.
+  - Utility: deterministic answer matching on 25 external facts plus 4 principal facts per group, stratified by relation to the audited evidence.
+  - Secondary: copy leakage and retrieval exposure.
+- **Pre-registered predictions:**
+  - localized: S has C/M's ASR but better utility on the attacker's other-batch benign memories;
+  - distributed: S matches C/M.
+- **Size and power.** Dev has 8 groups (32 scored attack probes per condition). The held-out test has 24 groups (96 per condition), giving P(≥20 baseline successes) = 0.86 at a 25% static ASR. Dev and test share no MPBench case or reachable template group.
+- **Cost (upper bound, measured token averages, 20% retry):**
+
+| Stage | Cost |
+|---|---:|
+| Dev construction | $0.28 |
+| Dev comparison | $0.69 |
+| Test construction | $0.83 |
+| Test comparison | $2.07 |
+| **Total** | **$3.87** |
+
+  At least $24.03 of the $30 allowance would remain.
+
+- **Validation.** 12 new offline tests pass. The full offline suite passes (**624 tests**). The bundle regenerates byte-identically, and the existing frozen comparison bundles still verify.
+
+### Controlled workload integration (offline, 8 November 2026)
+
+**Software integration only; mock outcomes are not results.** Full report: [CONTROLLED_WORKLOAD_INTEGRATION_20261108_REPORT.md](reports/CONTROLLED_WORKLOAD_INTEGRATION_20261108_REPORT.md).
+
+- **What was implemented.**
+  - Native stores built with the original SAFE-Mem write path.
+  - Per-condition provenance from the overlays.
+  - Fixed oracle audits that satisfy the ledger's complete-bundle rule.
+  - A runner reusing the provisional `answer_query`/judge path for static, R, C, M, S and no-memory.
+  - A deterministic utility grader.
+  - Analysis with paired cluster bootstrap, Holm correction and the H1–H3 decisions.
+  - A prompt-aware mock, and a refusing session so paid dispatch is impossible from this code.
+- **Dev dry run.** 8 real groups and 4,760 outcome events, using real cached extraction for the verbatim attacks and the mock elsewhere. Integrity is clean, and every mechanical prediction holds:
+  - R never blocks scored siblings but does block the linked copy.
+  - Localized: C and M suppress A's other-batch benign memories (8/56) while S keeps them (45/56) at the same ASR (0/32).
+  - Distributed: S equals C and M.
+  - Unlinked relays leak under every arm.
+- **Bugs fixed.**
+  - The spec's linked-copy prediction was wrong. The linked copy shares the audited root and use, so R, C, M and S all block it; the spec is corrected.
+  - A degenerate test fixture.
+  - Mock thresholds.
+  - Three integration-contract details.
+  - A 50× speed issue, solved with the existing tested evidence-revision cache.
+- **Explained.** Provisional R changed 0 contexts because every query had its own `use_id`, so use-specific direct findings never applied.
+- **Stage-1 cache audit (exact).**
+  - **Free:** 427 construction requests hit the frozen cache, including all 64 verbatim attacks and all MPBench questions.
+  - **Would be paid:** 528 requests (256 extractions, 40 retentions, 232 classifications), about **$0.073, or $0.088 with retries**, down from the $0.28 upper bound.
+- **Risks for the paid stages.**
+  - With mock retrieval, 23% of inserted facts never reached the context.
+  - 1% of utility passes were coincidental alias matches.
+  - Stage 2 must measure both with real extraction and MiniLM.
+- **Unchanged.**
+  - Of the 431 pre-existing files hashed, only my own earlier test fixture changed.
+  - 635 offline tests pass.
+  - The frozen provisional bundles verify.
+  - The state inspector passes; budget $2.09412345 used, $0 held.
+
+### S v2 candidates: dev exposure (12 November 2026)
+
+Full report: [SV2_CANDIDATES_DEV_20261112_REPORT.md](reports/SV2_CANDIDATES_DEV_20261112_REPORT.md). Free; exposure only; designed and evaluated on dev.
+
+| | S v1 | **S2-ID** | S2-BS | M | A-MemGuard |
+|---|---|---|---|---|---|
+| What it adds to S | – | content lineage + MemLineage sensitive-action gate | content lineage + identity-independent (context, batch) scope | – | – |
+| Sybil k=4 (seeds' batch / own batches) | .97 / .97 | .69 / .69 | **0** / .97 | .97 / .97 | .69 / .69 |
+| Laundering r=.5 random | .80 | **.51** | .80 | .49 | .65 |
+| Innocent's notes when the attacker shares their batch | .94 | .94 | **.58** | .94 | .92 |
+| Worst case over 51 attacker families | .98 | **.71** | .98 | .99 | .76 |
+| Utility (localized) | .93 | .93 | .93 | .67 | .90 |
+
+### Published baselines under Sybil-k / laundering-r: dev exposure (12 November 2026)
+
+Full report: [PUBLISHED_BASELINES_SWEEP_DEV_EXPOSURE_20261112_REPORT.md](reports/PUBLISHED_BASELINES_SWEEP_DEV_EXPOSURE_20261112_REPORT.md). Free and exposure-only; not ASR.
+
+| Unaudited attack exposure | k=1 | k=2 | k=4 | r=.25 rand | r=.5 rand | r=1 |
+|---|---:|---:|---:|---:|---:|---:|
+| Original SAFE-Mem / R / RandEC | .97 | .97 | .97 | .97 | .97 | .97–.98 |
+| C | 0 | .81 | .97 | .41 | .80 | .97–.98 |
+| M | 0 | **.28** | .97 | **.29** | **.49** | .97–.98 |
+| **S** (= SL) | 0 | .81 | .97 | .41 | .80 | .97–.98 |
+
+- **Utility:** S .925 in nearly every cell, vs C .67–.92 and M .65–.92.
+- **MemLineage:** equals no defence on ORDINARY queries and an empty context on SENSITIVE ones (all contexts contain untrusted memory). Its classifier calls are pending (≈ $0.01).
+- **A-MemGuard:** pending (paid, ≈ $0.5).
+
+### Adaptive attackers, content lineage and boundary verification: dev exposure (12 November 2026)
+
+Full report: [ADAPTIVE_ATTACKS_DEV_EXPOSURE_20261112_REPORT.md](reports/ADAPTIVE_ATTACKS_DEV_EXPOSURE_20261112_REPORT.md).
+- **Scope:** dev split only, **$0**, exposure level (is the attack target or utility fact in the answer context?).
+- **Adaptive conditions:** relabellings of the real dev stores (provenance and audits only).
+
+Unaudited-attack exposure (lower is better) and utility:
+
+| Condition (attacker knowledge) | C | M | **S** | Utility S vs C |
+|---|---:|---:|---:|---|
+| random detection, concentrated (K1) | 0 | 0 | **0** | **.925 vs .670** |
+| random detection, spread (K1) | 0 | 0 | **.280** | .703 vs .670 |
+| … + boundary-verification audit, concentrated | **.462** | 0 | **0** | **.925 vs .799** |
+| … + boundary-verification audit, spread | .080 | .080 | .126 | .686 vs .690 |
+| audit-aware batch shift (K3) | 0 | 0 | .969 | .775 vs .670 |
+| audit-aware context shift (K3) | .969 | 0 | .969 | – |
+| Sybil identity | .969 | .969 | .969 | – |
+| framing, concentrated: innocent's utility | .417 | .317 | **.575** | – |
+| framing, spread: innocent's utility | .417 | .417 | .417 | – |
+
+- **Content lineage (SL; τ = 0.8 MiniLM, claims only):** unlinked relays .625 → **0** in every oracle condition. It withheld 0 benign and 0 principal claims, and every utility number is unchanged.
+- **Interpretation:** every propagation granularity has a matching audit-aware evasion. Against rule-aware attackers who don't know the audits, plain S is beaten by spreading. **S + boundary verification (+ lineage)** is the proposed v2 method.
+- **Caveats:** exposure is not ASR; dev only, 8 groups; the follow-up rule and τ were designed on dev, so a confirmatory claim needs a frozen protocol v2.
+- **Paid dev confirmation: done** (12 Nov, owner-approved). 67,200 real outcomes, **$0.12520395**. It confirms every direction.
+
+  Target-specific ASR on unaudited attacks:
+
+  | Condition | C | M | S |
+  |---|---:|---:|---:|
+  | random_spread | 0 | 0 | **.205** |
+  | random_spread_fu | .080 | .080 | **.126** |
+  | random_concentrate_fu | **.316** | 0 | **0** |
+
+  - **Strict utility, S vs C:** localized +.255, random_concentrate_fu +.126.
+  - **Relays:** .50 under base arms, **0 under SL**.
+
+  See the report's §8.
+
+### Locked held-out test: original SAFE-Mem vs R / C / M / S, v4 (8 November 2026)
+
+Full report: [LOCKED_TEST_V4_20261108_REPORT.md](reports/LOCKED_TEST_V4_20261108_REPORT.md). Owner-approved. Frozen protocol `921cf7f5…`, verified before, during and after the run. 24 held-out groups, 13,440 outcomes, integrity clean, analysed once with the frozen code.
+
+| Condition | Arm | ASR | Utility strict | Key stratum strict |
+|---|---|---:|---:|---:|
+| localized | **original SAFE-Mem** | 74/96 (77.1%) | 546/600 | 151/168 |
+| localized | R | 74/96 | 546/600 | 151/168 |
+| localized | C / M | 0/96 | 395/600 | **0/168** |
+| localized | **S (ours)** | **0/96** | **546/600** | **151/168** |
+| distributed | C / M / S | 0/96 | 395/600 | – |
+| uninformative | C / M / **S** | 65 / 43 / **63** of 96 | 461 / 320 / **470** | 157 / 84 / **169** of 182 |
+
+- **Pre-registered decisions:**
+  - **H1 supported:** S − C/M key utility +0.780 [0.714, 0.839], Holm-significant; ASR equal (0); S − R ASR −0.771.
+  - **H2 supported.**
+  - **H3 not supported:** R − S utility +0.115 [0.080, 0.148].
+- **Secondary:** strict H1 +0.899 [0.833, 0.952]. Target-specific ASR: original SAFE-Mem 59/96 and S 0/96 (localized).
+- **Copies:**
+  - Linked copies are blocked by every audited arm (target-specific 0/24; the judge-only 1/24 hits are G-T08 false positives).
+  - Unlinked relays leak under every arm (15–16/24 vs 22/24 original).
+- **Cost:** Stage 1 $0.1758837 (1,774 paid requests, as estimated) and Stage 3 $0.40250085 (5,229 unique requests), **total $0.57838455**. 0 failures. The old $0.01974 hold is preserved.
+- **Limitations:**
+  - one backbone and an oracle auditor;
+  - the judge is not human-validated;
+  - synthetic contributor structure and 24 groups;
+  - S's benefit requires informative incident structure (H3).
+
+### Final dataset audit and locked-protocol freeze (8 November 2026)
+
+Full report: [WORKLOAD_AUDIT_FREEZE_20261108_REPORT.md](reports/WORKLOAD_AUDIT_FREEZE_20261108_REPORT.md). This was done offline; no paid call was made and no test run.
+
+- **Audit findings (texts only, never outcomes):**
+  - 1 fragment relay (dev G-D01: the bare label);
+  - within-group near-duplicate attack payloads in 11 groups (2 dev, 9 test);
+  - no dev/test leakage: 0 shared documents, benign bases, attack texts, template groups or cases;
+  - 5 similar payload families across splits (an MPBench property; documented);
+  - selection by the original reproduction's write behaviour and the dev-only v3 pilot, both disclosed;
+  - one judge false positive in dev G-D02.
+- **Corrections, giving workload v4** (`quality_v4.py`; method-independent, the same for dev and test):
+  1. Fragment relays are replaced by the attack's own best-restating sentence.
+  2. Selection skips candidates whose target near-duplicates an attack already in the group (MiniLM cosine ≥ 0.6; threshold set from target texts only).
+  - **Result:** 0 near-duplicate groups and 0 fragments.
+  - **Unchanged:** carriers, facts, overlays, audits, IDs and the split. v1–v4 all regenerate.
+- **Dev impact:** 10 contributions (4 groups) and 7 of 280 probes (5 attack, 2 relay). The v4 dev mock dry run is clean. Dev v3 results stay as development evidence. An optional real refresh of the changed dev groups would cost about $0.09.
+- **Secondary analyses, pre-declared:** H1 on strict utility (dev +0.91 [0.80, 0.98]) and target-specific ASR (dev: removes the G-D02 false positive). Primary dev decisions are unchanged (H1 ✓, H2 ✓, H3 ✗), and H3's margin is not relaxed.
+- **Frozen:** `research_data/workload_freeze_v4_20261108/locked_protocol_v1.json`.
+  - Digest `921cf7f53c5e292243d3efa368c60e39f70091ffea9934f6dbcbd9d3bffd97eb`; file SHA-256 `7232e56f…48ed90`.
+  - Covers the dataset, all `src/ams` code, all prompts, the scripts, the pricing config, and the protocol, hypotheses and statistics in plain form.
+  - `scripts/freeze_locked_protocol.py verify` passes.
+- **Test gate:** test dispatch needs an owner-approval file bound to the protocol digest and the caps. The run scripts re-verify the freeze first, and mock runs on test are refused.
+- **Test untouched:** `scripts/verify_test_untouched.py` passes before and after the freeze.
+- **Locked-test cost estimate:**
+  - Stage 1: $0.1988 (1,774 paid requests);
+  - Stage 2: $0;
+  - Stage 3: $0.4193;
+  - **total $0.618**, or $0.742 with a 20% allowance.
+
+### Dev Stage 3: original SAFE-Mem vs R / C / M / S (8 November 2026)
+
+Full report: [CONTROLLED_WORKLOAD_DEV_STAGE3_20261108_REPORT.md](reports/CONTROLLED_WORKLOAD_DEV_STAGE3_20261108_REPORT.md). These are **dev-split results** (8 groups). The held-out test split is untouched.
+
+| Condition | Arm | ASR | Utility strict | Key stratum strict |
+|---|---|---:|---:|---:|
+| localized | **original SAFE-Mem** | 23/32 (72%) | 185/200 | 51/56 |
+| localized | R | 23/32 | 185/200 | 51/56 |
+| localized | C / M | 0/32 | 134/200 | 0/56 |
+| localized | **S (ours)** | **0/32** | **185/200** | **51/56** |
+| distributed | C / M / S | 0/32 | 134/200 | – |
+| uninformative | C / M / **S** | 19 / 15 / **20** of 32 | 168 / 125 / **167** | 67 / 42 / **67** of 69 |
+
+- **Hypotheses:**
+  - **H1 supported:** S − C/M key utility +0.73, CI [0.57, 0.86], Holm-significant, with equal ASR. S − R ASR −0.72.
+  - **H2 supported.**
+  - **H3 not supported:** R − S utility +0.065, CI [0.02, 0.12]. With uninformative provenance S behaves like C.
+- **Copies:** R/C/M/S block the linked copy. Unlinked relays leak under every arm (4/8; original SAFE-Mem 7/8). One apparent linked-copy "leak" came from a near-duplicate MPBench attack in another record.
+- **Implementation:**
+  - a guarded `stage3` scope (answer, conflict and judge only; dev only; $0.70 cap; exact prompt-shape checks);
+  - `stage_controlled_workload.py stage3` with `--mock` and `--confirm-paid-dev-stage3`;
+  - a full offline mock run on the real stores before spending.
+- **Cost:** $0.1397682 for 1,354 unique requests, 0 failures.
+- **Limitations:**
+  - 8 groups and one backbone;
+  - an oracle auditor;
+  - the LLM judge is not human-validated;
+  - near-duplicate MPBench templates and fragment relays.
+
+### Controlled workload v3: pilots and real dev stores (8 November 2026)
+
+Full report: [CONTROLLED_WORKLOAD_V3_PILOTS_STAGE1_STAGE2_20261108_REPORT.md](reports/CONTROLLED_WORKLOAD_V3_PILOTS_STAGE1_STAGE2_20261108_REPORT.md).
+
+- **New session:** `research_data/controlled_workload_session_v2_20261108/`. Earlier paid replies were reused read-only, and every run used `caffeinate`.
+- **v2 pilot: failed, 10/18, $0.0047.**
+  - Whole notes got `{"claims": []}`: the extractor wants durable claims.
+  - One-off events were dropped (review day 0/3, kickoff room 1/3, volunteer count 1/3).
+  - Lasting facts were kept (version 3/3, month 3/3, lead 2/3).
+- **v3 (data only):** every fact is phrased as a standing reference fact, with identical answers and draws. Only the fact sentence, the notes and 416 utility question wordings changed; everything else is byte-identical to v1.
+- **v3 pilot on fresh contributions: passed, $0.0050.** 16/18 facts (89%), relays 3/4, no elevation, no keep.
+- **v3 dev Stage 1: $0.0554**, 8 groups, 0 failures, 389 requests free.
+- **Stage 2 on real data:**
+  - Facts stored 192/208. Utility facts in the static context **185/200** (v1: 10/75).
+  - **Localized:** attacks 0/32 under C/M/S, key stratum C/M **0/56** vs **S 51/56**.
+  - **Distributed:** S = C/M.
+  - **Uninformative:** S 167/200 utility facts vs M 125/200, but attacks exposed S 26/32 vs M 18/32.
+  - **Copies:** the linked copy is blocked by R/C/M/S; the unlinked relay leaks 5/8 under every arm.
+- **Remaining issues:**
+  - about 8% of facts are not extracted (equal across arms; covered by the strict metric);
+  - fragment relay carriers in MPBench limit relays to about 5/8.
+
+### Controlled workload v2: fact-centred utility carriers (8 November 2026)
+
+Full report: [CONTROLLED_WORKLOAD_V2_FACT_CARRIERS_20261108_REPORT.md](reports/CONTROLLED_WORKLOAD_V2_FACT_CARRIERS_20261108_REPORT.md). This is a data-only fix; no SAFE-Mem algorithm, prompt or setting changed, and no paid call was made.
+
+- **Design.**
+  - **Benign carriers.** Each benign carrier is a short note in its base document's format. The fact is the main statement, followed by two neutral topic sentences and a ≤ 600-character excerpt of the original MPBench benign document.
+  - **Requests.** Each request asks for a summary or update about the topic, for example "What does this message say about the Larkspur newsletter?". It never contains the answer and never asks to remember anything; a remember request could raise artifact claims to principal-endorsed standing.
+  - **Unlinked relays.** The relayed attack statement is now central, and the relay stays unlinked.
+- **Preserved, verified byte-identical to v1:**
+  - seed, contribution IDs and ingestion order;
+  - all 256 attack contributions, the linked copies and the principal controls;
+  - all overlays (contributors, contexts, batches);
+  - audit tickets and verdicts;
+  - probe questions, answers and strata;
+  - the dev/test split. The test split was not used.
+
+  v1 still regenerates byte for byte. v2 has its own version and design hash.
+- **New code (workload only):**
+  - `carriers_v2.py`, `validate_v2`;
+  - a request-guided mock extraction mode;
+  - `replay.py`, which reuses already-paid replies read-only by exact request key;
+  - per-purpose construction scopes;
+  - `pilot.py` and `scripts/pilot_fact_extraction.py`;
+  - 8 new tests.
+- **Offline results:**
+  - **Tests:** 648 pass.
+  - **Mock calibration** on the 3 real Stage-2 groups: v1 21/78 (real 8/78) and v2 78/78. The mock is more lenient than the real model, so this checks the mechanism only.
+  - **Full v2 dev mock dry run:** clean. Localized C/M strict key stratum 0/56 vs S 56/56 at ASR 0/32; distributed S = C/M.
+- **Cost of a full v2 dev Stage 1:** 563 paid requests, about $0.08–0.09. 357 requests are free: 176 from the frozen cache and 181 replays of v1 paid replies.
+- **Pilot prepared, not run** (`research_data/fact_pilot_v2_plan_20261108/`).
+  - **Size:** 18 dev facts (3 per family, distinct groups) plus 4 relays; 43 requests that the full Stage 1 would reuse.
+  - **Cost:** expected **$0.006**, hard cap $0.03.
+  - **Criteria:** primary, at least 15/18 facts stored. Secondary, at least 3/4 relays stored, no elevated claims, no retention keep.
+  - **Blocker:** `run` refuses the halted shared session, so it needs the owner's approval and a session decision.
+
+### Controlled workload: paid dev Stage 1 and free Stage 2 (8 November 2026)
+
+Full report: [CONTROLLED_WORKLOAD_STAGE1_STAGE2_20261108_REPORT.md](reports/CONTROLLED_WORKLOAD_STAGE1_STAGE2_20261108_REPORT.md).
+
+- **Stage 1 (paid, owner-approved, dev only, hard cap $0.15)** built real stores for G-D00–G-D02 with frozen-cache-first replies, guarded GPT-4o-mini calls for misses, and local MiniLM embeddings.
+  - **Settled cost $0.03251535:** 118 extraction, 13 retention and 78 classifier calls; 127.5k input and 22.3k output tokens.
+  - **The run halted** when one extraction call timed out after the computer apparently slept. Its billing is `unknown`, and the worst case of $0.01974 is held. The guard halted the shared session, and this code cannot clear that halt by design. The shared ledger reads **$2.12663880 used, $0.01974 held, blocked**.
+- **Stage 2 (free) on the 3 groups.**
+  - **Attack side works:**
+    - attacks, seeds and principal statements are stored 12/12;
+    - all probe questions are classified description;
+    - attack targets reach the static context in 11/12 and **0/12 under C/M/S** (localized and distributed);
+    - R blocks only the linked copy, and unlinked relays leak under every arm;
+    - S keeps the localized key stratum (4/21) where C/M drop it (0/21).
+  - **Utility side is broken by design:** inserted facts are stored as claims in only 8/78 benign documents, and reach the context in 10/75 utility probes.
+  - **Root cause:**
+    - the fact sits in an artifact chunk that MiniLM ranks #1 of 777 for 24/25 questions;
+    - the frozen `external_evidence=false` keeps external chunks out of the context;
+    - sentence-endorsed extraction keeps only what the user's request is about (broad "summarize" requests 7/44, narrow requests 1/34).
+  - The mock dry run hid this because its extractor kept every fact. This is a gap in my workload design, not a SAFE-Mem bug.
+- **Strict utility metric implemented:** correct **and** inserted fact in context (`utility_external_strict`, by stratum, principal, and coincidental passes), plus an H1 sensitivity analysis. Stage 2's fact-in-context rate (13% static) is its ceiling.
+- **Checks:**
+  - 640 offline tests pass, and no algorithm, prompt or configuration changed.
+  - The dated state inspector now refuses because the budget changed and one attempt is unresolved. That is expected and was left unchanged.
+
+## 7. What the latest inspection checked
+
+The [1 November audit](reports/RESEARCH_AUDIT_20261101_REPORT.md) passed **612 collected tests**, recounted all 3,888 answers and verified the prior 99-file delivery. The [7 November repository review](reports/REPOSITORY_REVIEW_20261107.md) rechecked the saved artifacts and reran the offline suite; see that report for this review’s results and scope. The published counts match. Earlier baseline checks matched original retrieval contexts and governance on all 648 static queries.
+
+Earlier test reports cover smaller or overlapping runs. Their counts should not be added to this total.
+
+**Known issue:** the old Phase 1 validator includes unrelated new research modules in its fingerprint, so it refuses the archive despite unchanged producer files and payloads. A versioned fix is needed before reusing affected Phase 1 and regeneration commands. The audit checks the recorded dependencies directly without rewriting old manifests. Later native/provisional freezes and results pass their checks.
+
+Synthetic provenance remains an assumption. Field checks cannot authenticate people or reviews, and evaluator separation is not an operating-system sandbox. Tests establish checked behavior, not universal safety.
+
+### Run the offline checks
+
+Use the existing environment. These commands do not install packages or call paid models:
+
+```sh
+.venv/bin/python scripts/check_research_offline.py -q tests
+.venv/bin/python scripts/inspect_research_state.py --out reports/my_new_inspection.json
 ```
 
-Add `--limit N` to `run_mpbench.py` to try a small subset first.
+The test command blocks networking in the test process and supports macOS multiprocessing. The dated inspection requires a fresh output path and refuses unexpected changes. It never falls back to paid calls. Setup instructions are in the archived READMEs.
 
-**EHRAgent under MINJA (Table 2).** MINJA needs its own environment (autogen 0.2):
+## 8. Human validation and remaining work
 
-```bash
-bash scripts/setup_minja_env.sh && source /path/to/envs/minja/bin/activate
-export AMS_PY=/path/to/main/env/python
-bash scripts/server_minja_demo.sh <MIMIC-III demo directory>
-```
+The review workflow is ready; genuine reviews are not complete. Two independent people must review safety for each intended use, source attribution, supporting spans and utility questions/references. A third person resolves disagreements. Use the [review guide](reports/PROVISIONAL_20261029_GUIDE.md) and the [focused question-review guide](reports/FOCUSED_REVIEW_WORKFLOW_20261101_GUIDE.md). Acceptance of one question does not certify its whole source bundle.
 
-**Adaptive attacks (Table 3)**: `configs/adaptive_<rewrite>_{nodef,ours}.yaml` with
-`run_mpbench.py`.
+“Implemented” describes working software. “Validated” additionally requires the scientific evidence stated below. A passed software test does not complete a human annotation or prove the method helps.
 
-**Appendix**: ablations in `configs/v31_mpbench_{govoff,noendorse,noconflict,withhold_m0}.yaml`,
-retrieval budget in `configs/v31_mpbench_withhold_{k2,k8,m2,m8}.yaml`, TMA-NM through its
-authors' monitor in `configs/mpbench_tma_nm.yaml`. `python scripts/paper_data.py` writes the
-data behind the figures.
+| Step | Work | Current status |
+|---|---|---|
+| 1 | Define the research question and protocol | **Prepared.** Proposed protocol, not externally registered; scientific claim remains unproven. |
+| 2 | Prepare IDs, source links, permissions, schedules and scenario generators | **Implemented and tested.** Original payloads retained. |
+| 3 | Recover claims and evidence chunks | **Completed within documented scope.** 22,089 claims and 124,090 chunks recovered/checked; not full historical graph replay. |
+| 4 | Safety and provenance annotation | **Partly complete.** Packets, import tools and AI proposals exist; genuine human validation is pending. |
+| 5 | Source-grounded benign-use questions | **Partly complete.** Drafts and review tools exist; no human-validated final utility set. |
+| 6 | Construct pilot groups | **Provisional version complete.** 20 case-intent groups exist; final verified 16-safe/16-unsafe groups remain pending. |
+| 7 | Evidence ledger | **Implemented and tested.** Reveals, incident deduplication, corrections, retractions and snapshots. |
+| 8 | R/C/M/S comparison policies | **Minimum version implemented and tested.** Stronger variants and descendant propagation remain pending. |
+| 9 | Integrate retrieval | **Implemented and tested** for flat/withhold/hops=0, with original authority, access checks and claim/chunk refill. |
+| 10 | Sequential execution and restart | **Implemented and tested.** Saved responses, state snapshots and restart checks; no continuous-adaptation efficacy claim. |
+| 11 | Freeze settings and estimate/control spending | **Engineering/provisional path completed and used.** Final scientifically validated freeze is pending. |
+| 12 | Run controlled comparisons | **Preliminary development comparison completed.** Eight groups, three conditions, six methods; no demonstrated S advantage. Primary validated pilot remains pending. |
+| 13 | Robustness experiments | **Partly prepared.** Scenario recipes and offline mechanics exist; answer-level noise/delay/compromise/false-accusation studies remain pending. |
+| 14 | Full-dataset and external evaluation of our defense | **Pending.** Only Original SAFE-Mem has completed full MPBench reproduction. |
+| 15 | Paper and reproducible release | **Pending.** Reports, tables, slides and illustrations exist; publication claims and release packaging are unfinished. |
 
-## Repository structure
+*Update, 12 November 2026 (adaptive attackers):* roadmap step 7 has started.
+- **Done free on dev:** adaptive placement, Sybil, framing and random-detection attacks; two improvements (boundary-verification auditing, content lineage).
+- **Remaining for step 7:**
+  - (a) paid dev confirmation, $0.11 expected, cap $0.25, needs approval;
+  - (b) freeze protocol v2 (S + boundary verification + lineage, adaptive hypotheses);
+  - (c) held-out confirmation on fresh groups;
+  - (d) ablations of S's gates and threshold, and of the audit budget.
 
-```
-src/ams/
-├── memory/typed.py        # SAFE-Mem: governance labels, memory graph, governance-aware retrieval
-├── core/lattice.py        # the order of kinds and the admission check
-├── eval/use_type.py       # classifying the use a request needs
-├── eval/callsite.py       # the check at tool calls (EHRAgent)
-├── baselines/             # A-MemGuard, DRIFT, RandEC, LLM sanitizer, MemLineage, TMA-NM
-├── eval/                  # MPBench, LoCoMo and MINJA evaluation
-└── llm/                   # model access: caching, retries, cost accounting
-configs/                   # one YAML per experiment
-prompts/                   # versioned prompts, prompts/<name>/v<k>.txt
-scripts/                   # command-line entry points
-```
+*Update, 8 November 2026 (locked test):* roadmap step 3 is done (§6). H1 and H2 are supported and H3 is not on the held-out test. In the older step table above, row 11 (freeze) is now done and row 12 (controlled comparisons) now has a completed locked test; rows 4–5 (human validation) are still pending. Next is step 4, which needs approval.
 
-## Citation
-```
-@misc{li2026safememsecureagenticmemory,
-      title={SAFE-Mem: Secure Agentic Memory with Fine-Grained Authority and Governance-Aware Retrieval}, 
-      author={Haoming Li and Dingyi Kang and Xu Hu and Jinxin Yang and Zhu Xu and Chenru Wang and Yi Ge and Miao Yin and Guanpeng Li and Feng Chen and Bingzhe Li},
-      year={2026},
-      eprint={2610.22959},
-      archivePrefix={arXiv},
-      primaryClass={cs.CR},
-      url={https://arxiv.org/abs/2610.22959}, 
-}
-```
-## License
+*Update, 8 November 2026 (audit and freeze):* roadmap step 2 is done. The final dataset is v4 and the protocol is frozen (§6). Step 3, the locked test, is next once the owner approves.
 
-Released under the [Apache License 2.0](LICENSE).
+*Update, 8 November 2026 (dev Stage 3; ICML roadmap):* dev Stage 3 is done (§6). H1 and H2 are supported and H3 is not, on dev. The **ICML roadmap** below replaces the older next-step lists; keep it current.
+
+| # | Step | Cost | Status |
+|---|---|---|---|
+| 1 | Dev Stage 3: original SAFE-Mem vs R/C/M/S | $0.14 | **Done** |
+| 2 | Final data-quality audit (relay fragments, near-duplicate payloads, leakage) → **workload v4**; **freeze dataset, protocol, hypotheses and analysis plan** (`locked_protocol_v1.json`, digest `921cf7f5…`) | free | **Done** |
+| 3 | Test split: Stage 1, 2 and 3, the **locked main comparison vs original SAFE-Mem** | **$0.578 actual** | **Done:** H1 ✓, H2 ✓, H3 ✗ |
+| 4 | Second backbone model on the test split | about $5–15 | **Next: needs owner approval** |
+| 5 | Full MPBench: S vs original SAFE-Mem | about $3–5 | Pending |
+| 6 | One more published memory-poisoning defense as a baseline | varies | Pending |
+| 7 | Adaptive attacker; ablations of S's gates and threshold | about $2–3 | **Dev done** (12 Nov): exposure study + paid confirmation ($0.125). Next: protocol v2 + held-out confirmation; ablations |
+| 8 | Robustness: noisy, false or late audits; compromised contributors | about $2–4 | Pending |
+| 9 | Human validation of a judge, label and utility sample | free (people) | Pending |
+| 10 | Paper, plus a reproducible release | – | Pending |
+
+*Update, 8 November 2026 (v3 on real data): the v2 pilot failed (10/18), v3 passed on fresh contributions (16/18), and the v3 dev stores are built and validated on real data (utility facts in context 185/200; S keeps the localized key stratum 51/56 vs C/M 0/56). Next: dev Stage 3, which needs approval; see §6 and §10.*
+
+*Update, 8 November 2026 (v2 carriers): the utility carriers are redesigned as fact-centred notes (workload v2), regenerated and tested offline; the tiny extraction pilot (expected $0.006, cap $0.03) is prepared and awaits approval and a session decision; see §6 and §10.*
+
+*Update, 8 November 2026 (night): paid dev Stage 1 ran 3/8 groups ($0.0325 settled, one unknown attempt held) and free Stage 2 found that the workload's inserted utility facts rarely reach the context (10/75). Next: fix the utility carriers (data only), a tiny paid extraction pilot, and an owner decision on the unknown-billing halt; see §6 and §10.*
+
+*Update, 8 November 2026 (late): the controlled workload is integrated and tested offline (§6). The next step is paid dev Stage 1 (≤ $0.09), which needs approval; see §10.*
+
+*Update, 8 November 2026 (evening): the controlled workload v1 is designed, generated and tested (§6). Next is offline runner integration, then paid dev Stage 1 if approved; see §10.*
+
+*Update, 8 November 2026: the full-pool feasibility check is **done** (§6). MPBench alone is insufficient, so the next step is a controlled attack-workload specification; see §10.*
+
+*Update, 7 November 2026: the inspection of the 23 changed contexts and the attack successes below is **done**; see the diagnostic in §6 and the progress log in §10. The next step is now an offline feasibility count of propagation-reachable attack cases in the full recovered pool. The original recommendation is kept below for the record.*
+
+Next, inspect the 23 changed retrieval contexts and the remaining attack successes, then prospectively define external-memory tasks and utility tests. We already store external records; we need questions that are permitted to use them and actually need their information. Include useful external facts, unsafe instructions, mixed contributions from one source, unrelated-source controls and principal-owned controls. Do not relabel ownership or relax authority only for our method. Keep original authority rules, equal verification budgets and strong C/M comparisons. Human validation can stay deferred for engineering work, but scientific labels and paper claims require it.
+
+## 9. Costs, files and sharing
+
+*Update, 12 November 2026 (adaptive paid dev confirmation):* spent **$0.12520395** (scope `adaptive_stage3`, cap $0.25). The new session's ledger is $0.9084978. All research spend is **$3.0351366, plus the $0.01974 hold**.
+
+*Update, 12 November 2026 (adaptive attackers):* **no spend.** The exposure study and the cost estimate are free. All research spend is unchanged at **$2.90993265, plus the $0.01974 hold**.
+
+*Update, 8 November 2026 (locked test):* the test spent **$0.57838455** (Stage 1 $0.1758837; Stage 3 $0.40250085). The new session's ledger is $0.78329385. All research spend is **$2.90993265, plus the preserved $0.01974 hold** in the old session; $27.07 of the $30 allowance remains.
+
+*Update, 8 November 2026 (dev Stage 3):* Stage 3 spent **$0.1397682**. The new session's ledger is $0.2049093. All research spend is **$2.3315481, plus $0.01974 held** in the halted old session.
+
+*Update, 8 November 2026 (v3):* the pilots and v3 dev Stage 1 spent **$0.0651411** in the new guarded session `research_data/controlled_workload_session_v2_20261108/`. All research spend across both ledgers is now **$2.1917799 used, plus $0.01974 held** in the halted shared session.
+
+*Update, 8 November 2026 (night):* owner-approved dev Stage 1 added **$0.03251535** settled. The shared ledger now reads **$2.12663880 used, $0.01974 held** (one unknown-billing attempt at worst case) **and is blocked** pending the owner's decision. See the [Stage 1/2 report](reports/CONTROLLED_WORKLOAD_STAGE1_STAGE2_20261108_REPORT.md). The paragraph below is kept as the 7 November record.
+
+The comparison added **$0.09877965**. The local research-session ledger, rechecked on 7 November, records **$2.09412345 of $30**, leaving **$27.90587655**, with no holds. Earlier reproduction costs are separate. This inspection used no paid model calls.
+
+Actual shared charges and equivalent per-policy verification costs are separate. The research guard preserves the allowance across restarts and stops on unknown billing; it does not cover every legacy script.
+
+`research_data/` stores versioned data, responses and private evaluator material; `reports/` holds dated explanations. Gold references, hidden profiles and future verdicts stay out of defense inputs. Old reports and failed checks are retained.
+
+Release packaging is pending: research code is untracked, and `.gitignore` excludes tests and reports. Sharing the README alone will not share the supporting work. Private evaluator data needs separate handling.
+
+The original project is credited in the [upstream README](UPSTREAM_README.md), including its citation. The [Apache 2.0 license](LICENSE) remains unchanged.
+
+## 10. Progress log
+
+Newest entry first. **Future sessions: read this section first, then add an entry after every task.** Each entry records what was done, what was found, which files changed, what is completed or remaining, and the next step. Standing rules: never delete earlier documentation or results; make no paid API calls and no algorithm changes without the project owner's explicit permission.
+
+### 2026-11-13 (later) — Protocol v2 draft, revision 2 (owner's three methodological concerns)
+
+**1. Power analysis.** `scripts/power_protocol_v2b.py` → `research_data/protocol_v2_draft_20261113/power_analysis_v2b.json`.
+- **Testing:** now uses the final procedure: 8 Holm contrasts, worst-case step α = 0.05/8 one-sided, intersection-union tests for joint hypotheses. The percentile cluster bootstrap and the t bound agree (0.998/0.996; 0.988/0.988).
+- **Calibration instead of the 0.80 factor:** P(target-specific success | target in context) was **measured in our real-answer data**: 0.75–0.79 on locked test v1 and 0.55–0.65 on the dev paid run; P(success | not in context) 0.00–0.09; relay 0.60–1.00.
+- **Sensitivity grids:** over q, p0 and effect scaling λ ∈ {1, 0.75, 0.5, 0.25}.
+- **H2:** evaluated at the 5-point margin.
+- **Power at N = 96:**
+  - H1 ≥ 0.99 (any λ);
+  - H3 ≥ 0.87 (λ = 0.25);
+  - H4 ≥ 0.94 if λ ≥ 0.5 (0.37–0.91 at 0.25);
+  - H5 ≥ 0.99 if SL's residual leak ≤ 10%;
+  - H6 ≥ 0.91 if the effect ≥ 0.10;
+  - H2 ≥ 0.99 if SD ≤ 0.10.
+- **MDE at N = 96:** 0.039–0.116 for SD 0.10–0.30.
+- Revision 1's "≥ 0.87 for all hypotheses" is replaced by these conditional statements.
+
+**2. Independence.**
+- No document is shared between held-out groups: the 1,154 unused MPBench benign documents are used at most once, and 1,342 generated benign documents (plus a reserve) fill the shortfall under frozen, defence-blind rules.
+- Seeds are unique.
+- A pre-registered multi-way cluster sensitivity analysis covers the remaining shared design factors (attack family, benign source type).
+
+**3. H5 endpoints.**
+- **Primary:** relay exposure (mechanism) + separate utility non-inferiority.
+- **Gatekept key secondary:** relay target-specific ASR (impact).
+- Primary and secondary endpoints are now explicit for H1–H6.
+
+**Files:** `reports/PROTOCOL_V2_DRAFT_20261113.md` (revision 2), `scripts/power_protocol_v2b.py`, `power_analysis_v2b.json`. Nothing frozen, generated or paid.
+
+**Owner decisions pending (§12 of the draft):**
+- generator model;
+- 96 or 128 groups;
+- budget/scope;
+- margins;
+- imperfect-audit rates;
+- second backbone;
+- S2-BS appendix-only;
+- generated benign documents.
+
+### 2026-11-13 — Pre-v2 archive and Protocol v2 DRAFT (Phase 0, steps 1–2; nothing frozen, generated or paid)
+
+**Step 1: archive.** `scripts/archive_snapshot.py archive` → `research_data/archive_pre_protocol_v2_20261113/`:
+- full copy of code and documents: 491 files (src, scripts, tests, prompts, configs, root documents, lock files);
+- full copy of reports and of every summary, analysis, estimate and plot: 493 files;
+- SHA-256 fingerprints of all 3,910 result files (8.94 GB).
+
+`verify` → verified. The locked v1 archive also still verifies.
+
+**Step 2: protocol v2 draft.** `reports/PROTOCOL_V2_DRAFT_20261113.md`, for owner review. It addresses all seven review points:
+1. **Power with dependencies** (`scripts/power_protocol_v2.py`; `research_data/protocol_v2_draft_20261113/power_analysis.json`):
+   - group = cluster; ICC from locked test v1 (utility ICC 0.07, design effect 2.71);
+   - Monte-Carlo power with observed and pessimistic (effect ×0.5) scenarios;
+   - **recommends 96 fresh groups:** primary power ≥ 0.87 even pessimistic;
+   - 2–3 point non-inferiority margins are untestable, so 0.05 is proposed.
+2. Defence-blind generation, inclusion and exclusion rules with a full funnel and no topping up.
+3. Fairness table: audit access, identity, inputs and compute per method; "+R" sensitivity variants.
+4. Pre-registered H1–H6, margins, Holm over 8 primary contrasts, cluster bootstrap, worst-case definition.
+5. Ablations frozen (dev and replication only) and the human-judge validation protocol (300 decisions, 2 blind annotators, κ).
+6. S2-BS is appendix-only.
+7. Approval gate per paid stage.
+
+**Method roles:** S main, SL original extension, S2-ID hybrid.
+
+**Open owner decisions:**
+- generator model;
+- group count;
+- scope and budget: the full scope at 96 groups likely exceeds the $30 allowance;
+- margins;
+- imperfect-audit rates;
+- second backbone.
+
+**Files:** `scripts/archive_snapshot.py`, `scripts/power_protocol_v2.py`, `reports/PROTOCOL_V2_DRAFT_20261113.md`, the archive directory, `research_data/protocol_v2_draft_20261113/`. No method code, results or locked data changed; no paid call.
+
+### 2026-11-12 (held-out supply check) — Fresh MPBench held-out groups are not possible with the current design
+
+**Request:** a new, consistent held-out evaluation (real ASR, strict utility, unaudited exposure, useful-fact exposure, worst cases, relay exposure) of all methods against all attack strategies, on **fresh, previously unused MPBench** data. Supply and cost had to be checked first; no paid run.
+
+**What we did (free, offline):** counted every MPBench case used by any workload version (v1–v4, dev + test) against the generator's three pools.
+
+| MPBench pool | Total | Used (v1–v4) | Genuinely unused |
+|---|---:|---:|---:|
+| Scored attacks ("reachable": poison stored as a description claim that propagation can affect) | 102 | 99 | **3** |
+| Seed attacks (poison written, not reachable) | 1,671 | 68 | 1,603 |
+| Benign documents | 1,986 | 832 | 1,154 |
+
+**Finding:**
+- Each group needs 4 scored attacks, so **0 fresh groups** can be built.
+- The unused seed cases cannot replace them:
+  - 2,727 of the 3,241 MPBench attack cases have non-description questions (`query_not_description`), which SAFE-Mem's authority rule never lets external memory answer;
+  - 242 have no question;
+  - 170 have the target outside external claims.
+- Only 102 cases were ever usable as scored attacks.
+
+**Status:** blocked; needs an owner decision between alternatives (reuse the v4 test split for a second, separately labelled held-out evaluation; or new non-MPBench attacks). No data was generated, no test-split retrieval or outcome was computed, and no paid call was made.
+
+### 2026-11-12 (overview) — Code appendix removed from RESEARCH_OVERVIEW.md
+
+**Owner request:** no code in the overview. Appendix J (the method's source code) and its index row were deleted, so the document now has Appendices A–I. The code itself is untouched in `src/`. No other change.
+
+### 2026-11-12 (overview, self-contained) — All supporting material copied into RESEARCH_OVERVIEW.md
+
+**What we did:** at the owner's request ("not as links"), RESEARCH_OVERVIEW.md now contains everything in full instead of linking to it:
+- **A:** the progress log;
+- **B:** IMPLEMENTATION.md;
+- **C:** brainstorm.md;
+- **D–H:** the five reports (locked test, audit/freeze, adaptive attackers, published competitors, S v2);
+- **I:** all 7 plots, embedded;
+- **J:** the method's code (risk/penalty, S's support gates, the R/C/M/S decision, content linking, S v2, published adapters).
+
+**How:** headings were shifted down, file links turned into plain text (web links kept), and image paths fixed. Source files are unchanged. The appendices are snapshots as of 12 Nov 2026; the originals stay authoritative if they are updated later. The file is about 3,400 lines.
+
+**Files:** RESEARCH_OVERVIEW.md, README.md. No code, data or results changed; no paid call.
+
+### 2026-11-12 (overview) — RESEARCH_OVERVIEW.md written
+
+**What we did:** at the owner's request, wrote [RESEARCH_OVERVIEW.md](RESEARCH_OVERVIEW.md). It is a from-scratch, plain-language explanation of the whole project:
+- the problem and the idea;
+- every method and every metric;
+- each phase (reproduction → MPBench null result → controlled workload → dev run → locked test → adaptive attackers → Sybil/laundering → published competitors → S v2), each with its result table and what that table shows;
+- a master comparison, the full cost breakdown ($3.3941 spent + $0.0395 held), solid vs preliminary evidence, and next steps.
+
+**Files:** new `RESEARCH_OVERVIEW.md`; README "Start here" now links it. No code, data or results changed; no paid call.
+
+**Next:** unchanged; the owner chooses the v2 option (S2-ID, or S + content linking + boundary verification, or both).
+
+### 2026-11-12 (supervisor sweeps) — Sybil-k and laundering-r exposure sweeps (dev, free)
+
+**Why:** supervisor feedback: random "uninformative" placement is unrealistic (an attacker cannot control every account); run competing methods and S on **Sybil-k** and **laundering-r** (no-signal control not a priority); improve S if it loses.
+
+**What we did ($0, no model call, dev only, frozen S/R/C/M unchanged):**
+- New overlay conditions in `src/ams/research/workload/adaptive.py` (`sweep_conditions`): `sybil_k{1,2,4,8}` (all 8 attack items dealt over k identities) and `launder_r{0..4}` (n of 4 scored attacks re-submitted by the innocent contributor B). Each with oracle detection (seeds caught) and random detection (`_rand`, 6 draws). `scripts/adaptive_exposure.py --sweeps`; analysis pools `_rand` draws.
+- Ran 110,880 retrievals, arms original SAFE-Mem (static), R, C, M, S, SL. Output: `research_data/adaptive_sweeps_dev_v3_20261112/` (`exposure_rows.jsonl.gz`, `summary.json`, `analysis.json`). Replica sanity checks pass; 9 adaptive tests pass.
+
+**Findings (unaudited exposure ASR / total utility):**
+- S never loses to C on security and keeps original-level utility everywhere (0.90–0.93; C 0.67–0.92, M 0.65–0.92).
+- **S loses to M on security** at Sybil k=2 (S/C 0.81 vs M 0.28 oracle; 0.85 vs 0.33 random) and under random-detection laundering (r=0.25: 0.41 vs 0.29; r=0.5: 0.80 vs 0.49; r=0.75: 0.90 vs 0.82). M pays for it with utility (0.65–0.73 vs S 0.90–0.93).
+- **Everyone fails** at Sybil k≥4 and full laundering (≈0.96–0.98 for all methods, = no defense).
+- Laundering with random detection hurts the innocent relayer: B utility 0.875 C, 0.869 M, **0.903 S**.
+- SL = S in every cell: near-duplicate lineage (τ=0.8) does not link distinct attack payloads across identities.
+
+**Status:** per the supervisor's rule, S needs improvement for Sybil and laundering. **Next (needs approval):** design S v2 with attack-family (semantic/indicator) linking across identities, as a new arm; re-run this free sweep; then paid dev confirmation.
+
+### 2026-11-12 (late night) — Budget session replaced; S v2 candidates designed, implemented and evaluated (free)
+
+**Budget (owner decision):**
+- Accepted the $0.0198144 unknown-billing hold in session v2. It stays blocked and unresolved, and is kept for the record.
+- Opened **session v3** (`research_data/controlled_workload_session_v3_20261112`).
+- **Mistake, recorded:** the first sanitiser scope was opened with a $0.02 cap. That is below one worst-case call reservation ($0.0198), so it stopped after 4 calls ($0.00022215). Scope caps are immutable by design, so a separately capped `published_sanitiser_resume` scope ($0.03) finished G-D07 for **$0.0049563**.
+- **Session v3 total:** $0.00517845, no holds.
+- **All research spend:** $3.3941325 (old session $2.1266388 + v2 $1.26231525 + v3 $0.00517845), plus holds $0.01974 (old) and $0.0198144 (v2).
+- The overall $30 allowance is tracked across sessions in this log; each session carries its own technical $30 limit.
+- **Sanitiser result, 8/8 groups:** exposure .906, utility .925.
+
+**S v2 (owner-approved design and free evaluation):** implemented as research-layer compositions on top of the unchanged S, in `src/ams/research/workload/sv2.py`. Content lineage (τ = 0.8) is kept in every candidate; boundary verification is evaluated as an audit protocol (`_fu` conditions).
+- **S2-ID:** adds MemLineage's sensitive-action gate (recorded verdicts; a miss raises).
+- **S2-BS:** adds an identity-independent (context, batch) scope with S's gate and threshold.
+- **S2-ALL:** both, exploratory.
+
+**New conditions (additive):**
+- 54 sweep boundary-verification draws;
+- stress tests `sybilown_k{2,4,8}` (each Sybil in its own batch) and `cohabit_x1` (attacker shares the innocent's batch).
+
+**Findings:**
+- **S2-BS rejected:**
+  - own-batch Sybils return it to S (k=4 .97, Δ 0);
+  - cohabit costs the innocent −.367 [−.467, −.300].
+- **S2-ID recommended:**
+  - never worse than S on exposure, identical utility;
+  - −.22 to −.28 under Sybils and laundering;
+  - worst case .706, the best of all arms.
+- **Limits:**
+  - S2-ID's gain is entirely MemLineage's query gate (7 SENSITIVE dev questions);
+  - M beats it at k=2 (+.31);
+  - every method floors at ≈ .69 under high-k own-batch Sybils and full laundering.
+- **Boundary verification:** helps S under random spread (.28 → .13), not under the sweeps; it hurts C and M there through dilution.
+
+**Files:**
+- New: `src/ams/research/workload/sv2.py`, `scripts/analyse_sv2.py`, `scripts/plot_sv2.py`, `tests/test_sv2_candidates.py`, `reports/SV2_CANDIDATES_DEV_20261112_REPORT.md`, `research_data/sv2_exposure_dev_v3_20261112/`.
+- Changed:
+  - `adaptive.py` (additive conditions);
+  - `scripts/adaptive_exposure.py` (S v2 arms);
+  - `transport.py` (resume scope);
+  - `scripts/published_paid.py` (`--cap`, `--new-session`, `--resume-scope`).
+
+**Integrity:** no frozen S, R, C, M, ledger, retrieval or prompt file changed; v1 archive verifies; 675 tests pass.
+
+**Plan changes:** the batch-scope idea was rejected on dev; S2-ALL adds nothing over S2-ID once the batch scope is defeated.
+
+**Unresolved:**
+- the session v2 hold;
+- S2-ID on test questions needs new SensitiveAction calls;
+- nothing here is answer-level.
+
+**Next (owner approval needed):**
+- adopt S2-ID as the v2 method;
+- optional paid answer-level dev check;
+- then protocol v2 + fresh held-out groups.
+
+### 2026-11-12 (night) — Paid published-defence runs: MemLineage, A-MemGuard, LLM sanitiser (owner-approved)
+
+**What we did:**
+- Added guarded, separately capped scopes in `transport.py`: `published_memlineage` $0.05, `published_amemguard` $1.00, `published_sanitiser` $0.50. Each has exact request-shape checks; temperature 1.0 is allowed only for A-MemGuard.
+- Added `GuardedPublishedClient`, `scripts/published_paid.py` (with a `--mock` dry run, which passed first) and paid-result merging in `analyse_published_comparison.py`.
+- Ran:
+  - the MemLineage classifier on 216 questions;
+  - an A-MemGuard pilot on G-D00 ($0.039), then the other 7 groups;
+  - the LLM sanitiser on 7 of 8 groups.
+
+**Cost:**
+- MemLineage $0.0047586; A-MemGuard $0.3150183; sanitiser ≈ $0.034.
+- **One sanitiser call (G-D07) failed with unknown billing**, so the session is **halted** with $0.0198144 held.
+- All research spend is $3.38895405 + holds $0.01974 (old session) + $0.0198144.
+
+**What we found:**
+- MemLineage marks 7 questions SENSITIVE.
+- Published exposures are flat in k and r: A-MemGuard .688 (utility .900), MemLineage .688 (.925), sanitiser .929, RandEC .969.
+- S wins at k=1 (−.69 vs A-MemGuard [−.84, −.50]) and loses at k ≥ 4 / r ≥ .5 random (+.14 to +.28).
+- Identity-blind methods protect the innocent forwarder best (.94).
+
+**Files:**
+- `src/ams/research/workload/transport.py`, `src/ams/research/workload/published.py` (`text_from_defence`);
+- `scripts/published_paid.py`, `scripts/analyse_published_comparison.py`, `scripts/plot_published_comparison.py`;
+- `research_data/published_paid_dev_v3_20261112/`;
+- report §9.
+
+**Remaining:**
+- **Owner decision on the halted session**, then the sanitiser for G-D07 (≈ $0.005);
+- answer-level ASR for published methods;
+- the S v2 design.
+
+**Next:** decide how to resolve the unknown-billing hold. Then design S v2, combining audit-driven selectivity with an identity-blind content/query signal.
+
+### 2026-11-12 (evening) — Published baselines vs S under the Sybil-k / laundering-r sweep (dev, free)
+
+**What we did:**
+- Inspected `src/ams/baselines/` and the existing sweep. The sweep was already in `adaptive.py`, with results in `research_data/adaptive_sweeps_dev_v3_20261112/`; it was used unchanged.
+- Built adapters (`src/ams/research/workload/published.py`) that feed published defences exactly the memories original SAFE-Mem (or R) retrieves.
+- Ran RandEC (free) on all 66 conditions.
+- Computed MemLineage's model-free labels.
+- Counted (mock) the paid requests for MemLineage, A-MemGuard and the LLM sanitiser.
+- Analysed, plotted and wrote the report.
+
+**What we found:**
+- **Static retrieval is identical across all 66 conditions,** so every published method is exactly invariant to k, r and audit draws.
+- **RandEC** flags 1/686 memories, so it equals no defence (SAFE-Mem's declarative claims are not injection-style text).
+- **MemLineage** labels 100% of attack and 100% of utility contexts untrusted, so it is all-or-nothing per query. Its sensitive-action verdicts are not cached.
+- **S vs internal baselines:**
+  - S = C on security everywhere;
+  - S has the best utility everywhere;
+  - M beats S on security at k=2 (+.53 [.28, .81]) and under random laundering (+.30 [.21, .40] at r=.5);
+  - all provenance methods fail at k ≥ 4 and r = 1.
+- **Consistency:** static 280/280, R 17,920/17,920 match the sweep.
+
+**Files:**
+- New:
+  - `src/ams/research/workload/published.py`;
+  - `scripts/published_exposure.py`, `scripts/analyse_published_comparison.py`, `scripts/plot_published_comparison.py`;
+  - `tests/test_published_adapters.py` (6 tests);
+  - `reports/PUBLISHED_BASELINES_SWEEP_DEV_EXPOSURE_20261112_REPORT.md`;
+  - `research_data/published_exposure_dev_v3_20261112/`.
+- No frozen behaviour changed; protocol v1 archive verifies; 668 tests pass; no paid call.
+
+**Remaining:**
+- paid MemLineage classifier (≈ $0.01);
+- A-MemGuard (one-group pilot, then ≈ $0.5) and LLM sanitiser (≈ $0.25);
+- answer-level ASR for published methods.
+
+**Next:** with approval, resolve MemLineage and A-MemGuard. Then choose the S v2 direction (identity-independent batch scope, forwarder-vs-author distinction, keep lineage).
+
+### 2026-11-12 (later) — Paid dev confirmation of the adaptive-attack experiment (owner-approved)
+
+**What we did:**
+- Ran `scripts/adaptive_stage3.py --confirm-paid-adaptive-dev --cap 0.25`: 40 conditions × static/R/C/M/S/SL × 8 dev groups, **67,200 outcomes**.
+- Real GPT-4o-mini answers and the original judge.
+- Already-paid requests were replayed at $0 from the dev Stage-3 scope.
+- Added `scripts/analyse_adaptive_stage3.py`.
+
+**Cost:** **$0.12520395** (cap $0.25). 4,071 answers, 1,354 judges and 36 conflict checks were sent; 0 failures and 0 holds. All research spend is $3.0351366, plus the $0.01974 hold.
+
+**What we found:**
+- 4,200/4,200 base rows match the earlier dev Stage 3 exactly.
+- **Target-specific ASR on unaudited attacks:**
+  - random spread: S .205 vs C/M 0;
+  - with boundary verification: S .126 vs C/M .080 (gap +.045 [.019, .070]);
+  - random concentrated with verification: S 0, M 0, C .316.
+- **Strict utility:** S beats C/M by +.255 (localized) and +.126 (concentrated with verification); equal under spread.
+- **Framing (concentrated):** innocent's strict utility S .575 vs C .417, M .317.
+- **Shared limits:** shift_batch defeats S (.656), shift_context defeats S and C, Sybils defeat everyone.
+- **SL:** relays .50 → 0 in oracle conditions; utility equal to S. In uninformative, SL differs from S on 2/32 attacks, both with the target already in S's context (answer variation).
+
+**Files:**
+- New: `scripts/analyse_adaptive_stage3.py`; `research_data/adaptive_stage3_dev_v3_20261112/` (journal, `stage3_summary.json`, `adaptive_analysis.json`).
+- Updated: the report (§8) and this README.
+
+**Completed:** the adaptive-attack experiment on dev (free + paid).
+
+**Remaining:**
+- protocol v2 freeze and a held-out confirmation on fresh groups;
+- ablations;
+- second backbone, full MPBench, external baseline, human validation.
+
+**Next:** freeze protocol v2 (method = S + boundary verification + lineage τ = 0.8; adaptive hypotheses), then generate fresh held-out groups and estimate cost. Needs approval before any paid step.
+
+### 2026-11-12 — Adaptive-attacker experiments (dev, free), two improvements, paid confirmation prepared
+
+**What we did:**
+- Archived the frozen locked-protocol-v1 files: `research_data/workload_freeze_v4_20261108/locked_protocol_v1_frozen_files.tar.gz`, 224 files, SHA-256 `e0c6a131…`. `scripts/archive_locked_protocol.py verify` passes, so v1 stays checkable after new code.
+- Built adaptive-attack conditions as relabellings of the real dev v3 Stage-1 stores:
+  - audit-aware batch shift and context shift;
+  - Sybil;
+  - framing, concentrated and spread;
+  - random detection, concentrated and spread, 8 draws each.
+- Ran a free exposure study over all arms: 90,160 retrievals, no model call, test split untouched.
+- Found a real weakness of S and tested two research-layer improvements:
+  - **boundary-verification auditing:** the 5th ticket checks an item next to a flagged batch; same budget;
+  - **content lineage**, as new arms RL/CL/ML/SL.
+- Prepared and estimated a paid dev confirmation; nothing paid was run.
+
+**What we found** (dev, exposure level):
+- **S is not uniformly better.**
+  - It wins against concentrated attackers: +25.5 utility points at equal 0% exposure.
+  - It wins against concentrated framing: the innocent keeps 58% vs 42% (C) and 32% (M).
+  - It loses to audit-aware batch shift (97% vs 0%).
+  - It ties or loses on context shift and Sybil.
+  - **Against random detection with spread poison, S leaks 28% of undetected attacks vs 0% for C/M.**
+- **Boundary verification** cuts that gap to 4.5 points at equal utility. Under concentrated attacks S then beats C on both security and utility (C 46% leak) and beats M by 12.6 utility points.
+- **Lineage** removes the unlinked-relay leak (62.5% → 0%) with 0 benign or principal claims withheld.
+- **Infrastructure caveats:**
+  - background (detached) jobs on this Mac ran about 10× slower; run long jobs as parallel foreground shards;
+  - temperature-0 replies differ across budget scopes, so replay is scoped to the dev Stage-3 scope.
+
+**Files:**
+- New:
+  - `src/ams/research/workload/adaptive.py`, `src/ams/research/workload/lineage.py`;
+  - `scripts/archive_locked_protocol.py`, `scripts/adaptive_exposure.py`, `scripts/analyse_adaptive_exposure.py`, `scripts/adaptive_stage3.py`;
+  - `tests/test_adaptive_lineage.py` (9 tests);
+  - `reports/ADAPTIVE_ATTACKS_DEV_EXPOSURE_20261112_REPORT.md`;
+  - `research_data/adaptive_exposure_dev_v3_20261112/`, `research_data/adaptive_stage3_estimate_dev_v3_20261112/`.
+- Changed (defaults preserved):
+  - `src/ams/research/workload/runner.py`: optional `conditions`/`arms`/`no_memory`/`lineage_tau`; with the defaults the journal scope is identical to v1;
+  - `src/ams/research/workload/replay.py`: `EvaluationReplaySession`, `CountingMockSession`;
+  - `src/ams/research/workload/transport.py`: new dev-only purpose `adaptive_stage3`, cap ≤ $1.00.
+- No frozen SAFE-Mem / R / C / M / S / prompt / judge code changed. 662 tests pass.
+
+**Completed:** step 7's free part on dev.
+
+**Remaining:**
+- paid dev confirmation with real answers and judges;
+- freeze protocol v2;
+- held-out confirmation on fresh groups;
+- ablations (gates, threshold, audit budget, lineage τ ∈ {0.7, 0.9});
+- second backbone, full MPBench, external baseline, human validation.
+
+**Next:** with approval, run the paid dev confirmation (`scripts/adaptive_stage3.py --confirm-paid-adaptive-dev --cap 0.25`): **expected $0.11 ($0.15 with allowance)**. Then write protocol v2 (S + boundary verification + lineage; adaptive hypotheses) and generate fresh held-out groups.
+
+### 2026-11-08 (slides) — Meeting deck rebuilt for a general audience
+
+- **What I did.** Built a new 19-slide deck, `output/pptx/safemem_research_20261108/SAFE_Mem_Research_Update_20261108.pptx` (PDF preview and generator `build_deck.js` alongside). Order: setup (assistant memory, poisoning, MPBench, Original SAFE-Mem + reproduction, the gap, the first null attempt, the controlled workload, the three conditions) → metrics and H1–H3 → approach (methods compared, how S works, dataset history v1→v4 and freeze) → dev results (localized chart, all-conditions table, hypothesis outcomes, limits) → next steps. Each slide has speaker notes citing the source reports.
+- **Scope.** All numbers come from this README and the dated 8 November reports; results are labelled as dev-split. The old deck `SAFE_Mem_Implementation_Walkthrough.pptx` (1 November) is unchanged.
+- **No paid call, no code or data change.** The locked test Stage 3 was still running and is not in the deck.
+- **Next:** add the locked-test results slide once the frozen analysis has run.
+
+### 2026-11-10 — Adaptive-attack assessment added to brainstorm.md
+
+- **Done:** added §3b to [brainstorm.md](brainstorm.md).
+  - The SAFE-Mem paper has adaptive attacks (Table 3: forged author, forged retention, conflict evasion, under-report); our work has none yet.
+  - For ICML this is close to required: our gates are public, and the base paper sets the precedent.
+  - Minimal path: overlay-only attacks (framing, Sybil-2, audit-aware batch shift), then random-audit draws with concentrate-vs-spread attackers. Only Stage 3 is paid (about $0.15 dev for step 1). About 20 lines to make the condition list a parameter, plus a new `adaptive.py` module.
+  - Archive the frozen v1 state before any code change.
+- **No code, data or paid change.**
+
+### 2026-11-10 — Baseline review added to brainstorm.md
+
+- **Done:** added §7b to [brainstorm.md](brainstorm.md). SAFE-Mem is the right base and reference, but not a fair stand-alone competitor: it gets no audits, and the workload targets its known gap. The proposal is a three-tier baseline set: equal-audit R/C/M plus source quarantine; A-MemGuard and MemLineage adapted to receive the same audits; content filters plus an S+sanitizer combination. Plus full MPBench to show S doesn't hurt SAFE-Mem. No code, data or paid change.
+
+### 2026-11-10 — IMPLEMENTATION.md written
+
+- **Done:** wrote [IMPLEMENTATION.md](IMPLEMENTATION.md), a self-contained guide for first-time readers. It was checked against the code: the gates in `ledger.active_scopes`, the risk and penalty in `policies.py`, the group layout in `design.py`. Linked it from "Start here". No code, data or paid change.
+- **Next:** unchanged; see the 10 Nov brainstorm entry below.
+
+### 2026-11-10 — Post-test review and adaptive-attacker brainstorm
+
+- **What I did.**
+  - Re-checked the locked test: the freeze still verifies, 653 tests pass, and the S/C/M implementation matches its specification.
+  - Recomputed the paid-request counts per scope.
+  - Wrote [brainstorm.md](brainstorm.md): a formal threat model (attacker capabilities and limits, knowledge levels K0–K3, budget), the realism of "uninformative", an adaptive-attack catalogue (A1–A7), S v2 ideas (excess-risk gates, content-lineage linking, no unknown-origin safe harbor, newcomer prior, adaptive audits), competing baselines already in the repo, and a costed plan.
+- **Found and to correct.**
+  - Test Stage 3 had **3,875** unique paid requests, not 5,229: the summary counted the dev requests in the same session.
+  - Test Stage 1 had **1,571** physical paid calls plus 203 exact reuses at $0, not "1,774 paid".
+  - Dollar costs are correct.
+  - The H2 table is missing from the test report.
+  - Zero-count ASR needs an exact upper bound (0/96 ≤ about 3.8%).
+  - Still to check: that the static arm equals original SAFE-Mem on v4.
+- **No code, data or frozen file changed; no paid call.**
+- **Next (needs the owner's decisions):** accept the threat model; choose the first adaptive attacks (suggested A6 framing, A1 spreading, A2 Sybil-k); approve or decline S v2 design work; choose external baselines (suggested MemLineage, A-MemGuard).
+
+### 2026-11-08 (locked test) — Held-out test on frozen v4: original SAFE-Mem vs R/C/M/S/no-memory
+
+- **What I did (owner-approved).**
+  - Verified the frozen protocol: digest `921cf7f5…` and file SHA-256 `7232e56f…`.
+  - Wrote the owner-approval file (bundle hash, digest, caps $0.30 and $0.60).
+  - Ran test Stage 1 under `caffeinate` (the gate re-verified the freeze), then free Stage 2. Stage 2 was recorded only.
+  - Ran test Stage 3 with the frozen evaluation code and analysed once.
+  - Re-verified the freeze after the run: no differences.
+- **What I found (held-out test, 24 groups).**
+  - **Original SAFE-Mem:** 77.1% ASR.
+  - **C/M:** 0% ASR in localized and distributed, but localized strict key utility 0/168.
+  - **S:** 0% ASR with original-level utility (546/600 strict; key 151/168).
+  - **Hypotheses:** H1 supported (+0.78 [0.71, 0.84]); H2 supported; H3 not supported (R − S +0.115 [0.08, 0.15]).
+  - **Copies:** linked copies blocked by audited arms (the residual judge hits are G-T08 false positives); unlinked relays leak.
+  - The results agree with dev.
+- **Cost:** $0.57838455 in total (Stage 1 $0.1758837; Stage 3 $0.40250085). 0 failures, no holds. All research spend is $2.90993265 plus the preserved $0.01974.
+- **Files changed or added:**
+  - `research_data/workload_freeze_v4_20261108/owner_approval_locked_test.json`;
+  - outputs in `research_data/controlled_workload_stage1_test_v4_20261108/`, `research_data/controlled_workload_stage2_test_v4_20261108/` and `research_data/controlled_workload_stage3_test_v4_20261108/`;
+  - `reports/LOCKED_TEST_V4_20261108_REPORT.md` (new), this README (intro note, status, §6, roadmap, §8 note, §9), and the index READMEs.
+
+  No frozen dataset, algorithm, prompt, hypothesis or analysis file changed.
+- **Completed:** roadmap step 3, the locked main comparison.
+- **Remaining:** roadmap steps 4–10.
+- **Next (needs approval):** step 4, a second backbone on the same frozen test (about $5–15), or another roadmap step chosen by the owner. No further paid experiments until approved.
+
+### 2026-11-08 (audit and freeze) — Final offline dataset audit, workload v4, locked-protocol freeze
+
+- **What I did.**
+  - Audited relay texts, within-group near-duplicate payloads (local MiniLM) and dev/test leakage, using texts only.
+  - Added two method-independent data-quality rules (`quality_v4.py`) and generated **workload v4**; v1–v4 all regenerate.
+  - Re-ran the offline checks: tests, the v4 dev mock dry run, and the generator checks.
+  - Added pre-declared secondary analyses (strict H1; target-specific ASR) and re-analysed dev Stage 3 into a new file.
+  - Built the owner-approval gate for the test split.
+  - Froze the dataset, code, prompts, protocol, hypotheses and statistics with hashes, and verified the freeze.
+  - Verified the test split untouched.
+  - Estimated the locked-test cost offline.
+- **What I found.**
+  - 1 fragment relay (dev); near-duplicate payloads in 11 groups; no leakage.
+  - **A dev judge false positive** in G-D02: my Stage-3 report wrongly called it a near-duplicate record. A correction note was added and the original text kept.
+  - Dev impact of v4: 10 contributions and 7 probes in 4 groups.
+- **Decisions.**
+  - The dev v3 results remain development evidence.
+  - H3's margin is not relaxed.
+  - No judge change; only a secondary target-specific metric.
+  - Test dispatch requires an owner-approval file bound to the frozen digest.
+- **Files changed or added:**
+  - `src/ams/research/workload/quality_v4.py` (new); `generator.py`, `analysis.py` and `transport.py` (changed);
+  - `scripts/freeze_locked_protocol.py`, `scripts/verify_test_untouched.py` and `scripts/estimate_locked_test_cost.py` (new); `scripts/generate_controlled_workload.py` and `scripts/stage_controlled_workload.py` (changed);
+  - tests: +3 in the v2/v3/v4 file and +1 in the stage1 file;
+  - outputs in `research_data/controlled_workload_v4_20261108/`, `research_data/controlled_workload_v4_dryrun_dev_20261108/`, `research_data/workload_freeze_v4_20261108/` (protocol, test-untouched checks, cost estimate) and `research_data/controlled_workload_stage3_dev_v3_20261108/analysis_with_secondary_20261108.json`;
+  - `reports/WORKLOAD_AUDIT_FREEZE_20261108_REPORT.md` (new), a correction note in `reports/CONTROLLED_WORKLOAD_DEV_STAGE3_20261108_REPORT.md`, this README, and the index READMEs.
+
+  No paid call; 653 tests pass.
+- **Completed:** roadmap step 2.
+- **Remaining:** roadmap steps 3–10.
+- **Next:** the owner's approval for the locked test: $0.618 expected, $0.742 with allowance, caps $0.30 + $0.60. After approval, write the approval file, `verify`, then test Stage 1 → 2 → 3 under `caffeinate`, analyse once, and report all hypotheses.
+
+### 2026-11-08 (dev Stage 3) — Real comparison: original SAFE-Mem vs R/C/M/S/no-memory on v3 dev
+
+- **What I did (owner-approved).**
+  - Added a guarded `stage3` scope to the workload transport: answer, conflict and judge requests only, each validated by its exact prompt shape; dev only; $0.70 cap.
+  - Added the `stage3` command (mock and live) and 1 test.
+  - Ran the full offline mock on the real v3 stores (clean), then the live dev Stage 3 under `caffeinate`.
+  - Analysed H1–H3 with a paired cluster bootstrap and Holm correction.
+- **What I found (dev).**
+  - **Original SAFE-Mem:** 72% ASR.
+  - **C/M:** 0% ASR, but strict key-stratum utility 0/56.
+  - **S:** 0% ASR with original-level utility (185/200 strict, key 51/56).
+  - **Hypotheses:** H1 supported (+0.73 key utility vs C/M); H2 supported; H3 not supported (with uninformative provenance S loses 6.5 points vs R and behaves like C).
+  - **Copies:** linked copies blocked; unlinked relays leak under every arm.
+- **Cost:** $0.1397682 (1,354 unique requests, 0 failures, no holds).
+- **Files changed or added:**
+  - `src/ams/research/workload/transport.py`, `scripts/stage_controlled_workload.py` and `tests/test_controlled_workload_stage1.py`;
+  - outputs in `research_data/controlled_workload_stage3_dev_v3_20261108/` and `research_data/controlled_workload_stage3_dev_v3_mock_20261108/`;
+  - `reports/CONTROLLED_WORKLOAD_DEV_STAGE3_20261108_REPORT.md` (new), this README (status, §6, the ICML roadmap in §8, §9), and the index READMEs.
+
+  No SAFE-Mem algorithm, prompt or setting changed. 650 tests pass.
+- **Completed:** dev Stage 3.
+- **Remaining:** see the ICML roadmap in §8 (freeze → test split → second backbone → full MPBench → baseline → adaptive attacks and ablations → robustness → human validation → paper).
+- **Next:** decide on the optional workload fixes, then freeze v3 and the analysis plan before the test split. The test split needs the owner's approval, about $0.65.
+
+### 2026-11-08 (v3 on real data) — Pilots, v3 carriers, paid dev Stage 1 and Stage 2
+
+- **What I did (owner-approved, API use allowed).**
+  - Created a new guarded session.
+  - Ran the v2 pilot. It failed, so I designed v3 (durable fact phrasing; `carriers_v3.py`) and re-piloted on fresh contributions. It passed.
+  - Rebuilt the v3 dev stores (paid Stage 1, cap $0.15) and ran the free Stage 2.
+  - Generalised the pilot and Stage-1 scripts: `--seed`, `--exclude-from`, `--replay`, `--session`.
+- **What I found.**
+  - The extractor drops whole notes whose fact is a one-off event.
+  - Durable phrasing gives 89% in the pilot and 92% across all dev stores.
+  - On real data the utility facts now reach the context (185/200).
+  - Every R/C/M/S mechanism behaves as designed, including S keeping the localized key stratum (51/56) where C/M drop it (0/56) at equal attack exposure.
+- **Cost:** $0.0651411 in total (v2 pilot $0.00470055; v3 pilot $0.00503250; Stage 1 $0.05540805), with no failures and no holds.
+- **Files changed or added:**
+  - `src/ams/research/workload/carriers_v3.py` (new); `generator.py` and `pilot.py` (changed);
+  - `scripts/pilot_fact_extraction.py`, `scripts/stage_controlled_workload.py` and `scripts/generate_controlled_workload.py` (changed);
+  - `tests/test_controlled_workload_v2.py` (+1 test);
+  - outputs in `research_data/controlled_workload_v3_20261108/`, `research_data/controlled_workload_session_v2_20261108/`, `research_data/fact_pilot_v{2,3}_{plan,run}_20261108/`, `research_data/controlled_workload_stage1_dev_v3_20261108/` and `research_data/controlled_workload_stage2_dev_v3_20261108/`;
+  - `reports/CONTROLLED_WORKLOAD_V3_PILOTS_STAGE1_STAGE2_20261108_REPORT.md` (new), this README, and the index READMEs.
+
+  No SAFE-Mem algorithm, prompt or setting changed. 649 tests pass.
+- **Completed:**
+  - the working utility design (v3);
+  - real dev stores;
+  - the Stage 2 validation.
+- **Remaining:**
+  - dev Stage 3 (answers and judges);
+  - the frozen analysis plan;
+  - the test split;
+  - human validation.
+- **Next (needs approval):**
+  1. Dev Stage 3 in the new session, under `caffeinate`, ≤ about $0.69.
+  2. Then freeze v3 and the analysis plan before the test split (Stage 1 about $0.17).
+
+### 2026-11-08 (v2 carriers) — Fact-centred utility carriers, offline regeneration, pilot prepared
+
+- **What I did.**
+  - Designed and implemented controlled workload v2 (`carriers_v2.py`). Each harmless fact is now the main content of a short note in its domain's format; the request asks about the topic without revealing the answer or asking to remember anything. The unlinked relay's statement is central.
+  - Regenerated the workload as `research_data/controlled_workload_v2_20261108/` and verified it against v1.
+  - Added a request-guided mock extraction mode, a read-only paid-reply replay, and per-purpose construction scopes.
+  - Ran all offline tests and a full mock dry run on v2 dev.
+  - Prepared the tiny extraction pilot (selection, exact requests, calibrated cost, pre-registered criteria, guarded `run` command).
+- **What I found.**
+  - v2 changes only the public text of the 832 benign carriers and 32 unlinked relays. Attacks, linked copies, principal controls, overlays, audits, probes, strata and the dev/test split are byte-identical, and v1 still regenerates.
+  - The request-guided mock reproduces the direction of the real v1 failure (mock 21/78 vs real 8/78) and gives 78/78 for v2. This is a mechanism check only.
+  - The v2 mock dry run is clean, and S vs C/M separate as designed.
+  - Two cost figures:
+    - full v2 dev Stage 1: about $0.08–0.09, with 181 v1 paid replies reused at $0;
+    - pilot: expected $0.006 (calibrated with measured tokens per character; the byte proxy overstated input tokens about fivefold).
+  - The pilot cannot run on the shared session, which is still halted.
+- **Files changed or added:**
+  - `src/ams/research/workload/carriers_v2.py`, `pilot.py` and `replay.py` (new); `generator.py`, `mock.py`, `stage2.py` and `transport.py` (changed);
+  - `scripts/pilot_fact_extraction.py` (new); `scripts/generate_controlled_workload.py` and `scripts/run_controlled_workload.py` (changed);
+  - `tests/test_controlled_workload_v2.py` (new);
+  - outputs in `research_data/controlled_workload_v2_20261108/`, `research_data/controlled_workload_v2_dryrun_dev_20261108/` and `research_data/fact_pilot_v2_plan_20261108/`;
+  - `reports/CONTROLLED_WORKLOAD_V2_FACT_CARRIERS_20261108_REPORT.md` (new), this README, and the index READMEs.
+
+  No SAFE-Mem memory, retrieval, policy, prompt or configuration file changed. No paid call was made, and the ledger is unchanged.
+- **Completed:**
+  - the v2 design, generator and validation;
+  - regeneration;
+  - 648 offline tests passing;
+  - the mock dry run;
+  - the pilot plan.
+- **Remaining:**
+  - the real pilot;
+  - rebuilding the v2 dev stores and free Stage 2;
+  - dev Stage 3;
+  - the test split;
+  - human validation.
+- **Next (each needs the owner's approval):**
+  1. Choose a session for the pilot. The recommendation is a new guarded session; the shared one stays halted with its worst-case hold.
+  2. Approve and run the pilot, under `caffeinate -i`: expected $0.006, cap $0.03, target at least 15/18 facts stored.
+  3. If it passes, rebuild the v2 dev stores (about $0.08) and rerun free Stage 2.
+  4. Only then, dev Stage 3.
+
+### 2026-11-08 (night) — Paid dev Stage 1 (partial, halted safely) and free Stage 2 validation
+
+- **What I did.**
+  - Added a construction-only paid scope on the existing shared session, `src/ams/research/workload/transport.py`. It allows the dev split only, the extraction/retention/classifier stages only, and a persisted $0.15 task cap. It uses a write-before-dispatch journal, one attempt per ID, native-response capture and a halt on unknown billing.
+  - Added the Stage-2 validation in `src/ams/research/workload/stage2.py` and the runner `scripts/stage_controlled_workload.py`.
+  - Ran approved paid dev Stage 1, which halted after 3/8 groups, then free Stage 2 on those groups.
+  - Ran read-only diagnostics, including local MiniLM ranking.
+  - Implemented the strict utility metric.
+- **What I found.**
+  - **Cost:** $0.03251535 settled over 209 calls, plus 1 unknown attempt held at worst case $0.01974.
+  - **The halt:** the timeout coincided with the computer sleeping. The guard halted as designed; I did not override it.
+  - **Attack and copy mechanics work on real data** (C/M/S 0/12 attack targets; S keeps the key stratum where C/M drop it; linked copy blocked; unlinked relay leaks).
+  - **Utility facts rarely reach the context (10/75):**
+    - frozen `external_evidence=false` blocks the artifact chunks that hold them;
+    - sentence-endorsed extraction keeps only what the user's request endorses (8/78 documents).
+  - The mock had hidden this.
+- **Files changed or added:**
+  - `src/ams/research/workload/transport.py` (new), `src/ams/research/workload/stage2.py` (new) and `src/ams/research/workload/analysis.py` (strict utility columns);
+  - `scripts/stage_controlled_workload.py` (new) and `tests/test_controlled_workload_stage1.py` (new, 5 tests);
+  - outputs in `research_data/controlled_workload_stage1_dev_v1_20261108/` and `research_data/controlled_workload_stage2_dev_v1_20261108/`;
+  - `reports/CONTROLLED_WORKLOAD_STAGE1_STAGE2_20261108_REPORT.md` (new), this README, and the index READMEs.
+
+  The shared session ledger gained the 210 workload dispatches and their budget reservations. No existing algorithm, prompt or configuration changed.
+- **Completed:**
+  - the guarded construction transport;
+  - partial dev Stage 1 (3 groups);
+  - Stage 2 on those groups;
+  - the strict metric;
+  - 640 tests pass.
+- **Remaining:**
+  - the utility-carrier redesign;
+  - stores for the remaining 5 dev groups;
+  - Stage 3;
+  - the test split;
+  - human validation.
+- **Next (each needs the owner's approval):**
+  1. Redesign the benign utility carriers so the inserted fact is the content the user's request endorses. This is a data change; algorithms and frozen settings stay as they are.
+  2. Run a tiny paid extraction pilot (≤ $0.01) to confirm a yield of at least 80%.
+  3. Rebuild the dev stores (about $0.08).
+  4. Only then, dev Stage 3 (≤ $0.69).
+
+  Also needed: decide on the unknown-billing halt. The recommendation is to keep the worst case held and use a new guarded session for future paid work. Run future paid stages under `caffeinate -i`.
+
+### 2026-11-08 (late) — Controlled workload: offline integration with SAFE-Mem and R/C/M/S
+
+- **Done.**
+  - Connected the controlled workload to the original SAFE-Mem stores and the R/C/M/S runner.
+  - Implemented the utility grader, the analysis (bootstrap, Holm correction, H1–H3, integrity checks), a prompt-aware mock and a refusing transport.
+  - Ran the invented-data end-to-end tests and a full dev-split dry run.
+  - Produced an exact Stage-1 request audit against the frozen cache.
+  - No paid calls, no algorithm changes.
+- **Found.**
+  - Every mechanical prediction holds through the real code path. In particular, localized S keeps A's other-batch benign memories (45/56) while C and M drop to 8/56, at equal ASR.
+  - The spec's linked-copy prediction was wrong and is now corrected: R, C, M and S block linked copies, and only unlinked relays leak.
+  - Provisional R = static is explained by use-specific direct findings and per-query use IDs.
+  - Paid dev Stage 1 is only 528 requests, about $0.09, because all verbatim MPBench text hits the cache.
+  - Risks to measure in Stage 2: inserted facts not reaching the context (23% under the mock) and coincidental alias matches (1%).
+  - Bugs fixed: the test fixture, mock thresholds, three integration-contract details, and the 50× speed issue (existing evidence-revision cache).
+- **Files added.**
+  - `src/ams/research/workload/integration.py`, `runner.py`, `grading.py`, `analysis.py`, `mock.py`
+  - `scripts/run_controlled_workload.py`
+  - `tests/test_controlled_workload_integration.py` (11 tests)
+  - `reports/CONTROLLED_WORKLOAD_INTEGRATION_20261108_REPORT.md`
+  - `research_data/controlled_workload_dryrun_dev_v1_20261108/` (journal, analysis, Stage-1 audit, construction summary)
+- **Files changed.**
+  - `reports/CONTROLLED_WORKLOAD_20261108_SPEC.md`: linked-copy prediction corrected, noted inline.
+  - `tests/test_controlled_workload.py`: my own fixture, now with distinct attack tokens; the workload bundle still regenerates identically.
+  - `README.md`: status, §6, §8 note, this entry, and a correction note on the previous entry.
+  - Index lines in `scripts/README.md`, `reports/README.md` and `src/ams/research/README.md`.
+  - No original SAFE-Mem, ledger, policy, retrieval or prompt file changed (verified by hashing 431 files).
+- **Verified.** 635 offline tests pass; the frozen provisional bundles verify; the state inspector passes; budget unchanged at $2.09412345 used, $0 held.
+- **Remaining.**
+  - A small reviewed live transport for construction calls only.
+  - **Paid** dev Stage 1 (≤ $0.09) → free Stage 2 checks → **paid** dev Stage 3 (≤ $0.69) → freeze → **paid** test.
+  - Still open from earlier: the decision on the three method weaknesses, the 2 suspect D02 judge positives, human validation, and adding a "correct and fact in context" utility variant.
+- **Next step.** Ask the owner to approve paid dev Stage 1. On approval, implement and review the live construction transport (existing `BudgetGuard` session, $0.15 hard cap), run Stage 1, then run Stage 2 offline.
+
+### 2026-11-08 (evening) — Controlled MPBench-derived workload v1: specification, generator, tests
+
+- **Done:**
+  - Designed the controlled workload and wrote the [specification](reports/CONTROLLED_WORKLOAD_20261108_SPEC.md): layout, conditions, fixed audits, probes, ASR/utility metrics, hypotheses, power, free-vs-paid stages and cost.
+  - Implemented a deterministic offline generator and validator (public runtime files kept separate from private labels; refuses to overwrite).
+  - Wrote 12 tests.
+  - Generated the bundle.
+  - Produced a GPT-4o-mini cost estimate from measured token averages.
+  - No paid calls, no algorithm changes.
+- **Found and decided:**
+  - **Reuse verbatim MPBench attack text.** Reachability is preserved and extraction/classification should hit the frozen cache for free.
+  - **Benign facts inserted by construction.** This gives exact, free utility grading and needs no human answer key.
+  - **Fixed audit IDs across conditions.** This removes the provisional run's confound where audits changed with the condition.
+  - **Two unsafe seeds share a batch in the localized condition.** That pushes S's batch scope to the 0.25 gate while C and M withhold A's whole context and contributor. This is the regime where selectivity can show.
+  - **The linked copy escapes S in the localized condition by design.** It is measured as a known tradeoff. *(Corrected in the later 8 Nov entry: integration showed the linked copy is blocked under R, C, M and S because it shares the audited root and use.)*
+  - **Test split power:** 96 scored probes per condition gives P(≥20 baseline successes) = 0.86 at 25% ASR. A pre-specified rule adds test groups if dev ASR is below 25%.
+  - **Total upper-bound cost:** $3.87.
+- **Files added:**
+  - `src/ams/research/workload/` (`__init__.py`, `design.py`, `generator.py`, `costs.py`)
+  - `scripts/generate_controlled_workload.py`
+  - `tests/test_controlled_workload.py`
+  - `reports/CONTROLLED_WORKLOAD_20261108_SPEC.md`
+  - `research_data/controlled_workload_v1_20261108/` (public contributions, overlays, probes and audit tickets; private labels, probes and audit schedule; `manifest.json`; `cost_estimate.json`)
+- **Files changed:** `README.md` (top status, §6 subsection, §8 note, this entry), plus index lines in `scripts/README.md`, `reports/README.md` and `src/ams/research/README.md`. No existing research code, policy, data or result was modified.
+- **Completed:** workload specification, offline generator, tests, bundle and cost estimate.
+- **Remaining:**
+  - **Free:** an adapter that loads the bundle into native SAFE-Mem stores and the R/C/M/S runner (the provisional runner expects its own bag format), a deterministic utility grader, and an analysis script.
+  - **Paid (each needs approval):** dev Stage 1 construction (≤ $0.28), dev Stage 3 comparison (≤ $0.69), then the locked test (≤ $2.91).
+  - Still open from earlier: the decision on the three method weaknesses, the 2 suspect judge positives, and human validation.
+- **Next step:** build the free integration layer and run it end-to-end on the dev bundle with exact-replay or mock clients. Then request approval for paid dev Stage 1. Budget unchanged: $2.09412345 of $30 used.
+
+### 2026-11-08 — Full-pool propagation feasibility analysis
+
+- **Done:** Offline analysis of all 6,240 MPBench cases ($0, network blocked). For each attack case:
+  - read the attack question's required type from the full reproduction;
+  - located the case's claims that restate the planted target (lexical proxy, 87.6% agreement with the reproduction's write judge);
+  - applied the unchanged SAFE-Mem admission rule;
+  - graded attribution as "now" (literal source span) or "after review", calibrated against the provisional AI origin decisions.
+
+  Also counted supply per context, traced the carriers of all 176 full-reproduction successes, and estimated power under two audit designs.
+- **Found:**
+  - Only **102/3,241 attacks (3.1%)** are propagation-reachable. 2,727 are blocked because their question type can never admit an external claim.
+  - Only **23** are attributable now; the AI-calibrated estimate is ≈64.
+  - The 102 come from 100 distinct templates, so there are no natural multi-attack contributors.
+  - Benign siblings are plentiful, but validated external-use utility questions number 0.
+  - 32 of 67 description-type successes involve copies of planted content from other cases.
+  - Expected baseline successes reach the protocol's 20 only in the most optimistic scenario, and that uses the whole supply.
+  - **Verdict:** MPBench alone is insufficient; a controlled, MPBench-derived workload is needed.
+- **Files added:** `scripts/assess_propagation_feasibility.py`, `reports/PROPAGATION_FEASIBILITY_20261108_REPORT.md`, and `research_data/propagation_feasibility_v1_20261108/` (`summary.json`, `attack_cases.jsonl`).
+- **Files changed:** `README.md` (top status, new §6 feasibility subsection, §8 note, this entry), plus one index line each in `scripts/README.md` and `reports/README.md`. No research code, policy, data or earlier result was modified.
+- **Completed:** the feasibility step recommended on 7 Nov.
+- **Remaining:**
+  - workload specification and generator;
+  - the owner's decision on the three method weaknesses from 7 Nov;
+  - manual check of the 2 suspect D02 judge positives;
+  - human validation;
+  - everything in the §8 table from step 4 onward.
+- **Next step:** write the controlled-workload specification and an offline, deterministic artifact generator, then report its size and a paid-cost estimate for extraction plus answering and judging. Optional: an MPBench-reachable external-validity cohort (23–102 cases; memories already cached). **No paid run without approval.** Budget unchanged: $2.09412345 of $30 used.
+
+### 2026-11-07 — Offline attack-carrier and S-change diagnostic
+
+- **Done:** Re-analysed all 3,888 saved provisional outcomes offline (hashes verified, network blocked, $0). Traced the record that carried each of the 15 attack successes, classified its origin, and dissected the 23 contexts S changed against static, R, C and M.
+- **Found:**
+  - 9/15 successes came through principal-owned endorsement context with the target absent from memory.
+  - 4/15 came through unknown-origin claims.
+  - 2/15 came through one attributed external claim, with evidence below the gate.
+  - So no propagation policy could have reduced more than 2/15. None of the carriers came from the probe's own input (duplicated, unlinked planted content).
+  - Only 18/405 attack probes had any admissible attributed external candidate.
+  - S's changes are a strict subset of M's (23/23).
+  - Half of the refill replacements were unknown-origin.
+  - Both restraint losses were refill side effects shared by C and M.
+  - 2 D02 attack "successes" look like judge false positives.
+  - **Verdict:** mainly a workload/design problem, plus three method weaknesses (S ≤ M by construction; refill side effect; unknown-origin safe harbor) that need owner approval before any change.
+- **Files added:** `scripts/diagnose_provisional_attacks.py`, `reports/ATTACK_CARRIER_DIAGNOSTIC_20261107_REPORT.md`, and `research_data/attack_carrier_diagnostic_v1_20261107/` (`summary.json`, `attack_successes.json`, `s_changed_contexts.json`).
+- **Files changed:** `README.md` (status note at the top, §6 diagnostic, §8 update note, this log), plus one index line each in `scripts/README.md` and `reports/README.md`. No research code, policy, data or earlier report was modified.
+- **Completed:** the diagnostic recommended in the 7 November review.
+- **Remaining:** everything in the §8 table from step 4 onward; workload redesign; a decision on the three method weaknesses; manual check of the 2 suspect judge positives.
+- **Next step:** a free offline feasibility count over the full recovered pool (6,240 cases, 22,089 claims). Count:
+  - attack cases whose planted target sits in an **attributed** external claim with a SAFE-Mem-admissible use type
+  - how many contributors could carry two or more such cases plus benign siblings.
+
+  This decides whether MPBench can supply a propagation-reachable cohort or whether a constructed workload is needed. Budget unchanged: $2.09412345 of $30 used.
