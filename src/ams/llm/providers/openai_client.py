@@ -129,8 +129,13 @@ class OpenAIClient:
             if request.reasoning_effort not in (None, "none"):
                 raise BudgetAccountingError("unbudgeted reasoning is forbidden")
             extra = kwargs.setdefault("extra_body", {})
+            ceiling = self._budget_guard.snapshot()
             extra["provider"] = {
-                "max_price": {"prompt": 0.15, "completion": 0.60, "request": 0},
+                "max_price": {
+                    "prompt": float(ceiling["max_input_per_mtok"]),
+                    "completion": float(ceiling["max_output_per_mtok"]),
+                    "request": 0,
+                },
                 "allow_fallbacks": False,
                 "require_parameters": True,
             }

@@ -1,0 +1,17 @@
+{
+  "schema": "dynamic-pricing-observation-v1",
+  "checked_on": "2026-11-14",
+  "provider": "openrouter",
+  "model": "anthropic/claude-haiku-5.5",
+  "currency": "USD",
+  "input_usd_per_million": "0.10",
+  "output_usd_per_million": "0.50",
+  "context_tokens": 1000000,
+  "source": "https://openrouter.ai/api/v1/models (public, unauthenticated model list)",
+  "use": "protocol v2 second backbone answer model, owner decision 22",
+  "guard_context_token_bound": 128000,
+  "observation": "Public OpenRouter list price; no batch or cache discount assumed. The guard reserves a 128k-token context (all protocol-v2 prompts are far smaller; prompts above 128k tokens are refused).",
+  "routing_requirement": "Enforce these maximum prompt/completion rates; no higher-rate fallback or per-request fee.",
+  "recheck_before_paid_execution": true,
+  "paid_api_calls_for_this_observation": 0
+}

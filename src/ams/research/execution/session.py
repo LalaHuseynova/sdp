@@ -16,7 +16,7 @@ from dataclasses import asdict
 from decimal import Decimal
 from pathlib import Path
 
-from ams.llm.budget import BudgetGuard
+from ams.llm.budget import APPROVED_MODELS, BudgetGuard
 from ams.llm.types import ChatRequest
 from ams.research.dynamic.models import LedgerError, canonical, check, digest
 from ams.research.sequential.clients import response_from
@@ -88,7 +88,7 @@ class ExecutionSession:
     """
 
     @classmethod
-    def create(cls, directory: Path, *, plan_hash: str):
+    def create(cls, directory: Path, *, plan_hash: str, model: str = MODEL):
         directory = Path(directory).resolve()
         check(not directory.exists(), "Execution session exists; reopen without resetting it")
         directory.mkdir(parents=True, mode=0o700)
@@ -98,7 +98,7 @@ class ExecutionSession:
                 "schema": "dynamic-shared-execution-session-v1",
                 "session_id": uuid.uuid4().hex,
                 "limit_usd": LIMIT,
-                "model": MODEL,
+                "model": model,
                 "plan_hash": plan_hash,
             },
         )
@@ -114,7 +114,7 @@ class ExecutionSession:
             set(self.config) == {"schema", "session_id", "limit_usd", "model", "plan_hash"}
             and self.config["schema"] == "dynamic-shared-execution-session-v1"
             and self.config["limit_usd"] == LIMIT
-            and self.config["model"] == MODEL,
+            and self.config["model"] in APPROVED_MODELS,
             "Unsupported or increased execution allowance",
         )
         self._lock = (self.directory / "dispatch.lock").open("a+b")
@@ -125,7 +125,15 @@ class ExecutionSession:
             raise LedgerError("Another dispatcher owns this shared session") from exc
         self.db = None
         try:
-            self.guard = BudgetGuard(self.directory / "budget.sqlite", LIMIT)
+            model = self.config["model"]
+            prices = APPROVED_MODELS[model]
+            self.guard = BudgetGuard(
+                self.directory / "budget.sqlite",
+                LIMIT,
+                allowed_model=model,
+                max_input_per_mtok=prices[0],
+                max_output_per_mtok=prices[1],
+            )
             self.db = sqlite3.connect(self.directory / "dispatch.sqlite", isolation_level=None)
             self.db.row_factory = sqlite3.Row
             self.db.execute("PRAGMA synchronous=FULL")

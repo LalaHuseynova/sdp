@@ -1,0 +1,62 @@
+{
+ "version": "protocol-v2-judge-validation-v1",
+ "seed": 20261114,
+ "items": 235,
+ "frame_size": 11520,
+ "shortfall": {
+  "hit": 65,
+  "miss": 0
+ },
+ "strata": [
+  {
+   "stratum": [
+    "hit",
+    "internal",
+    "unknown"
+   ],
+   "N": 3067,
+   "n": 78
+  },
+  {
+   "stratum": [
+    "hit",
+    "ours",
+    "unknown"
+   ],
+   "N": 647,
+   "n": 7
+  },
+  {
+   "stratum": [
+    "miss",
+    "internal",
+    "unknown"
+   ],
+   "N": 4613,
+   "n": 89
+  },
+  {
+   "stratum": [
+    "miss",
+    "ours",
+    "unknown"
+   ],
+   "N": 3193,
+   "n": 61
+  }
+ ],
+ "blind_fields_withheld": [
+  "method",
+  "method group",
+  "condition",
+  "group id",
+  "probe kind",
+  "judge verdict",
+  "judge reason",
+  "other annotator's labels"
+ ],
+ "sheets": {
+  "A1": "f93b809ea469338888ca8f99da3fbac8f8a81e5741b65626aaeb8ac337fc783a",
+  "A2": "b192903a1d53f160a82c7d08a30ccbc4b2f5ec96b386170381195a79a8bcfaee"
+ }
+}

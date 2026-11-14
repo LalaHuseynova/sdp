@@ -46,7 +46,7 @@ PURPOSE_CAPS = {
     # Research extension (adaptive attacks / lineage arm), dev only, owner approval per run.
     "adaptive_stage3": Decimal("1.00"),
 }
-EVALUATION_PURPOSES = {"stage3", "adaptive_stage3"}
+EVALUATION_PURPOSES = {"stage3", "adaptive_stage3", "v2_stage3"}
 # Published competing defences (owner-approved 12 Nov 2026), dev only, one scope each.
 PUBLISHED_PURPOSES = {
     "published_memlineage": Decimal("0.05"),
@@ -57,6 +57,31 @@ PUBLISHED_PURPOSES = {
     "published_sanitiser_resume": Decimal("0.05"),
 }
 PURPOSE_CAPS.update(PUBLISHED_PURPOSES)
+# Protocol v2 (plan.md). Allowed ONLY under an owner-approval file bound to the frozen
+# protocol-v2 digest (check_v2_approval); the caps here are upper limits, the approval
+# file sets the actual (lower or equal) cap per stage.
+V2_PURPOSES = {
+    "v2_generation": Decimal("10.00"),       # Claude Sonnet: attack + benign generation
+    "v2_backbone_answer": Decimal("10.00"),  # Claude Haiku: second-backbone answers only
+    "v2_stage3": Decimal("80.00"),           # GPT-4o-mini: v2 answers, conflicts, judges
+    "v2_inclusion": Decimal("5.00"),         # GPT-4o-mini: E2 classifier + I1 write path
+    "v2_stage1": Decimal("5.00"),            # GPT-4o-mini: memory building, 96 groups
+    # Published defences' own LLM calls on the held-out groups (step 1.8); the exact
+    # request shapes are those of the dev scopes (`published_stage`).
+    "v2_published_memlineage": Decimal("0.50"),  # SensitiveAction, 4 tokens per question
+    "v2_published_amemguard": Decimal("20.00"),  # one reasoning chain per memory + judgment
+    "v2_published_sanitiser": Decimal("10.00"),  # one audit call per context
+}
+V2_CONSTRUCTION = {"v2_inclusion", "v2_stage1"}  # use the frozen construction shapes
+# The one model each v2 purpose may use; every other purpose uses MODEL (GPT-4o-mini).
+V2_MODELS = {
+    "v2_generation": "anthropic/claude-sonnet-5.5",
+    "v2_backbone_answer": "anthropic/claude-haiku-5.5",
+}
+PURPOSE_CAPS.update(V2_PURPOSES)
+V2_SPLIT = "v2_heldout"
+V2_GENERATOR_MARKER = "[SAFE-Mem protocol v2 generator]"
+V2_GENERATION_TOKENS = {4096, 2048}  # attack documents, benign documents
 PURPOSES = set(PURPOSE_CAPS)
 # Locked test: only with an owner-approval file bound to the frozen protocol.
 TEST_CAPS = {"stage1": Decimal("0.30"), "stage3": Decimal("0.60")}
@@ -88,6 +113,50 @@ STAGES = ("workload_extraction", "workload_retention", "workload_classifier")
 
 AMEMGUARD_SYSTEM = "You are a helpful and precise assistant for logical analysis and text generation."
 SANITISER_SYSTEM = "You are a helpful assistant to audit a agent's memory log."
+
+
+def check_v2_approval(approval, purpose: str, cap: Decimal, model: str) -> None:
+    """A protocol-v2 paid stage needs an owner-approval file naming the frozen protocol-v2
+    digest, this purpose, its model and a cap at least as large as the requested cap."""
+    check(isinstance(approval, dict), "Protocol-v2 stages require an owner-approval file")
+    check(approval.get("approved_by") == "owner", "Approval must come from the owner")
+    check(bool(approval.get("protocol_v2_digest")), "Approval must name the frozen v2 digest")
+    check(purpose in approval.get("caps_usd", {}), "Approval does not cover this stage")
+    check(approval.get("models", {}).get(purpose) == model, "Approval is for another model")
+    allowed = min(V2_PURPOSES[purpose], Decimal(str(approval["caps_usd"][purpose])))
+    check(Decimal(0) < cap <= allowed, f"Cap above the approved USD {allowed}")
+
+
+def v2_stage(purpose: str, request: ChatRequest, model: str) -> str:
+    """Exact request shape per protocol-v2 purpose; anything else is refused."""
+    system = request.messages[0].content if len(request.messages) > 1 else ""
+    if purpose == "v2_generation":
+        ok = (
+            request.model == model
+            and request.temperature == 1.0
+            and request.max_tokens in V2_GENERATION_TOKENS
+            and system.startswith(V2_GENERATOR_MARKER)
+        )
+        if ok:
+            return "v2_generation"
+    if purpose in V2_CONSTRUCTION:
+        check(request.model == model and request.temperature == 0, "Unbudgeted v2 request")
+        return stage_of(request)  # retention / extraction / classifier, exact shapes
+    if purpose.startswith("v2_published_"):
+        check(request.model == model, "Unbudgeted v2 request")
+        return published_stage(purpose.removeprefix("v2_"), request)
+    if purpose == "v2_backbone_answer":
+        body = request.messages[-1].content
+        ok = (
+            request.model == model
+            and request.temperature == 0
+            and request.max_tokens == 200
+            and len(request.messages) == 1
+            and "What you remember:" in body
+        )
+        if ok:
+            return "v2_backbone_answer"
+    raise ValueError("Request shape does not match the approved protocol-v2 stage")
 
 
 def published_stage(purpose: str, request: ChatRequest) -> str:
@@ -162,7 +231,10 @@ class ConstructionSession(ExecutionSession):
     ):
         check(purpose in PURPOSES, "Unknown construction purpose")
         cap = Decimal(str(cap_usd))
-        if split == "test":
+        if purpose in V2_PURPOSES or split == V2_SPLIT:
+            check(purpose in V2_PURPOSES and split == V2_SPLIT, "v2 purposes use the v2 split")
+            check_v2_approval(approval, purpose, cap, self.config["model"])
+        elif split == "test":
             check_test_approval(approval, bundle_manifest_hash, purpose, cap)
         else:
             check(split in APPROVED_SPLITS, "Only the owner-approved dev split may be constructed")
@@ -170,6 +242,8 @@ class ConstructionSession(ExecutionSession):
                 Decimal(0) < cap <= PURPOSE_CAPS[purpose],
                 f"Task cap above the approved USD {PURPOSE_CAPS[purpose]}",
             )
+        required = V2_MODELS.get(purpose, MODEL)
+        check(self.config["model"] == required, f"Purpose {purpose} needs a {required} session")
         self.purpose = purpose
         self.scope_hash = digest([f"controlled-workload-{purpose}", bundle_manifest_hash, split])
         self.split = split
@@ -259,6 +333,12 @@ class ConstructionSession(ExecutionSession):
         result = self._dispatch(evaluation_stage(stage, request), request)
         return result["dispatch"]["call_id"], result
 
+    def dispatch_v2(self, request: ChatRequest) -> dict:
+        """Protocol-v2 scopes only; the stage is fixed by the exact request shape."""
+        check(hasattr(self, "scope_hash"), "Protocol-v2 scope not authorized")
+        check(self.purpose in V2_PURPOSES, "Not a protocol-v2 scope")
+        return self._dispatch(v2_stage(self.purpose, request, self.config["model"]), request)
+
     def dispatch_published(self, request: ChatRequest) -> dict:
         """Published-defence scopes only; the stage is fixed by the exact request shape."""
         check(hasattr(self, "scope_hash"), "Published scope not authorized")
@@ -268,11 +348,11 @@ class ConstructionSession(ExecutionSession):
     def _dispatch(self, stage: str, request: ChatRequest) -> dict:
         # Temperature 1.0 only for A-MemGuard, whose repository setting it is.
         temp_ok = request.temperature == 0 or (
-            stage == "published_amemguard" and request.temperature == 1.0
+            stage in ("published_amemguard", "v2_generation") and request.temperature == 1.0
         )
         check(
             type(request) is ChatRequest
-            and request.model == MODEL
+            and request.model == self.config["model"]
             and temp_ok
             and request.reasoning_effort in (None, "none"),
             "Unbudgeted construction request",
@@ -415,3 +495,15 @@ class GuardedPublishedClient:
         response = response_from("chat", result["response"])
         self.last_text = response.text
         return response
+
+
+class GuardedV2Client:
+    """LLMClient for a protocol-v2 stage: every call goes through the guarded v2 scope."""
+
+    def __init__(self, session: ConstructionSession):
+        self.session, self.paid = session, []
+
+    def complete(self, request):
+        result = self.session.dispatch_v2(request)
+        self.paid.append(result["actual_paid_usd"])
+        return response_from("chat", result["response"])

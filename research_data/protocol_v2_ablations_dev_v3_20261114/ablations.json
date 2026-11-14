@@ -1,0 +1,1754 @@
+{
+ "version": "protocol-v2-ablations-v1",
+ "label": "dev",
+ "groups": 8,
+ "seed": 20261114,
+ "resamples": 10000,
+ "grid": {
+  "context_gate": [
+   2,
+   3
+  ],
+  "source_gate": [
+   3,
+   4,
+   6
+  ],
+  "withhold": [
+   0.15,
+   0.25,
+   0.35
+  ],
+  "tau": [
+   0.7,
+   0.8,
+   0.9
+  ],
+  "budget": [
+   3,
+   5,
+   10
+  ]
+ },
+ "defaults": {
+  "context_gate": 2,
+  "source_gate": 4,
+  "withhold": 0.25,
+  "tau": 0.8,
+  "budget": 5
+ },
+ "knobs": {
+  "context_gate": {
+   "3": {
+    "localized": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.0,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.9249999999999999,
+      "variant": 0.9249999999999999,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9107142857142858,
+      "variant": 0.9107142857142858,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666667,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    },
+    "distributed": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.0,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.6699999999999999,
+      "variant": 0.6699999999999999,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666667,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    },
+    "uninformative": {
+     "unaudited_exposure": {
+      "default": 0.8125,
+      "variant": 0.9375,
+      "difference": 0.125,
+      "ci95": [
+       0.0,
+       0.25
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.8350000000000001,
+      "variant": 0.9149999999999999,
+      "difference": 0.07999999999999997,
+      "ci95": [
+       0.024999999999999994,
+       0.13999999999999996
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9613095238095238,
+      "variant": 0.9613095238095238,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    }
+   }
+  },
+  "source_gate": {
+   "3": {
+    "localized": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.0,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.9249999999999999,
+      "variant": 0.9249999999999999,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9107142857142858,
+      "variant": 0.9107142857142858,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666667,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    },
+    "distributed": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.0,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.6699999999999999,
+      "variant": 0.6699999999999999,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666667,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    },
+    "uninformative": {
+     "unaudited_exposure": {
+      "default": 0.8125,
+      "variant": 0.8125,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.8350000000000001,
+      "variant": 0.8350000000000001,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9613095238095238,
+      "variant": 0.9613095238095238,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    }
+   },
+   "6": {
+    "localized": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.0,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.9249999999999999,
+      "variant": 0.9249999999999999,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9107142857142858,
+      "variant": 0.9107142857142858,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666667,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    },
+    "distributed": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.0,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.6699999999999999,
+      "variant": 0.6699999999999999,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666667,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    },
+    "uninformative": {
+     "unaudited_exposure": {
+      "default": 0.8125,
+      "variant": 0.8125,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.8350000000000001,
+      "variant": 0.8350000000000001,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9613095238095238,
+      "variant": 0.9613095238095238,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    }
+   }
+  },
+  "withhold": {
+   "0.15": {
+    "localized": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.0,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.9249999999999999,
+      "variant": 0.9249999999999999,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9107142857142858,
+      "variant": 0.9107142857142858,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666667,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    },
+    "distributed": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.0,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.6699999999999999,
+      "variant": 0.6699999999999999,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666667,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    },
+    "uninformative": {
+     "unaudited_exposure": {
+      "default": 0.8125,
+      "variant": 0.5,
+      "difference": -0.3125,
+      "ci95": [
+       -0.4375,
+       -0.15625
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.8350000000000001,
+      "variant": 0.6100000000000001,
+      "difference": -0.225,
+      "ci95": [
+       -0.28500000000000003,
+       -0.16999999999999998
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9613095238095238,
+      "variant": 0.9613095238095238,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    }
+   },
+   "0.35": {
+    "localized": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.96875,
+      "difference": 0.96875,
+      "ci95": [
+       0.90625,
+       1.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.9249999999999999,
+      "variant": 0.9249999999999999,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9107142857142858,
+      "variant": 0.9107142857142858,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666667,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    },
+    "distributed": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.9375,
+      "difference": 0.9375,
+      "ci95": [
+       0.84375,
+       1.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.6699999999999999,
+      "variant": 0.9099999999999999,
+      "difference": 0.24,
+      "ci95": [
+       0.215,
+       0.26
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666667,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    },
+    "uninformative": {
+     "unaudited_exposure": {
+      "default": 0.8125,
+      "variant": 0.96875,
+      "difference": 0.15625,
+      "ci95": [
+       0.03125,
+       0.28125
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.8350000000000001,
+      "variant": 0.9149999999999999,
+      "difference": 0.07999999999999997,
+      "ci95": [
+       0.024999999999999994,
+       0.13999999999999996
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9613095238095238,
+      "variant": 0.9613095238095238,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    }
+   }
+  },
+  "tau": {
+   "0.7": {
+    "localized": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.0,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.9249999999999999,
+      "variant": 0.9249999999999999,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9107142857142858,
+      "variant": 0.9107142857142858,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666667,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.0,
+      "variant": 0.0,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    }
+   },
+   "0.9": {
+    "localized": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.0,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.9249999999999999,
+      "variant": 0.9249999999999999,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9107142857142858,
+      "variant": 0.9107142857142858,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666667,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.0,
+      "variant": 0.0,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    }
+   }
+  },
+  "budget": {
+   "3": {
+    "localized": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.640625,
+      "difference": 0.640625,
+      "ci95": [
+       0.5364583333333334,
+       0.7395833333333335
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.9249999999999999,
+      "variant": 0.9249999999999999,
+      "difference": -2.7755575615628914e-17,
+      "ci95": [
+       -6.938893903907228e-17,
+       0.0
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9107142857142858,
+      "variant": 0.9114583333333333,
+      "difference": 0.0007440476190476025,
+      "ci95": [
+       -4.163336342344337e-17,
+       0.002232142857142849
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666668,
+      "difference": 4.163336342344337e-17,
+      "ci95": [
+       1.3877787807814457e-17,
+       8.326672684688674e-17
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.7708333333333333,
+      "difference": 0.14583333333333331,
+      "ci95": [
+       0.041666666666666664,
+       0.29166666666666663
+      ],
+      "groups": 8
+     }
+    }
+   },
+   "10": {
+    "localized": {
+     "unaudited_exposure": {
+      "default": 0.0,
+      "variant": 0.0,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     },
+     "useful_exposure": {
+      "default": 0.9249999999999999,
+      "variant": 0.9249999999999999,
+      "difference": -2.7755575615628914e-17,
+      "ci95": [
+       -6.938893903907228e-17,
+       0.0
+      ],
+      "groups": 8
+     },
+     "key_exposure": {
+      "default": 0.9107142857142858,
+      "variant": 0.9107142857142857,
+      "difference": -1.3877787807814457e-17,
+      "ci95": [
+       -4.163336342344337e-17,
+       0.0
+      ],
+      "groups": 8
+     },
+     "innocent_useful_exposure": {
+      "default": 0.9416666666666667,
+      "variant": 0.9416666666666668,
+      "difference": 4.163336342344337e-17,
+      "ci95": [
+       1.3877787807814457e-17,
+       8.326672684688674e-17
+      ],
+      "groups": 8
+     },
+     "relay_exposure": {
+      "default": 0.625,
+      "variant": 0.625,
+      "difference": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "groups": 8
+     }
+    }
+   }
+  }
+ },
+ "boundary_verification": {
+  "random_concentrate": {
+   "unaudited_exposure": {
+    "default": 0.0,
+    "variant": 0.0,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9249999999999999,
+    "variant": 0.9249999999999999,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 0.9107142857142857,
+    "variant": 0.9107142857142857,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9416666666666668,
+    "variant": 0.9416666666666668,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.625,
+    "variant": 0.625,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "random_spread": {
+   "unaudited_exposure": {
+    "default": 0.3770833333333333,
+    "variant": 0.1388888888888889,
+    "difference": -0.23819444444444443,
+    "ci95": [
+     -0.3340277777777778,
+     -0.13958333333333334
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.705,
+    "variant": 0.685,
+    "difference": -0.020000000000000004,
+    "ci95": [
+     -0.02833333333333332,
+     -0.01249999999999997
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 0.9234375,
+    "variant": 0.8958333333333334,
+    "difference": -0.002083333333333326,
+    "ci95": [
+     -0.03749999999999998,
+     0.03125
+    ],
+    "groups": 6
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9416666666666668,
+    "variant": 0.9416666666666668,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.7083333333333334,
+    "variant": 0.6666666666666667,
+    "difference": -0.041666666666666664,
+    "ci95": [
+     -0.10416666666666666,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "sybil_k1_rand": {
+   "unaudited_exposure": {
+    "default": 0.0,
+    "variant": 0.0,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9249999999999999,
+    "variant": 0.9249999999999999,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 0.9107142857142857,
+    "variant": 0.9107142857142857,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9416666666666668,
+    "variant": 0.9416666666666668,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.625,
+    "variant": 0.625,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "sybil_k2_rand": {
+   "unaudited_exposure": {
+    "default": 0.8472222222222221,
+    "variant": 0.8472222222222221,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9249999999999999,
+    "variant": 0.9249999999999999,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 0.9345238095238095,
+    "variant": 0.9345238095238095,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9416666666666668,
+    "variant": 0.9416666666666668,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.8333333333333333,
+    "variant": 0.8333333333333333,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "sybil_k4_rand": {
+   "unaudited_exposure": {
+    "default": 0.9444444444444444,
+    "variant": 0.9444444444444444,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9249999999999999,
+    "variant": 0.9249999999999999,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 0.9776785714285714,
+    "variant": 0.9776785714285714,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9416666666666668,
+    "variant": 0.9416666666666668,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.8125,
+    "variant": 0.8125,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "sybil_k8_rand": {
+   "unaudited_exposure": {
+    "default": 0.9548611111111112,
+    "variant": 0.9548611111111112,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9249999999999999,
+    "variant": 0.9249999999999999,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 1.0,
+    "variant": 1.0,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 7
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9416666666666668,
+    "variant": 0.9416666666666668,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.7708333333333334,
+    "variant": 0.7708333333333334,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "launder_r0_rand": {
+   "unaudited_exposure": {
+    "default": 0.0,
+    "variant": 0.0,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9249999999999999,
+    "variant": 0.9249999999999999,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 0.9107142857142857,
+    "variant": 0.9107142857142857,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9416666666666668,
+    "variant": 0.9416666666666668,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.625,
+    "variant": 0.625,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "launder_r1_rand": {
+   "unaudited_exposure": {
+    "default": 0.4267361111111111,
+    "variant": 0.4267361111111111,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9249999999999999,
+    "variant": 0.9249999999999999,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 0.9158549783549783,
+    "variant": 0.9158549783549783,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9416666666666668,
+    "variant": 0.9416666666666668,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.6875,
+    "variant": 0.6875,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "launder_r2_rand": {
+   "unaudited_exposure": {
+    "default": 0.8531249999999999,
+    "variant": 0.8531249999999999,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9249999999999999,
+    "variant": 0.9249999999999999,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 0.9174152236652238,
+    "variant": 0.9174152236652238,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9416666666666668,
+    "variant": 0.9416666666666668,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.7083333333333334,
+    "variant": 0.7083333333333334,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "launder_r3_rand": {
+   "unaudited_exposure": {
+    "default": 0.9149305555555556,
+    "variant": 0.9149305555555556,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9016666666666666,
+    "variant": 0.9016666666666666,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 0.9154491341991342,
+    "variant": 0.9154491341991342,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9027777777777778,
+    "variant": 0.9027777777777778,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.8541666666666666,
+    "variant": 0.8541666666666666,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "launder_r4_rand": {
+   "unaudited_exposure": {
+    "default": 0.9826388888888888,
+    "variant": 0.9826388888888888,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9016666666666666,
+    "variant": 0.8866666666666666,
+    "difference": -0.015,
+    "ci95": [
+     -0.027499999999999983,
+     -0.0049999999999999906
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 0.8956777597402596,
+    "variant": 0.8956777597402596,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9027777777777778,
+    "variant": 0.8777777777777778,
+    "difference": -0.02500000000000001,
+    "ci95": [
+     -0.04583333333333335,
+     -0.008333333333333331
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.8125,
+    "variant": 0.8125,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "sybilown_k2_rand": {
+   "unaudited_exposure": {
+    "default": 0.8628472222222222,
+    "variant": 0.8628472222222222,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9249999999999999,
+    "variant": 0.9249999999999999,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 0.9345238095238095,
+    "variant": 0.9345238095238095,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9416666666666668,
+    "variant": 0.9416666666666668,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.7291666666666666,
+    "variant": 0.7291666666666666,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "sybilown_k4_rand": {
+   "unaudited_exposure": {
+    "default": 0.9670138888888888,
+    "variant": 0.9670138888888888,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9249999999999999,
+    "variant": 0.9249999999999999,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 0.9832589285714286,
+    "variant": 0.9832589285714286,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9416666666666668,
+    "variant": 0.9416666666666668,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.8333333333333333,
+    "variant": 0.8333333333333333,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "sybilown_k8_rand": {
+   "unaudited_exposure": {
+    "default": 0.9826388888888888,
+    "variant": 0.9826388888888888,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9249999999999999,
+    "variant": 0.9249999999999999,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 1.0,
+    "variant": 1.0,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 7
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9416666666666668,
+    "variant": 0.9416666666666668,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.875,
+    "variant": 0.875,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  },
+  "cohabit_x1_rand": {
+   "unaudited_exposure": {
+    "default": 0.0,
+    "variant": 0.0,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "useful_exposure": {
+    "default": 0.9249999999999999,
+    "variant": 0.9249999999999999,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "key_exposure": {
+    "default": 0.9107142857142857,
+    "variant": 0.9107142857142857,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "innocent_useful_exposure": {
+    "default": 0.9416666666666668,
+    "variant": 0.9416666666666668,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   },
+   "relay_exposure": {
+    "default": 0.625,
+    "variant": 0.625,
+    "difference": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "groups": 8
+   }
+  }
+ },
+ "inputs": {
+  "bundle": "research_data/controlled_workload_v3_20261108",
+  "stage1": "research_data/controlled_workload_stage1_dev_v3_20261108",
+  "groups": [
+   "G-D00",
+   "G-D01",
+   "G-D02",
+   "G-D03",
+   "G-D04",
+   "G-D05",
+   "G-D06",
+   "G-D07"
+  ]
+ }
+}

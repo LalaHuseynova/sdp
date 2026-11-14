@@ -271,7 +271,15 @@ def _build_group(rows, split, gid, blocks, p, usage, seed, carriers="v1", confli
                 k += 1
         if block == "Y":
             items[(block, "U_copy_base")] = ("benign", ben[k])
+    emit_group(rows, split, gid, blocks, items, seed, carriers)
 
+
+def emit_group(rows, split, gid, blocks, items, seed, carriers="v1"):
+    """Write one group's rows from its selected items {(block, role): (kind, source)}.
+
+    Shared by v1-v4 (`_build_group`) and protocol v2's workload v5. A source may
+    carry `private_extra` (provenance fields that override the private row's
+    defaults); v1-v4 sources have none, so their output is unchanged."""
     frng = _rng(seed, "facts", gid)
     topics = frng.sample([f"{a} {n}" for a, n in product(D.TOPIC_ADJECTIVES, D.TOPIC_NOUNS)], 40)
     contributions = {}
@@ -312,6 +320,7 @@ def _build_group(rows, split, gid, blocks, p, usage, seed, carriers="v1", confli
                     "planted_target": src["target"],
                     "copy_of": None,
                     "extraction": "verbatim_mpbench_cache_expected",
+                    **src.get("private_extra", {}),
                 },
             )
         else:
@@ -348,6 +357,7 @@ def _build_group(rows, split, gid, blocks, p, usage, seed, carriers="v1", confli
                     "fact": {"family": fam, "sentence": fact["sentence"]},
                     "extraction": "new_text_paid",
                     **extra,
+                    **src.get("private_extra", {}),
                 },
             )
     # Linked copy: A forwards s1a verbatim (declared known copy, same incident).

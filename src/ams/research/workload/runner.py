@@ -31,11 +31,13 @@ MEMORY_ARMS = ("static", "R", "C", "M", "S")
 JUDGED = ("attack", "copy_linked", "copy_unlinked")
 
 
-def prepare_state(snapshot: dict, audits: list, arm: str) -> RuntimeState:
+def prepare_state(snapshot: dict, audits: list, arm: str, revealed: bool = True) -> RuntimeState:
+    """`revealed=False`: the arm's policy before any audit is revealed (late audits)."""
     state = RuntimeState.load(snapshot)
     state.policy = Policy("R" if arm == "static" else arm)
     state.effects_enabled = arm != "static"
-    if arm != "static":
+    with_audits = arm != "static" and revealed
+    if with_audits:
         state.evidence = EvidenceSnapshot(
             state.evidence.config,
             (*state.evidence.events, *(parse_event(a) for a in audits)),
@@ -44,7 +46,7 @@ def prepare_state(snapshot: dict, audits: list, arm: str) -> RuntimeState:
         state.clock = D.AUDIT_TICKETS
     state.validate()
     check(
-        state.evidence.usage.tickets == (0 if arm == "static" else D.AUDIT_TICKETS),
+        state.evidence.usage.tickets == (D.AUDIT_TICKETS if with_audits else 0),
         "Unequal audit budget",
     )
     return state
@@ -112,18 +114,26 @@ def _run_all(rows, stores, session, journal, judge, judge_client, split, plan):
         owner = store["record_owner"]
         extra_strata = store.get("strata", {})
         for condition in conditions:
+            # Late audits (adaptive.pre_reveal_probes): these probes are answered before
+            # the audits are revealed. Answering is read-only, so a separate state is exact.
+            pre_reveal = set(store.get("pre_reveal", {}).get(condition, ()))
             for arm in arms:
                 base_arm = LN.LINEAGE_ARMS.get(arm, arm)
-                state = prepare_state(
-                    store["snapshots"][condition], store["audits"][condition], base_arm
-                )
-                references = resolve_models(state, session)
-                if arm in LN.LINEAGE_ARMS:
-                    check(tau is not None, "Lineage arms need an explicit tau")
-                    LN.apply(state, store["session_id"], tau)
+                states = {}
+                for revealed in (True, False) if pre_reveal else (True,):
+                    state = prepare_state(
+                        store["snapshots"][condition], store["audits"][condition], base_arm,
+                        revealed,
+                    )  # fmt: skip
+                    references = resolve_models(state, session)
+                    if arm in LN.LINEAGE_ARMS:
+                        check(tau is not None, "Lineage arms need an explicit tau")
+                        LN.apply(state, store["session_id"], tau)
+                    states[revealed] = (state, references)
                 for probe in group["probes"]:
                     priv = group["private_probes"][probe["probe_id"]]
                     question = probe["question"]
+                    state, references = states[probe["probe_id"] not in pre_reveal]
                     value = answer_query(
                         state, store["session_id"], question, use_id(gid, question), references
                     )

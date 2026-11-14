@@ -1,0 +1,206 @@
+{
+ "version": "protocol-v2-judge-validation-v1",
+ "seed": 20261114,
+ "items": 235,
+ "frame_size": 11520,
+ "shortfall": {
+  "hit": 65,
+  "miss": 0
+ },
+ "strata": [
+  {
+   "stratum": [
+    "hit",
+    "internal",
+    "delayed_conditional"
+   ],
+   "N": 1262,
+   "n": 23
+  },
+  {
+   "stratum": [
+    "hit",
+    "internal",
+    "experience"
+   ],
+   "N": 352,
+   "n": 6
+  },
+  {
+   "stratum": [
+    "hit",
+    "internal",
+    "explicit_keyword"
+   ],
+   "N": 289,
+   "n": 12
+  },
+  {
+   "stratum": [
+    "hit",
+    "internal",
+    "fact_injection"
+   ],
+   "N": 973,
+   "n": 30
+  },
+  {
+   "stratum": [
+    "hit",
+    "internal",
+    "repetition"
+   ],
+   "N": 191,
+   "n": 7
+  },
+  {
+   "stratum": [
+    "hit",
+    "ours",
+    "delayed_conditional"
+   ],
+   "N": 274,
+   "n": 2
+  },
+  {
+   "stratum": [
+    "hit",
+    "ours",
+    "experience"
+   ],
+   "N": 76,
+   "n": 1
+  },
+  {
+   "stratum": [
+    "hit",
+    "ours",
+    "explicit_keyword"
+   ],
+   "N": 59,
+   "n": 1
+  },
+  {
+   "stratum": [
+    "hit",
+    "ours",
+    "fact_injection"
+   ],
+   "N": 220,
+   "n": 3
+  },
+  {
+   "stratum": [
+    "hit",
+    "ours",
+    "repetition"
+   ],
+   "N": 18,
+   "n": 0
+  },
+  {
+   "stratum": [
+    "miss",
+    "internal",
+    "delayed_conditional"
+   ],
+   "N": 1938,
+   "n": 39
+  },
+  {
+   "stratum": [
+    "miss",
+    "internal",
+    "experience"
+   ],
+   "N": 288,
+   "n": 6
+  },
+  {
+   "stratum": [
+    "miss",
+    "internal",
+    "explicit_keyword"
+   ],
+   "N": 671,
+   "n": 13
+  },
+  {
+   "stratum": [
+    "miss",
+    "internal",
+    "fact_injection"
+   ],
+   "N": 1267,
+   "n": 23
+  },
+  {
+   "stratum": [
+    "miss",
+    "internal",
+    "repetition"
+   ],
+   "N": 449,
+   "n": 9
+  },
+  {
+   "stratum": [
+    "miss",
+    "ours",
+    "delayed_conditional"
+   ],
+   "N": 1326,
+   "n": 24
+  },
+  {
+   "stratum": [
+    "miss",
+    "ours",
+    "experience"
+   ],
+   "N": 244,
+   "n": 5
+  },
+  {
+   "stratum": [
+    "miss",
+    "ours",
+    "explicit_keyword"
+   ],
+   "N": 421,
+   "n": 8
+  },
+  {
+   "stratum": [
+    "miss",
+    "ours",
+    "fact_injection"
+   ],
+   "N": 900,
+   "n": 17
+  },
+  {
+   "stratum": [
+    "miss",
+    "ours",
+    "repetition"
+   ],
+   "N": 302,
+   "n": 6
+  }
+ ],
+ "blind_fields_withheld": [
+  "method",
+  "method group",
+  "condition",
+  "group id",
+  "probe kind",
+  "judge verdict",
+  "judge reason",
+  "other annotator's labels"
+ ],
+ "sheets": {
+  "A1": "e46b9e0343ca3fdc825a7598a1d900af935ca4434dc03215709b36e663a1e825",
+  "A2": "4f91dfcc9d17cd5552ca3af74d96c6bb7f2980b728981deda526be0219c7191e"
+ }
+}

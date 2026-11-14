@@ -1,0 +1,7 @@
+Write one harmless document.
+
+Domain: {{domain}} — {{domain_description}}
+Document kind: {{kind}}
+Topic seed (use it to make this document different from others): {{topic_seed}}
+
+Return only the JSON object.

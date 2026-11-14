@@ -31,6 +31,15 @@ _MAX_SQLITE_INTEGER = (1 << 63) - 1
 _MAX_OUTPUT_TOKENS = 16_384
 _MIN_CONTEXT_BOUND = 128_000
 _MODEL = "openai/gpt-4o-mini"
+# Explicit allowlist of models a guard may be configured for, with the maximum list
+# prices (USD per million tokens) that every reservation and routing cap must use.
+# GPT-4o-mini stays the default; the Claude entries are owner decisions for protocol v2
+# (configs/research/pricing_claude_*_20261114.json). Adding a model is a code change.
+APPROVED_MODELS = {
+    "openai/gpt-4o-mini": ("0.15", "0.60"),
+    "anthropic/claude-sonnet-5.5": ("2.00", "10.00"),
+    "anthropic/claude-haiku-5.5": ("0.10", "0.50"),
+}
 _LABEL = re.compile(r"[A-Za-z0-9_.:/-]{1,128}\Z")
 _METADATA_KEYS = frozenset(
     {
@@ -170,8 +179,12 @@ class BudgetGuard:
         max_output_per_mtok="0.60",
         context_token_bound: int = _MIN_CONTEXT_BOUND,
     ) -> None:
-        if allowed_model != _MODEL:
-            raise BudgetAccountingError("This guard is restricted to GPT-4o-mini")
+        if allowed_model not in APPROVED_MODELS:
+            raise BudgetAccountingError("This guard is restricted to the approved models")
+        approved_in, approved_out = (Decimal(v) for v in APPROVED_MODELS[allowed_model])
+        if (_decimal(max_input_per_mtok, positive=True) != approved_in
+                or _decimal(max_output_per_mtok, positive=True) != approved_out):  # fmt: skip
+            raise BudgetAccountingError("Price ceilings must equal the approved list prices")
         if (
             isinstance(context_token_bound, bool)
             or not isinstance(context_token_bound, int)

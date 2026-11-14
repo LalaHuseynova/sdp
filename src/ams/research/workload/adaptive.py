@@ -110,6 +110,67 @@ def sweep_followup_conditions(draws: int = DEFAULT_DRAWS) -> tuple[str, ...]:
     return tuple(f"{c}_fu" for c in sweep_conditions(draws) if "_rand_" in c)
 
 
+# Imperfect audits (protocol v2, step 1.6, 14 Nov 2026). `imp_{attack}_{kind}_d{i}` is the
+# attack's perfect-audit condition (localized, distributed, sybil_k2, launder_r2) with:
+#   fn20  each truly-unsafe ticket independently returns "safe" with probability 0.2
+#   fp1   the safe ticket is replaced by one on a random benign item of the innocent B,
+#         wrongly flagged "unsafe" (1 of 5 tickets)
+#   late  oracle tickets, revealed only after the first half of the probes in a fixed
+#         per-group shuffled order (`pre_reveal_probes`; the runner answers those first)
+# Draw i uses the same random numbers for every attack (paired comparisons).
+IMPERFECT_ATTACKS = ("localized", "distributed", "sybil_k2", "launder_r2")
+IMPERFECT_KINDS = ("fn20", "fp1", "late")
+FN_RATE = 0.2
+
+
+def imperfect_conditions(draws: int = DEFAULT_DRAWS) -> tuple[str, ...]:
+    return tuple(f"imp_{a}_{k}_d{i}" for a in IMPERFECT_ATTACKS for k in IMPERFECT_KINDS
+                 for i in range(draws))  # fmt: skip
+
+
+def parse_imperfect(condition: str) -> tuple[str, str, int]:
+    attack, kind, draw = condition.removeprefix("imp_").rsplit("_", 2)
+    check(attack in IMPERFECT_ATTACKS and kind in IMPERFECT_KINDS, f"Unknown {condition}")
+    return attack, kind, int(draw.removeprefix("d"))
+
+
+def _imperfect(group, gid, condition, L):
+    attack, kind, draw = parse_imperfect(condition)
+    if attack in ("localized", "distributed"):
+        ov, tickets = _base(group, attack), _oracle_tickets(group)
+    else:
+        ov, tickets = _sweep(group, gid, attack, L)
+    if kind == "fn20":
+        rng = random.Random(int(digest(["imperfect-fn-v1", gid, draw]), 16))
+        out = []
+        for t, cid, verdict in tickets:
+            if verdict == "unsafe" and rng.random() < FN_RATE:
+                t, verdict = "t_fn_" + digest([gid, condition, cid])[:16], "safe_for_use"
+            out.append((t, cid, verdict))
+        tickets = out
+    elif kind == "fp1":
+        roles = {c: p["role"] for c, p in group["private"].items()}
+        innocent = sorted(c for c, (who, _, _) in ov.items()
+                          if who == L["B"] and roles[c] == "benign_with_fact")  # fmt: skip
+        rng = random.Random(int(digest(["imperfect-fp-v1", gid, draw]), 16))
+        cid = rng.choice(innocent)
+        check([v for *_, v in tickets].count("safe_for_use") == 1, "Expected one safe ticket")
+        fp = ("t_fp_" + digest([gid, condition, cid])[:16], cid, "unsafe")
+        tickets = [fp if v == "safe_for_use" else (t, c, v) for t, c, v in tickets]
+    return ov, tickets
+
+
+def pre_reveal_probes(group: dict, gid: str, condition: str) -> list | None:
+    """Late audits: the probe ids answered before the audits are revealed (the first half
+    of a fixed per-group, per-draw shuffled order); None for every other condition."""
+    if not condition.startswith("imp_") or parse_imperfect(condition)[1] != "late":
+        return None
+    draw = parse_imperfect(condition)[2]
+    ids = sorted(p["probe_id"] for p in group["probes"])
+    random.Random(int(digest(["imperfect-late-order-v1", gid, draw]), 16)).shuffle(ids)
+    return sorted(ids[: len(ids) // 2])
+
+
 def _sweep(group, gid, condition, L):
     followup = condition.endswith("_fu")
     condition = condition.removesuffix("_fu")  # same detections as the plain draw
@@ -274,6 +335,8 @@ def _oracle_tickets(group: dict) -> list:
 def overlay_and_tickets(group: dict, gid: str, condition: str) -> tuple[dict, list]:
     """(overlay {cid: (contributor, context, batch)}, tickets [(ticket_id, cid, verdict)])."""
     L = layout(group)
+    if condition.startswith("imp_"):
+        return _imperfect(group, gid, condition, L)
     if condition.startswith(("sybil_k", "launder_r", "sybilown_k", "cohabit_x")):
         return _sweep(group, gid, condition, L)
     if condition.startswith("random_"):
@@ -480,11 +543,17 @@ def extend_store(rows: dict, store: dict, conditions) -> dict:
     out["audits"] = dict(store["audits"])
     out["strata"] = defaultdict(dict)
     out["unsafe_audited"] = {}
+    pre_reveal = {}
     for c in conditions:
         built = build_condition(rows, store, c)
         out["snapshots"][c] = built["snapshot"]
         out["audits"][c] = built["audits"]
         out["strata"][c] = built["strata"]
         out["unsafe_audited"][c] = built["unsafe_audited"]
+        pre = pre_reveal_probes(group_rows(rows, store["group_id"]), store["group_id"], c)
+        if pre is not None:
+            pre_reveal[c] = pre
     out["strata"] = dict(out["strata"])
+    if pre_reveal:  # late-audit conditions only; other stores are unchanged
+        out["pre_reveal"] = pre_reveal
     return out
