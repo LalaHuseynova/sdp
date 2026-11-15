@@ -1,0 +1,87 @@
+{
+ "group": "G-D00",
+ "conditions": 272,
+ "build_seconds": 2.69916387507692,
+ "methods": {
+  "static": {
+   "conditions": 272,
+   "seconds": 1069.5374818750424,
+   "conflict_requests": 272,
+   "conflict_distinct": [
+    "605966b693d94f858d96eea1536ebabecf1a71b07d9d36786147ebd920d7621e"
+   ]
+  },
+  "R": {
+   "conditions": 272,
+   "seconds": 900.0955440829275,
+   "conflict_requests": 272,
+   "conflict_distinct": [
+    "605966b693d94f858d96eea1536ebabecf1a71b07d9d36786147ebd920d7621e"
+   ]
+  },
+  "C": {
+   "conditions": 272,
+   "seconds": 836.6829604170052,
+   "conflict_requests": 783,
+   "conflict_distinct": [
+    "24ed75f12c3b90ead61921bc9ddecc1047383917318baaa0037aa35aa66887ab",
+    "605966b693d94f858d96eea1536ebabecf1a71b07d9d36786147ebd920d7621e",
+    "7830ff05cf31ec0d6bc39cb3d49594acbd5af7f70ff7204c745dd45006a8d4ba"
+   ]
+  },
+  "M": {
+   "conditions": 272,
+   "seconds": 793.0010033750441,
+   "conflict_requests": 1006,
+   "conflict_distinct": [
+    "24ed75f12c3b90ead61921bc9ddecc1047383917318baaa0037aa35aa66887ab",
+    "605966b693d94f858d96eea1536ebabecf1a71b07d9d36786147ebd920d7621e",
+    "7830ff05cf31ec0d6bc39cb3d49594acbd5af7f70ff7204c745dd45006a8d4ba"
+   ]
+  },
+  "S": {
+   "conditions": 272,
+   "seconds": 681.0242012079107,
+   "conflict_requests": 387,
+   "conflict_distinct": [
+    "24ed75f12c3b90ead61921bc9ddecc1047383917318baaa0037aa35aa66887ab",
+    "605966b693d94f858d96eea1536ebabecf1a71b07d9d36786147ebd920d7621e",
+    "7830ff05cf31ec0d6bc39cb3d49594acbd5af7f70ff7204c745dd45006a8d4ba"
+   ]
+  },
+  "SL": {
+   "conditions": 272,
+   "seconds": 2360.8202606249833,
+   "conflict_requests": 386,
+   "conflict_distinct": [
+    "24ed75f12c3b90ead61921bc9ddecc1047383917318baaa0037aa35aa66887ab",
+    "605966b693d94f858d96eea1536ebabecf1a71b07d9d36786147ebd920d7621e"
+   ]
+  },
+  "S2-BS": {
+   "conditions": 272,
+   "seconds": 813.1905913340161,
+   "conflict_requests": 399,
+   "conflict_distinct": [
+    "24ed75f12c3b90ead61921bc9ddecc1047383917318baaa0037aa35aa66887ab",
+    "605966b693d94f858d96eea1536ebabecf1a71b07d9d36786147ebd920d7621e"
+   ]
+  },
+  "randec": {
+   "conditions": 4,
+   "seconds": 321.9779784170678,
+   "conflict_requests": 4,
+   "conflict_distinct": [
+    "605966b693d94f858d96eea1536ebabecf1a71b07d9d36786147ebd920d7621e"
+   ]
+  },
+  "randec+R": {
+   "conditions": 4,
+   "seconds": 186.92832379206084,
+   "conflict_requests": 4,
+   "conflict_distinct": [
+    "605966b693d94f858d96eea1536ebabecf1a71b07d9d36786147ebd920d7621e"
+   ]
+  }
+ }
+}

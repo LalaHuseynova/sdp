@@ -1,0 +1,6 @@
+# RandEC weights kept (SHA-256), 2026-11-15 00:27:23
+9964ed5d4751dbeb8fbd3f8412afee53cbee6dd4b48b405839f97eb2248b7a9b  third_party/AMemGuard/certified-llm-safety/models/distilbert_infusion.pt
+f566a38471cf4d3cc4adca08f24b38b55c84ba10979306bd4fc4a26549e255f0  third_party/AMemGuard/certified-llm-safety/models/distilbert_insertion.pt
+57b7536c513da87dc57658b0c0297ce5a6a4a67c57cb219ac9a77b9836c757bc  third_party/AMemGuard/certified-llm-safety/models/distilbert_suffix.pt
+# deleted archive (SHA-256)
+e7006ac0d1852fdc9849e0b1e8e78c6cf467b98ffd6c652f5fc61dc2a71b32ab  reports/downloads/randec-models.zip

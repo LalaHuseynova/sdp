@@ -1,0 +1,10 @@
+# before 2026-11-15 00:27:08
+14137876	.
+723632	reports/downloads/randec-models.zip
+271540	tmp/pdfs/result_table_tools
+96	.pytest_cache
+40	.ruff_cache
+2122628	research_data/provisional_extension_results_v1_20261101
+302712	research_data/provisional_comparison_results_v1_20261101
+29328	__pycache__ (outside .venv*)
+/dev/disk3s5   239362496 200430512   7266300    97% 1968030 72663000    3%   /System/Volumes/Data

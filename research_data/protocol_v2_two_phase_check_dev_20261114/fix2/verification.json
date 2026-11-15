@@ -1,0 +1,18 @@
+{
+ "original_seconds": 487.6506566250464,
+ "step1_seconds": 65.3202895000577,
+ "step2_seconds": 66.55815029097721,
+ "step3_seconds": 21.74501374992542,
+ "conditions": 5,
+ "methods": 16,
+ "rows": 2800,
+ "identical": true,
+ "differing": 0,
+ "same_requests_sent": true,
+ "distinct_conflict_checks": 2,
+ "conflict_replies_real": 2,
+ "conflict_replies_standin": 0,
+ "contradict_replies": 0,
+ "contexts_with_contested_label": 0,
+ "rows_with_conflict_calls": 128
+}

@@ -1,0 +1,8 @@
+# after 2026-11-15 00:29:14
+10945000	.
+0	reports/downloads
+576	tmp/pdfs
+205040	research_data/provisional_extension_results_v1_20261101
+29328	research_data/provisional_comparison_results_v1_20261101
+28	research_data/cleanup_20261115
+/dev/disk3s5   239362496 197481620  10215192    96% 1962590 102151920    2%   /System/Volumes/Data

@@ -1,0 +1,13 @@
+{
+ "N": 24,
+ "alpha_one_sided": 0.00625,
+ "power": 0.9,
+ "formula": "(t_{1-a,N-1}+t_{0.9,N-1})*sd/sqrt(N), as power_protocol_v2b.py MDE_at_N96",
+ "MDE": {
+  "sd=0.1": 0.082,
+  "sd=0.15": 0.123,
+  "sd=0.2": 0.164,
+  "sd=0.25": 0.206,
+  "sd=0.3": 0.247
+ }
+}

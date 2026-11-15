@@ -1,0 +1,9 @@
+{
+ "uncached": 568.7626009170199,
+ "cached": 116.50498095806688,
+ "distinct_texts": 83,
+ "conditions": 4,
+ "rows": 700,
+ "identical": true,
+ "differing": 0
+}

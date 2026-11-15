@@ -8,7 +8,9 @@ hypothesis refers to. Draw seeds are fixed: each draw's random numbers are a has
 
   cells()               cell -> family, audits, params, runtime conditions
   TABLES / HYPOTHESES   protocol §10 and §6, as cell references
-  WORST_CASE            every attack cell except boundary verification (47; "≈ 50")
+  WORST_CASE            every attack cell except boundary verification and the
+                        no-signal control (46; owner decision 35, 14 Nov 2026)
+  CONTROLS              "uninformative": run and reported, but a control, not an attack
   SECOND_BACKBONE       Table 1 + the hypothesis cells (decision 23)
   adaptive_conditions() what `adaptive.extend_store` must build (all but the stored base)
 """
@@ -21,7 +23,7 @@ from ams.research.dynamic.models import digest
 from ams.research.workload import adaptive as AD
 from ams.research.workload import design as D
 
-VERSION = "protocol-v2-condition-registry-v1"
+VERSION = "protocol-v2-condition-registry-v2"  # v2: decision 35
 DRAWS = AD.DEFAULT_DRAWS  # 6 (decision 12)
 
 
@@ -82,7 +84,8 @@ def _oracle_and_random(prefix, labels):
 
 
 _TABLE2 = {
-    "localized": "localized", "distributed": "distributed", "uninformative": "uninformative",
+    "localized": "localized", "distributed": "distributed",
+    "no-signal control": "uninformative",  # decision 35: a control column, not an attack
     "sybil k=2": "sybil_k2", "sybil k=4": "sybil_k4", "sybil k=8": "sybil_k8",
     "own-batch k=4": "sybilown_k4", "launder r=.25": "launder_r1", "launder r=.5": "launder_r2",
     "launder r=1": "launder_r4", "audit-aware shift (batch)": "shift_batch",
@@ -117,7 +120,11 @@ HYPOTHESES = {
     "H6": {"security": None, "utility": ["imp_localized_fp1"]},
 }
 
-WORST_CASE = [c for c, v in cells().items() if v["audits"] != "random_bv"]
+# Decision 35 (owner, 14 Nov 2026): "uninformative" assumes the attacker controls every
+# contributor, so no audit can carry signal. It stays a Table 2 column, labelled the
+# "no-signal control", and is excluded from the worst case.
+CONTROLS = ["uninformative"]
+WORST_CASE = [c for c, v in cells().items() if v["audits"] != "random_bv" and c not in CONTROLS]
 APPENDIX = {"boundary_verification": [c for c, v in cells().items() if v["audits"] == "random_bv"]}
 
 
@@ -142,7 +149,7 @@ def referenced_cells() -> list[str]:
 
 def registry() -> dict:
     return {"version": VERSION, "draws": DRAWS, "cells": cells(), "tables": TABLES,
-            "hypotheses": HYPOTHESES, "worst_case": WORST_CASE,
+            "hypotheses": HYPOTHESES, "worst_case": WORST_CASE, "controls": CONTROLS,
             "second_backbone": SECOND_BACKBONE, "appendix": APPENDIX,
             "seed_basis": "per draw: hash of (group id, condition name) in "
                           "workload/adaptive.py, identical for every method"}  # fmt: skip

@@ -1,0 +1,18 @@
+# Package list of the removed virtualenv tmp/pdfs/result_table_tools (cleanup 2026-11-15).
+# Interpreter: Python 3.11.15. Used by scripts/render_research_result_tables.py.
+# Rebuild: python3.11 -m venv tmp/pdfs/result_table_tools && tmp/pdfs/result_table_tools/bin/pip install -r tmp/pdfs/result_table_tools.requirements.txt
+charset-normalizer==3.5.2
+flatbuffers==25.12.19
+networkx==3.6.1
+numpy==2.4.6
+onnxruntime==1.31.1
+packaging==26.3
+pillow==13.0.0
+protobuf==7.36.2
+psutil==7.2.2
+pymupdf==2.0
+pymupdf4llm==2.0
+pymupdf_layout==2.0
+PyYAML==6.0.3
+reportlab==5.1.0
+tabulate==0.10.0

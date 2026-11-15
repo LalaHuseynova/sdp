@@ -12,6 +12,13 @@ One loop, two modes, both reusing the frozen code paths unchanged:
                 (the guard's exact reuse), and a restart is replayed from the guarded
                 ledger at $0 while the journal checks every row is unchanged.
 
+  answer=True, contexts=...  PAID stage, step-1.12 runtime fix 2 (owner-approved, three
+                steps, `two_phase`): the internal arms' contexts (and the base contexts
+                the published defences filter) are read from a free precompute that
+                replayed the REAL conflict replies, instead of being recomputed; each
+                stored context is re-verified (hashes, recomputed row, live ledger).
+                Rows are identical to answer=True without contexts (tested).
+
 Methods: internal arms come from frozen policies (`runner.prepare_state`, plus the
 `lineage` / `sv2` compositions); published defences filter Original SAFE-Mem's
 retrieval (or R's, for the labelled "+R" variants) with the existing adapters
@@ -33,13 +40,14 @@ from ams.research.evidence_memoization import memoized_evidence_revisions
 from ams.research.provisional_run.runner import BoundClient, Journal, resolve_models
 from ams.research.recovery.offline import CHAT_MODEL
 from ams.research.retrieval import RetrievalContext
+from ams.research.sequential.clients import response_from
 from ams.research.workload import lineage as LN
 from ams.research.workload import published as P
 from ams.research.workload import sv2 as SV2
 from ams.research.workload.integration import group_rows, use_id
 from ams.research.workload.runner import _grade, exposure, prepare_state
 
-VERSION = "protocol-v2-pipeline-v1"
+VERSION = "protocol-v2-pipeline-v2"  # v2: Haiku answers built for the backbone model (2.3)
 TAU = LN.DEFAULT_TAU  # content-lineage threshold (SL, S2-*), frozen at 0.8
 
 # Table rows in protocol §10 order, then the appendix-only methods (decisions 6-8).
@@ -107,15 +115,22 @@ def _retrieve(state, store, question):
 
 def answer_prompt(state, question, entries, required) -> str:
     """The frozen answer prompt, rendered exactly as `provisional_run.runner.answer_query`."""
+    return render_answer(state.memory.prompts.get("answer_typed", "v2"), question, entries,
+                         required)  # fmt: skip
+
+
+def render_answer(template, question, entries, required) -> str:
+    """`template`: the state's frozen `answer_typed` v2 prompt (or its stored copy)."""
     body = "\n".join(f"- {e['text']}" for e in entries) or "(nothing)"
-    return state.memory.prompts.get("answer_typed", "v2").render(
-        query=question, memory=body, required=required or "description"
-    )
+    return template.render(query=question, memory=body, required=required or "description")
 
 
 def evaluate(rows, stores, session, out: Path, *, conditions, methods, defences=None,
-             sensitive=None, answer: bool = True) -> dict:  # fmt: skip
-    """Every (group, condition, method, probe) once; idempotent on restart."""
+             sensitive=None, answer: bool = True, contexts=None) -> dict:  # fmt: skip
+    """Every (group, condition, method, probe) once; idempotent on restart.
+
+    `contexts` (step-1.12 fix 2, `two_phase`): with answer=False a writer that stores
+    each internal arm's context; with answer=True the verified reader of those."""
     defences = defences or {}
     for m in methods:
         pub = _published(m)
@@ -123,21 +138,31 @@ def evaluate(rows, stores, session, out: Path, *, conditions, methods, defences=
         check(m not in ("S2-ID",) or sensitive is not None, "S2-ID needs SensitiveAction")
     scope = digest([VERSION, list(conditions), list(methods), answer,
                     sorted(s["group_id"] for s in stores)])  # fmt: skip
+    if contexts is not None and answer:  # validated before anything is written or sent
+        contexts.check(conditions, [s["group_id"] for s in stores])
+        contexts.verify(session)
     journal = Journal(Path(out), scope)
+    # Second backbone (decision 22): the router re-addresses answers to Claude Haiku, so the
+    # answer request is built for that model and dispatched directly (the frozen replay
+    # client would refuse a Haiku reply to a GPT-4o-mini request). Same prompt, temperature
+    # and max_tokens; found and fixed at step 2.3 (tests/test_v2_pipeline.py).
+    from ams.research.protocol_v2.backbone import BackboneRouter
+
+    backbone = session.model if isinstance(session, BackboneRouter) else None
     judge_client = BoundClient(session, "judge_answer") if answer else None
     judge = MemoryJudge(judge_client, model=CHAT_MODEL) if answer else None
     try:
         with memoized_evidence_revisions():
             for store in stores:
                 _group(rows, store, session, journal, judge, judge_client, conditions, methods,
-                       defences, sensitive, answer)  # fmt: skip
+                       defences, sensitive, answer, contexts, backbone)  # fmt: skip
         return {"rows": len(journal.rows()), "scope": scope}
     finally:
         journal.db.close()
 
 
 def _group(rows, store, session, journal, judge, judge_client, conditions, methods,
-           defences, sensitive, answer):  # fmt: skip
+           defences, sensitive, answer, contexts=None, backbone=None):  # fmt: skip
     gid = store["group_id"]
     group = group_rows(rows, gid)
     owner = store["record_owner"]
@@ -145,42 +170,72 @@ def _group(rows, store, session, journal, judge, judge_client, conditions, metho
         pre = set(store.get("pre_reveal", {}).get(condition, ()))  # late audits (step 1.6)
         for method in methods:
             pub = _published(method)
-            states = _states(store, condition, method, session, sensitive,
-                             (True, False) if pre else (True,))  # fmt: skip
+            base = pub[1] if pub else method
+            stored = answer and contexts is not None and contexts.has(base)
+            states = None if stored else _states(store, condition, method, session, sensitive,
+                                                 (True, False) if pre else (True,))  # fmt: skip
             for probe in group["probes"]:
                 pid, question = probe["probe_id"], probe["question"]
                 priv = group["private_probes"][pid]
                 revealed = pid not in pre
-                state, references = states[revealed]
-                start = len(references)
-                entries, required = _retrieve(state, store, question)
+                if stored:  # fix 2: the verified context of `base`, real conflict replies
+                    ctx = contexts.get(gid, condition, base, pid)
+                    check(ctx["row"]["audits_revealed"] == revealed, "Context audit mismatch")
+                    entries, required = ctx["entries"], ctx["required"]
+                    template, model = ctx["template"], ctx["answer_model"]
+                    tickets = ctx["row"]["audit_tickets"]
+                else:
+                    state, references = states[revealed]
+                    start = len(references)
+                    entries, required = _retrieve(state, store, question)
+                    template, model = state.memory.prompts.get("answer_typed", "v2"), None
+                    tickets = state.evidence.usage.tickets
+                base_entries = entries
                 extra = {}
                 if pub:
                     res = P.apply(defences[pub[0]], store, group, question, entries,
                                   text_from_defence=pub[0] == "llm_sanitiser")  # fmt: skip
                     entries = res["kept_entries"]
                     extra = {"kept": res["kept"], "flagged": res["flagged"]}
-                prompt = answer_prompt(state, question, entries, required)
+                prompt = render_answer(template, question, entries, required)
                 row = {
                     "group_id": gid, "condition": condition, "method": method,
                     "probe_id": pid, "kind": priv["kind"],
                     "stratum": store.get("strata", {}).get(condition, {}).get(
                         pid, priv["strata"].get(condition)),
                     "audits_revealed": revealed,
-                    "audit_tickets": state.evidence.usage.tickets,
+                    "audit_tickets": tickets,
                     "context_size": len(entries), "prompt_hash": digest(prompt),
                     "exposure": exposure(entries, owner, priv, priv.get("aliases")),
                     "answer": None, "outcome": None, "judge": None, "finish_reason": None,
                     **extra,
                 }  # fmt: skip
-                if answer:
+                if stored and not pub:  # the stored row must be exactly its recomputation
+                    check(row == ctx["row"], "Stored context differs from its recomputation")
+                if contexts is not None and not answer and not pub:
+                    contexts.put(digest([gid, condition, method, pid]), row=row,
+                                 entries=base_entries, required=required, template=template,
+                                 answer_model=state.answer_model,
+                                 conflict_call_ids=references[start:])  # fmt: skip
+                if answer and (stored or backbone):
+                    # = state.answer_client.complete through `resolve_models`' resolver
+                    request = ChatRequest((Message("user", prompt),), backbone or model,
+                                          temperature=0, max_tokens=200)  # fmt: skip
+                    call_id, result = session.dispatch("answer", request)
+                    response = response_from("chat", result["response"])
+                    check(response.model == request.model, "Replay response model mismatch")
+                    calls = [*(ctx["conflict_call_ids"] if stored else references[start:]),
+                             call_id]  # fmt: skip
+                elif answer:
                     response = state.answer_client.complete(ChatRequest(
                         (Message("user", prompt),), state.answer_model, temperature=0,
                         max_tokens=200))  # fmt: skip
+                    calls = references[start:]
+                if answer:
                     graded = _grade(judge, judge_client, priv, question, response.text)
                     row.update(answer=response.text, finish_reason=response.raw_finish_reason,
                                outcome=graded["outcome"], judge=graded["judge"],
-                               model_call_ids=references[start:])  # fmt: skip
+                               model_call_ids=calls)  # fmt: skip
                 journal.commit(digest([gid, condition, method, pid]), row)
 
 

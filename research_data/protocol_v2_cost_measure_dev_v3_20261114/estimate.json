@@ -1,0 +1,576 @@
+{
+ "version": "protocol-v2-cost-estimate-v1",
+ "groups": 96,
+ "measured_groups": 4,
+ "per_call": {
+  "workload_retention": {
+   "n": 675,
+   "usd": 6.704355555555555e-05,
+   "in_tokens": 349.60592592592593,
+   "out_tokens": 24.337777777777777,
+   "seconds_per_call": 4.0
+  },
+  "workload_extraction": {
+   "n": 917,
+   "usd": 0.00017961232279171212,
+   "in_tokens": 677.062159214831,
+   "out_tokens": 130.08833151581243,
+   "seconds_per_call": 4.0
+  },
+  "workload_classifier": {
+   "n": 577,
+   "usd": 5.384038128249567e-05,
+   "in_tokens": 346.9358752166378,
+   "out_tokens": 3.0,
+   "seconds_per_call": 1
+  },
+  "workload_answer": {
+   "n": 4455,
+   "usd": 0.0001295137037037037,
+   "in_tokens": 725.1872053872054,
+   "out_tokens": 34.55937149270483,
+   "seconds_per_call": 1.0
+  },
+  "workload_judge": {
+   "n": 981,
+   "usd": 4.808501529051988e-05,
+   "in_tokens": 212.9459734964322,
+   "out_tokens": 26.90519877675841,
+   "seconds_per_call": 3.0
+  },
+  "workload_conflict": {
+   "n": 61,
+   "usd": 1.5715573770491803e-05,
+   "in_tokens": 100.24590163934427,
+   "out_tokens": 1.1311475409836065,
+   "seconds_per_call": 14
+  },
+  "workload_no_memory_answer": {
+   "n": 794,
+   "usd": 5.334937027707808e-05,
+   "in_tokens": 283.7884130982368,
+   "out_tokens": 17.96851385390428,
+   "seconds_per_call": 1.0
+  },
+  "published_memlineage_sensitive": {
+   "n": 216,
+   "usd": 2.2030555555555556e-05,
+   "in_tokens": 138.87037037037038,
+   "out_tokens": 2.0,
+   "seconds_per_call": 1
+  },
+  "published_amemguard": {
+   "n": 2496,
+   "usd": 0.00012620925480769232,
+   "in_tokens": 361.8245192307692,
+   "out_tokens": 119.8926282051282,
+   "seconds_per_call": 3
+  },
+  "published_sanitiser": {
+   "n": 613,
+   "usd": 5.55310766721044e-05,
+   "in_tokens": 320.8955954323002,
+   "out_tokens": 12.3278955954323,
+   "seconds_per_call": 1
+  }
+ },
+ "published": {
+  "a_memguard_per_context": 0.0011250653571428571,
+  "a_memguard_calls_per_context": 7.8,
+  "llm_sanitiser_calls_per_context": 3.182142857142857,
+  "llm_sanitiser_per_context": 0.00013927446428571428,
+  "memlineage_per_question": 2.2030555555555556e-05,
+  "memlineage_questions_per_group": 27.0
+ },
+ "prices": {
+  "haiku": {
+   "model": "anthropic/claude-haiku-5.5",
+   "in": 1.0000000000000001e-07,
+   "out": 5e-07
+  },
+  "sonnet": {
+   "model": "anthropic/claude-sonnet-5.5",
+   "in": 2e-06,
+   "out": 1e-05
+  }
+ },
+ "generation": {
+  "attacks": 1440,
+  "benign": 1957,
+  "attack_in_tokens": 593.9791666666666,
+  "benign_in_tokens": 270.89333163004596,
+  "in_tokens": 1385468.25,
+  "out_tokens_mid": 1999390.0,
+  "out_tokens_top": 2627724.0,
+  "out_tokens_hard": 9906176,
+  "low": 22.7648365,
+  "high": 29.048176500000004,
+  "hard_bound": 101.83269650000001
+ },
+ "stage1_calls_per_group": {
+  "workload_retention": 40.0,
+  "workload_extraction": 40.0,
+  "workload_classifier": 35.0
+ },
+ "stage1_usd_per_group": 0.011750648478778054,
+ "conflicts_per_group": 2.75,
+ "per_group": {
+  "all": {
+   "answers_low": 631.0,
+   "judged_low": 297.0,
+   "answers_high": 1260.75,
+   "judged_high": 593.4116481774961,
+   "judged_share": 0.4706814580031696,
+   "distinct_static": 35.0,
+   "distinct_R": 41.0,
+   "distinct_SL": 325.75,
+   "unmeasured_high": 629.75
+  },
+  "core": {
+   "answers_low": 300.0,
+   "judged_low": 128.0,
+   "answers_high": 754.0,
+   "judged_high": 321.7066666666667,
+   "judged_share": 0.4266666666666667,
+   "distinct_static": 35.0,
+   "distinct_R": 41.0,
+   "distinct_SL": 150.0,
+   "unmeasured_high": 454.0
+  }
+ },
+ "static_invariance": [
+  {
+   "probes": 35,
+   "varying": 0,
+   "distinct": 35
+  },
+  {
+   "probes": 35,
+   "varying": 0,
+   "distinct": 35
+  },
+  {
+   "probes": 35,
+   "varying": 0,
+   "distinct": 35
+  },
+  {
+   "probes": 35,
+   "varying": 0,
+   "distinct": 35
+  }
+ ],
+ "ablations": {
+  "dev_answers": 1722,
+  "dev_judged": 827,
+  "dev_usd": 0.26278890542303773,
+  "option_a": {
+   "low": 0.26278890542303773,
+   "high": 1.051155621692151
+  },
+  "option_b": {
+   "low": 1.0062504018635874,
+   "high": 4.0250016074543495
+  },
+  "option_b_extra_prompts_per_group": 607.0
+ },
+ "stages": {
+  "3.1 generation (Claude Sonnet)": {
+   "purpose": "v2_generation",
+   "low": 22.7648365,
+   "high": 29.048176500000004
+  },
+  "3.3 inclusion E2 + I1": {
+   "purpose": "v2_inclusion",
+   "low": 0.5005534942828037,
+   "high": 1.0011069885656074
+  },
+  "3.5 Stage 1 memory, 96 groups": {
+   "purpose": "v2_stage1",
+   "low": 1.1280622539626932,
+   "high": 2.2561245079253864
+  },
+  "4.2+4.3 answers, judges, conflicts": {
+   "purpose": "v2_stage3",
+   "low": 9.220570982994268,
+   "high": 18.422884394531486
+  },
+  "4.3 A-MemGuard own calls": {
+   "purpose": "v2_published_amemguard",
+   "low": 3.7802196,
+   "high": 8.208476845714285
+  },
+  "4.3 LLM sanitiser own calls": {
+   "purpose": "v2_published_sanitiser",
+   "low": 0.4679622,
+   "high": 1.0161464914285714
+  },
+  "4.3 MemLineage SensitiveAction": {
+   "purpose": "v2_published_memlineage",
+   "low": 0.0571032,
+   "high": 0.0571032
+  },
+  "4.4 replication (24 groups, Table 1 + hypothesis cells): answers, judges": {
+   "purpose": "v2_stage3",
+   "low": 1.0812530615079963,
+   "high": 2.7170169176174195
+  },
+  "4.4 replication: A-MemGuard own calls": {
+   "purpose": "v2_published_amemguard",
+   "low": 0.9450549,
+   "high": 2.0521192114285713
+  },
+  "4.4 replication: LLM sanitiser own calls": {
+   "purpose": "v2_published_sanitiser",
+   "low": 0.11699055,
+   "high": 0.25403662285714285
+  },
+  "4.4 replication: MemLineage SensitiveAction": {
+   "purpose": "v2_published_memlineage",
+   "low": 0.0142758,
+   "high": 0.0142758
+  },
+  "4.5 Haiku answers": {
+   "purpose": "v2_backbone_answer",
+   "low": 2.586194101010101,
+   "high": 14.06235358771717
+  },
+  "4.5 GPT judges of Haiku answers": {
+   "purpose": "v2_stage3",
+   "low": 0.5908686678899082,
+   "high": 1.4850499186299697
+  },
+  "6.2 ablations, option A (current cells)": {
+   "purpose": "v2_stage3",
+   "low": 0.26278890542303773,
+   "high": 1.051155621692151
+  }
+ },
+ "by_purpose": {
+  "v2_generation": {
+   "low": 22.7648365,
+   "high": 29.048176500000004,
+   "proposed_cap": 38.0,
+   "code_ceiling": 10,
+   "fits_ceiling": false
+  },
+  "v2_inclusion": {
+   "low": 0.5005534942828037,
+   "high": 1.0011069885656074,
+   "proposed_cap": 1.5,
+   "code_ceiling": 5,
+   "fits_ceiling": true
+  },
+  "v2_stage1": {
+   "low": 1.1280622539626932,
+   "high": 2.2561245079253864,
+   "proposed_cap": 3.0,
+   "code_ceiling": 5,
+   "fits_ceiling": true
+  },
+  "v2_stage3": {
+   "low": 11.15548161781521,
+   "high": 23.676106852471026,
+   "proposed_cap": 31.0,
+   "code_ceiling": 80,
+   "fits_ceiling": true
+  },
+  "v2_published_amemguard": {
+   "low": 4.7252745,
+   "high": 10.260596057142857,
+   "proposed_cap": 14.0,
+   "code_ceiling": 20,
+   "fits_ceiling": true
+  },
+  "v2_published_sanitiser": {
+   "low": 0.58495275,
+   "high": 1.2701831142857143,
+   "proposed_cap": 2.0,
+   "code_ceiling": 10,
+   "fits_ceiling": true
+  },
+  "v2_published_memlineage": {
+   "low": 0.071379,
+   "high": 0.071379,
+   "proposed_cap": 0.1,
+   "code_ceiling": 0.5,
+   "fits_ceiling": true
+  },
+  "v2_backbone_answer": {
+   "low": 2.586194101010101,
+   "high": 14.06235358771717,
+   "proposed_cap": 19.0,
+   "code_ceiling": 10,
+   "fits_ceiling": false
+  }
+ },
+ "total": {
+  "low": 43.51673421707081,
+  "high": 81.64602660810776
+ },
+ "variants": {
+  "4.4 replication on every cell instead": {
+   "low": 1.2238896842405707,
+   "high": 1.8887041810154521
+  },
+  "6.2 ablations option B instead of A": {
+   "low": 0.7434614964405497,
+   "high": 2.973845985762199
+  },
+  "3.1 with Claude Haiku as generator instead": {
+   "low": -21.626594675,
+   "high": -27.595767675000005
+  }
+ },
+ "contingency": 0.3,
+ "allowance_left": 26.57,
+ "scope_reduction": {
+  "full_96": {
+   "low": 13.525855982994269,
+   "high": 27.704610931674345
+  },
+  "b_32_all_64_core": {
+   "low": 10.262150158352744,
+   "high": 22.66806644896647
+  }
+ },
+ "scenarios": {
+  "A. full plan: 96 generated groups + MPBench v4 replication": {
+   "low": 43.516734217070805,
+   "high": 81.64602660810776
+  },
+  "B. MPBench only: v4 split (24 groups) is the main result": {
+   "low": 4.438518593396608,
+   "high": 11.86415923119752
+  },
+  "C. MPBench v4 main + 32 generated groups (every cell)": {
+   "low": 17.078288003809863,
+   "high": 31.8674988739193
+  }
+ },
+ "scenario_caps": {
+  "A. full plan: 96 generated groups + MPBench v4 replication": {
+   "v2_generation": {
+    "low": 22.7648365,
+    "high": 29.048176500000004,
+    "proposed_cap": 38.0,
+    "code_ceiling": 10,
+    "fits_ceiling": false
+   },
+   "v2_inclusion": {
+    "low": 0.5005534942828037,
+    "high": 1.0011069885656074,
+    "proposed_cap": 1.5,
+    "code_ceiling": 5,
+    "fits_ceiling": true
+   },
+   "v2_stage1": {
+    "low": 1.1280622539626932,
+    "high": 2.2561245079253864,
+    "proposed_cap": 3.0,
+    "code_ceiling": 5,
+    "fits_ceiling": true
+   },
+   "v2_stage3": {
+    "low": 11.15548161781521,
+    "high": 23.676106852471026,
+    "proposed_cap": 31.0,
+    "code_ceiling": 80,
+    "fits_ceiling": true
+   },
+   "v2_published_amemguard": {
+    "low": 4.7252745,
+    "high": 10.260596057142857,
+    "proposed_cap": 14.0,
+    "code_ceiling": 20,
+    "fits_ceiling": true
+   },
+   "v2_published_sanitiser": {
+    "low": 0.58495275,
+    "high": 1.2701831142857143,
+    "proposed_cap": 2.0,
+    "code_ceiling": 10,
+    "fits_ceiling": true
+   },
+   "v2_published_memlineage": {
+    "low": 0.071379,
+    "high": 0.071379,
+    "proposed_cap": 0.1,
+    "code_ceiling": 0.5,
+    "fits_ceiling": true
+   },
+   "v2_backbone_answer": {
+    "low": 2.586194101010101,
+    "high": 14.06235358771717,
+    "proposed_cap": 19.0,
+    "code_ceiling": 10,
+    "fits_ceiling": false
+   }
+  },
+  "B. MPBench only: v4 split (24 groups) is the main result": {
+   "v2_stage3": {
+    "low": 2.7156488181440817,
+    "high": 6.0281391999825145,
+    "proposed_cap": 8.0,
+    "code_ceiling": 80,
+    "fits_ceiling": true
+   },
+   "v2_published_amemguard": {
+    "low": 0.9450549,
+    "high": 2.0521192114285713,
+    "proposed_cap": 3.0,
+    "code_ceiling": 20,
+    "fits_ceiling": true
+   },
+   "v2_published_sanitiser": {
+    "low": 0.11699055,
+    "high": 0.25403662285714285,
+    "proposed_cap": 0.35,
+    "code_ceiling": 10,
+    "fits_ceiling": true
+   },
+   "v2_published_memlineage": {
+    "low": 0.0142758,
+    "high": 0.0142758,
+    "proposed_cap": 0.05,
+    "code_ceiling": 0.5,
+    "fits_ceiling": true
+   },
+   "v2_backbone_answer": {
+    "low": 0.6465485252525253,
+    "high": 3.5155883969292927,
+    "proposed_cap": 5.0,
+    "code_ceiling": 10,
+    "fits_ceiling": true
+   }
+  },
+  "C. MPBench v4 main + 32 generated groups (every cell)": {
+   "v2_stage3": {
+    "low": 5.789172479142171,
+    "high": 12.169100664826344,
+    "proposed_cap": 16.0,
+    "code_ceiling": 80,
+    "fits_ceiling": true
+   },
+   "v2_published_amemguard": {
+    "low": 2.2051281,
+    "high": 4.78827816,
+    "proposed_cap": 6.5,
+    "code_ceiling": 20,
+    "fits_ceiling": true
+   },
+   "v2_published_sanitiser": {
+    "low": 0.27297795,
+    "high": 0.59275212,
+    "proposed_cap": 0.8,
+    "code_ceiling": 10,
+    "fits_ceiling": true
+   },
+   "v2_published_memlineage": {
+    "low": 0.0333102,
+    "high": 0.0333102,
+    "proposed_cap": 0.05,
+    "code_ceiling": 0.5,
+    "fits_ceiling": true
+   },
+   "v2_backbone_answer": {
+    "low": 0.6465485252525253,
+    "high": 3.5155883969292927,
+    "proposed_cap": 5.0,
+    "code_ceiling": 10,
+    "fits_ceiling": true
+   },
+   "v2_generation": {
+    "low": 7.588278833333334,
+    "high": 9.6827255,
+    "proposed_cap": 13.0,
+    "code_ceiling": 10,
+    "fits_ceiling": false
+   },
+   "v2_inclusion": {
+    "low": 0.16685116476093456,
+    "high": 0.3337023295218691,
+    "proposed_cap": 0.45,
+    "code_ceiling": 5,
+    "fits_ceiling": true
+   },
+   "v2_stage1": {
+    "low": 0.37602075132089774,
+    "high": 0.7520415026417955,
+    "proposed_cap": 1.0,
+    "code_ceiling": 5,
+    "fits_ceiling": true
+   }
+  }
+ },
+ "runtime": {
+  "precompute_internal_seconds_per_group": 7202.080231042026,
+  "published_retrieval_seconds_per_group": 8012.558153303224,
+  "randec_seconds_per_condition": 64.74469298568874,
+  "randec_seconds_per_group": {
+   "current": 35221.11298421468,
+   "randec_cached": 140.58847619749557
+  },
+  "calls_per_group": {
+   "low": 1342.125,
+   "high": 2721.304505320353
+  },
+  "seconds_per_call": {
+   "median": 1.0,
+   "mean": 2.0755551774015144
+  },
+  "api_seconds_per_group": {
+   "low": 1342.125,
+   "high": 5648.217655303726
+  },
+  "precompute_cpu_hours": {
+   "current": 1131.2851524068453,
+   "randec_cached": 195.80449885972058,
+   "both_fixes": 384.1109456555747
+  },
+  "paid_stage_wall_hours": {
+   "current": {
+    "96": {
+     "low": 1380.7433698282648,
+     "high": 1495.5725073030305
+    },
+    "24": {
+     "low": 345.1858424570662,
+     "high": 373.89312682575763
+    },
+    "32": {
+     "low": 460.2477899427549,
+     "high": 498.5241691010103
+    }
+   },
+   "randec_cached": {
+    "96": {
+     "low": 445.2627162811399,
+     "high": 560.091853755906
+    },
+    "24": {
+     "low": 111.31567907028497,
+     "high": 140.0229634389765
+    },
+    "32": {
+     "low": 148.42090542704662,
+     "high": 186.697284585302
+    }
+   },
+   "both_fixes": {
+    "96": {
+     "low": 101.7279635983331,
+     "high": 216.55710107309912
+    },
+    "24": {
+     "low": 25.431990899583276,
+     "high": 54.13927526827478
+    },
+    "32": {
+     "low": 33.90932119944437,
+     "high": 72.18570035769972
+    }
+   }
+  }
+ }
+}

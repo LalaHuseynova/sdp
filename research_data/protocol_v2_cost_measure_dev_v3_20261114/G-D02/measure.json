@@ -1,0 +1,84 @@
+{
+ "group": "G-D02",
+ "conditions": 272,
+ "build_seconds": 2.3754624169087037,
+ "methods": {
+  "static": {
+   "conditions": 272,
+   "seconds": 945.4686911250465,
+   "conflict_requests": 544,
+   "conflict_distinct": [
+    "82828e6a9180b63ef31988ebdd218bded793ccfa1c0aced2c1b5a7d5b88dcab7"
+   ]
+  },
+  "R": {
+   "conditions": 272,
+   "seconds": 833.8572618749458,
+   "conflict_requests": 544,
+   "conflict_distinct": [
+    "82828e6a9180b63ef31988ebdd218bded793ccfa1c0aced2c1b5a7d5b88dcab7"
+   ]
+  },
+  "C": {
+   "conditions": 272,
+   "seconds": 750.7777905410621,
+   "conflict_requests": 708,
+   "conflict_distinct": [
+    "3ac74616b3e55b962f86b5480f5f8bd591441b84c93b18f33fa9f71b4e8a60d5",
+    "82828e6a9180b63ef31988ebdd218bded793ccfa1c0aced2c1b5a7d5b88dcab7"
+   ]
+  },
+  "M": {
+   "conditions": 272,
+   "seconds": 739.0530523330672,
+   "conflict_requests": 734,
+   "conflict_distinct": [
+    "3ac74616b3e55b962f86b5480f5f8bd591441b84c93b18f33fa9f71b4e8a60d5",
+    "82828e6a9180b63ef31988ebdd218bded793ccfa1c0aced2c1b5a7d5b88dcab7"
+   ]
+  },
+  "S": {
+   "conditions": 272,
+   "seconds": 636.0248216250911,
+   "conflict_requests": 761,
+   "conflict_distinct": [
+    "3ac74616b3e55b962f86b5480f5f8bd591441b84c93b18f33fa9f71b4e8a60d5",
+    "82828e6a9180b63ef31988ebdd218bded793ccfa1c0aced2c1b5a7d5b88dcab7"
+   ]
+  },
+  "SL": {
+   "conditions": 272,
+   "seconds": 2298.2017362089828,
+   "conflict_requests": 759,
+   "conflict_distinct": [
+    "3ac74616b3e55b962f86b5480f5f8bd591441b84c93b18f33fa9f71b4e8a60d5",
+    "82828e6a9180b63ef31988ebdd218bded793ccfa1c0aced2c1b5a7d5b88dcab7"
+   ]
+  },
+  "S2-BS": {
+   "conditions": 272,
+   "seconds": 612.5991898749489,
+   "conflict_requests": 799,
+   "conflict_distinct": [
+    "3ac74616b3e55b962f86b5480f5f8bd591441b84c93b18f33fa9f71b4e8a60d5",
+    "82828e6a9180b63ef31988ebdd218bded793ccfa1c0aced2c1b5a7d5b88dcab7"
+   ]
+  },
+  "randec": {
+   "conditions": 4,
+   "seconds": 213.05323708301876,
+   "conflict_requests": 8,
+   "conflict_distinct": [
+    "82828e6a9180b63ef31988ebdd218bded793ccfa1c0aced2c1b5a7d5b88dcab7"
+   ]
+  },
+  "randec+R": {
+   "conditions": 4,
+   "seconds": 232.22011587501038,
+   "conflict_requests": 8,
+   "conflict_distinct": [
+    "82828e6a9180b63ef31988ebdd218bded793ccfa1c0aced2c1b5a7d5b88dcab7"
+   ]
+  }
+ }
+}
