@@ -1,0 +1,23 @@
+{
+ "internal": {
+  "rows": 1225,
+  "seed0_vs_seed0_identical": true,
+  "seed0_vs_seed1_identical": true,
+  "seed0_vs_seed2_identical": true,
+  "seed1_vs_seed2_identical": true,
+  "rows_differing_seed0_vs_seed1": 0
+ },
+ "randec": {
+  "rows": 350,
+  "seed0_vs_seed0_identical": true,
+  "seed0_vs_seed1_identical": true,
+  "seed0_vs_seed2_identical": true,
+  "seed1_vs_seed2_identical": true,
+  "rows_differing_seed0_vs_seed1": 0,
+  "kept_flagged_differing_seed0_vs_seed1": 0
+ },
+ "internal_vs_step_1_12_measurement": {
+  "compared": 1225,
+  "differing": 0
+ }
+}

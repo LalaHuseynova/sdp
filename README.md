@@ -749,11 +749,237 @@ The original project is credited in the [upstream README](UPSTREAM_README.md), i
 
 Newest entry first. **Future sessions: read this section first, then add an entry after every task.** Each entry records what was done, what was found, which files changed, what is completed or remaining, and the next step. Standing rules: never delete earlier documentation or results; make no paid API calls and no algorithm changes without the project owner's explicit permission.
 
+### 2026-11-15 (Phase 2, steps 2.1–2.3) — Option B protocol finalised, freeze manifest prepared (not active), paid stages ready (free)
+
+**Scope (owner, decision 36):** option B. All 11 methods (+ 5 appendix methods) on every registered condition (62 cells, 272 runtime conditions) of the MPBench-derived v4 test split (24 groups), Claude Haiku on Table 1 + the hypothesis cells. **Labelled replication evidence, not fresh held-out, not confirmatory:** v4 was the protocol-v1 locked test, so H1/H2 are near re-measurements of v1's tests; H3–H6 involve methods and conditions never run on v4. The full v5 plan is kept unchanged as the future evaluation.
+
+**Step 2.1, protocol** (`reports/PROTOCOL_V2_OPTION_B_20261115.md`, revision 5):
+- every pending decision resolved, with reasons (§12: D-35 … D-FG); none changes the claims or the chosen scope;
+- one optional scope item left to the owner: ablation cells for the source gate and τ (+$0.74–2.97, default not added);
+- correction to the table preview: H1's security part and H2 use judge ASR (protocol metric 1);
+- power at 24 groups (unchanged power code): H1 0.98; H3 ≥ 0.96 at λ ≥ 0.75; H2 only if the SD ≤ 0.05; H4 0.76–0.95 at λ = 1; H5 0.95–0.98 if SL never leaks; H6 0.26–0.78 for a 10-pt effect. MDE 8–21 pt. So a ✗ for H2/H4/H5/H6 means "not shown at this size".
+
+**Code (tests first; no defence algorithm changed):**
+- `registry.py` v2: decision 35 (uninformative = "no-signal control", out of the worst case: 46 cells);
+- `analysis.py` v2 + `analyse_protocol_v2.py`: evidence label in every title, Table 8 "replication, not confirmatory", groups/probes footnotes, † control, Table 6 two panels, Table 7 "not run" fresh rows, A13 (Haiku, all 11 methods), `--evidence`, `--backbone-journal`, `--not-run`;
+- **`freeze.py` + `scripts/freeze_protocol_v2.py`** (prepare / verify) and a `--freeze` gate on `conflicts` and `paid`: the manifest must verify, the owner's approval must name its digest, and only the frozen dataset is accepted;
+- `run_protocol_v2.py`: old stores load through the verified prompt mirror (needed for v4: 35 checkpointed prompts, all verified unchanged);
+- **bug found and fixed at step 2.3:** the Haiku paid run (P-B3) would have failed at its first answer ("Replay response model mismatch": the frozen replay client refused a Haiku reply to a GPT request). Haiku answer requests are now built for the Haiku model (same prompt, temperature, tokens); the GPT path is unchanged (`pipeline.py` v2). A new guarded end-to-end test runs GPT then Haiku on the same sessions and checks that every GPT call is replayed at $0.
+
+**Step 2.2, freeze and integrity:**
+- manifest **prepared, not active**: `research_data/protocol_v2_freeze_optionB_20261115/protocol_v2_optionB.json`, digest `1845a84d73b1961201dd63884e43807f363ed89b08a84662b2d1fb43922e4903` (320 files: code, prompts, configs, `uv.lock`, v2 scripts, protocol text, v4 bundle + 24 stores, dev data, MPBench, RandEC weights, HF snapshots); `verify` passes;
+- v1 locked archive verified (224 files); pre-v2 snapshot 0 changed, 3 missing (= the approved 15 Nov cleanup, hashes recorded); v4 bundle equals the v1-freeze hashes; 24 v4 + 8 dev stores equal the 13 Nov fingerprints;
+- full test suite: 827 passed (810 before + 17 new), 58 subtests.
+
+**Step 2.3, readiness:** draft approval (unsigned, refused by the gates) and runbook with exact commands in `research_data/protocol_v2_freeze_optionB_20261115/`. Estimate $4.19–10.82; proposed caps sum $23.15 (v2_stage3 $10, A-MemGuard $4.50, sanitiser $0.60, MemLineage $0.05, Haiku $8). The guard fixes each purpose's cap at its first use, so the conflict pass (P-B1, ≈ $0.001) sets the v2_stage3 cap for P-B2 and P-B3 too.
+
+**Next:** 🔒 owner approves the freeze and the caps (signs the approval file); then the RUNBOOK (free precompute → P-B1 → free contexts → P-B2 → P-B3 → analysis once). No paid call, no v5 data, no freeze activation in this step.
+
+### 2026-11-15 (before step 2.1) — Preview of the ICML table formats (for owner approval)
+
+**What:** `reports/TABLE_PREVIEW_V2_20261115.md`. It covers:
+- the complete layouts of Tables 1, 2, 2b and 3–8 and appendix A1–A13, all values "—";
+- each metric's level (answer vs retrieval) and direction;
+- CI and Holm presentation;
+- what each table teaches;
+- what option B (reused v4 split, 24 groups) can produce versus what needs fresh v5 data or Haiku;
+- a table → conditions → paid-purposes matrix.
+
+Row and column names are generated from `registry.py`.
+
+**Key point:** under option B every result must be labelled "reused v4 split, replication / secondary, not confirmatory". Table 7's fresh rows need v5.
+
+No code changed, nothing frozen, no data generated, no paid call. **Next:** the owner approves the presentation (§5 of the preview).
+
+### 2026-11-15 (before step 2.1) — Cleanup executed: tiers 1 + 2 (owner-approved)
+
+**What we did** (details: `reports/CLEANUP_AUDIT_20261115.md` §6; records in `research_data/cleanup_20261115/`):
+- **Deleted the duplicate `reports/downloads/randec-models.zip`.** Its CRC-32 equals the kept weights; the SHA-256 of the 3 kept weights is recorded.
+- **Removed `tmp/pdfs/result_table_tools/`.** Its package list was saved first.
+- **Removed caches:** 30 `__pycache__`, `.pytest_cache`, `.ruff_cache`.
+- **Compressed in place:** the two v1 provisional `queries.sqlite` journals became `.tar.gz`. Each was extracted, its restored SHA-256 equals the original's and `integrity_check` returned ok; only then was the original removed. `ARCHIVED.md` holds the restore steps.
+
+**Result:**
+- Repo: 14,137,876 KB → 10,945,000 KB, so **3.05 GiB freed**.
+- Paid ledgers, response caches, v4 data, frozen artifacts and other results: untouched (verified).
+- Tier 3: unchanged.
+
+### 2026-11-15 (before step 2.1) — Checkpoint and temporary-file audit (proposal only)
+
+**Why:** the owner asked for an audit of checkpoints and temporary files before step 2.1. **Nothing was deleted, moved or overwritten.** Report: `reports/CLEANUP_AUDIT_20261115.md`.
+
+**Findings:**
+- **Size:** the repo is 13 GB.
+- **Must keep:** 3 paid ledgers (`controlled_workload_session_v2`, `session_v3`, `dynamic_execution_prep_v1/session`), the paid response cache (`reports/safemem_full_mpbench/cache`, 2.6 GB), the v4 MPBench data and paid Stage-1 stores, protocol v2 artifacts and earlier results.
+- **Proposed tier 1 (remove, ≈ 1.0 GB):**
+  - `reports/downloads/randec-models.zip` (CRC-identical to the extracted weights);
+  - `tmp/pdfs/result_table_tools/` (a virtualenv);
+  - caches.
+- **Proposed tier 2 (archive, ≈ 2.1 GB):** compress the two v1 provisional journals in place, with SHA-256 verification.
+- **Tier 3 (optional):** `.venv-minja/` and the unused RandEC weights.
+- **Not recommended:** the pilot-finish provenance chain, the by-design duplicates, `git gc`.
+
+**Next:** the owner approves (or edits) the cleanup list.
+
+### 2026-11-15 (step 1.12, runtime fixes) — Fix 2 (three steps) implemented, exact; PYTHONHASHSEED fixed to 0 (free)
+
+**Why:** the owner approved the three-step Fix 2 "only if exact equivalence ... can be demonstrated", and a fixed PYTHONHASHSEED for all protocol v2 runs. No paid call was made, no held-out data was used, no frozen algorithm was changed, and nothing was committed or frozen. Details: `reports/COST_ESTIMATE_V2_20261114.md` §4c.
+
+**What we did (tests first):**
+- **New `src/ams/research/protocol_v2/two_phase.py`:**
+  1. step 1, free: record the distinct conflict requests; step 1, paid: send only those;
+  2. step 2, free: replay the real replies, storing contexts, template, model and conflict ids;
+  3. step 3, paid: read the verified contexts (hashes, inputs fingerprint, conditions, recomputed rows, live-ledger replies; never pays to verify).
+- **`pipeline.evaluate(..., contexts=)`** with an unchanged journal scope. S2-ID is still computed the original way.
+- **CLI (`scripts/run_protocol_v2.py`):**
+  - `precompute` also writes `conflict_requests.json`;
+  - new `conflicts` (paid, gated by `--confirm-paid` and the owner approval);
+  - new `contexts` (free);
+  - `paid --contexts`.
+- **New `src/ams/research/protocol_v2/hashseed.py` (seed 0):** both v2 scripts re-execute with it, and every run command refuses without it.
+- **Runtime model:** adds the both-fixes case.
+- **Tests:** `tests/test_v2_two_phase.py` (9) and `tests/test_v2_hashseed.py` (8), plus `tests/test_v2_cost.py`. **810 pass** (793 + 17).
+
+**Equivalence:**
+- **Unit and guarded tests:** journals identical in every field (including model-call ids and contested labels), the same wire requests each sent once, the same spend.
+- **Real dev G-D00** (5 conditions × 16 methods, 2,800 rows):
+  - with real conflict replies: identical;
+  - with every reply "contradict": identical, and 119 contexts carry a contested label.
+- **Mutation checks:** both detected.
+
+**PYTHONHASHSEED:**
+- Seeds 0/0/1/2 give identical rows (1,575, RandEC included).
+- Seed-0 internal rows equal the step-1.12 journals (1,225/1,225).
+- So it changes no frozen output; it is a reproducibility safeguard.
+
+**Runtime, option B (24 groups):** the paid process takes **25–54 h with both fixes** (4.6–5.8 days with Fix 1 only; 14.4–15.6 days before). The free precompute is ≈ 96 CPU-h, in parallel.
+
+**Risks:**
+- equivalence shown with mock or forced replies, not live GPT;
+- step 1 needs its own paid approval and the same session as step 3;
+- S2-ID stays in the paid process;
+- ≈ 2.2 GB of contexts for B;
+- old-store prompt-checkpoint decision still pending.
+
+**Data:** `research_data/protocol_v2_two_phase_check_dev_20261114/`. Note: `tests/` is gitignored in this repo (`.gitignore:230`; pre-existing).
+
+**Next:** the owner reviews the changes before any commit. Option B is preferred, not frozen.
+
+### 2026-11-14 (step 1.12, runtime fixes) — Fix 1 (RandEC cache) implemented and verified; Fix 2 stopped (free)
+
+**Why:** the owner approved two runtime optimizations "strictly as runtime optimizations", with tests first, identical rows, prompts, retrieval and decisions, and "stop and report" if equivalence cannot be shown. No frozen algorithm was changed, no paid call was made, no held-out data was used, and nothing was committed or frozen. Details: `reports/COST_ESTIMATE_V2_20261114.md` §4b.
+
+**What we did:**
+- **Fix 1, RandEC cache (done):**
+  - new `src/ams/research/protocol_v2/randec_cache.py`: memoizes `harmful` by exact text and restores the global `random` state the real call left, reproducing its side effect exactly;
+  - `scripts/run_protocol_v2.py randec()` uses it; the frozen classifier class is unchanged.
+- **Fix 1 tests (written first):** `tests/test_v2_randec_cache.py` (7, including a real-DistilBERT cached = uncached check) and `tests/test_v2_pipeline.py::test_randec_cache_leaves_every_row_identical`.
+- **Fix 1 real-data check:** G-D00, 4 conditions, 5 methods, 700 rows: **identical, 0 differing**. Wall time 569 s → 117 s. Output: `research_data/protocol_v2_randec_cache_check_dev_20261114/`.
+- **Fix 2, reuse of the free precompute (stopped):** exact equivalence cannot be shown.
+  - The free precompute uses the placeholder reply "compatible" for conflict checks.
+  - A real "contradict" reply (4 of 61 in the dev ledger) marks the claim contested (`typed.py:854/867`), which adds a "contested" mark to the prompt text (`typed.py:932`).
+  - A two-phase exact alternative is proposed in the report; it is not implemented and needs approval.
+- **Runtime formula corrected (tests first):**
+  - `cost.call_seconds()`: ledger gaps, median and mean;
+  - `published_costs`: calls per context;
+  - `cost.runtime()`: adds the published methods' retrieval and their own calls;
+  - rerun the estimate: `research_data/protocol_v2_cost_measure_dev_v3_20261114/estimate.json` and `estimate.md`. Cost figures are unchanged.
+
+**Findings:**
+- **Option B (24 groups), paid process:** current code 14.4–15.6 days; **with Fix 1, 4.6–5.8 days.**
+  - Per group: internal methods 2.0 CPU-h; published methods' retrieval 2.2 h; RandEC 9.8 h before Fix 1, 0.04 h after; API 1,342–2,721 calls, 0.37–1.6 h.
+  - No rate-limit delays were seen in 11,785 dev calls.
+- **torch RNG:** RandEC's forward pass advances torch's global generator, so a cache hit leaves it different. This is unobservable: the logits do not depend on the torch seed, and no `src/ams` code uses torch (tested).
+- **Pre-existing:** RandEC's sampling depends on `PYTHONHASHSEED` across processes (`list(set(...))`). Recommendation: fix it for all v2 runs (owner decision at 2.1).
+
+**Files:**
+- new: `src/ams/research/protocol_v2/randec_cache.py`, `tests/test_v2_randec_cache.py`, `research_data/protocol_v2_randec_cache_check_dev_20261114/`;
+- changed: `scripts/run_protocol_v2.py`, `src/ams/research/protocol_v2/cost.py`, `tests/test_v2_cost.py`, `tests/test_v2_pipeline.py`, the report, `plan.md`.
+
+**Tests:** 793 pass (784 + 9).
+
+**Next:** owner decisions:
+- whether to approve the two-phase Fix 2 alternative;
+- the `PYTHONHASHSEED` recommendation;
+- scope (option B preferred, not frozen);
+- commit (not done).
+
+### 2026-11-14 (step 1.12) — Dry-run cost and runtime estimate, and budget proposal (free)
+
+**Why:** plan.md decision 31 requires an exact budget figure from a free dry run before the freeze, so that the owner can choose between raising the allowance and reducing scope. Report: `reports/COST_ESTIMATE_V2_20261114.md`.
+
+**What we did:**
+- **Measurement (free, offline, dev only):**
+  - `scripts/estimate_cost_v2.py measure` ran the free precompute (`pipeline.evaluate`, `answer=False`) of the 7 internal methods over all 272 conditions, plus RandEC and RandEC+R on 4 check cells;
+  - 4 dev groups (G-D00..G-D03) in parallel;
+  - output in `research_data/protocol_v2_cost_measure_dev_v3_20261114/`;
+  - the owner paused it once (20:07) and resumed it (21:47) from where it stopped; complete at 22:25.
+- **Cost model:** `src/ams/research/protocol_v2/cost.py` (`scripts/estimate_cost_v2.py estimate`). Every figure is measured or a stated bound:
+  - cost per call from the dev guarded ledger and the published defences' dev summaries;
+  - distinct prompts from the measurement (identical requests are sent once);
+  - strict upper bounds for methods that cannot run free (a filter cannot produce more distinct contexts than the retrieval it filters);
+  - Claude list prices.
+
+**Results** (full tables in `estimate.md` and the report):
+
+| Scope option | Low | High | Sum of proposed caps (high × 1.3) | Fits ≈ $26.57? |
+|---|---|---|---|---|
+| A. Full plan: 96 generated groups + MPBench v4 replication | $43.52 | $81.65 | $108.60 | no |
+| **B. MPBench only: v4 test split (24 groups) as the main result** | **$4.44** | **$11.86** | **$16.40** | **yes** |
+| C. MPBench v4 main + 32 generated groups | $17.08 | $31.87 | $42.80 | only at the low end |
+
+**What we found:**
+1. **Few distinct prompts:** 631 distinct answer prompts per group out of about 66,600 rows (297 judged; 3 distinct conflict checks).
+2. **Original SAFE-Mem's retrieval is identical in all 272 conditions** (0 of 140 probes vary). So the published defences are paid once per question: A-MemGuard at 96 groups costs $3.78, as the protocol had guessed.
+3. **Generation dominates the full plan.** Sonnet costs $22.76–29.05 (the guess was $2–8) and needs its code ceiling raised from $10 to $38. The Haiku high bound ($14.06) assumes 200-token answers and also exceeds its $10 ceiling under A.
+4. **Runtime is the hidden problem.** The paid stage is one process (single-writer session). In the current code it recomputes retrieval, and RandEC in every condition (≈ 65 s per condition), before sending calls at ≈ 1 s each. That gives 48–49 days for 96 groups and 12 days for 24.
+   - RandEC's output is identical in all conditions and deterministic.
+   - **Two proposed result-identical fixes** (cache RandEC by input; let the paid stage reuse the free precompute's contexts) would bring this to **25–49 h for 96 groups and 6–12 h for 24**. Pending approval.
+
+> **Correction (14 Nov 2026, after the owner asked for a runtime breakdown):** the runtime figures in this entry are **too low**. `cost.runtime()` omitted (a) the retrieval that A-MemGuard, the LLM sanitiser, MemLineage, their "+R" variants and S2-ID redo in the paid process (≈ 2.2 CPU-h per group), and (b) the published defences' own API calls (≈ +45% calls). Corrected for option B (24 groups): **current code ≈ 14.4–15.6 days** of the single paid process (not 12); with the RandEC cache ≈ 4.6–5.8 days; with both fixes ≈ 1.0–2.2 days for the paid process plus ≈ 12 h of free parallel precompute (not 6–12 h). Cost figures are unaffected. The formula will be corrected (tests first) only after owner approval.
+
+**Problems found and how they were resolved:**
+1. **RandEC tried to reach Hugging Face inside `no_network()`.** `run_protocol_v2.randec()` now forces the local cache, which also fixes a latent failure in `run_protocol_v2.py precompute`. Test added.
+2. **The full suite once failed on `test_v2_imperfect_audits.py::test_late_reveals_audits_after_half_the_probes`.** It picked one draw with `set.pop()` (hash-seed dependent), and one draw has 4 attacks in its first half, so it failed about 1 run in 6. Fixed to check every draw, with the same intent. Test code only.
+3. **The new tests caught two cost-model bugs:**
+   - wrong registry family names for ablation option B;
+   - the replication's published-defence calls were filed under `v2_stage3` instead of their own purposes.
+
+   Both are fixed.
+4. **The measurement took longer than expected.** SL needs ≈ 39 min per group because it is slow on the Sybil and laundering conditions. Two background "waiter" loops never ended because `pgrep -f` matched their own command lines; they were stopped.
+
+**Owner input during this step:**
+- **Decision 35** (recorded in plan.md): uninformative stays a Table 2 column labelled "no-signal control" and is excluded from the worst case. It is implemented at step 2.1 and does not change the cost.
+- **Stated preference "for now":** the MPBench replication table, i.e. option B. Recorded as a preference, **not a frozen decision**. MPBench-only consequences, explained to the owner:
+  - the main result would be on a split used once before;
+  - 24 groups means wider CIs, with H4/H6 likely underpowered;
+  - the protocol would move to rev 5;
+  - the prompt mirror becomes required.
+
+**Checks:**
+- **Tests:** `tests/test_v2_cost.py`, 17 tests with synthetic ledgers and journals and exact arithmetic. They also check that the full-plan scenario equals the stage table, that the caps match the transport ceilings, and that the RandEC loader is offline.
+- **Full suite: 784 passed, 0 failed** (after all step 1.12 changes; 767 before + 17 new).
+- **v4 test groups:** same structure as dev (35 questions: 4 attack, 2 copy, 25 utility, 4 principal-utility), so scaling to 24 groups is justified.
+- No paid call, no held-out data, no frozen algorithm changed.
+
+**Completed:** step 1.12.
+
+**Remaining for the owner at step 2.1:**
+- scope A, B or C;
+- the code ceilings (if A or C);
+- the two runtime fixes;
+- decision 35's implementation;
+- every earlier pending item (8 analysis choices, ablation cells and budget definitions, prompt mirror, withhold boundary, judge-validation choices, annotators to name).
+
+**Next:** step 2.1. Stopped here as instructed.
+
 ### 2026-11-14 (step 1.12, in progress) — Dry-run cost estimate: measurement PAUSED by the owner
+
+*Kept for the record; the completed step is the entry above.*
 
 - **Status:** the free dev measurement (`scripts/estimate_cost_v2.py measure`, 4 dev groups G-D00..G-D03 in parallel, output `research_data/protocol_v2_cost_measure_dev_v3_20261114/`) was **paused at 20:07 on the owner's request** with `kill -STOP` (PIDs 95199–95202). Progress is kept in memory; nothing was deleted.
   - Done per group: static, R, C, M, S. In progress: SL (595–6,685 of 9,520 rows). Remaining: S2-BS, RandEC.
-  - **Resume:** `kill -CONT 95199 95200 95201 95202`. A reboot or killing the processes loses the in-memory run; a rerun must use a new output directory (the script refuses to overwrite).
+  - **Resumed at 21:47** on the owner's request (`kill -CONT 95199 95200 95201 95202`); the processes continued from where they stopped. A reboot or killing the processes loses the in-memory run; a rerun must use a new output directory (the script refuses to overwrite).
 - **Already done (free, no paid call):** cost model `src/ams/research/protocol_v2/cost.py`, CLI `estimate` subcommand, 17 tests (`tests/test_v2_cost.py`); RandEC loads from the local Hugging Face cache only; an order-dependent test (`test_v2_imperfect_audits.py`, `set.pop()`) made deterministic. Full suite: **784 passed**.
 - **Early findings:** Claude Sonnet generation (3.1) ≈ $29–35, above the $10 code ceiling and the ≈ $26.57 left; Original SAFE-Mem's retrieval is identical in all 272 conditions (35 contexts per group), so published defences are paid once per question; inclusion ≈ $0.50; Stage 1 ≈ $1.13. S and SL are much slower on Sybil/laundering conditions (runtime finding).
 - **Owner decision 35 (recorded in plan.md):** uninformative stays a Table 2 column labelled "no-signal control" and is excluded from the worst case; to implement at step 2.1.

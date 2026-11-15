@@ -1,0 +1,24 @@
+{
+ "approved_by": "PENDING_OWNER",
+ "_how_to_approve": "The owner copies this file to owner_approval_optionB.json and sets approved_by to \"owner\" and date to the approval date. The paid gates refuse any other value. This draft activates nothing.",
+ "date": null,
+ "protocol_v2_digest": "1845a84d73b1961201dd63884e43807f363ed89b08a84662b2d1fb43922e4903",
+ "protocol_text": "reports/PROTOCOL_V2_OPTION_B_20261115.md",
+ "scope": "Option B: MPBench-derived v4 test split (24 groups, reused; replication evidence, not fresh held-out). P-B1 conflict pass, P-B2 GPT-4o-mini evaluation (62 cells x 16 methods), P-B3 Claude Haiku evaluation (8 cells x 11 methods). Ablations (stage 6.2) and any v5 stage are NOT covered.",
+ "stages": ["P-B1 conflict pass", "P-B2 GPT-4o-mini evaluation", "P-B3 Claude Haiku evaluation"],
+ "estimate_usd": {"low": "4.19", "high": "10.82"},
+ "caps_usd": {
+  "v2_stage3": "10.00",
+  "v2_published_amemguard": "4.50",
+  "v2_published_sanitiser": "0.60",
+  "v2_published_memlineage": "0.05",
+  "v2_backbone_answer": "8.00"
+ },
+ "models": {
+  "v2_stage3": "openai/gpt-4o-mini",
+  "v2_published_amemguard": "openai/gpt-4o-mini",
+  "v2_published_sanitiser": "openai/gpt-4o-mini",
+  "v2_published_memlineage": "openai/gpt-4o-mini",
+  "v2_backbone_answer": "anthropic/claude-haiku-5.5"
+ }
+}

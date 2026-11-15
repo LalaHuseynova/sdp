@@ -1,5 +1,7 @@
 # Protocol v2 (DRAFT for owner review): fresh held-out evaluation of all methods against all attacks
 
+> **15 Nov 2026 — status of this document: the full fresh-data (v5) plan, preserved unchanged as the FUTURE evaluation.** The owner chose option B for the current evaluation (plan.md decision 36): all methods on the reused MPBench-derived v4 split, labelled replication evidence. Its final text is `reports/PROTOCOL_V2_OPTION_B_20261115.md` (revision 5). Nothing below is cancelled; a v5 run needs its own freeze before any data is generated. Option B's decisions that also apply here: decision 35 (no-signal control, worst case 46 cells), the freeze gate on paid commands, the Haiku paid-path fix.
+
 **Status: DRAFT, revision 3 (14 Nov 2026). All 34 owner decisions are incorporated (§12; also recorded in `plan.md` §1). Not frozen.**
 
 > **Revision 4 (14 Nov 2026, found while building the groups, `plan.md` step 1.5).** These changes override the numbers in §2.3b and §2.4 "Supply" below. The original text is kept for the record.

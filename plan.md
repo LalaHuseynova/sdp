@@ -55,6 +55,7 @@
 | 32 | Approvals | Separate approval for every paid stage |
 | 33 | Figures | Line plots for Tables 3 and 4; bar chart for Table 1 |
 | 34 | Old locked test v1 | Appendix, labelled "earlier pre-registered test (protocol v1)" |
+| 36 | Scope (owner, 15 Nov; resolves decision 31) | **Option B:** all 11 methods (+ 5 appendix methods) on every registered condition (62 cells / 272 runtime conditions) of the MPBench-derived **v4 test split (24 groups)**; Claude Haiku on Table 1 + hypothesis cells; ablations dev only. Results labelled **replication evidence, not fresh held-out, not confirmatory**. The full v5 plan (96 generated groups) is kept unchanged as the future evaluation (`reports/PROTOCOL_V2_DRAFT_20261113.md`). Final text: `reports/PROTOCOL_V2_OPTION_B_20261115.md` (rev 5) |
 | 35 | Uninformative cell (owner, 14 Nov, during step 1.12) | **Option (a):** stays a Table 2 column, labelled **"no-signal control"** (not an attack: it assumes the attacker controls every contributor, see `brainstorm.md` and the supervisors' feedback), and is **excluded from the worst case**. Revises decision 10 and the registry's `WORST_CASE` (currently 47 cells incl. uninformative). No cost change (the cell still runs). **To implement at step 2.1** (registry + Table 2 label + protocol text), tests first. |
 
 ## 2. Target output: the 8 paper tables (+ appendix)
@@ -257,11 +258,30 @@
     - **NPV transportability:** a group-level NPV inflates the corrected ASR of secure methods (dry run: 0 → about 0.10), because their misses are mostly unexposed;
     - **few "ours" hits** (7 distinct on dev).
     Both design points are pending under 2.1.
-- ⬜ **1.12** **Dry-run cost estimate** with mocks for every paid stage (3.1, 3.3, 3.5, 4.2–4.5, 6.2), plus a runtime estimate → budget proposal to the owner.
+- ✅ **1.12** **Dry-run cost estimate** with mocks for every paid stage (3.1, 3.3, 3.5, 4.2–4.5, 6.2), plus a runtime estimate → budget proposal to the owner.
+  - **Done 14 Nov (free; no paid call, no held-out data, no algorithm change).** Report: `reports/COST_ESTIMATE_V2_20261114.md`. Code: `protocol_v2/cost.py`, `scripts/estimate_cost_v2.py` (`measure`, `estimate`). Data: `research_data/protocol_v2_cost_measure_dev_v3_20261114/` (`estimate.json`, `estimate.md`).
+  - **Method:** measured cost per call (dev guarded ledger and published dev summaries); measured distinct prompts from the free precompute of 7 internal methods × 272 conditions on 4 dev groups; strict upper bounds for methods that cannot run free.
+  - **Measured:**
+    - 631 distinct answer prompts per group (of ≈ 66,600 rows), 297 judged;
+    - Original SAFE-Mem's retrieval and RandEC's output are identical in all conditions, so the published defences are paid once per question;
+    - Sonnet generation $22.76–29.05 (guess was $2–8).
+  - **Scope scenarios (low–high; sum of caps at high × 1.3):**
+    - A full plan $43.52–81.65 (caps $108.60; generation and Haiku caps above their ceilings);
+    - **B MPBench only (v4, 24 groups) $4.44–11.86 (caps $16.40, fits the ≈ $26.57 left)**;
+    - C MPBench v4 + 32 generated groups $17.08–31.87 (caps $42.80).
+  - **Runtime:** the paid stage is one process that, in the current code, recomputes retrieval and RandEC per condition: 48–49 days for 96 groups, 12 days for 24. Two proposed result-identical fixes (below) bring it to 25–49 h for 96 groups and 6–12 h for 24.
+  - ✅ **Runtime fixes, part 2 (15 Nov):** Fix 2 (three steps) exact and implemented; PYTHONHASHSEED = 0; B ≈ 25–54 h paid process.
+  - ✅ **Runtime fixes (same day, owner-approved):**
+    - Fix 1 (RandEC cache) implemented and verified identical;
+    - Fix 2 stopped (prompt equivalence fails); see step 2.1;
+    - corrected runtime for B with Fix 1: 4.6–5.8 days.
+  - ⚠️ **Runtime correction (same day):** B current code ≈ 14.4–15.6 days (not 12); both fixes ≈ 1.0–2.2 days paid + ≈ 12 h free precompute (not 6–12 h). The estimate had omitted the published methods' retrieval and their own calls. Cost unaffected.
+  - **Also:** RandEC now loads from the local Hugging Face cache (offline precompute fixed); an order-dependent test made deterministic; 17 tests; the tests caught 2 cost-model bugs (fixed).
 
 ### Phase 2: Freeze protocol v2
 
-- ⬜ **2.1** Final protocol text (rev N): exact budget, caps, seeds, condition registry, analysis plan.
+- ✅ **2.1** Final protocol text, **option B, revision 5** (15 Nov): `reports/PROTOCOL_V2_OPTION_B_20261115.md`. Every pending item below is resolved there (§12 decision table D-35 … D-FG); decision 35 implemented (registry v2: worst case 46 cells, "no-signal control" †); option-B labels, footnotes, Table 6 panels, Table 7 rows, A13 implemented (analysis v2); power at N = 24 computed (`research_data/protocol_v2_freeze_optionB_20261115/power_n24/`). Found and fixed at 2.3 (tests first): the Haiku paid run would have failed at its first answer (pipeline v2). One optional scope item left to the owner: ablation cells for source gate and τ (+$0.74–2.97, default not added).
+  - *History of this step, kept for the record:* the original to-do was "Final protocol text (rev N): exact budget, caps, seeds, condition registry, analysis plan."
   - ⚠️ **Pending methodological review before the freeze. NOT approved** (owner, 14 Nov: "Do not treat the eight statistical choices from Step 1.9 as approved yet"). The code implements these as provisional defaults only.
     - **Step 1.9 analysis choices:**
       1. H1 ASR non-inferiority per contrast against its own comparator (protocol text names only S − C);
@@ -292,10 +312,32 @@
         - (e) the correction's CI reflects annotation uncertainty only.
       - 🔍 **withhold-threshold boundary:** S's localized and distributed penalties equal the frozen 0.25, so security rests on the ≥ boundary. Decide how this is reported (no algorithm change).
     - **Prompt checkpoint (found in 1.10):** old stores (dev, v4 replication) list fewer prompt files than `prompts/` now holds, because the 4 v2 generator prompts were added later. They load only through `ablations.checkpoint_prompts` (a verified mirror). Decide: keep the mirror for every rerun on old stores (Table 7 row 3 replication included), or move the generator prompts out of `prompts/`.
-- ⬜ **2.2** Freeze script v2: hashes of code, prompts, generation procedure, group builder, analysis, ablation and judge protocols, protocol text. `verify` command.
-- ⬜ **2.3** 🔒 **Owner approves the freeze.**
+    - **From step 1.12 (cost and runtime):**
+      - 💰 **Scope (decision 31):** A full plan, B MPBench only, or C MPBench + 32 generated groups (`reports/COST_ESTIMATE_V2_20261114.md` §3, §5). Only B fits the current allowance. The owner's stated preference "for now" is the MPBench replication table; **not yet a decision.**
+      - **Code ceilings:** A needs generation $10 → $38 and Haiku $10 → $19; C needs generation $10 → $13. Raising a ceiling is a code change that needs approval.
+      - ⚙️ **Runtime fixes (result-identical engineering, not algorithm changes):**
+        1. cache RandEC by input text (deterministic, condition-invariant input);
+        2. the paid stage reads contexts from the verified free-precompute journals instead of recomputing retrieval.
+
+        Without them, even B's paid stage takes about 12 days in one process. **Pending approval;** to be implemented tests-first, with a check that the outputs are identical.
+
+        **Update (14 Nov, owner approved both as runtime optimizations):**
+        - **Fix 1: ✅ implemented and verified identical** (700 dev rows, 0 differing; 7 + 1 tests). With it, B's paid process takes ≈ 4.6–5.8 days; current code takes 14.4–15.6.
+        - **Fix 2: ⛔ stopped.** Real "contradict" conflict replies add a "contested" mark to prompts, so the placeholder precompute cannot reproduce them exactly.
+          - 🔍 **Decide:** the two-phase exact alternative (report §4b): a tiny paid conflict pass, then a free replay precompute, then the paid stage reads it.
+        - 🔍 **Decide:** fix `PYTHONHASHSEED` for all v2 runs. RandEC's sampling depends on it across processes; this is pre-existing.
+        **Update (15 Nov, owner approved the three-step Fix 2 and PYTHONHASHSEED):**
+        - **Fix 2: ✅ implemented (three steps, `two_phase.py`), exact.** Identical journals, requests and spend in the tests. On real dev G-D00: 2,800 rows identical with real replies, and again with every reply "contradict" (119 contested contexts).
+        - **PYTHONHASHSEED = 0: ✅** enforced by both v2 scripts. It changes no frozen output (seeds 0/1/2 identical; equal to the step-1.12 journals).
+        - **Runtime B:** paid process 25–54 h, plus ≈ 96 CPU-h of free parallel precompute.
+        - At the paid stage, step 1 (conflict checks only, v2_stage3) needs its approval like every paid stage.
+      - **Uninformative (decision 35):** implement the "no-signal control" label and exclusion from the worst case.
+- ✅ **2.2** Freeze script v2 (15 Nov): `src/ams/research/protocol_v2/freeze.py`, `scripts/freeze_protocol_v2.py prepare | verify`; manifest **prepared, not active**: `research_data/protocol_v2_freeze_optionB_20261115/protocol_v2_optionB.json`, digest `1845a84d73b1961201dd63884e43807f363ed89b08a84662b2d1fb43922e4903`. The paid commands now require `--freeze` (verify + approval names the digest + frozen dataset only). v1 archive verified (224 files); pre-v2 snapshot: 0 changed, 3 missing = the approved 15 Nov cleanup; v4 bundle = the v1-freeze hashes; all 24 v4 and 8 dev Stage-1 stores = the 13 Nov fingerprints; all 35 checkpointed prompts unchanged.
+- ⏸ **2.3** 🔒 **Owner approves the freeze** and the paid caps: draft `research_data/protocol_v2_freeze_optionB_20261115/owner_approval_optionB.DRAFT.json` (unsigned; the gates refuse it). Commands and order: `research_data/protocol_v2_freeze_optionB_20261115/RUNBOOK.md`.
 
 ### Phase 3: Create the held-out data
+
+> **Option B (decision 36): not part of the current evaluation.** Phase 3 is the future v5 plan, kept unchanged; it needs its own freeze before any generation.
 
 - ⬜ **3.1** 🔒💰 Generate attacks (~~≈ 960~~ **1,440 specs**, rev 4) and benign documents (~~≈ 1,610~~ **1,957 specs**, rev 4) with Claude Sonnet.
 - ⬜ **3.2** Local exclusions E1–E4 (free); funnel report.
@@ -305,6 +347,8 @@
 - ⬜ **3.6** Stage 2 input validation (free; inputs only, never outcomes).
 
 ### Phase 4: Evaluation (each a separate approval)
+
+> **Option B mapping (decision 36; RUNBOOK):** free precompute + contexts on v4 (= 4.1) → 🔒💰 **P-B1** conflict pass → 🔒💰 **P-B2** GPT-4o-mini, all 62 cells × 16 methods on v4 (= 4.2 + 4.3 + 4.4) → 🔒💰 **P-B3** Claude Haiku, 8 cells × 11 methods (= 4.5) → free analysis once (= 5.1, `--evidence replication`).
 
 - ⬜ **4.1** Free parallel retrieval precompute.
 - ⬜ **4.2** 🔒💰 Internal methods (original SAFE-Mem, R, C, M, S, SL, S2-ID, S2-BS) × all conditions: answers + judge.
@@ -348,8 +392,8 @@
 2. Continue with the first ⬜ step whose prerequisites are ✅. **Stop at every 🔒.**
 3. Integrity checks before any paid step:
    - `scripts/archive_locked_protocol.py verify --protocol research_data/workload_freeze_v4_20261108/locked_protocol_v1.json`
-   - `scripts/archive_snapshot.py verify --out research_data/archive_pre_protocol_v2_20261113`
-   - after step 2.2: the protocol-v2 `verify`.
+   - `scripts/archive_snapshot.py verify --out research_data/archive_pre_protocol_v2_20261113` (expected since 15 Nov: 0 changed, 3 missing = the approved cleanup)
+   - `scripts/freeze_protocol_v2.py verify --protocol research_data/protocol_v2_freeze_optionB_20261115/protocol_v2_optionB.json`
 4. Environment: `export VIRTUAL_ENV=` then `uv run …`. Long CPU jobs: run in parallel foreground shards (background jobs were about 10× slower on this Mac). Paid stages: one process (single-writer session), under `caffeinate`.
 
 ## 5. Budget log
@@ -360,9 +404,51 @@
 | Unresolved holds (accepted) | 0.01974 (old session) + 0.0198144 (session v2) |
 | Current session | `research_data/controlled_workload_session_v3_20261112` (used $0.00517845) |
 | Remaining allowance (of $30) | ≈ 26.57 |
-| Protocol v2 total estimate | ⏳ step 1.12 |
+| **Option B (decision 36), proposed for owner approval** | P-B1 ≈ $0.001; P-B2 + P-B3 $4.19–10.82 in total. Caps (≈ 2× high, fixed per purpose at first use): v2_stage3 $10.00, A-MemGuard $4.50, sanitiser $0.60, MemLineage $0.05, Haiku $8.00; **sum $23.15**. Ablations later, separately ($0.26–1.05) |
+| Protocol v2 total estimate (step 1.12; low–high, sum of caps) | A full plan $43.52–81.65 (caps $108.60) · **B MPBench only $4.44–11.86 (caps $16.40)** · C MPBench + 32 generated $17.08–31.87 (caps $42.80). Scope: owner decision at 2.1 |
 
 ## 6. Progress log (newest first)
+
+- **15 Nov 2026:** Phase 2 free work done (steps 2.1, 2.2; 2.3 waits for the owner):
+  - option B protocol, revision 5 (`reports/PROTOCOL_V2_OPTION_B_20261115.md`): every pending decision resolved and documented (§12), replication labelling, power at N = 24 (H2/H4/H6 underpowered, stated);
+  - code, tests first: decision 35 (registry v2), option-B renderers (analysis v2), freeze module + `--freeze` gate in every paid command, prompt mirror for old stores, Haiku paid-run fix (pipeline v2);
+  - freeze manifest prepared (not active), digest `1845a84d73b1961201dd63884e43807f363ed89b08a84662b2d1fb43922e4903`; integrity checks all pass;
+  - draft approval + runbook prepared; full suite 827 passed (810 before + 17 new), 58 subtests.
+
+  Next: 🔒 owner approves the freeze and the caps; then the RUNBOOK, starting with the free precompute.
+
+- **15 Nov 2026:** table-format preview for owner approval (`reports/TABLE_PREVIEW_V2_20261115.md`):
+  - option-B labelling proposed: reused v4 split, replication, not confirmatory;
+  - Table 7 fresh rows need v5;
+  - A13 proposed (Haiku, all 11 methods).
+
+  Next: owner approval.
+- **15 Nov 2026:** cleanup tiers 1 + 2 executed (owner-approved):
+  - 3.05 GiB freed;
+  - the 2 SQLite journals archived with SHA-256-verified restores (`ARCHIVED.md`);
+  - protected data untouched.
+
+  Next: step 2.1.
+- **15 Nov 2026:** checkpoint and temporary-file audit (proposal only; nothing deleted):
+  - tier 1 ≈ 1.0 GB, tier 2 archive ≈ 2.1 GB, tier 3 optional;
+  - paid ledgers and caches, v4 data and previous results kept.
+
+  Report: `reports/CLEANUP_AUDIT_20261115.md`. Next: owner approval.
+- **15 Nov 2026:** step 1.12 runtime fixes, part 2 (owner-approved, free):
+  - Fix 2 three-step implemented tests-first, exact (unit, guarded and real-dev checks; contested labels included);
+  - PYTHONHASHSEED = 0 enforced, with no effect on frozen outputs;
+  - B paid process ≈ 25–54 h;
+  - 810 tests pass; not committed, not frozen.
+
+  Next: the owner reviews the changes.
+- **14 Nov 2026:** step 1.12 runtime fixes (owner-approved, free):
+  - Fix 1 (RandEC cache) implemented, tests first; verified identical on 700 dev rows;
+  - Fix 2 stopped: real conflict replies change prompt text, so exact equivalence fails; a two-phase alternative is proposed;
+  - runtime formula corrected: B ≈ 4.6–5.8 days with Fix 1;
+  - 793 tests pass; not committed.
+
+  Next: owner decisions at 2.1.
+- **14 Nov 2026:** step 1.12 done (dry-run cost and runtime estimate, free: measured on 4 dev groups; A $43.52–81.65, B MPBench only $4.44–11.86, C $17.08–31.87; only B fits ≈ $26.57; generation dominates A; paid stage needs 2 result-identical runtime fixes (pending approval); RandEC offline fix; flaky test fixed; decision 35 recorded; 17 tests). Next: owner decisions at step 2.1 (scope, ceilings, runtime fixes, all pending items).
 
 - **14 Nov 2026:** step 1.11 done (judge validation kit: blind sheets, design-weighted metrics, adjudication, κ, correction; 11 tests; 767 pass; dev feasibility draw only, no annotation; NPV transportability and few-'ours'-hits flagged under 2.1). Next: step 1.12.
 

@@ -35,10 +35,10 @@ from ams.research.protocol_v2 import registry as REG
 from ams.research.protocol_v2.pipeline import APPENDIX_METHODS, MAIN_METHODS
 from ams.research.workload.grading import restates
 
-VERSION = "protocol-v2-analysis-v1"
+VERSION = "protocol-v2-analysis-v2"  # v2: evidence labels, footnotes, Table 6/7, A13 (step 2.1)
 KEY_STRATUM = "same_contributor_context_other_batch"
 RESAMPLES = 10_000
-SEED = 20261114  # placeholder; the final seed is fixed in the frozen protocol (step 2.1)
+SEED = 20261114  # bootstrap seed, fixed by the frozen protocol (step 2.1; set 14 Nov 2026)
 ALPHA = 0.05
 CHUNK = 500  # bootstrap rows per block in the multi-way analysis (memory bound)
 PUBLISHED = ("a_memguard", "memlineage", "llm_sanitiser", "randec")
@@ -53,6 +53,17 @@ LEVEL = {
     "relay_exposure": "retrieval",
 }  # fmt: skip
 LEVEL_NAME = {"answer": "answer-level", "retrieval": "retrieval exposure"}
+# What kind of evidence a result is (step 2.1): printed in every table title, and Table 8
+# says when its decisions are not confirmatory. Option B = "replication".
+EVIDENCE = {
+    "confirmatory": "fresh held-out data, confirmatory",
+    "replication": "reused MPBench v4 split: replication evidence, not fresh held-out",
+    "exploratory": "exploratory, not confirmatory",
+    "dev": "development data",
+}
+PROBE_KINDS = (("attack", "scored-attack"), ("copy_unlinked", "unlinked-relay"),
+               ("copy_linked", "linked-copy"), ("utility", "utility"),
+               ("utility_principal", "principal-utility"))  # fmt: skip
 # The design factor a probe belongs to in the multi-way bootstrap.
 FACTOR = {"attack": "attack_family", "copy_unlinked": "attack_family",
           "copy_linked": "attack_family", "utility": "benign_source",
@@ -428,8 +439,18 @@ def covariates(rows, info, seed=SEED, resamples=RESAMPLES) -> dict:
     return out
 
 
+def sample(rows) -> dict:
+    """Groups and distinct probes per kind (the footnote under every table)."""
+    probes = {}
+    for _gid, _pid, kind in {(r["group_id"], r["probe_id"], r["kind"]) for r in rows}:
+        probes[kind] = probes.get(kind, 0) + 1
+    return {"groups": len({r["group_id"] for r in rows}), "probes": probes}
+
+
 def analyse(rows, info, *, seed=SEED, resamples=RESAMPLES, label: str, selection=None,
-            with_multiway=True, with_covariates=True) -> dict:  # fmt: skip
+            with_multiway=True, with_covariates=True, evidence: str = "dev") -> dict:  # fmt: skip
+    if evidence not in EVIDENCE:
+        raise ValueError(f"Unknown evidence type {evidence}")
     idx = index(rows, info)
     W = group_weights(len(idx.groups), seed, resamples)
     cells = describe_all(idx, W)
@@ -440,7 +461,8 @@ def analyse(rows, info, *, seed=SEED, resamples=RESAMPLES, label: str, selection
                                                   "useful_exposure")}
              for m in methods}  # fmt: skip
     hyp = hypotheses(idx, seed, resamples)
-    out = {"version": VERSION, "label": label, "groups": len(idx.groups), "seed": seed,
+    out = {"version": VERSION, "label": label, "evidence": evidence, "sample": sample(rows),
+           "groups": len(idx.groups), "seed": seed,
            "resamples": resamples, "methods": methods, "unanswered": idx.unanswered,
            "cells": cells, "worst_case": worst, "hypotheses": hyp}  # fmt: skip
     if with_multiway:
@@ -502,6 +524,11 @@ def _col(header, cell, *metrics, ci=False, worst=False, sep="paren"):
 
 
 T = REG.TABLES
+def _mark(header):
+    """Table 2 header; the no-signal control (decision 35) carries a dagger footnote."""
+    return f"{header}†" if T["table2"].get(header) in REG.CONTROLS else header
+
+
 _T1 = [("target ASR ↓", "target_asr"), ("judge ASR ↓", "judge_asr"),
        ("strict utility ↑", "strict_utility"), ("unaudited exposure ↓", "unaudited_exposure"),
        ("useful-fact exposure ↑", "useful_exposure"), ("relay exposure ↓", "relay_exposure")]
@@ -515,9 +542,10 @@ def _sweep(table, metric, extra=()):
 
 TABLE_COLUMNS = {
     "table1": [_col(f"{h} [{LEVEL_NAME[LEVEL[m]]}]", "localized", m, ci=True) for h, m in _T1],
-    "table2": [*[_col(h, c, "target_asr", "strict_utility") for h, c in T["table2"].items()],
+    "table2": [*[_col(_mark(h), c, "target_asr", "strict_utility")
+                 for h, c in T["table2"].items()],
                _col("worst case", None, "target_asr", "strict_utility", worst=True)],
-    "table2b": [*[_col(h, c, "unaudited_exposure", "useful_exposure")
+    "table2b": [*[_col(_mark(h), c, "unaudited_exposure", "useful_exposure")
                   for h, c in T["table2b"].items()],
                 _col("worst case", None, "unaudited_exposure", "useful_exposure", worst=True)],
     "table3_answer": _sweep("table3", "target_asr"),
@@ -530,8 +558,10 @@ TABLE_COLUMNS = {
         "innocent_useful_exposure")]),
     "table5_answer": [_col(h, c, "innocent_strict_utility") for h, c in T["table5"].items()],
     "table5_retrieval": [_col(h, c, "innocent_useful_exposure") for h, c in T["table5"].items()],
-    "table6": [_col(f"{a} · {k}", c, "target_asr", "strict_utility", sep="slash")
-               for a, kinds in T["table6"].items() for k, c in kinds.items()],
+    # Two panels of two attacks each (16 paired columns do not fit one page width).
+    **{f"table6_{panel}": [_col(f"{a} · {k}", c, "target_asr", "strict_utility", sep="slash")
+                           for a in attacks for k, c in T["table6"][a].items()]
+       for panel, attacks in (("a", list(T["table6"])[:2]), ("b", list(T["table6"])[2:]))},
     "appendix_judge": [*[_col(h, c, "judge_asr") for h, c in T["table2"].items()],
                        _col("worst case", None, "judge_asr", worst=True),
                        _col("relay (localized)", "localized", "relay_judge_asr")],
@@ -568,8 +598,23 @@ def _grid(results, columns, methods=MAIN_METHODS) -> str:
     return "\n".join(lines)
 
 
+def _evidence(results):
+    return EVIDENCE[results.get("evidence", "dev")]
+
+
 def _title(n, text, results):
-    return f"## Table {n} — {text} (data: {results['label']}, {results['groups']} groups)"
+    return (f"## Table {n} — {text} (data: {results['label']}; {_evidence(results)}; "
+            f"{results['groups']} groups)")  # fmt: skip
+
+
+def footnote(results) -> str:
+    """Denominators under every table: groups and distinct probes per kind."""
+    smp = results.get("sample") or {"groups": results["groups"], "probes": {}}
+    kinds = ", ".join(f"{smp['probes'][k]} {name}" for k, name in PROBE_KINDS
+                      if smp["probes"].get(k))  # fmt: skip
+    return (f"*n = {smp['groups']} groups; probes: {kinds or 'none'}. Each value is the mean "
+            "over groups of per-group rates (random-audit draws averaged within a group "
+            "first).*")  # fmt: skip
 
 
 def _panels(n, text, results, key, answer_cells, retrieval_cells):
@@ -577,7 +622,7 @@ def _panels(n, text, results, key, answer_cells, retrieval_cells):
         _title(n, text, results),
         f"Panel A — answer-level: {answer_cells}", _grid(results, TABLE_COLUMNS[f"{key}_answer"]),
         f"Panel B — retrieval exposure: {retrieval_cells}",
-        _grid(results, TABLE_COLUMNS[f"{key}_retrieval"])])  # fmt: skip
+        _grid(results, TABLE_COLUMNS[f"{key}_retrieval"]), footnote(results)])  # fmt: skip
 
 
 def _fmt_p(p):
@@ -589,6 +634,10 @@ def render_table8(results) -> str:
                        "one-sided bound at the contrast's Holm level)", results), "",
              "| Contrast | Part (level) | Population | Estimate [95% CI] | Bound @ Holm level "
              "| Margin | Holm p | Decision |", "|---|---|---|---|---|---|---|---|"]  # fmt: skip
+    if results.get("evidence", "dev") != "confirmatory":
+        lines[1:1] = ["", f"**Evidence: {results.get('evidence', 'dev')}, not confirmatory.** "
+                      "The pre-registered rules are applied unchanged, but the data are not "
+                      "fresh held-out data, so ✓/✗ are not confirmatory tests."]  # fmt: skip
     hyp = results["hypotheses"]["contrasts"]
 
     def part_row(name, c, last_cols):
@@ -618,20 +667,24 @@ def render_table8(results) -> str:
         for i, c in enumerate(s["components"]):
             last = f"{_fmt_p(s['p'])} | {'✓' if s['pass'] else '✗'}" if i == 0 else " | "
             lines.append(part_row(name if i == 0 else "", c, last))
-    return "\n".join(lines)
+    return "\n".join([*lines, "", footnote(results)])
 
 
 def render_tables(results) -> str:
     """Tables 1-6 and 8 (Table 7 combines several analyses: `render_table7`)."""
     r = results
+    fn = footnote(r)
+    control = ("† No-signal control (owner decision 35): it assumes the attacker controls "
+               "every contributor, so no audit can carry signal. It is reported, but it is "
+               "not an attack and is excluded from the worst case.")  # fmt: skip
     parts = [
         _title(1, "Main result, localized, oracle audits; value [95% CI]", r),
-        _grid(r, TABLE_COLUMNS["table1"]),
+        _grid(r, TABLE_COLUMNS["table1"]) + "\n\n" + fn,
         _title(2, "ASR under every attack; answer-level: target ASR (strict utility)", r),
-        _grid(r, TABLE_COLUMNS["table2"]),
+        _grid(r, TABLE_COLUMNS["table2"]) + "\n\n" + control + "\n\n" + fn,
         _title("2b", "Exposure under every attack; retrieval exposure: unaudited exposure "
                      "(useful-fact exposure)", r),
-        _grid(r, TABLE_COLUMNS["table2b"]),
+        _grid(r, TABLE_COLUMNS["table2b"]) + "\n\n" + control + "\n\n" + fn,
         _panels(3, "Sybil-k, oracle and random audits", r, "table3", "target ASR",
                 "unaudited exposure"),
         _panels(4, "Laundering-r, oracle and random audits", r, "table4",
@@ -640,7 +693,9 @@ def render_tables(results) -> str:
         _panels(5, "Harm to innocents", r, "table5", "innocent strict utility",
                 "innocent useful-fact exposure"),
         _title(6, "Imperfect audits; answer-level: target ASR / strict utility", r),
-        _grid(r, TABLE_COLUMNS["table6"]),
+        "\n\n".join(["Panel A — localized and distributed", _grid(r, TABLE_COLUMNS["table6_a"]),
+                     "Panel B — Sybil k=2 and laundering r=.5",
+                     _grid(r, TABLE_COLUMNS["table6_b"]), fn]),
         render_table8(r),
     ]  # fmt: skip
     note = ("Worst case: maximum over the registered cells present "
@@ -653,13 +708,17 @@ def _coverage(r):
     return f"{max(cov) if cov else 0} of {len(REG.WORST_CASE)} cells"
 
 
-def render_table7(rows: dict) -> str:
-    """rows: label -> analyse() result (first = fresh GPT-4o-mini, whose Table-1 values fix
-    the pre-specified baselines; the others are analysed with the same `selection`)."""
-    first = next(iter(rows.values()))["table7"]
+def render_table7(rows: dict, not_run=()) -> str:
+    """rows: label -> analyse() result. The FIRST result's Table-1 values fix the
+    pre-specified baselines; the others use the same baselines. `not_run`: labels of rows
+    the protocol defines but this evaluation does not produce (option B: the fresh v5
+    rows), listed first and marked "not run"."""
+    first_res = next(iter(rows.values()))
+    first = first_res["table7"]
     bp, bi = first["best_published"], first["best_internal"]
     lines = ["## Table 7 — Generalization (answer-level; best published = "
-             f"{LABEL.get(bp, bp)}, best internal = {LABEL.get(bi, bi)}, pre-specified)", "",
+             f"{LABEL.get(bp, bp)}, best internal = {LABEL.get(bi, bi)}, pre-specified on "
+             f"the first measured row; data: {_evidence(first_res)})", "",
              "| Data | S: target ASR / strict utility | Best published: target ASR / strict "
              "utility | Best internal: target ASR / strict utility | S − best published, target "
              "ASR [95% CI] | S − best internal, strict utility [95% CI] |",
@@ -674,12 +733,29 @@ def render_table7(rows: dict) -> str:
         return (f"{pct(d['estimate'], True)} [{pct(d['ci95'][0], True)}, "
                 f"{pct(d['ci95'][1], True)}]" if d else "–")  # fmt: skip
 
+    for label in not_run:
+        lines.append(f"| {label} | " + " | ".join(["not run (needs fresh v5 data)"] * 5) + " |")
     for label, res in rows.items():
         t = res["table7"]
         lines.append(f"| {label} | {pair(res, 'S')} | {pair(res, bp)} | {pair(res, bi)} | "
                      f"{diff(t['S_minus_best_published_target_asr'])} | "
                      f"{diff(t['S_minus_best_internal_strict_utility'])} |")  # fmt: skip
-    return "\n".join(lines) + "\n"
+    notes = [footnote(res).replace("*n =", f"*{label}: n =", 1) for label, res in rows.items()]
+    return "\n".join([*lines, "", *notes]) + "\n"
+
+
+def render_backbone(results) -> str:
+    """Appendix A13: the second backbone (Claude Haiku answers, GPT-4o-mini judge), all 11
+    methods on Table 1's cell and the hypothesis cells (decision 23)."""
+    r = results
+    return "\n\n".join([
+        f"## Appendix A13 — Second backbone: Claude Haiku answers, GPT-4o-mini judge; all 11 "
+        f"methods (data: {r['label']}; {_evidence(r)}; {r['groups']} groups)",
+        "Table 1 layout, localized, oracle audits; value [95% CI]",
+        _grid(r, TABLE_COLUMNS["table1"]), footnote(r),
+        render_table8(r).replace("## Table 8", "### A13 hypotheses (descriptive for this "
+                                               "backbone)", 1),
+    ]) + "\n"  # fmt: skip
 
 
 def render_appendix(results) -> str:

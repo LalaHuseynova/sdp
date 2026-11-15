@@ -1,0 +1,125 @@
+{
+  "definitions": "Revised protocol-v2 power analysis (free, offline, read-only). Supersedes v2a.\n\n    power_protocol_v2b.py --out research_data/protocol_v2_draft_20261113/power_analysis_v2b.json\n\nChanges from v2a (owner review, 13 Nov 2026):\n1. Testing procedure identical to the protocol: 8 primary contrasts under Holm. Power is\n   computed at the Holm worst-case step, alpha = 0.05/8 one-sided (a lower bound on Holm\n   power); joint (\"and\") hypotheses are intersection-union tests, each component at that\n   level, power = P(all components pass).\n2. No single exposure->ASR factor. ASR is generated from exposure with calibrated\n   probabilities measured in our real-answer data (target-specific ASR):\n     q  = P(success | target in context):  locked test v1 0.75-0.79, dev paid 0.55-0.65\n          -> grid q in {0.55, 0.65, 0.80}\n     p0 = P(success | target not in context): 0.00-0.09 -> grid p0 in {0.00, 0.05}\n   Relay: q_relay in {0.60, 0.95}.\n3. Effect-size sensitivity: every dev-measured difference is scaled by lambda in\n   {1.0, 0.75, 0.5, 0.25} (winner's curse: methods were designed on dev); hypotheses\n   without dev data (H6) use explicit grids.\n4. H2 evaluated at the 5-point non-inferiority margin over a between-group SD grid.\n5. Groups are simulated as independent clusters, which the revised protocol makes true\n   by construction (no document shared between held-out groups).\n6. A percentile cluster-bootstrap check (the protocol's actual CI) is run for key cells.\nData used: per-group dev exposure rows (8 groups) and locked test v1 per-group results\n(24 groups), both already reported. No held-out data exists.\n",
+  "alpha_one_sided": 0.00625,
+  "sims": 4000,
+  "results": {
+    "H1 (each of 2 contrasts)": {
+      "lambda=1.0,N=24": 0.98,
+      "lambda=0.75,N=24": 0.98,
+      "lambda=0.5,N=24": 0.976,
+      "lambda=0.25,N=24": 0.978
+    },
+    "H2 (NI margin 0.05)": {
+      "true=0.0,sd=0.0,N=24": 1.0,
+      "true=0.0,sd=0.05,N=24": 0.983,
+      "true=0.0,sd=0.1,N=24": 0.418,
+      "true=0.0,sd=0.15,N=24": 0.173,
+      "true=0.02,sd=0.0,N=24": 1.0,
+      "true=0.02,sd=0.05,N=24": 0.597,
+      "true=0.02,sd=0.1,N=24": 0.129,
+      "true=0.02,sd=0.15,N=24": 0.053
+    },
+    "H3 (IUT over 4 published)": {
+      "q=0.55,p0=0.0,lambda=1.0,N=24": 1.0,
+      "q=0.55,p0=0.0,lambda=0.75,N=24": 1.0,
+      "q=0.55,p0=0.0,lambda=0.5,N=24": 0.994,
+      "q=0.55,p0=0.0,lambda=0.25,N=24": 0.465,
+      "q=0.55,p0=0.05,lambda=1.0,N=24": 0.998,
+      "q=0.55,p0=0.05,lambda=0.75,N=24": 0.956,
+      "q=0.55,p0=0.05,lambda=0.5,N=24": 0.584,
+      "q=0.55,p0=0.05,lambda=0.25,N=24": 0.022,
+      "q=0.65,p0=0.0,lambda=1.0,N=24": 1.0,
+      "q=0.65,p0=0.0,lambda=0.75,N=24": 1.0,
+      "q=0.65,p0=0.0,lambda=0.5,N=24": 0.999,
+      "q=0.65,p0=0.0,lambda=0.25,N=24": 0.69,
+      "q=0.65,p0=0.05,lambda=1.0,N=24": 1.0,
+      "q=0.65,p0=0.05,lambda=0.75,N=24": 0.994,
+      "q=0.65,p0=0.05,lambda=0.5,N=24": 0.826,
+      "q=0.65,p0=0.05,lambda=0.25,N=24": 0.064,
+      "q=0.8,p0=0.0,lambda=1.0,N=24": 1.0,
+      "q=0.8,p0=0.0,lambda=0.75,N=24": 1.0,
+      "q=0.8,p0=0.0,lambda=0.5,N=24": 1.0,
+      "q=0.8,p0=0.0,lambda=0.25,N=24": 0.891,
+      "q=0.8,p0=0.05,lambda=1.0,N=24": 1.0,
+      "q=0.8,p0=0.05,lambda=0.75,N=24": 1.0,
+      "q=0.8,p0=0.05,lambda=0.5,N=24": 0.956,
+      "q=0.8,p0=0.05,lambda=0.25,N=24": 0.211
+    },
+    "H4 (ASR superiority AND utility NI)": {
+      "q=0.55,p0=0.0,lambda=1.0,N=24": 0.816,
+      "q=0.55,p0=0.0,lambda=0.75,N=24": 0.642,
+      "q=0.55,p0=0.0,lambda=0.5,N=24": 0.341,
+      "q=0.55,p0=0.0,lambda=0.25,N=24": 0.093,
+      "q=0.55,p0=0.05,lambda=1.0,N=24": 0.76,
+      "q=0.55,p0=0.05,lambda=0.75,N=24": 0.576,
+      "q=0.55,p0=0.05,lambda=0.5,N=24": 0.287,
+      "q=0.55,p0=0.05,lambda=0.25,N=24": 0.071,
+      "q=0.65,p0=0.0,lambda=1.0,N=24": 0.884,
+      "q=0.65,p0=0.0,lambda=0.75,N=24": 0.755,
+      "q=0.65,p0=0.0,lambda=0.5,N=24": 0.46,
+      "q=0.65,p0=0.0,lambda=0.25,N=24": 0.129,
+      "q=0.65,p0=0.05,lambda=1.0,N=24": 0.861,
+      "q=0.65,p0=0.05,lambda=0.75,N=24": 0.698,
+      "q=0.65,p0=0.05,lambda=0.5,N=24": 0.412,
+      "q=0.65,p0=0.05,lambda=0.25,N=24": 0.104,
+      "q=0.8,p0=0.0,lambda=1.0,N=24": 0.948,
+      "q=0.8,p0=0.0,lambda=0.75,N=24": 0.892,
+      "q=0.8,p0=0.0,lambda=0.5,N=24": 0.677,
+      "q=0.8,p0=0.0,lambda=0.25,N=24": 0.237,
+      "q=0.8,p0=0.05,lambda=1.0,N=24": 0.937,
+      "q=0.8,p0=0.05,lambda=0.75,N=24": 0.876,
+      "q=0.8,p0=0.05,lambda=0.5,N=24": 0.642,
+      "q=0.8,p0=0.05,lambda=0.25,N=24": 0.216
+    },
+    "H5 primary: relay exposure AND utility NI": {
+      "pS=0.4,SLleak=0.0,N=24": 0.951,
+      "pS=0.4,SLleak=0.1,N=24": 0.45,
+      "pS=0.4,SLleak=0.25,N=24": 0.071,
+      "pS=0.625,SLleak=0.0,N=24": 0.979,
+      "pS=0.625,SLleak=0.1,N=24": 0.917,
+      "pS=0.625,SLleak=0.25,N=24": 0.528
+    },
+    "H5 secondary: relay target ASR (given primary passes)": {
+      "pS=0.4,SLleak=0.0,q_relay=0.6,N=24": 0.533,
+      "pS=0.4,SLleak=0.0,q_relay=0.95,N=24": 0.931,
+      "pS=0.4,SLleak=0.1,q_relay=0.6,N=24": 0.172,
+      "pS=0.4,SLleak=0.1,q_relay=0.95,N=24": 0.396,
+      "pS=0.4,SLleak=0.25,q_relay=0.6,N=24": 0.021,
+      "pS=0.4,SLleak=0.25,q_relay=0.95,N=24": 0.056,
+      "pS=0.625,SLleak=0.0,q_relay=0.6,N=24": 0.91,
+      "pS=0.625,SLleak=0.0,q_relay=0.95,N=24": 0.979,
+      "pS=0.625,SLleak=0.1,q_relay=0.6,N=24": 0.554,
+      "pS=0.625,SLleak=0.1,q_relay=0.95,N=24": 0.885,
+      "pS=0.625,SLleak=0.25,q_relay=0.6,N=24": 0.193,
+      "pS=0.625,SLleak=0.25,q_relay=0.95,N=24": 0.458
+    },
+    "H6 (each of 2 contrasts)": {
+      "effect=0.05,sd=0.14,N=24": 0.203,
+      "effect=0.05,sd=0.2,N=24": 0.085,
+      "effect=0.05,sd=0.25,N=24": 0.055,
+      "effect=0.1,sd=0.14,N=24": 0.78,
+      "effect=0.1,sd=0.2,N=24": 0.412,
+      "effect=0.1,sd=0.25,N=24": 0.258,
+      "effect=0.158,sd=0.14,N=24": 0.996,
+      "effect=0.158,sd=0.2,N=24": 0.868,
+      "effect=0.158,sd=0.25,N=24": 0.646
+    }
+  },
+  "MDE_at_N96": {
+    "sd=0.1": 0.039,
+    "sd=0.15": 0.058,
+    "sd=0.2": 0.077,
+    "sd=0.25": 0.096,
+    "sd=0.3": 0.116
+  },
+  "bootstrap_vs_t_check": {
+    "H6 effect=0.10 sd=0.20 N=96": {
+      "bootstrap": 0.992,
+      "t": 0.99
+    },
+    "H2 true=0 sd=0.10 N=96": {
+      "bootstrap": 0.996,
+      "t": 0.996
+    }
+  }
+}
