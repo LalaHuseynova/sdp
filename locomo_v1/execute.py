@@ -207,3 +207,39 @@ def judge_check(run_dir: Path, mode: str) -> dict:
     out = map_concurrent(one, sample, workers=2, progress="judge check")
     _append(run_dir / "judge_check.jsonl", out)
     return {"n": len(out), "failed": sum(r.get("check") is None for r in out)}
+
+
+def sensitive_verdicts(out: Path, mode: str) -> dict:
+    """v1.1: the frozen MemLineage SensitiveAction classifier (prompt `sensitive_action` v1),
+    once per distinct category 1-4 question text, recorded for S2-ID (separate $1 guard).
+    A file is never overwritten."""
+    from ams.baselines.memlineage import SensitiveAction
+
+    if out.exists():
+        raise SystemExit(f"{out} exists; verdicts are recorded once")
+    prompts = PromptLibrary(K.REPO / "prompts")
+    questions = sorted({q.question for c in load_locomo(K.DATA) for q in c.qa
+                        if q.category in K.QA_CATEGORIES})
+    if mode == "mock":
+        client, model = MockClient(), "mock"
+    else:
+        from ams.llm import ResponseCache
+        from ams.llm.registry import build_client
+
+        _env_key()
+        os.environ["AMS_STRICT_BUDGET_PATH"] = str(out.parent / "sensitive_guard.sqlite")
+        os.environ["AMS_STRICT_BUDGET_LIMIT_USD"] = K.SENSITIVE_CAP_USD
+        client = build_client(K.MODEL_SPEC, cache=ResponseCache(out.parent /
+                                                                "sensitive_cache.sqlite"),
+                              stage="sensitive_action")
+        model = K.MODEL
+    clf = SensitiveAction(client, model, prompts=prompts, version=K.SENSITIVE_PROMPT_VERSION)
+
+    def one(q):
+        return q, ("SENSITIVE" if clf(q) else "ORDINARY")
+    rows = dict(map_concurrent(one, questions, workers=8, progress="sensitive"))
+    body = {"prompt": f"sensitive_action/{K.SENSITIVE_PROMPT_VERSION}", "model": model,
+            "n": len(rows), "n_sensitive": sum(v == "SENSITIVE" for v in rows.values()),
+            "verdicts": rows}
+    out.write_text(json.dumps(body, indent=1, sort_keys=True))
+    return {k: body[k] for k in ("n", "n_sensitive", "model")}

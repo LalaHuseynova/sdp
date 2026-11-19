@@ -30,7 +30,8 @@ _spec.loader.exec_module(F)
 
 from ams.data.locomo import load_locomo  # noqa: E402
 from ams.research.workload import lineage as LN  # noqa: E402
-from minja_v2.adapter import _Index, _LineageState  # noqa: E402
+from minja_v2.adapter import _Index, _KeptReader, _LineageState  # noqa: E402
+from ams.research.workload import sv2 as SV2  # noqa: E402
 from ams.research.dynamic.models import digest  # noqa: E402
 
 import re  # noqa: E402
@@ -80,14 +81,29 @@ def strata_of(q, mem, by_dia):
         if len(kinds) == 1 else "U_mix"
 
 
-def contexts(conv, mem, S, qs, arm, snap, unsafe, poison_of, blocked):
-    """Frozen decisions -> ranked top-k contexts (eligible ranked by the adjusted score)."""
+def gate_s2id(kept, recs, principal, query, verdicts):
+    """S2-ID's last step, the frozen MemLineage deny (`sv2._GatedReader`): a SENSITIVE query
+    whose final context holds any non-owner turn gets an empty context."""
+    owner = {f"rec{i}": {"kind": "principal" if recs[i]["speaker"] == principal else "external"}
+             for i in kept}
+    reader = SV2._GatedReader(_KeptReader(kept), SV2.RecordedVerdicts(verdicts), owner)
+    out = reader.retrieve_with_trace(session_id="m", query=query, context=None, k=len(kept))
+    ids = {e.entry_id for e in out.retrieval.entries}
+    return [i for i in kept if f"rec{i}" in ids]
+
+
+def contexts(conv, mem, S, qs, arm, snap, unsafe, poison_of, blocked, verdicts=None):
+    """Frozen decisions -> ranked top-k contexts (eligible ranked by the adjusted score).
+    S2-ID = SL's decisions, then the frozen MemLineage gate on the final context."""
     recs = mem["records"]
+    base = "SL" if arm == "S2-ID" else arm
+    if arm == "S2-ID" and verdicts is None:
+        raise ValueError("S2-ID needs the recorded SensitiveAction verdicts")
     if arm in ("static", "clean"):
         elig, pen = np.ones(len(recs), bool), np.zeros(len(recs))
     else:
-        elig, pen = F.generic_decisions(arm, snap, mem, conv.sample_id, blocked, 3,
-                                        random.Random(f"check|{arm}"))
+        elig, pen = F.generic_decisions(base, snap, mem, conv.sample_id, blocked, 3,
+                                        random.Random(f"check|{base}"))
     score = np.where(elig[None, :], S - 0.5 * pen[None, :], -np.inf)
     if arm not in ("static", "clean"):
         for qi, q in enumerate(qs):  # an audited unsafe turn is withheld for its own use
@@ -100,6 +116,8 @@ def contexts(conv, mem, S, qs, arm, snap, unsafe, poison_of, blocked):
     for qi in range(len(qs)):
         order = np.argsort(-score[qi], kind="stable")[: K.TOPK]
         kept = [int(i) for i in order if np.isfinite(score[qi, i])]
+        if arm == "S2-ID":
+            kept = gate_s2id(kept, recs, mem["principal"], qs[qi].question, verdicts)
         body = "\n".join(f"- [{dates[recs[i]['session']]}] {recs[i]['text']}" for i in kept)
         out.append((kept, h + "\n\n" + (body or "(nothing)")))
     return out
@@ -133,13 +151,22 @@ def lineage_blocked(mem, snap, R):
     return blocked
 
 
+def load_verdicts(path: Path | None = None) -> dict | None:
+    path = path or (K.REPO / "research_data" / "locomo_v1_freeze" / "sensitive_verdicts.json")
+    return json.loads(path.read_text())["verdicts"] if path.exists() else None
+
+
 def build_conversation(cid: str, out_dir: Path, draws: int = K.DRAWS_MAX,
-                       shapes=K.SHAPES, orientations=K.ORIENTATIONS, encode=None) -> dict:
+                       shapes=K.SHAPES, orientations=K.ORIENTATIONS, encode=None,
+                       verdicts: dict | None = None) -> dict:
     convs = load_locomo(K.DATA)
     by_id = {c.sample_id: c for c in convs}
     c = by_id[cid]
     p1, p2 = pools(convs)
     encode = encode or Encoder()
+    verdicts = verdicts if verdicts is not None else load_verdicts()
+    if verdicts is None:
+        raise SystemExit("no recorded SensitiveAction verdicts: run the `sensitive` stage first")
     qs = [q for q in c.qa if q.category in K.QA_CATEGORIES]
     Q = encode([q.question for q in qs])
     jobs, ctx_store, scen = [], {}, []
@@ -200,7 +227,8 @@ def build_conversation(cid: str, out_dir: Path, draws: int = K.DRAWS_MAX,
                                                  "lineage_blocked": len(blocked)}
                         for arm in arms:
                             emit(f"{sid}|{aname}|{arm}", contexts(c, mem, S, qs, arm, snap,
-                                                                  unsafe, poison_of, blocked))
+                                                                  unsafe, poison_of, blocked,
+                                                                  verdicts))
                     scen.append(meta)
     out_dir.mkdir(parents=True, exist_ok=True)
 

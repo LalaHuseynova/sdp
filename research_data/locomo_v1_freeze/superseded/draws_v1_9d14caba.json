@@ -1,0 +1,42 @@
+{
+ "rule": "5 draws if calibrated estimate <= $25.0",
+ "estimate_5_draws": {
+  "draws": 5,
+  "unique_answer_prompts": 85254,
+  "per_conversation": {
+   "conv-26": 10103,
+   "conv-30": 5327,
+   "conv-41": 7359,
+   "conv-42": 9495,
+   "conv-43": 8848,
+   "conv-44": 7983,
+   "conv-47": 7336,
+   "conv-48": 10448,
+   "conv-49": 9847,
+   "conv-50": 8508
+  },
+  "raw_estimate_usd": 10.604,
+  "calibrated_usd": 8.568,
+  "calibration": 0.8081
+ },
+ "draws": 5,
+ "estimate": {
+  "draws": 5,
+  "unique_answer_prompts": 85254,
+  "per_conversation": {
+   "conv-26": 10103,
+   "conv-30": 5327,
+   "conv-41": 7359,
+   "conv-42": 9495,
+   "conv-43": 8848,
+   "conv-44": 7983,
+   "conv-47": 7336,
+   "conv-48": 10448,
+   "conv-49": 9847,
+   "conv-50": 8508
+  },
+  "raw_estimate_usd": 10.604,
+  "calibrated_usd": 8.568,
+  "calibration": 0.8081
+ }
+}

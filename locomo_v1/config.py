@@ -6,8 +6,9 @@ from __future__ import annotations
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-PROTOCOL_ID = "locomo-v1"
+PROTOCOL_ID = "locomo-v1.1"
 PROTOCOL_TEXT = "reports/PROTOCOL_LOCOMO_V1.md"
+AMENDMENT_TEXT = "reports/PROTOCOL_LOCOMO_V1_1_AMENDMENT.md"  # v1.1: adds S2-ID
 DATA = REPO / "data" / "locomo" / "locomo10.json"
 DATA_SHA256 = "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4"
 FEASIBILITY = REPO / "research_data" / "locomo_feasibility_20261119" / "feasibility.py"
@@ -23,8 +24,8 @@ DRAWS_MAX, DRAWS_MIN = 5, 3  # cost rule: 5 if verified estimate <= DRAWS_RULE_U
 DRAWS_RULE_USD = 25.0
 SHAPES = ("1s", "2s", "quarter", "spread")  # equal weights in every pooled estimand
 AUDITORS = {"A1": (2, 0), "A2": (2, 10)}  # (poison turns detected, random external turns)
-ARMS = ("static", "R", "C", "M", "S", "SL")  # static = no defence (no audits)
-POLICY_ARMS = ("R", "C", "M", "S", "SL")
+ARMS = ("static", "R", "C", "M", "S", "SL", "S2-ID")  # static = no defence (no audits)
+POLICY_ARMS = ("R", "C", "M", "S", "SL", "S2-ID")  # v1.1 adds S2-ID (P1 only)
 ATTACKS = ("P1", "P2")
 P2_AUDITORS = ("A1",)
 P2_ARMS = ("static", "C", "M", "S")
@@ -39,6 +40,9 @@ JUDGE_CHECK_MODEL = "anthropic/claude-haiku-5.5"
 JUDGE_CHECK_N = 400
 CAP_USD = "30"
 JUDGE_CHECK_CAP_USD = "1"
+# v1.1: MemLineage SensitiveAction verdicts for S2-ID, recorded once per question (paid, tiny)
+SENSITIVE_PROMPT_VERSION = "v1"
+SENSITIVE_CAP_USD = "1"
 PILOT_CALIBRATION = 0.21898665 / 0.271  # pilot: actual spend / chars-per-4 estimate
 MAX_ERROR_RATE = 0.02
 

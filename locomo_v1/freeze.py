@@ -14,7 +14,8 @@ from . import config as K
 FROZEN_MODULES = (  # imported unchanged; each must equal its Option B manifest hash
     "src/ams/research/dynamic/ledger.py", "src/ams/research/dynamic/policies.py",
     "src/ams/research/dynamic/models.py", "src/ams/research/workload/lineage.py",
-    "src/ams/research/workload/integration.py",
+    "src/ams/research/workload/integration.py", "src/ams/research/workload/sv2.py",
+    "src/ams/baselines/memlineage.py",
 )
 REUSED = (  # reused unchanged code outside the Option B manifest
     "research_data/locomo_feasibility_20261119/feasibility.py", "minja_v2/adapter.py",
@@ -23,7 +24,7 @@ REUSED = (  # reused unchanged code outside the Option B manifest
     "src/ams/llm/cache.py", "src/ams/llm/registry.py", "src/ams/llm/providers/openai_client.py",
 )
 PROMPTS = ("prompts/locomo_qa/v1.txt", "prompts/locomo_judge/v1.txt",
-           "prompts/locomo_memory_start/v1.txt")
+           "prompts/locomo_memory_start/v1.txt", "prompts/sensitive_action/v1.txt")
 
 
 def sha(path: Path) -> str:
@@ -42,7 +43,9 @@ def collect(build_dir: Path, env: dict) -> dict:
         "reused": {f: sha(root / f) for f in REUSED},
         "frozen_modules": {f: sha(root / f) for f in FROZEN_MODULES},
         "prompts": {f: sha(root / f) for f in PROMPTS},
-        "protocol": {K.PROTOCOL_TEXT: sha(root / K.PROTOCOL_TEXT)},
+        "protocol": {K.PROTOCOL_TEXT: sha(root / K.PROTOCOL_TEXT),
+                     K.AMENDMENT_TEXT: sha(root / K.AMENDMENT_TEXT)},
+        "verdicts": {"sensitive_verdicts.json": sha(build_dir.parent / "sensitive_verdicts.json")},
         "data": {"data/locomo/locomo10.json": sha(K.DATA)},
         "build": {p.name: sha(p) for p in sorted(build_dir.glob("*")) if p.is_file()},
         "draws": {"draws.json": sha(build_dir.parent / "draws.json")}

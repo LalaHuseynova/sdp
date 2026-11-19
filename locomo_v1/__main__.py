@@ -24,8 +24,8 @@ from . import config as K
 
 FREEZE_DIR = K.REPO / "research_data" / "locomo_v1_freeze"
 BUILD = FREEZE_DIR / "build"
-MANIFEST = FREEZE_DIR / "freeze_manifest.json"
-APPROVAL = FREEZE_DIR / "owner_approval.json"
+MANIFEST = FREEZE_DIR / "freeze_manifest_v1_1.json"  # v1.1 (v1 manifest kept)
+APPROVAL = FREEZE_DIR / "owner_approval_v1_1.json"
 DRAWS_FILE = FREEZE_DIR / "draws.json"
 
 
@@ -87,6 +87,13 @@ def main():
         print(json.dumps({h: {k: v[k] for k in ("p_iut", "reject")}
                           for h, v in res["confirmatory"]["hypotheses"].items()}))
         print(json.dumps(res["validity"]))
+    elif a.stage == "sensitive":
+        # v1.1, PAID (tiny, separate $1 guard): needs its own owner approval file
+        if not (FREEZE_DIR / "owner_approval_sensitive.json").exists():
+            raise SystemExit("no owner approval for the SensitiveAction precompute; refusing")
+        from .execute import sensitive_verdicts
+
+        print(json.dumps(sensitive_verdicts(FREEZE_DIR / "sensitive_verdicts.json", "paid")))
     elif a.stage == "freeze-prepare":
         from .freeze import prepare
 

@@ -44,17 +44,23 @@ def test_hypothesis_family_is_fixed():
 @pytest.fixture(scope="module")
 def small(tmp_path_factory):
     d = tmp_path_factory.mktemp("build")
+    from ams.data.locomo import load_locomo
+
+    conv = {c.sample_id: c for c in load_locomo(K.DATA)}["conv-30"]
+    qs = sorted(q.question for q in conv.qa if q.category in K.QA_CATEGORIES)
+    # test verdicts: every 3rd question SENSITIVE, to exercise both branches of the gate
+    verdicts = {q: ("SENSITIVE" if n % 3 == 0 else "ORDINARY") for n, q in enumerate(qs)}
     info = B.build_conversation("conv-30", d, draws=1, shapes=("1s", "spread"),
-                                orientations=(0,))
-    return d, info
+                                orientations=(0,), verdicts=verdicts)
+    return d, info, verdicts
 
 
 def test_build_shape(small):
-    d, info = small
+    d, info, _ = small
     jobs = B.load_jobs(d, "conv-30")
     cells = {j["cell"] for j in jobs}
-    # clean + per scenario: P1 static + 5 arms x 2 auditors; P2 static + 3 arms x 1 auditor
-    assert len(cells) == 1 + 2 * (1 + 10) + 2 * (1 + 3)
+    # clean + per scenario: P1 static + 6 arms x 2 auditors; P2 static + 3 arms x 1 auditor
+    assert len(cells) == 1 + 2 * (1 + 12) + 2 * (1 + 3)
     per_cell = {c: sum(j["cell"] == c for j in jobs) for c in cells}
     assert set(per_cell.values()) == {info["questions"]}  # every question in every cell
     ctx = B.load_contexts(d, "conv-30")
@@ -62,7 +68,7 @@ def test_build_shape(small):
 
 
 def test_audits_and_attacks(small):
-    d, _ = small
+    d, _, _ = small
     for s in B.load_scenarios(d, "conv-30"):
         assert len(s["audits"]["A1"]["unsafe"]) == 2 and not s["audits"]["A1"]["safe"]
         if s["attack"] == "P1":
@@ -74,7 +80,7 @@ def test_audits_and_attacks(small):
 def test_p2_values_come_from_same_conversation(small):
     from ams.data.locomo import load_locomo
 
-    d, _ = small
+    d, _, _ = small
     conv = {c.sample_id: c for c in load_locomo(K.DATA)}["conv-30"]
     mine = {q.answer for q in conv.qa if q.category in K.QA_CATEGORIES}
     qa = {q.qid: q for q in conv.qa}
@@ -85,7 +91,7 @@ def test_p2_values_come_from_same_conversation(small):
 
 
 def test_R_equals_static_except_audited_targets(small):
-    d, _ = small
+    d, _, _ = small
     jobs = {}
     for j in B.load_jobs(d, "conv-30"):
         jobs.setdefault(j["cell"], {})[j["qid"]] = j
@@ -102,7 +108,7 @@ def test_R_equals_static_except_audited_targets(small):
 
 
 def test_audited_poison_never_reaches_its_own_target(small):
-    d, _ = small
+    d, _, _ = small
     jobs = {}
     for j in B.load_jobs(d, "conv-30"):
         jobs.setdefault(j["cell"], {})[j["qid"]] = j
@@ -130,7 +136,7 @@ def test_head_is_the_existing_prompt(small):
 
 
 def test_mock_end_to_end_and_analysis(small, tmp_path):
-    d, _ = small
+    d, _, _ = small
     out = E.run(d, tmp_path, "mock", draws=1, workers=4, convs=("conv-30",))
     assert out["stopped"] is None and out["failed"] == 0
     vals = A.scenario_values(d, tmp_path, 1, convs=("conv-30",))
@@ -143,7 +149,7 @@ def test_mock_end_to_end_and_analysis(small, tmp_path):
 
 
 def test_estimate_runs(small):
-    d, _ = small
+    d, _, _ = small
     e = E.estimate(d, 1, convs=("conv-30",))
     assert e["unique_answer_prompts"] > 0 and e["calibrated_usd"] > 0
 
@@ -152,3 +158,34 @@ def test_selected_draws():
     assert E.selected({"cell": "P1|conv-26|o0|1s|d4|A1|S"}, 5)
     assert not E.selected({"cell": "P1|conv-26|o0|1s|d4|A1|S"}, 3)
     assert E.selected({"cell": "clean|conv-26|o0"}, 3)
+
+
+def test_s2id_is_sl_plus_the_frozen_gate(small):
+    from ams.data.locomo import load_locomo
+
+    d, _, verdicts = small
+    conv = {c.sample_id: c for c in load_locomo(K.DATA)}["conv-30"]
+    text = {q.qid: q.question for q in conv.qa}
+    ctx = B.load_contexts(d, "conv-30")
+    jobs = {}
+    for j in B.load_jobs(d, "conv-30"):
+        jobs.setdefault(j["cell"], {})[j["qid"]] = j
+    owner = conv.speakers[0]
+    for s in B.load_scenarios(d, "conv-30"):
+        if s["attack"] != "P1":
+            continue
+        for aud in K.AUDITORS:
+            sl, s2 = jobs[f"{s['sid']}|{aud}|SL"], jobs[f"{s['sid']}|{aud}|S2-ID"]
+            for q in sl:
+                if verdicts[text[q]] == "ORDINARY":
+                    assert s2[q]["ctx"] == sl[q]["ctx"]
+                else:
+                    external = any(f'] {owner} said' not in line
+                                   for line in ctx[sl[q]["ctx"]].splitlines()[2:])
+                    assert s2[q]["kept"] == ([] if external else sl[q]["kept"])
+
+
+def test_build_refuses_s2id_without_verdicts(tmp_path, monkeypatch):
+    monkeypatch.setattr(B, "load_verdicts", lambda path=None: None)
+    with pytest.raises(SystemExit):
+        B.build_conversation("conv-30", tmp_path, draws=1, shapes=("1s",), orientations=(0,))

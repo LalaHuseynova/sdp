@@ -1,0 +1,9 @@
+{
+ "stage": "sensitive (LoCoMo-v1.1 S2-ID SensitiveAction precompute)",
+ "protocol": "reports/PROTOCOL_LOCOMO_V1_1_AMENDMENT.md",
+ "cap_usd": "1",
+ "model": "openai/gpt-4o-mini",
+ "approved_by": "project owner",
+ "approval_basis": "Owner chose 'Yes, run it (cap $1)' in the Claude Code session on 19 Nov 2026.",
+ "date": "2026-11-19"
+}

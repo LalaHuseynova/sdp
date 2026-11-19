@@ -238,6 +238,13 @@ def contrast_table(vals, convs, attack="P1"):
                          if v is not None]
                     out[f"{h}|{a}|S-{b}|{m}"] = {"estimate": round(float(np.mean(d)), 4)
                                                  if d else None, "ci95": t_interval(d)}
+            if attack == "P1":  # v1.1, descriptive: the extensions against S
+                for x in ("SL", "S2-ID"):
+                    for m in ("asr", "acc_U_out", "acc_U_all"):
+                        d = [v for v in diffs(vals, convs, attack, (h,), (a,), x, "S", m).values()
+                             if v is not None]
+                        out[f"{h}|{a}|{x}-S|{m}"] = {"estimate": round(float(np.mean(d)), 4)
+                                                     if d else None, "ci95": t_interval(d)}
     return out
 
 
