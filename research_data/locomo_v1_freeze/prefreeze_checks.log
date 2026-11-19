@@ -1,0 +1,27 @@
+............                                                             [100%]
+== estimate
+ "rule": "5 draws if calibrated estimate <= $25.0",
+  "draws": 5,
+  "unique_answer_prompts": 85254,
+  "raw_estimate_usd": 10.604,
+  "calibrated_usd": 8.568,
+ "draws": 5,
+  "draws": 5,
+  "unique_answer_prompts": 85254,
+  "raw_estimate_usd": 10.604,
+  "calibrated_usd": 8.568,
+== mock
+{"conv": "conv-26", "calls": 17466, "failed": 0}
+{"conv": "conv-30", "calls": 26510, "failed": 0}
+{"conv": "conv-41", "calls": 39586, "failed": 0}
+{"conv": "conv-42", "calls": 56434, "failed": 0}
+{"conv": "conv-43", "calls": 71975, "failed": 0}
+{"conv": "conv-44", "calls": 85805, "failed": 0}
+{"conv": "conv-47", "calls": 98736, "failed": 0}
+{"conv": "conv-48", "calls": 117268, "failed": 0}
+{"conv": "conv-49", "calls": 134381, "failed": 0}
+{"conv": "conv-50", "calls": 149196, "failed": 0}
+{"n": 400, "failed": 0}
+{"H1": {"p_iut": 0.00390625, "reject": true}, "H2": {"p_iut": 0.01953125, "reject": false}, "H3": {"p_iut": 0.01953125, "reject": false}, "H4": {"p_iut": 1.0, "reject": false}, "H5": {"p_iut": 0.00390625, "reject": true}, "H6": {"p_iut": 0.1875, "reject": false}}
+{"judge_kappa": 1.0, "judge_check_n": 400, "judge_kappa_below_0.6": false, "chance_asr": 0.00046875, "chance_asr_above_0.05": false, "f1_estimates": {"H2|f1_U_out": 0.0065, "H2|f1_U_all": 0.0024, "H3|f1_U_out": 0.0065, "H3|f1_U_all": 0.0024}, "S_equals_M_under_A2": 1.0, "R_equals_static_except_audited": 1.0}
+exit 0

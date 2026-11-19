@@ -1,0 +1,15 @@
+............                                                             [100%]
+== prepare
+9d14caba66ca4da31a9cdff0386cacd725df22de50aadbbf00cbe2ac878d0b04
+== verify
+{
+ "verified": true,
+ "digest": "9d14caba66ca4da31a9cdff0386cacd725df22de50aadbbf00cbe2ac878d0b04",
+ "saved_digest": "9d14caba66ca4da31a9cdff0386cacd725df22de50aadbbf00cbe2ac878d0b04",
+ "diffs": [],
+ "option_b": {
+  "frozen_modules_match_option_b": true,
+  "mismatch": [],
+  "option_b_verified": true
+ }
+}

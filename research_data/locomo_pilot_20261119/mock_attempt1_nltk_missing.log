@@ -1,0 +1,58 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 48453.71it/s]
+{
+ "mode": "mock",
+ "draws": 2,
+ "estimate_draws1": {
+  "jobs": 7634,
+  "unique_answer_prompts": 1474,
+  "nominal_usd": 0.93,
+  "unique_usd": 0.177,
+  "note": "chars/4 token estimate; judge prompt ~160 tokens; 32/4 output tokens"
+ },
+ "estimate_draws2": {
+  "jobs": 14921,
+  "unique_answer_prompts": 2268,
+  "nominal_usd": 1.817,
+  "unique_usd": 0.271,
+  "note": "chars/4 token estimate; judge prompt ~160 tokens; 32/4 output tokens"
+ },
+ "data_sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+ "build_seconds": 137
+}
+answer:   0%|          | 0/2268 [00:00<?, ?it/s]answer: 100%|██████████| 2268/2268 [00:00<00:00, 7328.68it/s]
+judge:   0%|          | 0/1672 [00:00<?, ?it/s]judge: 100%|██████████| 1672/1672 [00:00<00:00, 5182.52it/s]
+Traceback (most recent call last):
+  File "/mnt/c/Users/HP/Documents/sdp/research_data/locomo_pilot_20261119/pilot.py", line 309, in <module>
+    main()
+  File "/mnt/c/Users/HP/Documents/sdp/research_data/locomo_pilot_20261119/pilot.py", line 294, in main
+    rows = run(jobs, qa, convs_by_id, a.workers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/HP/Documents/sdp/research_data/locomo_pilot_20261119/pilot.py", line 249, in run
+    "f1": official_score(q.category, pred, q.answer) if pred is not None else None,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/HP/Documents/sdp/src/ams/eval/locomo.py", line 60, in official_score
+    return f1_score(prediction, answer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/HP/Documents/sdp/src/ams/eval/locomo.py", line 41, in f1_score
+    p = [_stem(w) for w in normalize_answer(prediction).split()]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/HP/Documents/sdp/src/ams/eval/locomo.py", line 41, in <listcomp>
+    p = [_stem(w) for w in normalize_answer(prediction).split()]
+         ^^^^^^^^
+  File "/mnt/c/Users/HP/Documents/sdp/src/ams/eval/locomo.py", line 26, in _stem
+    from nltk.stem import PorterStemmer
+ModuleNotFoundError: No module named 'nltk'
+exit 1
+Traceback (most recent call last):
+  File "/mnt/c/Users/HP/Documents/sdp/research_data/locomo_pilot_20261119/analyse.py", line 17, in <module>
+    rows = [json.loads(x) for x in (run / "outcomes.jsonl").read_text().splitlines() if x]
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhalat/.local/share/uv/python/cpython-3.11.16-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhalat/.local/share/uv/python/cpython-3.11.16-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/c/Users/HP/Documents/sdp/research_data/locomo_pilot_20261119/mock/outcomes.jsonl'
+analyse exit 1

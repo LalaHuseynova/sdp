@@ -1,0 +1,220 @@
+{
+ "conversations": [
+  {
+   "sample_id": "conv-26",
+   "speakers": [
+    "Caroline",
+    "Melanie"
+   ],
+   "sessions": 19,
+   "turns": 419,
+   "turns_per_speaker": {
+    "Caroline": 211,
+    "Melanie": 208
+   },
+   "qa": 199,
+   "qa_by_category": {
+    "1": 32,
+    "2": 37,
+    "3": 13,
+    "4": 70,
+    "5": 47
+   }
+  },
+  {
+   "sample_id": "conv-30",
+   "speakers": [
+    "Jon",
+    "Gina"
+   ],
+   "sessions": 19,
+   "turns": 369,
+   "turns_per_speaker": {
+    "Gina": 184,
+    "Jon": 185
+   },
+   "qa": 105,
+   "qa_by_category": {
+    "1": 11,
+    "2": 26,
+    "4": 44,
+    "5": 24
+   }
+  },
+  {
+   "sample_id": "conv-41",
+   "speakers": [
+    "John",
+    "Maria"
+   ],
+   "sessions": 32,
+   "turns": 663,
+   "turns_per_speaker": {
+    "Maria": 328,
+    "John": 335
+   },
+   "qa": 193,
+   "qa_by_category": {
+    "1": 31,
+    "2": 27,
+    "3": 8,
+    "4": 86,
+    "5": 41
+   }
+  },
+  {
+   "sample_id": "conv-42",
+   "speakers": [
+    "Joanna",
+    "Nate"
+   ],
+   "sessions": 29,
+   "turns": 629,
+   "turns_per_speaker": {
+    "Nate": 316,
+    "Joanna": 313
+   },
+   "qa": 260,
+   "qa_by_category": {
+    "1": 37,
+    "2": 40,
+    "3": 11,
+    "4": 111,
+    "5": 61
+   }
+  },
+  {
+   "sample_id": "conv-43",
+   "speakers": [
+    "Tim",
+    "John"
+   ],
+   "sessions": 29,
+   "turns": 680,
+   "turns_per_speaker": {
+    "John": 336,
+    "Tim": 344
+   },
+   "qa": 242,
+   "qa_by_category": {
+    "1": 31,
+    "2": 26,
+    "3": 14,
+    "4": 107,
+    "5": 64
+   }
+  },
+  {
+   "sample_id": "conv-44",
+   "speakers": [
+    "Audrey",
+    "Andrew"
+   ],
+   "sessions": 28,
+   "turns": 675,
+   "turns_per_speaker": {
+    "Audrey": 338,
+    "Andrew": 337
+   },
+   "qa": 158,
+   "qa_by_category": {
+    "1": 30,
+    "2": 24,
+    "3": 7,
+    "4": 62,
+    "5": 35
+   }
+  },
+  {
+   "sample_id": "conv-47",
+   "speakers": [
+    "James",
+    "John"
+   ],
+   "sessions": 31,
+   "turns": 689,
+   "turns_per_speaker": {
+    "John": 346,
+    "James": 343
+   },
+   "qa": 190,
+   "qa_by_category": {
+    "1": 20,
+    "2": 34,
+    "3": 13,
+    "4": 83,
+    "5": 40
+   }
+  },
+  {
+   "sample_id": "conv-48",
+   "speakers": [
+    "Deborah",
+    "Jolene"
+   ],
+   "sessions": 30,
+   "turns": 681,
+   "turns_per_speaker": {
+    "Deborah": 341,
+    "Jolene": 340
+   },
+   "qa": 239,
+   "qa_by_category": {
+    "1": 21,
+    "2": 42,
+    "3": 10,
+    "4": 118,
+    "5": 48
+   }
+  },
+  {
+   "sample_id": "conv-49",
+   "speakers": [
+    "Evan",
+    "Sam"
+   ],
+   "sessions": 25,
+   "turns": 509,
+   "turns_per_speaker": {
+    "Sam": 253,
+    "Evan": 256
+   },
+   "qa": 196,
+   "qa_by_category": {
+    "1": 37,
+    "2": 33,
+    "3": 13,
+    "4": 73,
+    "5": 40
+   }
+  },
+  {
+   "sample_id": "conv-50",
+   "speakers": [
+    "Calvin",
+    "Dave"
+   ],
+   "sessions": 30,
+   "turns": 568,
+   "turns_per_speaker": {
+    "Calvin": 285,
+    "Dave": 283
+   },
+   "qa": 204,
+   "qa_by_category": {
+    "1": 32,
+    "2": 32,
+    "3": 7,
+    "4": 87,
+    "5": 46
+   }
+  }
+ ],
+ "evidence_ids": 2355,
+ "evidence_ids_invalid": 9,
+ "qa_cat1
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 1032.52it/s]
+conv-26 p0 done 102s
+conv-26 p0 done 173s
+exit 143

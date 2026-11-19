@@ -1,0 +1,610 @@
+{
+ "1s|m0|a10": {
+  "unsafe_found_mean": 0.25,
+  "safe_found_mean": 9.75,
+  "share_S_context_gate_active": 0.0,
+  "mean_sessions_with_S_batch_gate": 0.23,
+  "lineage_blocked_mean": 0.26
+ },
+ "1s|m0|a30": {
+  "unsafe_found_mean": 0.95,
+  "safe_found_mean": 29.05,
+  "share_S_context_gate_active": 0.0,
+  "mean_sessions_with_S_batch_gate": 0.61,
+  "lineage_blocked_mean": 1.02
+ },
+ "1s|m2|a0": {
+  "unsafe_found_mean": 2.0,
+  "safe_found_mean": 0.0,
+  "share_S_context_gate_active": 0.0,
+  "mean_sessions_with_S_batch_gate": 1.0,
+  "lineage_blocked_mean": 2.33
+ },
+ "1s|m2|a10": {
+  "unsafe_found_mean": 2.19,
+  "safe_found_mean": 9.81,
+  "share_S_context_gate_active": 0.0,
+  "mean_sessions_with_S_batch_gate": 1.0,
+  "lineage_blocked_mean": 2.46
+ },
+ "1s|m2|a30": {
+  "unsafe_found_mean": 2.47,
+  "safe_found_mean": 29.53,
+  "share_S_context_gate_active": 0.0,
+  "mean_sessions_with_S_batch_gate": 1.0,
+  "lineage_blocked_mean": 2.62
+ },
+ "1s|m4|a0": {
+  "unsafe_found_mean": 4.0,
+  "safe_found_mean": 0.0,
+  "share_S_context_gate_active": 0.0,
+  "mean_sessions_with_S_batch_gate": 1.0,
+  "lineage_blocked_mean": 4.36
+ },
+ "1s|m4|a10": {
+  "unsafe_found_mean": 4.13,
+  "safe_found_mean": 9.87,
+  "share_S_context_gate_active": 0.0,
+  "mean_sessions_with_S_batch_gate": 1.0,
+  "lineage_blocked_mean": 4.4
+ },
+ "1s|m4|a30": {
+  "unsafe_found_mean": 4.44,
+  "safe_found_mean": 29.56,
+  "share_S_context_gate_active": 0.0,
+  "mean_sessions_with_S_batch_gate": 1.0,
+  "lineage_blocked_mean": 4.76
+ },
+ "2s|m0|a10": {
+  "unsafe_found_mean": 0.32,
+  "safe_found_mean": 9.68,
+  "share_S_context_gate_active": 0.06,
+  "mean_sessions_with_S_batch_gate": 0.3,
+  "lineage_blocked_mean": 0.33
+ },
+ "2s|m0|a30": {
+  "unsafe_found_mean": 1.01,
+  "safe_found_mean": 28.99,
+  "share_S_context_gate_active": 0.16,
+  "mean_sessions_with_S_batch_gate": 0.8,
+  "lineage_blocked_mean": 1.29
+ },
+ "2s|m2|a0": {
+  "unsafe_found_mean": 2.0,
+  "safe_found_mean": 0.0,
+  "share_S_context_gate_active": 0.47,
+  "mean_sessions_with_S_batch_gate": 1.47,
+  "lineage_blocked_mean": 2.1
+ },
+ "2s|m2|a10": {
+  "unsafe_found_mean": 2.22,
+  "safe_found_mean": 9.78,
+  "share_S_context_gate_active": 0.56,
+  "mean_sessions_with_S_batch_gate": 1.56,
+  "lineage_blocked_mean": 2.38
+ },
+ "2s|m2|a30": {
+  "unsafe_found_mean": 2.58,
+  "safe_found_mean": 29.42,
+  "share_S_context_gate_active": 0.64,
+  "mean_sessions_with_S_batch_gate": 1.64,
+  "lineage_blocked_mean": 2.81
+ },
+ "2s|m4|a0": {
+  "unsafe_found_mean": 4.0,
+  "safe_found_mean": 0.0,
+  "share_S_context_gate_active": 0.85,
+  "mean_sessions_with_S_batch_gate": 1.85,
+  "lineage_blocked_mean": 4.35
+ },
+ "2s|m4|a10": {
+  "unsafe_found_mean": 4.15,
+  "safe_found_mean": 9.85,
+  "share_S_context_gate_active": 0.93,
+  "mean_sessions_with_S_batch_gate": 1.93,
+  "lineage_blocked_mean": 4.48
+ },
+ "2s|m4|a30": {
+  "unsafe_found_mean": 4.3,
+  "safe_found_mean": 29.7,
+  "share_S_context_gate_active": 0.9,
+  "mean_sessions_with_S_batch_gate": 1.9,
+  "lineage_blocked_mean": 4.91
+ },
+ "quarter|m0|a10": {
+  "unsafe_found_mean": 0.25,
+  "safe_found_mean": 9.75,
+  "share_S_context_gate_active": 0.03,
+  "mean_sessions_with_S_batch_gate": 0.25,
+  "lineage_blocked_mean": 0.26
+ },
+ "quarter|m0|a30": {
+  "unsafe_found_mean": 0.84,
+  "safe_found_mean": 29.16,
+  "share_S_context_gate_active": 0.14,
+  "mean_sessions_with_S_batch_gate": 0.76,
+  "lineage_blocked_mean": 0.89
+ },
+ "quarter|m2|a0": {
+  "unsafe_found_mean": 2.0,
+  "safe_found_mean": 0.0,
+  "share_S_context_gate_active": 0.86,
+  "mean_sessions_with_S_batch_gate": 1.86,
+  "lineage_blocked_mean": 2.17
+ },
+ "quarter|m2|a10": {
+  "unsafe_found_mean": 2.2,
+  "safe_found_mean": 9.8,
+  "share_S_context_gate_active": 0.88,
+  "mean_sessions_with_S_batch_gate": 2.02,
+  "lineage_blocked_mean": 2.43
+ },
+ "quarter|m2|a30": {
+  "unsafe_found_mean": 2.57,
+  "safe_found_mean": 29.43,
+  "share_S_context_gate_active": 0.94,
+  "mean_sessions_with_S_batch_gate": 2.32,
+  "lineage_blocked_mean": 2.78
+ },
+ "quarter|m4|a0": {
+  "unsafe_found_mean": 4.0,
+  "safe_found_mean": 0.0,
+  "share_S_context_gate_active": 0.99,
+  "mean_sessions_with_S_batch_gate": 3.23,
+  "lineage_blocked_mean": 4.27
+ },
+ "quarter|m4|a10": {
+  "unsafe_found_mean": 4.18,
+  "safe_found_mean": 9.82,
+  "share_S_context_gate_active": 1.0,
+  "mean_sessions_with_S_batch_gate": 3.4,
+  "lineage_blocked_mean": 4.42
+ },
+ "quarter|m4|a30": {
+  "unsafe_found_mean": 4.5,
+  "safe_found_mean": 29.5,
+  "share_S_context_gate_active": 0.99,
+  "mean_sessions_with_S_batch_gate": 3.45,
+  "lineage_blocked_mean": 4.78
+ },
+ "spread|m0|a10": {
+  "unsafe_found_mean": 0.26,
+  "safe_found_mean": 9.74,
+  "share_S_context_gate_active": 0.01,
+  "mean_sessions_with_S_batch_gate": 0.26,
+  "lineage_blocked_mean": 0.27
+ },
+ "spread|m0|a30": {
+  "unsafe_found_mean": 0.77,
+  "safe_found_mean": 29.23,
+  "share_S_context_gate_active": 0.19,
+  "mean_sessions_with_S_batch_gate": 0.77,
+  "lineage_blocked_mean": 0.8
+ },
+ "spread|m2|a0": {
+  "unsafe_found_mean": 2.0,
+  "safe_found_mean": 0.0,
+  "share_S_context_gate_active": 0.95,
+  "mean_sessions_with_S_batch_gate": 1.95,
+  "lineage_blocked_mean": 2.17
+ },
+ "spread|m2|a10": {
+  "unsafe_found_mean": 2.21,
+  "safe_found_mean": 9.79,
+  "share_S_context_gate_active": 0.95,
+  "mean_sessions_with_S_batch_gate": 2.13,
+  "lineage_blocked_mean": 2.45
+ },
+ "spread|m2|a30": {
+  "unsafe_found_mean": 2.65,
+  "safe_found_mean": 29.35,
+  "share_S_context_gate_active": 1.0,
+  "mean_sessions_with_S_batch_gate": 2.53,
+  "lineage_blocked_mean": 3.07
+ },
+ "spread|m4|a0": {
+  "unsafe_found_mean": 4.0,
+  "safe_found_mean": 0.0,
+  "share_S_context_gate_active": 1.0,
+  "mean_sessions_with_S_batch_gate": 3.77,
+  "lineage_blocked_mean": 4.58
+ },
+ "spread|m4|a10": {
+  "unsafe_found_mean": 4.19,
+  "safe_found_mean": 9.81,
+  "share_S_context_gate_active": 1.0,
+  "mean_sessions_with_S_batch_gate": 3.88,
+  "lineage_blocked_mean": 4.58
+ },
+ "spread|m4|a30": {
+  "unsafe_found_mean": 4.39,
+  "safe_found_mean": 29.61,
+  "share_S_context_gate_active": 1.0,
+  "mean_sessions_with_S_batch_gate": 4.07,
+  "lineage_blocked_mean": 4.83
+ }
+}
+1s|m0|a10|k10|C {'poison_exposure': 0.994, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m0|a10|k10|M {'poison_exposure': 0.975, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.361, 'recall_principal': 0.418, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.988}
+1s|m0|a10|k10|R {'poison_exposure': 0.994, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m0|a10|k10|S {'poison_exposure': 0.975, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.361, 'recall_principal': 0.418, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.988}
+1s|m0|a10|k10|SL {'poison_exposure': 0.975, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.361, 'recall_principal': 0.418, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.988}
+1s|m0|a10|k10|static {'poison_exposure': 0.994, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m0|a30|k10|C {'poison_exposure': 0.994, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m0|a30|k10|M {'poison_exposure': 0.882, 'recall_hijacked_out': 0.413, 'recall_hijacked_in': 0.333, 'recall_principal': 0.419, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.904}
+1s|m0|a30|k10|R {'poison_exposure': 0.994, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m0|a30|k10|S {'poison_exposure': 0.882, 'recall_hijacked_out': 0.413, 'recall_hijacked_in': 0.333, 'recall_principal': 0.419, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.904}
+1s|m0|a30|k10|SL {'poison_exposure': 0.881, 'recall_hijacked_out': 0.413, 'recall_hijacked_in': 0.333, 'recall_principal': 0.419, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.904}
+1s|m0|a30|k10|static {'poison_exposure': 0.994, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m2|a0|k10|C {'poison_exposure': 0.0, 'recall_hijacked_out': 0.0, 'recall_hijacked_in': 0.0, 'recall_principal': 0.452, 'avail_hijacked_out': 0.0, 'avail_hijacked_in': 0.0}
+1s|m2|a0|k10|M {'poison_exposure': 0.0, 'recall_hijacked_out': 0.0, 'recall_hijacked_in': 0.0, 'recall_principal': 0.452, 'avail_hijacked_out': 0.0, 'avail_hijacked_in': 0.0}
+1s|m2|a0|k10|R {'poison_exposure': 0.993, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m2|a0|k10|S {'poison_exposure': 0.0, 'recall_hijacked_out': 0.427, 'recall_hijacked_in': 0.0, 'recall_principal': 0.424, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.0}
+1s|m2|a0|k10|SL {'poison_exposure': 0.0, 'recall_hijacked_out': 0.427, 'recall_hijacked_in': 0.0, 'recall_principal': 0.424, 'avail_hijacked_out': 0.999, 'avail_hijacked_in': 0.0}
+1s|m2|a0|k10|static {'poison_exposure': 0.993, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m2|a10|k10|C {'poison_exposure': 0.993, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m2|a10|k10|M {'poison_exposure': 0.224, 'recall_hijacked_out': 0.425, 'recall_hijacked_in': 0.037, 'recall_principal': 0.423, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.211}
+1s|m2|a10|k10|R {'poison_exposure': 0.993, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m2|a10|k10|S {'poison_exposure': 0.224, 'recall_hijacked_out': 0.425, 'recall_hijacked_in': 0.037, 'recall_principal': 0.423, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.211}
+1s|m2|a10|k10|SL {'poison_exposure': 0.221, 'recall_hijacked_out': 0.426, 'recall_hijacked_in': 0.037, 'recall_principal': 0.423, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.211}
+1s|m2|a10|k10|static {'poison_exposure': 0.993, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m2|a30|k10|C {'poison_exposure': 0.991, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m2|a30|k10|M {'poison_exposure': 0.576, 'recall_hijacked_out': 0.422, 'recall_hijacked_in': 0.152, 'recall_principal': 0.422, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.575}
+1s|m2|a30|k10|R {'poison_exposure': 0.991, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m2|a30|k10|S {'poison_exposure': 0.576, 'recall_hijacked_out': 0.422, 'recall_hijacked_in': 0.152, 'recall_principal': 0.422, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.575}
+1s|m2|a30|k10|SL {'poison_exposure': 0.567, 'recall_hijacked_out': 0.423, 'recall_hijacked_in': 0.155, 'recall_principal': 0.423, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.575}
+1s|m2|a30|k10|static {'poison_exposure': 0.991, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m4|a0|k10|C {'poison_exposure': 0.0, 'recall_hijacked_out': 0.0, 'recall_hijacked_in': 0.0, 'recall_principal': 0.452, 'avail_hijacked_out': 0.0, 'avail_hijacked_in': 0.0}
+1s|m4|a0|k10|M {'poison_exposure': 0.0, 'recall_hijacked_out': 0.0, 'recall_hijacked_in': 0.0, 'recall_principal': 0.452, 'avail_hijacked_out': 0.0, 'avail_hijacked_in': 0.0}
+1s|m4|a0|k10|R {'poison_exposure': 0.99, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m4|a0|k10|S {'poison_exposure': 0.0, 'recall_hijacked_out': 0.427, 'recall_hijacked_in': 0.0, 'recall_principal': 0.424, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.0}
+1s|m4|a0|k10|SL {'poison_exposure': 0.0, 'recall_hijacked_out': 0.427, 'recall_hijacked_in': 0.0, 'recall_principal': 0.424, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.0}
+1s|m4|a0|k10|static {'poison_exposure': 0.99, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m4|a10|k10|C {'poison_exposure': 0.995, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m4|a10|k10|M {'poison_exposure': 0.207, 'recall_hijacked_out': 0.427, 'recall_hijacked_in': 0.063, 'recall_principal': 0.423, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.225}
+1s|m4|a10|k10|R {'poison_exposure': 0.995, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m4|a10|k10|S {'poison_exposure': 0.207, 'recall_hijacked_out': 0.427, 'recall_hijacked_in': 0.063, 'recall_principal': 0.423, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.225}
+1s|m4|a10|k10|SL {'poison_exposure': 0.207, 'recall_hijacked_out': 0.427, 'recall_hijacked_in': 0.063, 'recall_principal': 0.424, 'avail_hijacked_out': 0.999, 'avail_hijacked_in': 0.225}
+1s|m4|a10|k10|static {'poison_exposure': 0.995, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m4|a30|k10|C {'poison_exposure': 1.0, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m4|a30|k10|M {'poison_exposure': 0.523, 'recall_hijacked_out': 0.424, 'recall_hijacked_in': 0.107, 'recall_principal': 0.422, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.54}
+1s|m4|a30|k10|R {'poison_exposure': 1.0, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+1s|m4|a30|k10|S {'poison_exposure': 0.523, 'recall_hijacked_out': 0.424, 'recall_hijacked_in': 0.107, 'recall_principal': 0.422, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.54}
+1s|m4|a30|k10|SL {'poison_exposure': 0.518, 'recall_hijacked_out': 0.424, 'recall_hijacked_in': 0.107, 'recall_principal': 0.423, 'avail_hijacked_out': 0.999, 'avail_hijacked_in': 0.54}
+1s|m4|a30|k10|static {'poison_exposure': 1.0, 'recall_hijacked_out': 0.408, 'recall_hijacked_in': 0.405, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m0|a10|k10|C {'poison_exposure': 0.992, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m0|a10|k10|M {'poison_exposure': 0.982, 'recall_hijacked_out': 0.413, 'recall_hijacked_in': 0.387, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.996}
+2s|m0|a10|k10|R {'poison_exposure': 0.992, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m0|a10|k10|S {'poison_exposure': 0.982, 'recall_hijacked_out': 0.413, 'recall_hijacked_in': 0.387, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.996}
+2s|m0|a10|k10|SL {'poison_exposure': 0.98, 'recall_hijacked_out': 0.414, 'recall_hijacked_in': 0.387, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.996}
+2s|m0|a10|k10|static {'poison_exposure': 0.992, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m0|a30|k10|C {'poison_exposure': 0.991, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m0|a30|k10|M {'poison_exposure': 0.957, 'recall_hijacked_out': 0.413, 'recall_hijacked_in': 0.388, 'recall_principal': 0.414, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.967}
+2s|m0|a30|k10|R {'poison_exposure': 0.991, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m0|a30|k10|S {'poison_exposure': 0.957, 'recall_hijacked_out': 0.413, 'recall_hijacked_in': 0.388, 'recall_principal': 0.414, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.967}
+2s|m0|a30|k10|SL {'poison_exposure': 0.956, 'recall_hijacked_out': 0.413, 'recall_hijacked_in': 0.388, 'recall_principal': 0.414, 'avail_hijacked_out': 0.999, 'avail_hijacked_in': 0.967}
+2s|m0|a30|k10|static {'poison_exposure': 0.991, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m2|a0|k10|C {'poison_exposure': 0.0, 'recall_hijacked_out': 0.0, 'recall_hijacked_in': 0.0, 'recall_principal': 0.448, 'avail_hijacked_out': 0.0, 'avail_hijacked_in': 0.0}
+2s|m2|a0|k10|M {'poison_exposure': 0.0, 'recall_hijacked_out': 0.0, 'recall_hijacked_in': 0.0, 'recall_principal': 0.448, 'avail_hijacked_out': 0.0, 'avail_hijacked_in': 0.0}
+2s|m2|a0|k10|R {'poison_exposure': 0.99, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m2|a0|k10|S {'poison_exposure': 0.285, 'recall_hijacked_out': 0.22, 'recall_hijacked_in': 0.1, 'recall_principal': 0.432, 'avail_hijacked_out': 0.53, 'avail_hijacked_in': 0.252}
+2s|m2|a0|k10|SL {'poison_exposure': 0.282, 'recall_hijacked_out': 0.22, 'recall_hijacked_in': 0.1, 'recall_principal': 0.432, 'avail_hijacked_out': 0.53, 'avail_hijacked_in': 0.252}
+2s|m2|a0|k10|static {'poison_exposure': 0.99, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m2|a10|k10|C {'poison_exposure': 0.993, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m2|a10|k10|M {'poison_exposure': 0.775, 'recall_hijacked_out': 0.423, 'recall_hijacked_in': 0.245, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.789}
+2s|m2|a10|k10|R {'poison_exposure': 0.993, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m2|a10|k10|S {'poison_exposure': 0.775, 'recall_hijacked_out': 0.423, 'recall_hijacked_in': 0.245, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.789}
+2s|m2|a10|k10|SL {'poison_exposure': 0.765, 'recall_hijacked_out': 0.424, 'recall_hijacked_in': 0.246, 'recall_principal': 0.418, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.789}
+2s|m2|a10|k10|static {'poison_exposure': 0.993, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m2|a30|k10|C {'poison_exposure': 0.994, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m2|a30|k10|M {'poison_exposure': 0.846, 'recall_hijacked_out': 0.416, 'recall_hijacked_in': 0.304, 'recall_principal': 0.415, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.847}
+2s|m2|a30|k10|R {'poison_exposure': 0.994, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m2|a30|k10|S {'poison_exposure': 0.846, 'recall_hijacked_out': 0.416, 'recall_hijacked_in': 0.304, 'recall_principal': 0.415, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.847}
+2s|m2|a30|k10|SL {'poison_exposure': 0.835, 'recall_hijacked_out': 0.419, 'recall_hijacked_in': 0.311, 'recall_principal': 0.416, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.847}
+2s|m2|a30|k10|static {'poison_exposure': 0.994, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m4|a0|k10|C {'poison_exposure': 0.0, 'recall_hijacked_out': 0.0, 'recall_hijacked_in': 0.0, 'recall_principal': 0.448, 'avail_hijacked_out': 0.0, 'avail_hijacked_in': 0.0}
+2s|m4|a0|k10|M {'poison_exposure': 0.0, 'recall_hijacked_out': 0.0, 'recall_hijacked_in': 0.0, 'recall_principal': 0.448, 'avail_hijacked_out': 0.0, 'avail_hijacked_in': 0.0}
+2s|m4|a0|k10|R {'poison_exposure': 0.99, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m4|a0|k10|S {'poison_exposure': 0.09, 'recall_hijacked_out': 0.062, 'recall_hijacked_in': 0.033, 'recall_principal': 0.443, 'avail_hijacked_out': 0.15, 'avail_hijacked_in': 0.078}
+2s|m4|a0|k10|SL {'poison_exposure': 0.082, 'recall_hijacked_out': 0.062, 'recall_hijacked_in': 0.033, 'recall_principal': 0.443, 'avail_hijacked_out': 0.15, 'avail_hijacked_in': 0.078}
+2s|m4|a0|k10|static {'poison_exposure': 0.99, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m4|a10|k10|C {'poison_exposure': 0.992, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m4|a10|k10|M {'poison_exposure': 0.478, 'recall_hijacked_out': 0.425, 'recall_hijacked_in': 0.129, 'recall_principal': 0.418, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.464}
+2s|m4|a10|k10|R {'poison_exposure': 0.992, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m4|a10|k10|S {'poison_exposure': 0.478, 'recall_hijacked_out': 0.425, 'recall_hijacked_in': 0.129, 'recall_principal': 0.418, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.464}
+2s|m4|a10|k10|SL {'poison_exposure': 0.463, 'recall_hijacked_out': 0.427, 'recall_hijacked_in': 0.129, 'recall_principal': 0.419, 'avail_hijacked_out': 0.999, 'avail_hijacked_in': 0.464}
+2s|m4|a10|k10|static {'poison_exposure': 0.992, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m4|a30|k10|C {'poison_exposure': 0.99, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m4|a30|k10|M {'poison_exposure': 0.742, 'recall_hijacked_out': 0.422, 'recall_hijacked_in': 0.25, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.764}
+2s|m4|a30|k10|R {'poison_exposure': 0.99, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+2s|m4|a30|k10|S {'poison_exposure': 0.742, 'recall_hijacked_out': 0.422, 'recall_hijacked_in': 0.25, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.764}
+2s|m4|a30|k10|SL {'poison_exposure': 0.736, 'recall_hijacked_out': 0.424, 'recall_hijacked_in': 0.25, 'recall_principal': 0.418, 'avail_hijacked_out': 0.999, 'avail_hijacked_in': 0.764}
+2s|m4|a30|k10|static {'poison_exposure': 0.99, 'recall_hijacked_out': 0.41, 'recall_hijacked_in': 0.413, 'recall_principal': 0.412, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m0|a10|k10|C {'poison_exposure': 0.979, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m0|a10|k10|M {'poison_exposure': 0.979, 'recall_hijacked_out': 0.405, 'recall_hijacked_in': 0.394, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m0|a10|k10|R {'poison_exposure': 0.979, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m0|a10|k10|S {'poison_exposure': 0.979, 'recall_hijacked_out': 0.405, 'recall_hijacked_in': 0.394, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m0|a10|k10|SL {'poison_exposure': 0.979, 'recall_hijacked_out': 0.405, 'recall_hijacked_in': 0.394, 'recall_principal': 0.414, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m0|a10|k10|static {'poison_exposure': 0.979, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m0|a30|k10|C {'poison_exposure': 0.978, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m0|a30|k10|M {'poison_exposure': 0.968, 'recall_hijacked_out': 0.407, 'recall_hijacked_in': 0.39, 'recall_principal': 0.414, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.994}
+quarter|m0|a30|k10|R {'poison_exposure': 0.978, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m0|a30|k10|S {'poison_exposure': 0.968, 'recall_hijacked_out': 0.407, 'recall_hijacked_in': 0.39, 'recall_principal': 0.414, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.994}
+quarter|m0|a30|k10|SL {'poison_exposure': 0.963, 'recall_hijacked_out': 0.407, 'recall_hijacked_in': 0.39, 'recall_principal': 0.415, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.994}
+quarter|m0|a30|k10|static {'poison_exposure': 0.978, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m2|a0|k10|C {'poison_exposure': 0.0, 'recall_hijacked_out': 0.0, 'recall_hijacked_in': 0.0, 'recall_principal': 0.45, 'avail_hijacked_out': 0.0, 'avail_hijacked_in': 0.0}
+quarter|m2|a0|k10|M {'poison_exposure': 0.0, 'recall_hijacked_out': 0.0, 'recall_hijacked_in': 0.0, 'recall_principal': 0.45, 'avail_hijacked_out': 0.0, 'avail_hijacked_in': 0.0}
+quarter|m2|a0|k10|R {'poison_exposure': 0.983, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m2|a0|k10|S {'poison_exposure': 0.112, 'recall_hijacked_out': 0.059, 'recall_hijacked_in': 0.049, 'recall_principal': 0.446, 'avail_hijacked_out': 0.14, 'avail_hijacked_in': 0.114}
+quarter|m2|a0|k10|SL {'poison_exposure': 0.108, 'recall_hijacked_out': 0.059, 'recall_hijacked_in': 0.049, 'recall_principal': 0.446, 'avail_hijacked_out': 0.14, 'avail_hijacked_in': 0.114}
+quarter|m2|a0|k10|static {'poison_exposure': 0.983, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m2|a10|k10|C {'poison_exposure': 0.979, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m2|a10|k10|M {'poison_exposure': 0.953, 'recall_hijacked_out': 0.413, 'recall_hijacked_in': 0.36, 'recall_principal': 0.416, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.984}
+quarter|m2|a10|k10|R {'poison_exposure': 0.979, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m2|a10|k10|S {'poison_exposure': 0.953, 'recall_hijacked_out': 0.413, 'recall_hijacked_in': 0.36, 'recall_principal': 0.416, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.984}
+quarter|m2|a10|k10|SL {'poison_exposure': 0.943, 'recall_hijacked_out': 0.413, 'recall_hijacked_in': 0.362, 'recall_principal': 0.418, 'avail_hijacked_out': 0.999, 'avail_hijacked_in': 0.983}
+quarter|m2|a10|k10|static {'poison_exposure': 0.979, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m2|a30|k10|C {'poison_exposure': 0.979, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m2|a30|k10|M {'poison_exposure': 0.947, 'recall_hijacked_out': 0.409, 'recall_hijacked_in': 0.376, 'recall_principal': 0.415, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.986}
+quarter|m2|a30|k10|R {'poison_exposure': 0.979, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m2|a30|k10|S {'poison_exposure': 0.947, 'recall_hijacked_out': 0.409, 'recall_hijacked_in': 0.376, 'recall_principal': 0.415, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.986}
+quarter|m2|a30|k10|SL {'poison_exposure': 0.933, 'recall_hijacked_out': 0.412, 'recall_hijacked_in': 0.377, 'recall_principal': 0.417, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.984}
+quarter|m2|a30|k10|static {'poison_exposure': 0.979, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m4|a0|k10|C {'poison_exposure': 0.0, 'recall_hijacked_out': 0.0, 'recall_hijacked_in': 0.0, 'recall_principal': 0.45, 'avail_hijacked_out': 0.0, 'avail_hijacked_in': 0.0}
+quarter|m4|a0|k10|M {'poison_exposure': 0.0, 'recall_hijacked_out': 0.0, 'recall_hijacked_in': 0.0, 'recall_principal': 0.45, 'avail_hijacked_out': 0.0, 'avail_hijacked_in': 0.0}
+quarter|m4|a0|k10|R {'poison_exposure': 0.978, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m4|a0|k10|S {'poison_exposure': 0.01, 'recall_hijacked_out': 0.004, 'recall_hijacked_in': 0.002, 'recall_principal': 0.45, 'avail_hijacked_out': 0.01, 'avail_hijacked_in': 0.007}
+quarter|m4|a0|k10|SL {'poison_exposure': 0.01, 'recall_hijacked_out': 0.004, 'recall_hijacked_in': 0.002, 'recall_principal': 0.45, 'avail_hijacked_out': 0.01, 'avail_hijacked_in': 0.007}
+quarter|m4|a0|k10|static {'poison_exposure': 0.978, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m4|a10|k10|C {'poison_exposure': 0.987, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m4|a10|k10|M {'poison_exposure': 0.901, 'recall_hijacked_out': 0.42, 'recall_hijacked_in': 0.341, 'recall_principal': 0.419, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.928}
+quarter|m4|a10|k10|R {'poison_exposure': 0.987, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m4|a10|k10|S {'poison_exposure': 0.901, 'recall_hijacked_out': 0.42, 'recall_hijacked_in': 0.341, 'recall_principal': 0.419, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.928}
+quarter|m4|a10|k10|SL {'poison_exposure': 0.882, 'recall_hijacked_out': 0.421, 'recall_hijacked_in': 0.342, 'recall_principal': 0.42, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.927}
+quarter|m4|a10|k10|static {'poison_exposure': 0.987, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m4|a30|k10|C {'poison_exposure': 0.972, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m4|a30|k10|M {'poison_exposure': 0.939, 'recall_hijacked_out': 0.411, 'recall_hijacked_in': 0.363, 'recall_principal': 0.416, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.963}
+quarter|m4|a30|k10|R {'poison_exposure': 0.972, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+quarter|m4|a30|k10|S {'poison_exposure': 0.939, 'recall_hijacked_out': 0.411, 'recall_hijacked_in': 0.363, 'recall_principal': 0.416, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 0.963}
+quarter|m4|a30|k10|SL {'poison_exposure': 0.918, 'recall_hijacked_out': 0.417, 'recall_hijacked_in': 0.367, 'recall_principal': 0.418, 'avail_hijacked_out': 0.999, 'avail_hijacked_in': 0.963}
+quarter|m4|a30|k10|static {'poison_exposure': 0.972, 'recall_hijacked_out': 0.404, 'recall_hijacked_in': 0.398, 'recall_principal': 0.413, 'avail_hijacked_out': 1.0, 'avail_hijacked_in': 1.0}
+spread|m0|a10|k10|C {'poison_exposure': 0.991, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m0|a10|k10|M {'poison_exposure': 0.989, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.405, 'recall_principal': 0.415, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m0|a10|k10|R {'poison_exposure': 0.991, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m0|a10|k10|S {'poison_exposure': 0.989, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.405, 'recall_principal': 0.415, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m0|a10|k10|SL {'poison_exposure': 0.988, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.405, 'recall_principal': 0.415, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m0|a10|k10|static {'poison_exposure': 0.991, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m0|a30|k10|C {'poison_exposure': 0.992, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m0|a30|k10|M {'poison_exposure': 0.992, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.405, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m0|a30|k10|R {'poison_exposure': 0.992, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m0|a30|k10|S {'poison_exposure': 0.992, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.405, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m0|a30|k10|SL {'poison_exposure': 0.989, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.415, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m0|a30|k10|static {'poison_exposure': 0.992, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m2|a0|k10|C {'poison_exposure': 0.0, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.0, 'recall_principal': 0.45, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.0}
+spread|m2|a0|k10|M {'poison_exposure': 0.0, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.0, 'recall_principal': 0.45, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.0}
+spread|m2|a0|k10|R {'poison_exposure': 0.993, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m2|a0|k10|S {'poison_exposure': 0.05, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.021, 'recall_principal': 0.449, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.047}
+spread|m2|a0|k10|SL {'poison_exposure': 0.05, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.021, 'recall_principal': 0.449, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.047}
+spread|m2|a0|k10|static {'poison_exposure': 0.993, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m2|a10|k10|C {'poison_exposure': 0.991, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m2|a10|k10|M {'poison_exposure': 0.986, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.403, 'recall_principal': 0.416, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.997}
+spread|m2|a10|k10|R {'poison_exposure': 0.991, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m2|a10|k10|S {'poison_exposure': 0.986, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.403, 'recall_principal': 0.416, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.997}
+spread|m2|a10|k10|SL {'poison_exposure': 0.969, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.404, 'recall_principal': 0.417, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.997}
+spread|m2|a10|k10|static {'poison_exposure': 0.991, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m2|a30|k10|C {'poison_exposure': 0.993, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m2|a30|k10|M {'poison_exposure': 0.993, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.404, 'recall_principal': 0.415, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m2|a30|k10|R {'poison_exposure': 0.993, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m2|a30|k10|S {'poison_exposure': 0.993, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.404, 'recall_principal': 0.415, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m2|a30|k10|SL {'poison_exposure': 0.98, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.407, 'recall_principal': 0.418, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.999}
+spread|m2|a30|k10|static {'poison_exposure': 0.993, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m4|a0|k10|C {'poison_exposure': 0.0, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.0, 'recall_principal': 0.45, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.0}
+spread|m4|a0|k10|M {'poison_exposure': 0.0, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.0, 'recall_principal': 0.45, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.0}
+spread|m4|a0|k10|R {'poison_exposure': 0.99, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m4|a0|k10|S {'poison_exposure': 0.0, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.0, 'recall_principal': 0.45, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.0}
+spread|m4|a0|k10|SL {'poison_exposure': 0.0, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.0, 'recall_principal': 0.45, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.0}
+spread|m4|a0|k10|static {'poison_exposure': 0.99, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m4|a10|k10|C {'poison_exposure': 0.992, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m4|a10|k10|M {'poison_exposure': 0.971, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.399, 'recall_principal': 0.417, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.992}
+spread|m4|a10|k10|R {'poison_exposure': 0.992, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m4|a10|k10|S {'poison_exposure': 0.971, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.399, 'recall_principal': 0.417, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.992}
+spread|m4|a10|k10|SL {'poison_exposure': 0.946, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.402, 'recall_principal': 0.419, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.992}
+spread|m4|a10|k10|static {'poison_exposure': 0.992, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m4|a30|k10|C {'poison_exposure': 0.992, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m4|a30|k10|M {'poison_exposure': 0.984, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.404, 'recall_principal': 0.416, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.997}
+spread|m4|a30|k10|R {'poison_exposure': 0.992, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+spread|m4|a30|k10|S {'poison_exposure': 0.984, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.404, 'recall_principal': 0.416, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.997}
+spread|m4|a30|k10|SL {'poison_exposure': 0.95, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.407, 'recall_principal': 0.419, 'avail_hijacked_out': None, 'avail_hijacked_in': 0.996}
+spread|m4|a30|k10|static {'poison_exposure': 0.992, 'recall_hijacked_out': None, 'recall_hijacked_in': 0.406, 'recall_principal': 0.414, 'avail_hijacked_out': None, 'avail_hijacked_in': 1.0}
+1s|m0|a10|k10|S-C|poison_exposure [-0.019, -0.039, -0.004]
+1s|m0|a10|k10|S-C|recall_hijacked_in [-0.044, -0.083, -0.017]
+1s|m0|a10|k10|S-C|recall_hijacked_out [0.002, 0.001, 0.004]
+1s|m0|a10|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+1s|m0|a10|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+1s|m0|a10|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+1s|m0|a30|k10|S-C|poison_exposure [-0.112, -0.145, -0.08]
+1s|m0|a30|k10|S-C|recall_hijacked_in [-0.072, -0.097, -0.049]
+1s|m0|a30|k10|S-C|recall_hijacked_out [0.005, 0.004, 0.006]
+1s|m0|a30|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+1s|m0|a30|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+1s|m0|a30|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+1s|m2|a0|k10|S-C|poison_exposure [0.0, 0.0, 0.0]
+1s|m2|a0|k10|S-C|recall_hijacked_in [0.0, 0.0, 0.0]
+1s|m2|a0|k10|S-C|recall_hijacked_out [0.427, 0.384, 0.47]
+1s|m2|a0|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+1s|m2|a0|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+1s|m2|a0|k10|S-M|recall_hijacked_out [0.427, 0.384, 0.47]
+1s|m2|a10|k10|S-C|poison_exposure [-0.769, -0.812, -0.722]
+1s|m2|a10|k10|S-C|recall_hijacked_in [-0.368, -0.456, -0.29]
+1s|m2|a10|k10|S-C|recall_hijacked_out [0.017, 0.013, 0.021]
+1s|m2|a10|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+1s|m2|a10|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+1s|m2|a10|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+1s|m2|a30|k10|S-C|poison_exposure [-0.415, -0.522, -0.325]
+1s|m2|a30|k10|S-C|recall_hijacked_in [-0.253, -0.312, -0.194]
+1s|m2|a30|k10|S-C|recall_hijacked_out [0.014, 0.01, 0.019]
+1s|m2|a30|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+1s|m2|a30|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+1s|m2|a30|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+1s|m4|a0|k10|S-C|poison_exposure [0.0, 0.0, 0.0]
+1s|m4|a0|k10|S-C|recall_hijacked_in [0.0, 0.0, 0.0]
+1s|m4|a0|k10|S-C|recall_hijacked_out [0.427, 0.384, 0.47]
+1s|m4|a0|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+1s|m4|a0|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+1s|m4|a0|k10|S-M|recall_hijacked_out [0.427, 0.384, 0.47]
+1s|m4|a10|k10|S-C|poison_exposure [-0.788, -0.863, -0.693]
+1s|m4|a10|k10|S-C|recall_hijacked_in [-0.342, -0.409, -0.278]
+1s|m4|a10|k10|S-C|recall_hijacked_out [0.018, 0.014, 0.024]
+1s|m4|a10|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+1s|m4|a10|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+1s|m4|a10|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+1s|m4|a30|k10|S-C|poison_exposure [-0.477, -0.577, -0.382]
+1s|m4|a30|k10|S-C|recall_hijacked_in [-0.298, -0.369, -0.233]
+1s|m4|a30|k10|S-C|recall_hijacked_out [0.015, 0.012, 0.019]
+1s|m4|a30|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+1s|m4|a30|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+1s|m4|a30|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+2s|m0|a10|k10|S-C|poison_exposure [-0.011, -0.02, -0.002]
+2s|m0|a10|k10|S-C|recall_hijacked_in [-0.026, -0.041, -0.012]
+2s|m0|a10|k10|S-C|recall_hijacked_out [0.003, 0.001, 0.005]
+2s|m0|a10|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+2s|m0|a10|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+2s|m0|a10|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+2s|m0|a30|k10|S-C|poison_exposure [-0.034, -0.059, -0.012]
+2s|m0|a30|k10|S-C|recall_hijacked_in [-0.025, -0.04, -0.011]
+2s|m0|a30|k10|S-C|recall_hijacked_out [0.002, 0.001, 0.003]
+2s|m0|a30|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+2s|m0|a30|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+2s|m0|a30|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+2s|m2|a0|k10|S-C|poison_exposure [0.285, 0.238, 0.323]
+2s|m2|a0|k10|S-C|recall_hijacked_in [0.1, 0.061, 0.138]
+2s|m2|a0|k10|S-C|recall_hijacked_out [0.22, 0.184, 0.258]
+2s|m2|a0|k10|S-M|poison_exposure [0.285, 0.238, 0.323]
+2s|m2|a0|k10|S-M|recall_hijacked_in [0.1, 0.061, 0.138]
+2s|m2|a0|k10|S-M|recall_hijacked_out [0.22, 0.184, 0.258]
+2s|m2|a10|k10|S-C|poison_exposure [-0.218, -0.25, -0.185]
+2s|m2|a10|k10|S-C|recall_hijacked_in [-0.168, -0.207, -0.129]
+2s|m2|a10|k10|S-C|recall_hijacked_out [0.012, 0.007, 0.019]
+2s|m2|a10|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+2s|m2|a10|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+2s|m2|a10|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+2s|m2|a30|k10|S-C|poison_exposure [-0.148, -0.212, -0.093]
+2s|m2|a30|k10|S-C|recall_hijacked_in [-0.109, -0.14, -0.077]
+2s|m2|a30|k10|S-C|recall_hijacked_out [0.005, 0.003, 0.007]
+2s|m2|a30|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+2s|m2|a30|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+2s|m2|a30|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+2s|m4|a0|k10|S-C|poison_exposure [0.09, 0.048, 0.138]
+2s|m4|a0|k10|S-C|recall_hijacked_in [0.033, 0.011, 0.059]
+2s|m4|a0|k10|S-C|recall_hijacked_out [0.062, 0.035, 0.089]
+2s|m4|a0|k10|S-M|poison_exposure [0.09, 0.048, 0.138]
+2s|m4|a0|k10|S-M|recall_hijacked_in [0.033, 0.011, 0.059]
+2s|m4|a0|k10|S-M|recall_hijacked_out [0.062, 0.035, 0.089]
+2s|m4|a10|k10|S-C|poison_exposure [-0.513, -0.614, -0.411]
+2s|m4|a10|k10|S-C|recall_hijacked_in [-0.284, -0.332, -0.231]
+2s|m4|a10|k10|S-C|recall_hijacked_out [0.015, 0.01, 0.021]
+2s|m4|a10|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+2s|m4|a10|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+2s|m4|a10|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+2s|m4|a30|k10|S-C|poison_exposure [-0.247, -0.316, -0.181]
+2s|m4|a30|k10|S-C|recall_hijacked_in [-0.163, -0.208, -0.118]
+2s|m4|a30|k10|S-C|recall_hijacked_out [0.011, 0.007, 0.017]
+2s|m4|a30|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+2s|m4|a30|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+2s|m4|a30|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+quarter|m0|a10|k10|S-C|poison_exposure [0.0, 0.0, 0.0]
+quarter|m0|a10|k10|S-C|recall_hijacked_in [-0.004, -0.006, -0.002]
+quarter|m0|a10|k10|S-C|recall_hijacked_out [0.001, 0.0, 0.002]
+quarter|m0|a10|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+quarter|m0|a10|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+quarter|m0|a10|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+quarter|m0|a30|k10|S-C|poison_exposure [-0.01, -0.021, 0.0]
+quarter|m0|a30|k10|S-C|recall_hijacked_in [-0.008, -0.014, -0.003]
+quarter|m0|a30|k10|S-C|recall_hijacked_out [0.003, 0.001, 0.004]
+quarter|m0|a30|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+quarter|m0|a30|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+quarter|m0|a30|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+quarter|m2|a0|k10|S-C|poison_exposure [0.112, 0.055, 0.17]
+quarter|m2|a0|k10|S-C|recall_hijacked_in [0.049, 0.022, 0.08]
+quarter|m2|a0|k10|S-C|recall_hijacked_out [0.059, 0.026, 0.097]
+quarter|m2|a0|k10|S-M|poison_exposure [0.112, 0.055, 0.17]
+quarter|m2|a0|k10|S-M|recall_hijacked_in [0.049, 0.022, 0.08]
+quarter|m2|a0|k10|S-M|recall_hijacked_out [0.059, 0.026, 0.097]
+quarter|m2|a10|k10|S-C|poison_exposure [-0.026, -0.041, -0.01]
+quarter|m2|a10|k10|S-C|recall_hijacked_in [-0.037, -0.048, -0.025]
+quarter|m2|a10|k10|S-C|recall_hijacked_out [0.009, 0.006, 0.012]
+quarter|m2|a10|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+quarter|m2|a10|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+quarter|m2|a10|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+quarter|m2|a30|k10|S-C|poison_exposure [-0.032, -0.053, -0.015]
+quarter|m2|a30|k10|S-C|recall_hijacked_in [-0.022, -0.035, -0.01]
+quarter|m2|a30|k10|S-C|recall_hijacked_out [0.005, 0.003, 0.007]
+quarter|m2|a30|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+quarter|m2|a30|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+quarter|m2|a30|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+quarter|m4|a0|k10|S-C|poison_exposure [0.01, 0.0, 0.03]
+quarter|m4|a0|k10|S-C|recall_hijacked_in [0.002, 0.0, 0.006]
+quarter|m4|a0|k10|S-C|recall_hijacked_out [0.004, 0.0, 0.013]
+quarter|m4|a0|k10|S-M|poison_exposure [0.01, 0.0, 0.03]
+quarter|m4|a0|k10|S-M|recall_hijacked_in [0.002, 0.0, 0.006]
+quarter|m4|a0|k10|S-M|recall_hijacked_out [0.004, 0.0, 0.013]
+quarter|m4|a10|k10|S-C|poison_exposure [-0.086, -0.143, -0.048]
+quarter|m4|a10|k10|S-C|recall_hijacked_in [-0.057, -0.068, -0.046]
+quarter|m4|a10|k10|S-C|recall_hijacked_out [0.016, 0.009, 0.023]
+quarter|m4|a10|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+quarter|m4|a10|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+quarter|m4|a10|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+quarter|m4|a30|k10|S-C|poison_exposure [-0.033, -0.043, -0.023]
+quarter|m4|a30|k10|S-C|recall_hijacked_in [-0.035, -0.049, -0.02]
+quarter|m4|a30|k10|S-C|recall_hijacked_out [0.007, 0.005, 0.009]
+quarter|m4|a30|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+quarter|m4|a30|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+quarter|m4|a30|k10|S-M|recall_hijacked_out [0.0, 0.0, 0.0]
+spread|m0|a10|k10|S-C|poison_exposure [-0.001, -0.004, 0.0]
+spread|m0|a10|k10|S-C|recall_hijacked_in [-0.001, -0.003, -0.0]
+spread|m0|a10|k10|S-C|recall_hijacked_out None
+spread|m0|a10|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+spread|m0|a10|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+spread|m0|a10|k10|S-M|recall_hijacked_out None
+spread|m0|a30|k10|S-C|poison_exposure [0.0, 0.0, 0.0]
+spread|m0|a30|k10|S-C|recall_hijacked_in [-0.001, -0.001, 0.0]
+spread|m0|a30|k10|S-C|recall_hijacked_out None
+spread|m0|a30|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+spread|m0|a30|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+spread|m0|a30|k10|S-M|recall_hijacked_out None
+spread|m2|a0|k10|S-C|poison_exposure [0.05, 0.01, 0.09]
+spread|m2|a0|k10|S-C|recall_hijacked_in [0.021, 0.004, 0.041]
+spread|m2|a0|k10|S-C|recall_hijacked_out None
+spread|m2|a0|k10|S-M|poison_exposure [0.05, 0.01, 0.09]
+spread|m2|a0|k10|S-M|recall_hijacked_in [0.021, 0.004, 0.041]
+spread|m2|a0|k10|S-M|recall_hijacked_out None
+spread|m2|a10|k10|S-C|poison_exposure [-0.005, -0.011, 0.0]
+spread|m2|a10|k10|S-C|recall_hijacked_in [-0.003, -0.006, 0.001]
+spread|m2|a10|k10|S-C|recall_hijacked_out None
+spread|m2|a10|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+spread|m2|a10|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+spread|m2|a10|k10|S-M|recall_hijacked_out None
+spread|m2|a30|k10|S-C|poison_exposure [0.0, 0.0, 0.0]
+spread|m2|a30|k10|S-C|recall_hijacked_in [-0.002, -0.004, -0.001]
+spread|m2|a30|k10|S-C|recall_hijacked_out None
+spread|m2|a30|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+spread|m2|a30|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+spread|m2|a30|k10|S-M|recall_hijacked_out None
+spread|m4|a0|k10|S-C|poison_exposure [0.0, 0.0, 0.0]
+spread|m4|a0|k10|S-C|recall_hijacked_in [0.0, 0.0, 0.0]
+spread|m4|a0|k10|S-C|recall_hijacked_out None
+spread|m4|a0|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+spread|m4|a0|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+spread|m4|a0|k10|S-M|recall_hijacked_out None
+spread|m4|a10|k10|S-C|poison_exposure [-0.021, -0.033, -0.01]
+spread|m4|a10|k10|S-C|recall_hijacked_in [-0.007, -0.011, -0.003]
+spread|m4|a10|k10|S-C|recall_hijacked_out None
+spread|m4|a10|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+spread|m4|a10|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+spread|m4|a10|k10|S-M|recall_hijacked_out None
+spread|m4|a30|k10|S-C|poison_exposure [-0.007, -0.015, 0.0]
+spread|m4|a30|k10|S-C|recall_hijacked_in [-0.002, -0.006, 0.002]
+spread|m4|a30|k10|S-C|recall_hijacked_out None
+spread|m4|a30|k10|S-M|poison_exposure [0.0, 0.0, 0.0]
+spread|m4|a30|k10|S-M|recall_hijacked_in [0.0, 0.0, 0.0]
+spread|m4|a30|k10|S-M|recall_hijacked_out None

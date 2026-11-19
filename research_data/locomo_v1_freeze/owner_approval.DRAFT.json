@@ -1,0 +1,13 @@
+{
+ "UNSIGNED_DRAFT": "To approve: fill approved_by and date, delete this line, save as owner_approval.json in this folder. The paid stages refuse to start without that file, unless the freeze verifies and the digest and cap below match.",
+ "protocol": "reports/PROTOCOL_LOCOMO_V1.md",
+ "protocol_id": "locomo-v1",
+ "freeze_digest": "9d14caba66ca4da31a9cdff0386cacd725df22de50aadbbf00cbe2ac878d0b04",
+ "cap_usd": "30",
+ "judge_check_cap_usd": "1",
+ "draws": 5,
+ "stages": ["paid", "judge-check", "analyse"],
+ "estimate_usd": {"calibrated": 8.568, "raw": 10.604, "pilot_per_call_cross_check": 8.25, "judge_check": 0.05},
+ "approved_by": "",
+ "date": ""
+}

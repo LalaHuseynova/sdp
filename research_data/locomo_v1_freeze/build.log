@@ -1,0 +1,25 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 1376.42it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 1384.86it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 1982.11it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 1787.40it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 1836.71it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights:  59%|█████▉    | 61/103 [00:00<00:00, 600.97it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 682.31it/s]
+{"conv": "conv-26", "questions": 152, "scenarios": 80, "jobs": 91504, "contexts": 10103}
+{"conv": "conv-30", "questions": 81, "scenarios": 80, "jobs": 48762, "contexts": 5327}
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights:  51%|█████▏    | 53/103 [00:00<00:00, 528.57it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 634.09it/s]
+{"conv": "conv-41", "questions": 152, "scenarios": 80, "jobs": 91504, "contexts": 7359}
+{"conv": "conv-42", "questions": 199, "scenarios": 80, "jobs": 119798, "contexts": 9495}
+{"conv": "conv-43", "questions": 178, "scenarios": 80, "jobs": 107156, "contexts": 8848}
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights:  59%|█████▉    | 61/103 [00:00<00:00, 609.60it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 724.25it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights:  47%|████▋     | 48/103 [00:00<00:00, 463.63it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 821.64it/s]
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights:  65%|██████▌   | 67/103 [00:00<00:00, 667.73it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 824.94it/s]
+{"conv": "conv-44", "questions": 123, "scenarios": 80, "jobs": 74046, "contexts": 7983}
+{"conv": "conv-47", "questions": 150, "scenarios": 80, "jobs": 90300, "contexts": 7336}
+{"conv": "conv-48", "questions": 191, "scenarios": 80, "jobs": 114982, "contexts": 9783}
+{"conv": "conv-49", "questions": 156, "scenarios": 80, "jobs": 93912, "contexts": 9847}
+{"conv": "conv-50", "questions": 158, "scenarios": 80, "jobs": 95116, "contexts": 8508}
