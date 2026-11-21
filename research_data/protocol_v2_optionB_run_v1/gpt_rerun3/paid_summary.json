@@ -1,0 +1,10 @@
+{
+  "rows": 3655680,
+  "scope": "cbecb1a3faa6186dfa2ff70a0e89a86cb8f3fd7ac526ad76b4dc393e1d71815c",
+  "spend_usd": {
+    "v2_published_amemguard": "1.01142885",
+    "v2_published_memlineage": "0.0127239",
+    "v2_published_sanitiser": "0.1160157",
+    "v2_stage3": "2.11052805"
+  }
+}

@@ -1,0 +1,9 @@
+Sat Nov 21 07:52:24 UTC 2026
+{
+  "status": "verified",
+  "protocol_v2_digest": "898ddc60de2570d0255a28051e0ae136014f92509b790ad6b580ce057b931f6e",
+  "files": 320,
+  "diffs": []
+}
+{"status": "verified", "files": 224, "diffs": []}
+{"status": "differs", "changed": 0, "missing": 25, "issues": []}
