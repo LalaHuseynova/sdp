@@ -15,8 +15,10 @@ S=research_data/controlled_workload_stage1_test_v4_20261108
 # Rerun 3 (owner, 17 Nov 2026): rerun 2 halted the same way on home Wi-Fi; sessions_rerun2/, gpt_rerun2/ kept.
 # Freeze revision 6: never-connected attempts are retried inside the same call (protocol §15).
 # Freeze revision 7 (owner, 19 Nov 2026): reviewed unknown transport failures booked at worst case and re-sent (protocol §15).
+# Freeze revision 8 (owner, 21 Nov 2026): Haiku answers sent without temperature (endpoints refuse it); 404 reviewable (protocol §15).
+# Freeze revision 9 (owner, 21 Nov 2026): Haiku answers sent with reasoning disabled (it used up the 200-token limit).
 SESS=$RUN/sessions_rerun3
-COMMON="--sessions $SESS --approval $FZ/owner_approval_optionB_rev7.json --freeze $FZ/protocol_v2_optionB_rev7.json --confirm-paid"
+COMMON="--sessions $SESS --approval $FZ/owner_approval_optionB_rev9.json --freeze $FZ/protocol_v2_optionB_rev9.json --confirm-paid"
 case "$1" in
   PB1) uv run python scripts/run_protocol_v2.py conflicts --bundle $B \
          --requests $RUN/precompute/G-T*/conflict_requests.json --out $RUN/conflict_replies_rerun3.json $COMMON ;;

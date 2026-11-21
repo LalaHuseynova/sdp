@@ -1,0 +1,4 @@
+before: blocked=True reason='unresolved_workload_construction_billing' used=$0.0 held=$0.0129 counts={'pending': 0, 'unknown': 1, 'settled': 0, 'breach': 0, 'total': 1} not-completed dispatches=1
+booked at worst case: ['15b06b368f8a4fe8be6a4afc05ca4b90']
+failed rows moved to superseded_dispatches: 1
+after: blocked=False reason='' used=$0.0129 held=$0.0 counts={'pending': 0, 'unknown': 0, 'settled': 1, 'breach': 0, 'total': 1} not-completed dispatches=0

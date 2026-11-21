@@ -191,7 +191,8 @@ def v2_stage(purpose: str, request: ChatRequest, model: str) -> str:
         body = request.messages[-1].content
         ok = (
             request.model == model
-            and request.temperature == 0
+            and request.temperature is None  # revision 8: Haiku 5.5 accepts no temperature
+            and request.reasoning_effort == "none"  # revision 9: no reasoning, like GPT-4o-mini
             and request.max_tokens == 200
             and len(request.messages) == 1
             and "What you remember:" in body
@@ -434,7 +435,7 @@ class ConstructionSession(ExecutionSession):
         # Temperature 1.0 only for A-MemGuard, whose repository setting it is.
         temp_ok = request.temperature == 0 or (
             stage in ("published_amemguard", "v2_generation") and request.temperature == 1.0
-        )
+        ) or (stage == "v2_backbone_answer" and request.temperature is None)  # revision 8
         check(
             type(request) is ChatRequest
             and request.model == self.config["model"]
