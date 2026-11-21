@@ -1,0 +1,5 @@
+20084456	.
+12463892	research_data
+2745612	reports
+931292	.venv-minja
+/dev/disk3s5   239362496 200959100   7787124    97% 1926514 77871240    2%   /System/Volumes/Data

@@ -1,0 +1,4 @@
+18114128	.
+11424972	research_data
+2745612	reports
+/dev/disk3s5   239362496 200155956   9639064    96% 1910832 96390640    2%   /System/Volumes/Data

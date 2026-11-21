@@ -7,6 +7,9 @@ write-before-dispatch journal, BudgetGuard reservation (full-context hold and
 frozen GPT-4o-mini price ceilings), one physical attempt per dispatch ID,
 native-response capture before billing validation, and a halt on any unknown
 outcome. An identical request redispatched returns the saved reply ($0).
+Revision 6 (owner, 17 Nov 2026): an attempt whose connection was never made (DNS, TCP or
+TLS setup failed, so no request byte was sent) is not a physical attempt; it is retried
+inside the same dispatch (`_ConnectRetrySDK`). Every other failure still halts.
 
 Additional limits: dev split only; the three construction stages only; a hard
 task cap (default USD 0.15) measured from the shared ledger at first
@@ -17,9 +20,12 @@ from __future__ import annotations
 
 import json
 import re
+import sys
+import time
 from dataclasses import asdict
 from decimal import Decimal
 from pathlib import Path
+from types import SimpleNamespace
 
 from ams.llm.openrouter_budget import current_key_budget
 from ams.llm.providers.openai_client import OpenAIClient
@@ -34,6 +40,42 @@ from ams.research.execution.session import (
 )
 from ams.research.llm_review.transport import _CaptureSDK
 from ams.research.sequential.clients import response_from
+
+CONNECT_RETRIES, CONNECT_WAIT_S = 10, 30
+
+
+def never_connected(exc) -> bool:
+    """The SDK wraps httpx's connect-phase errors; nothing was sent, nothing billed."""
+    import httpx
+    from openai import APIConnectionError
+
+    return isinstance(exc, APIConnectionError) and isinstance(
+        exc.__cause__, (httpx.ConnectError, httpx.ConnectTimeout)
+    )
+
+
+class _ConnectRetrySDK:
+    """Retry only never-connected attempts (bounded); re-raise everything else unchanged."""
+
+    def __init__(self, sdk):
+        self.sdk, self.base_url = sdk, sdk.base_url
+        self.chat = SimpleNamespace(completions=SimpleNamespace(create=self.create))
+
+    def with_options(self, **kwargs):
+        return _ConnectRetrySDK(self.sdk.with_options(**kwargs))
+
+    def create(self, **kwargs):
+        for attempt in range(1, CONNECT_RETRIES + 2):
+            try:
+                return self.sdk.chat.completions.create(**kwargs)
+            except Exception as exc:
+                if attempt > CONNECT_RETRIES or not never_connected(exc):
+                    raise
+                print(f"connection not made ({type(exc.__cause__).__name__}); "
+                      f"retry {attempt}/{CONNECT_RETRIES} in {CONNECT_WAIT_S}s",
+                      file=sys.stderr, flush=True)  # fmt: skip
+                time.sleep(CONNECT_WAIT_S)
+
 
 SHARED_SESSION = Path("research_data/dynamic_execution_prep_v1_20261031/session")
 APPROVED_SPLITS = {"dev"}
@@ -315,6 +357,49 @@ class ConstructionSession(ExecutionSession):
             self.start_used
         )
 
+    def supersede_reviewed_failures(self, reason: str) -> int:
+        """Revision 7: once the guard booked a failed attempt at its worst case after owner
+        review, move its failed row to `superseded_dispatches` (kept for audit, never deleted)
+        so the same request can be sent again in this session."""
+        self.db.execute("""CREATE TABLE IF NOT EXISTS superseded_dispatches (
+            call_id TEXT NOT NULL, request_key TEXT NOT NULL, stage TEXT NOT NULL,
+            request TEXT NOT NULL, status TEXT NOT NULL, reservation TEXT NOT NULL,
+            result TEXT, result_hash TEXT, native_body TEXT, reason TEXT NOT NULL,
+            superseded_utc TEXT NOT NULL, PRIMARY KEY (call_id, reservation))""")
+        rows = self.db.execute("SELECT * FROM dispatches WHERE status='failed'").fetchall()
+        for row in rows:
+            receipt = self._receipt(row["reservation"])
+            check(
+                receipt["state"] == "settled"
+                and receipt["metadata"].get("worst_case_review") == reason
+                and receipt["actual_nanodollars"] == receipt["reserved_nanodollars"],
+                "Failed dispatch not reviewed at its worst case; refusing to resend",
+            )
+        from datetime import UTC, datetime
+
+        now = datetime.now(UTC).isoformat()
+        self.db.execute("BEGIN IMMEDIATE")
+        try:
+            for row in rows:
+                native = self.db.execute(
+                    "SELECT body FROM workload_native_responses WHERE call_id=?", (row["call_id"],)
+                ).fetchone()
+                self.db.execute(
+                    "INSERT INTO superseded_dispatches VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                    (*[row[k] for k in ("call_id", "request_key", "stage", "request", "status",
+                                        "reservation", "result", "result_hash")],
+                     native[0] if native else None, reason, now),
+                )  # fmt: skip
+                self.db.execute(
+                    "DELETE FROM workload_native_responses WHERE call_id=?", (row["call_id"],)
+                )
+                self.db.execute("DELETE FROM dispatches WHERE call_id=?", (row["call_id"],))
+            self.db.execute("COMMIT")
+        except BaseException:
+            self.db.execute("ROLLBACK")
+            raise
+        return len(rows)
+
     def dispatch_construction(self, request: ChatRequest) -> dict:
         check(hasattr(self, "scope_hash"), "Construction scope not authorized")
         check(
@@ -404,7 +489,7 @@ class ConstructionSession(ExecutionSession):
 
         adapter = OpenAIClient(
             provider="openrouter",
-            sdk_client=_CaptureSDK(self._sdk, capture),
+            sdk_client=_CaptureSDK(_ConnectRetrySDK(self._sdk), capture),
             budget_guard=_TrackedGuard(self, call_id),
             allow_estimated_billing=False,
         )

@@ -30,6 +30,8 @@ uv run python scripts/archive_snapshot.py verify --out research_data/archive_pre
 
 Expected: `verified`; `verified` (224 files); `differs` with `changed: 0, missing: 3`. The 3 missing files are the approved 15 Nov cleanup (the RandEC zip, deleted after its weights were verified; the two v1 SQLite journals, archived with verified SHA-256 restores; `reports/CLEANUP_AUDIT_20261115.md` §6).
 
+**Update 21 Nov 2026 (owner-approved cleanup after P-B2):** expected snapshot result is now `differs` with `changed: 0, missing: 25` (the 3 above + 22 files of 4 deleted dry-run/mock folders, each listed with SHA-256 in `research_data/cleanup_20261121/deleted_files_sha256.txt`; `reports/CLEANUP_AUDIT_20261121.md`).
+
 ## 2. Free precompute (step 1 of Fix 2): conflict-check requests
 
 ```bash

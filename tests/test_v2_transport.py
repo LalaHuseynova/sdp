@@ -133,3 +133,114 @@ def test_purpose_model_pairing(sonnet_session, gpt_session):
     with ConstructionSession(sonnet_session) as s:  # GPT purposes never in a Sonnet session
         with pytest.raises(LedgerError, match="openai/gpt-4o-mini session"):
             s.arm_construction_mock("bundle", "dev", transport, Decimal("0.10"), purpose="stage1")
+
+
+# Revision 6 (owner, 17 Nov 2026): a call whose connection was never made (DNS/TCP/TLS setup
+# failed, so no request byte left the machine) is retried; every other failure still halts.
+
+
+def flaky_wire(failures, exc=httpx.ConnectError):
+    good, seen = wire()
+    calls = []
+
+    def handler(request):
+        calls.append(1)
+        if len(calls) <= failures:
+            raise exc("offline: connection not made", request=request)
+        return good.handle_request(request)
+
+    return httpx.MockTransport(handler), seen, calls
+
+
+@pytest.fixture
+def no_wait(monkeypatch):
+    import ams.research.workload.transport as T
+
+    monkeypatch.setattr(T, "CONNECT_WAIT_S", 0)
+    return T
+
+
+@pytest.mark.parametrize("exc", [httpx.ConnectError, httpx.ConnectTimeout])
+def test_never_connected_call_is_retried_and_billed_once(sonnet_session, no_wait, exc):
+    transport, seen, calls = flaky_wire(3, exc)
+    with ConstructionSession(sonnet_session) as s:
+        s.arm_construction_mock("v2-bundle", V2_SPLIT, transport, Decimal("1.00"),
+                                purpose="v2_generation", approval=approval())  # fmt: skip
+        assert GuardedV2Client(s).complete(gen_request()).text == '{"ok": true}'
+        snap = s.guard.snapshot()
+        assert len(calls) == 4 and len(seen) == 1  # three never-connected tries, one call
+        assert not snap["blocked"] and snap["held_nanodollars"] == 0
+        assert snap["used_nanodollars"] == 100_000  # billed once ($0.0001)
+        rows = s.db.execute("SELECT status FROM dispatches").fetchall()
+        assert [r[0] for r in rows] == ["completed"]
+
+
+def test_connection_never_back_still_halts(sonnet_session, no_wait):
+    transport, seen, calls = flaky_wire(10**6)
+    with ConstructionSession(sonnet_session) as s:
+        s.arm_construction_mock("v2-bundle", V2_SPLIT, transport, Decimal("1.00"),
+                                purpose="v2_generation", approval=approval())  # fmt: skip
+        with pytest.raises(LedgerError, match="no retry"):
+            GuardedV2Client(s).complete(gen_request())
+        assert len(calls) == no_wait.CONNECT_RETRIES + 1 and not seen
+        assert s.guard.snapshot()["blocked"]  # unchanged behaviour after the bounded retries
+
+
+def test_failure_after_sending_is_never_retried(sonnet_session, no_wait):
+    transport, seen, calls = flaky_wire(1, httpx.ReadError)  # request sent, reply lost
+    with ConstructionSession(sonnet_session) as s:
+        s.arm_construction_mock("v2-bundle", V2_SPLIT, transport, Decimal("1.00"),
+                                purpose="v2_generation", approval=approval())  # fmt: skip
+        with pytest.raises(LedgerError, match="no retry"):
+            GuardedV2Client(s).complete(gen_request())
+        assert len(calls) == 1 and s.guard.snapshot()["blocked"]
+
+
+# Revision 7 (owner, 19 Nov 2026): an owner-reviewed transport failure of unknown billing is
+# booked at its full worst case (never lower), its failed row is kept in an audit table, and
+# the same request can then be sent again in the same session.
+
+
+def test_reviewed_timeout_is_booked_at_worst_case_and_resent(sonnet_session, no_wait):
+    transport, seen, calls = flaky_wire(1, httpx.ReadTimeout)  # sent, no reply
+    with ConstructionSession(sonnet_session) as s:
+        s.arm_construction_mock("v2-bundle", V2_SPLIT, transport, Decimal("1.00"),
+                                purpose="v2_generation", approval=approval())  # fmt: skip
+        client = GuardedV2Client(s)
+        with pytest.raises(LedgerError, match="no retry"):
+            client.complete(gen_request())
+        held = s.guard.snapshot()["held_nanodollars"]
+        assert s.guard.snapshot()["blocked"] and held > 0
+        with pytest.raises(LedgerError, match="reviewed"):
+            s.supersede_reviewed_failures("owner_review")  # guard not reviewed yet
+        assert len(s.guard.resolve_unknown_at_worst_case("owner_review")) == 1
+        snap = s.guard.snapshot()
+        assert not snap["blocked"] and snap["held_nanodollars"] == 0
+        assert snap["used_nanodollars"] == held  # booked at the full worst case
+        assert s.supersede_reviewed_failures("owner_review") == 1
+        kept = s.db.execute("SELECT status, reason FROM superseded_dispatches").fetchall()
+        assert [tuple(r) for r in kept] == [("failed", "owner_review")]
+        assert client.complete(gen_request()).text == '{"ok": true}'  # sent again
+        snap = s.guard.snapshot()
+        assert len(calls) == 2 and len(seen) == 1
+        assert snap["used_nanodollars"] == held + 100_000 and not snap["blocked"]
+        assert [r[0] for r in s.db.execute("SELECT status FROM dispatches")] == ["completed"]
+
+
+def test_worst_case_review_refuses_other_stops(tmp_path):
+    g = BudgetGuard(tmp_path / "g.sqlite", "30.00")
+    with pytest.raises(BudgetAccountingError, match="not active"):
+        g.resolve_unknown_at_worst_case("owner_review")  # nothing to review
+    r = g.reserve(MODEL, 100)
+    g.mark_unknown(r, "IncompleteResponse")  # a reply came back: not a transport failure
+    g.halt("unresolved_workload_construction_billing")
+    with pytest.raises(BudgetAccountingError, match="transport"):
+        g.resolve_unknown_at_worst_case("owner_review")
+    g2 = BudgetGuard(tmp_path / "g2.sqlite", "30.00")
+    r2 = g2.reserve(MODEL, 100)
+    g2.mark_unknown(r2, "APITimeoutError")
+    g2.halt("actual_cost_exceeded_reservation")  # a stronger stop is never cleared
+    with pytest.raises(BudgetAccountingError, match="not active"):
+        g2.resolve_unknown_at_worst_case("owner_review")
+    with pytest.raises(BudgetAccountingError, match="reason"):
+        g2.resolve_unknown_at_worst_case("bad reason with spaces")

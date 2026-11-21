@@ -41,6 +41,8 @@ APPROVED_MODELS = {
     "anthropic/claude-haiku-5.5": ("0.10", "0.50"),
 }
 _LABEL = re.compile(r"[A-Za-z0-9_.:/-]{1,128}\Z")
+# Exceptions raised before any reply arrived (revision 7 review only).
+_TRANSPORT_FAILURES = ("APITimeoutError", "APIConnectionError")
 _METADATA_KEYS = frozenset(
     {
         "generation_id",
@@ -514,6 +516,57 @@ class BudgetGuard:
             self._record_review_event(
                 conn, "resume_after_review", reason, expected_blocked_reason, ""
             )
+
+    def resolve_unknown_at_worst_case(self, reason: str) -> list[str]:
+        """Revision 7 (owner, 19 Nov 2026): after an owner review, book every unresolved
+        transport-failure attempt (no reply received) as charged at its FULL reserved worst
+        case, then clear the `unresolved_workload_construction_billing` stop.
+
+        Never lowers a charge. A breach, a settlement discrepancy, a reply-bearing unknown or
+        any other stop cannot be cleared. Recorded as a review event `worst_case:<reason>`.
+        """
+        if not isinstance(reason, str) or not _LABEL.fullmatch(reason) or len(reason) > 100:
+            raise BudgetAccountingError("Pass a short review reason identifier")
+        stop = "unresolved_workload_construction_billing"
+        with self._transaction() as conn:
+            self._audit_totals(conn)
+            config = conn.execute(
+                "SELECT blocked,blocked_reason FROM budget_config WHERE singleton=1"
+            ).fetchone()
+            if not config["blocked"] or config["blocked_reason"] != stop:
+                raise BudgetAccountingError("The reviewable unknown-billing stop is not active")
+            protected = conn.execute("""SELECT COUNT(*) FROM reservations WHERE state='breach'
+                OR error_type IN ('InvalidSettlement','ConflictingSettlement')""").fetchone()[0]
+            if protected:
+                raise BudgetAccountingError("A financial accounting discrepancy cannot be resumed")
+            rows = conn.execute(
+                "SELECT * FROM reservations WHERE state IN ('pending','unknown')"
+            ).fetchall()
+            if not rows or any(
+                r["state"] != "unknown" or r["error_type"] not in _TRANSPORT_FAILURES for r in rows
+            ):
+                raise BudgetAccountingError("Only unknown transport failures can be reviewed")
+            used, held = self._totals(conn)
+            booked = sum(r["reserved_nanodollars"] for r in rows)
+            now = datetime.now(UTC).isoformat()
+            for r in rows:
+                merged = json.loads(r["metadata"])
+                merged.update(worst_case_review=reason, billing_verified=False)
+                conn.execute(
+                    """UPDATE reservations SET state='settled',actual_nanodollars=?,metadata=?,
+                    updated_utc=? WHERE reservation_id=?""",
+                    (
+                        r["reserved_nanodollars"],
+                        json.dumps(merged, sort_keys=True, separators=(",", ":")),
+                        now,
+                        r["reservation_id"],
+                    ),
+                )
+            self._store_totals(conn, used + booked, held - booked)
+            conn.execute("UPDATE budget_config SET blocked=0,blocked_reason='' WHERE singleton=1")
+            self._record_review_event(conn, "resume_after_review", f"worst_case:{reason}", stop, "")
+            self._audit_totals(conn)
+        return [r["reservation_id"] for r in rows]
 
     def snapshot(self) -> dict:
         with self._transaction() as conn:
