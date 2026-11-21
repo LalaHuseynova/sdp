@@ -271,7 +271,7 @@ MPBENCH = [
 
 def validity(vals, convs, run_dir: Path, build_dir: Path):
     out = {}
-    jc = _jsonl(run_dir / "judge_check.jsonl")
+    jc = _jsonl(run_dir / K.JUDGE_CHECK_FILE)  # v1.2 file (v1.1 check failed; kept)
     out["judge_kappa"] = kappa([r["correct"] for r in jc], [r.get("check") for r in jc])
     out["judge_check_n"] = len(jc)
     out["judge_kappa_below_0.6"] = out["judge_kappa"] is not None and out["judge_kappa"] < 0.6
@@ -312,6 +312,12 @@ def validity(vals, convs, run_dir: Path, build_dir: Path):
     return out
 
 
+def _completeness(build_dir, run_dir, draws):
+    from .execute import completeness  # v1.2: reported, counts only
+
+    return completeness(build_dir, run_dir, draws)
+
+
 def analyse(build_dir: Path, run_dir: Path, draws: int) -> dict:
     vals = scenario_values(build_dir, run_dir, draws)
     res = {"protocol": K.PROTOCOL_ID, "draws": draws,
@@ -323,7 +329,8 @@ def analyse(build_dir: Path, run_dir: Path, draws: int) -> dict:
                       "P2_cells": cell_table(vals, K.CONFIRMATORY, "P2"),
                       "P2_contrasts": contrast_table(vals, K.CONFIRMATORY, "P2"),
                       "P1_cells_all10": cell_table(vals, K.CONVS)},
-           "validity": validity(vals, K.CONFIRMATORY, run_dir, build_dir),
+           "validity": {**validity(vals, K.CONFIRMATORY, run_dir, build_dir),
+                        "completeness": _completeness(build_dir, run_dir, draws)},
            "mpbench_comparison": MPBENCH}
     (run_dir / "results.json").write_text(json.dumps(res, indent=1))
     (run_dir / "RESULTS.md").write_text(report(res))

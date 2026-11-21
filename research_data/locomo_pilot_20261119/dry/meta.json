@@ -1,0 +1,20 @@
+{
+ "mode": "dry",
+ "draws": 2,
+ "estimate_draws1": {
+  "jobs": 7634,
+  "unique_answer_prompts": 1474,
+  "nominal_usd": 0.93,
+  "unique_usd": 0.177,
+  "note": "chars/4 token estimate; judge prompt ~160 tokens; 32/4 output tokens"
+ },
+ "estimate_draws2": {
+  "jobs": 14921,
+  "unique_answer_prompts": 2268,
+  "nominal_usd": 1.817,
+  "unique_usd": 0.271,
+  "note": "chars/4 token estimate; judge prompt ~160 tokens; 32/4 output tokens"
+ },
+ "data_sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+ "build_seconds": 137
+}

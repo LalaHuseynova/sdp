@@ -23,6 +23,7 @@ REUSED = (  # reused unchanged code outside the Option B manifest
     "src/ams/core/prompts.py", "src/ams/llm/budget.py", "src/ams/llm/pool.py",
     "src/ams/llm/cache.py", "src/ams/llm/registry.py", "src/ams/llm/providers/openai_client.py",
 )
+PIPELINE = "research_data/locomo_v1_2_pipeline.sh"
 PROMPTS = ("prompts/locomo_qa/v1.txt", "prompts/locomo_judge/v1.txt",
            "prompts/locomo_memory_start/v1.txt", "prompts/sensitive_action/v1.txt")
 
@@ -44,7 +45,10 @@ def collect(build_dir: Path, env: dict) -> dict:
         "frozen_modules": {f: sha(root / f) for f in FROZEN_MODULES},
         "prompts": {f: sha(root / f) for f in PROMPTS},
         "protocol": {K.PROTOCOL_TEXT: sha(root / K.PROTOCOL_TEXT),
-                     K.AMENDMENT_TEXT: sha(root / K.AMENDMENT_TEXT)},
+                     K.AMENDMENT_TEXT: sha(root / K.AMENDMENT_TEXT),
+                     K.AMENDMENT_V1_2_TEXT: sha(root / K.AMENDMENT_V1_2_TEXT)},
+        # v1.2: the public OpenRouter model/endpoint record and the pipeline that runs the stages
+        "v1_2": {K.MODEL_CHECK: sha(root / K.MODEL_CHECK), PIPELINE: sha(root / PIPELINE)},
         "verdicts": {"sensitive_verdicts.json": sha(build_dir.parent / "sensitive_verdicts.json")},
         "data": {"data/locomo/locomo10.json": sha(K.DATA)},
         "build": {p.name: sha(p) for p in sorted(build_dir.glob("*")) if p.is_file()},

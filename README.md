@@ -749,6 +749,155 @@ The original project is credited in the [upstream README](UPSTREAM_README.md), i
 
 Newest entry first. **Future sessions: read this section first, then add an entry after every task.** Each entry records what was done, what was found, which files changed, what is completed or remaining, and the next step. Standing rules: never delete earlier documentation or results; make no paid API calls and no algorithm changes without the project owner's explicit permission.
 
+### 2026-11-20 (Windows machine) — LoCoMo-v1.2 technical restart: fixes, free tests, mock, re-freeze (free; no paid call)
+
+- **Asked:** after the S2 stop, fix the budget-ledger failures, the pipeline stop check and the Haiku judge check. Keep every method, dataset, attack, audit rule, hypothesis and metric unchanged. Preserve all earlier records, run free tests and a full mock, re-freeze, and report for approval. Make no paid calls.
+- **Root causes (measured for free):**
+  - **Ledger:** the frozen strict client calls `guard.snapshot()` on every request. That runs a full-ledger audit inside an exclusive SQLite lock, so each call costs O(ledger) and the ledger lived on slow `/mnt/c`. A 30k-row snapshot took 530 ms there against 24 ms on ext4. With 16 workers the unfair lock starved waiters past the 30 s timeout.
+  - **Judge check:** the id `anthropic/claude-haiku-5.5` is valid, at $0.10 / $0.50. But no Haiku 5.5 endpoint accepts `temperature`, which the frozen client sends with `require_parameters`, so every call got a 404. The $0.10 holds then used up the $1 guard.
+  - **Pipeline:** it looked for the stop record in the wrong file.
+- **Fixes:** all in `locomo_v1/` and `research_data/locomo_v1_2_pipeline.sh`; no frozen or Option B file was touched.
+  - The live ledger becomes a verified copy on WSL ext4, and the original is never written again.
+  - `FixedCeilingGuard`: the full audit runs between batches; reserve and settle still run on every call.
+  - Non-zero exit codes and recorded stops; the pipeline continues only on 0.
+  - `analyse` refuses a stopped or incomplete run.
+  - One retry pass, only for calls that raised.
+  - The judge check drops only `temperature`, starts with a one-call canary, and uses a new $1 guard and output file.
+- **Free verification:**
+  - **Tests:** 26 of 26 pass, 12 of them new: concurrency, cap enforcement, migration and its refusals, parameter compatibility with all five endpoints, canary, unexpected model, retry, S2 stop, preservation.
+  - **Rehearsal** on a copy of the real ledger, with conv-42's real prompts, the frozen client and guard, and a fake SDK: 9,694 calls at 16 workers, 0 failures, 134 calls/s, ledger consistent.
+  - **Full mock:** 149,196 calls, 0 failures, 85,254 of 85,254 keys complete, analysis ran.
+  - **CLI:** `analyse` refuses after a stop and without a judge check (exit 6).
+- **Freeze v1.2:**
+  - Digest `f04cc850dbfeda0552e98e2e7a3b6ef56b2b7da464d0c092b5785652ec45be5e`; it verifies, and Option B verifies.
+  - Build, prompts, data, verdicts, draws, frozen modules and environment are identical to v1.1.
+  - The only changed config value is `PROTOCOL_ID`; 8 constants were added, all infrastructure.
+- **Preservation:** `research_data/locomo_v1_freeze/preservation_record_v1_2.json` covers the logs (prefix hashes), the v1.1 ledgers, the failed judge check, the quarantine (still unread) and the response cache (27,361 rows). `preflight` re-checks it: everything is preserved.
+- **Cost:**
+  - **Spent:** $2.19 settled and $5.74 held.
+  - **Remaining:** 62,762 answer prompts; calibrated estimate $6.25 (raw $7.73); $22.07 of the $30 cap is left.
+  - **Haiku:** new $1 guard.
+- **Files:**
+  - **New:** `reports/PROTOCOL_LOCOMO_V1_2_AMENDMENT.md`, `research_data/locomo_v1_2_pipeline.sh`, `locomo_v1/tests/test_v1_2_restart.py`, the `freeze_manifest_v1_2.json`, `openrouter_model_check_v1_2.json` and `preservation_record_v1_2.json` files in `research_data/locomo_v1_freeze/`, and `research_data/locomo_v1_2_mock/`.
+  - **Edited:** `locomo_v1/{config,execute,analysis,__main__,freeze}.py`.
+- **Next:** the owner's approval, `owner_approval_v1_2.json` naming the digest and the caps, then the paid resume via the v1.2 pipeline.
+
+### 2026-11-20 (Windows machine, ~00:15) — LoCoMo-v1.1 paid run: stopped by rule S2 (technical failure; no results)
+
+- **Ran:** the approved v1.1 pipeline (freeze `373e4b5a…`, cap $30 + $1).
+- **Stopped by pre-registered rule S2** (more than 2% of calls failed) after conversation 3 of 10:
+  - conv-26: 0 of 12,209 calls failed.
+  - conv-30: 33 of 18,881 failed.
+  - conv-41: 617 of 27,978 failed (2.2%).
+  - **Every failure is `BudgetAccountingError('Budget database operation failed')`:** the strict-budget SQLite file on `/mnt/c` couldn't keep up with 16 concurrent workers under WSL. This was not an API or model failure. Failures grew as conversations got bigger.
+- **Judge check failed 400 of 400:** the model id `anthropic/claude-haiku-5.5` in `locomo_v1/config.py` returned NotFound (404) from OpenRouter. 9 reservations are held at "unknown"; nothing should be billed for a 404.
+- **Pipeline bug:** `locomo_v1_1_pipeline.sh` looked for the stop record in `progress.jsonl`, but it is written only to the log. So `analyse` ran on partial data. Its outputs were moved **unread** to `research_data/locomo_v1_run/quarantine_S2_partial_analysis_UNREAD/`. **No outcome has been inspected.**
+- **Spend (main guard):**
+  - $2.19 settled.
+  - $5.74 held: 263 reservations left pending, with no settle recorded, plus 36 connection errors.
+  - Worst-case total is $7.93, and the true amount is likely much lower; the OpenRouter dashboard has the actual figure.
+  - Judge-check guard: $0 settled, $0.90 held.
+- **Kept for resumption:** `answers.jsonl`, `judgements.jsonl`, and the response cache. Finished calls replay at $0.
+- **Next (needs owner approval):**
+  - an infrastructure-only fix, with the method, attacks, audits and metrics unchanged: lower concurrency, put the guard DB on WSL's native filesystem, and/or retry calls that were refused before sending;
+  - correct the Haiku model id; this is a config change, so it needs an amendment and a re-freeze;
+  - fix the pipeline's stop check;
+  - then resume from conv-41.
+
+### 2026-11-19 (Windows machine, night) — LoCoMo-v1 run paused; v1.1 amendment adds S2-ID; SAFE-Mem judged not fairly comparable on LoCoMo
+
+- **Committed:** `262b85c` (LoCoMo-v1 code, protocol and freeze). The v1 freeze re-verified (`9d14caba…`). The owner's chat approval was recorded in `owner_approval.json`.
+- **Paid run:** started, then **stopped on the owner's request** to add methods, during conv-26. No outcome was inspected.
+  - Spend: $0.64 settled, plus $0.83 held for 35 calls with unknown billing (connection errors).
+- **S2-ID:** added as amendment v1.1 (`reports/PROTOCOL_LOCOMO_V1_1_AMENDMENT.md`).
+  - Composition: SL plus the frozen MemLineage gate, using recorded SensitiveAction verdicts. Descriptive only; H1–H6 unchanged.
+  - Expected to equal SL, because LoCoMo's questions are fact recall.
+- **Original SAFE-Mem:** not added.
+  - It needs a different memory substrate (extracted claims), a separate store per poisoned scenario and new retrieval bindings.
+  - A fair comparison would move every arm onto it; that is a separate experiment.
+  - The SAFE-Mem comparison stays on MPBench.
+- **Code:** S2-ID cells, `sensitive` stage (separate $1 guard and its own approval), v1.1 freeze names. 14 tests pass.
+- **Next:** ⏸ the owner approves the SensitiveAction precompute (≤ $1); then rebuild, estimate, mock, v1.1 freeze and a new approval; then resume.
+
+### 2026-11-19 (Windows machine, evening) — LoCoMo-v1 second-dataset evaluation: final protocol, implementation, free checks, freeze (free; nothing paid)
+
+- **Protocol:** `reports/PROTOCOL_LOCOMO_V1.md` (final; supersedes the draft).
+  - LoCoMo is the paper's second dataset.
+  - Frozen R/C/M/S/SL; 8 unseen conversations are confirmatory.
+  - H1–H6; exact sign-flip tests; Holm m = 6.
+  - Pre-specified transfer rules against MPBench.
+- **Code:** `locomo_v1/` (12 tests pass). It reuses the feasibility generator, `ams.eval.locomo`, the strict guard and the frozen modules, unchanged.
+- **Free checks:**
+  - deterministic build of 800 scenarios (rebuild is byte-identical after fixing the gzip timestamp);
+  - estimate: 85,254 unique answer prompts, $8.57 calibrated ($10.60 raw), so 5 draws;
+  - full mock run: 149,196 calls, 0 failures; analysis end to end; R = none except audited targets (1.0); S ≡ M under A2 (1.0);
+  - OpenRouter ids and prices checked (free model list).
+- **Freeze:** `research_data/locomo_v1_freeze/freeze_manifest.json`, digest `9d14caba66ca4da31a9cdff0386cacd725df22de50aadbbf00cbe2ac878d0b04`; verified; Option B verified.
+- **Approval draft:** `owner_approval.DRAFT.json` (unsigned).
+- **Next:** ⏸ owner signs `owner_approval.json`; then paid, judge-check, analyse.
+
+### 2026-11-19 (Windows machine) — Full LoCoMo protocol drafted for approval (free; nothing run)
+
+- **Protocol:** `reports/PROTOCOL_LOCOMO_FULL_20261119.md` (draft).
+- **Data:**
+  - the confirmatory set is the 8 conversations never answered;
+  - conv-48 and conv-49 (pilot) are secondary;
+  - the retrieval-level inspection of all 10 is disclosed.
+- **Matrix:**
+  - 10 conversations × 2 orientations × 5 draws × 4 equally weighted hijack shapes (1s, 2s, ¼, spread);
+  - auditors A1 and A2 (A3 descriptive);
+  - arms none, R, C, M, S, SL;
+  - attacks P1 (pilot attack) and P2 (same-conversation values, secondary).
+- **Hypotheses:** H1–H6, including the H4 security non-inferiority, which is predicted to fail.
+- **Statistics:** exact sign-flip tests over conversations, Holm m = 6.
+- **Validity checks:** Haiku judge κ, F1, chance ASR, equivalences.
+- **Cost:** estimate about $19 (range $10–25); caps $30 + $1.
+- **Stopping criteria:** S1–S3; one analysis.
+- **Next:** ⏸ the owner approves (protocol §15); then tests, mock, dry run, freeze and signature before any paid call.
+
+### 2026-11-19 (Windows machine) — LoCoMo real-LLM pilot (owner-approved, cap $5; spent $0.219)
+
+- **Done:**
+  - Pre-registered before any call (`research_data/locomo_pilot_20261119/PREREGISTRATION.md`).
+  - Free dry run (estimate $0.27; 2 draws) and mock run (0 errors).
+  - The only fix: nltk 3.10.4 (the uv.lock pin) installed in a separate overlay `~/venvs/locomo_overlay`; the locked venv is untouched.
+  - The paid run used conv-48 and conv-49 (seeded draw); hijacks 1 session, 2 sessions, spread × 2 draws; auditors A1 (2 incidents) and A2 (+10 random); arms none, C, M, S; GPT-4o-mini answers and judge.
+  - **3,398 calls, $0.21898665**, 0 errors, guard never blocked. Frozen methods unchanged.
+- **Results (exploratory):**
+  - **Q1:** no-defence ASR .458 vs clean 0. Passes.
+  - **Q2:** S ASR .097 (A1) / .318 (A2). Passes.
+  - **Q3:** 1 session × A1, unaffected-session accuracy S .380 vs C/M .104 (+.276; +.295 and +.255 per conversation) at equal ASR 0. Passes.
+  - **Q4:** 2 sessions × A1, S ASR .292 vs C/M 0 (S's cost).
+  - **Q5:** retrieval → answer sign agreement 12/16.
+  - Under A2, C fails (ASR = no defence) and S ≡ M exactly.
+- **Assessment:** the regime map carries over to real answers.
+  - The full 10-conversation run is justified as a pre-registered regime map, estimated at $5–10 with a proposed cap of $15.
+  - It is not justified as a claim that S dominates. The attack is conservative (random wrong values).
+- **Report:** `reports/LOCOMO_PILOT_20261119.md`.
+- **Next:** ⏸ owner approves the full-run pre-registration.
+
+### 2026-11-19 (Windows machine, late night) — LoCoMo feasibility for frozen S/SL (free, retrieval level, no LLM)
+
+- **Done:**
+  - Downloaded LoCoMo (`data/locomo/`, CC BY-NC, SHA-256 `79fa87e9…`).
+  - Ran the frozen R/C/M/S/SL decisions on natural provenance (turn = root, speaker = contributor, session = batch, conversation = context) under random hijacks (1 session, 2 sessions, ¼, spread; 5 draws × 20 conversation-orientations) and incident or random auditors.
+  - Retrieval: MiniLM over turns.
+  - No frozen file changed; every direct-decide spot-check passed. One in-process memo of `EvidenceSnapshot.revision` (speed only).
+- **Found:**
+  - S is selective only for single-session compromise with incident audits: unaffected-session evidence recall S .43 vs C/M 0 at equal 0 exposure.
+  - Over 2 sessions, S leaks (+.29 exposure) or escalates to C/M.
+  - With safe verdicts mixed in, C is diluted and contains nothing (exposure .99), while S ≡ M exactly.
+  - Random-only auditing finds too little poison to trigger anything.
+  - SL adds almost nothing.
+- **Assessment:**
+  - Natural sessions and independent utility labels are genuinely new.
+  - The decision-level regime structure repeats MPBench's localized/distributed dependence.
+  - The result is defensible as a regime map, not as a blanket win.
+- **Recommendation:** a small answer-level pilot (about $1–3, cap $5) before any main design.
+- **Report:** `reports/LOCOMO_FEASIBILITY_20261119.md`.
+- **Next:** ⏸ owner decision.
+
+
 ### 2026-11-15 (Phase 2, steps 2.1–2.3) — Option B protocol finalised, freeze manifest prepared (not active), paid stages ready (free)
 
 **Scope (owner, decision 36):** option B. All 11 methods (+ 5 appendix methods) on every registered condition (62 cells, 272 runtime conditions) of the MPBench-derived v4 test split (24 groups), Claude Haiku on Table 1 + the hypothesis cells. **Labelled replication evidence, not fresh held-out, not confirmatory:** v4 was the protocol-v1 locked test, so H1/H2 are near re-measurements of v1's tests; H3–H6 involve methods and conditions never run on v4. The full v5 plan is kept unchanged as the future evaluation.

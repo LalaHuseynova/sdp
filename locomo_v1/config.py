@@ -6,9 +6,10 @@ from __future__ import annotations
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-PROTOCOL_ID = "locomo-v1.1"
+PROTOCOL_ID = "locomo-v1.2"
 PROTOCOL_TEXT = "reports/PROTOCOL_LOCOMO_V1.md"
 AMENDMENT_TEXT = "reports/PROTOCOL_LOCOMO_V1_1_AMENDMENT.md"  # v1.1: adds S2-ID
+AMENDMENT_V1_2_TEXT = "reports/PROTOCOL_LOCOMO_V1_2_AMENDMENT.md"  # v1.2: technical restart
 DATA = REPO / "data" / "locomo" / "locomo10.json"
 DATA_SHA256 = "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4"
 FEASIBILITY = REPO / "research_data" / "locomo_feasibility_20261119" / "feasibility.py"
@@ -45,6 +46,15 @@ SENSITIVE_PROMPT_VERSION = "v1"
 SENSITIVE_CAP_USD = "1"
 PILOT_CALIBRATION = 0.21898665 / 0.271  # pilot: actual spend / chars-per-4 estimate
 MAX_ERROR_RATE = 0.02
+
+# v1.2 technical restart (infrastructure only; reports/PROTOCOL_LOCOMO_V1_2_AMENDMENT.md)
+STATE_DIR = Path.home() / ".locomo_v1_state"  # live strict-guard ledger on WSL ext4, not /mnt/c
+GUARD_MIGRATION = "guard_migration_v1_2.json"  # record of the verified ledger copy
+JUDGE_CHECK_FILE = "judge_check_v1_2.jsonl"  # v1.1's failed file is kept unchanged
+JUDGE_CHECK_GUARD = "judge_check_guard_v1_2.sqlite"  # v1.1's guard holds $0.90 for 9 HTTP 404s
+JUDGE_CHECK_DROP = ("temperature",)  # no Haiku 5.5 endpoint accepts it (require_parameters)
+RETRY_PASSES = 1  # one more pass over keys whose call raised (technical errors only)
+MODEL_CHECK = "research_data/locomo_v1_freeze/openrouter_model_check_v1_2.json"
 
 # statistics (protocol section 7)
 ALPHA = 0.05

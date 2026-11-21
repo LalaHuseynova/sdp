@@ -8,7 +8,12 @@
   paid                 PAID: refuses unless the freeze verifies and the owner's approval names
                        the digest and the cap
   judge-check          PAID (separate $1 guard), after `paid`
-  analyse              free: once, after the run
+  analyse              free: once, after the run; refuses a stopped or incomplete run
+  preflight            free, read-only (v1.2): freeze, preservation of every earlier record,
+                       ledger state, remaining-cost estimate
+
+Exit codes (v1.2): 0 ok; 3 run stopped (S2) or incomplete; 5 judge check failed; 6 analysis
+refused. The pipeline continues only on 0.
 """
 
 from __future__ import annotations
@@ -24,8 +29,9 @@ from . import config as K
 
 FREEZE_DIR = K.REPO / "research_data" / "locomo_v1_freeze"
 BUILD = FREEZE_DIR / "build"
-MANIFEST = FREEZE_DIR / "freeze_manifest_v1_1.json"  # v1.1 (v1 manifest kept)
-APPROVAL = FREEZE_DIR / "owner_approval_v1_1.json"
+MANIFEST = FREEZE_DIR / "freeze_manifest_v1_2.json"  # v1.2 (v1, v1.1 manifests kept)
+APPROVAL = FREEZE_DIR / "owner_approval_v1_2.json"
+PRESERVATION = FREEZE_DIR / "preservation_record_v1_2.json"
 DRAWS_FILE = FREEZE_DIR / "draws.json"
 
 
@@ -48,6 +54,29 @@ def _build_one(cid):
 
 def draws() -> int:
     return json.loads(DRAWS_FILE.read_text())["draws"]
+
+
+def _judge_ok(r: dict) -> bool:
+    return not r.get("canary_failed") and r["n"] > 0 and r["failed"] / r["n"] <= K.MAX_ERROR_RATE
+
+
+def _analysable(run_dir: Path) -> list:
+    """Reasons the analysis must not run (counts and flags only; no outcome is read)."""
+    from .execute import _read, completeness
+
+    why = []
+    prog = _read(run_dir / "progress.jsonl")
+    last = [r for r in prog if "segment" in r and "started_utc" in r]
+    seg_start = prog.index(last[-1]) if last else 0
+    tail = prog[seg_start:]
+    if any("stop" in r for r in tail) or not any("segment_done" in r for r in tail):
+        why.append("the last execution segment stopped or did not finish")
+    c = completeness(BUILD, run_dir, draws())
+    if c["missing_answers"] or c["missing_judgements"]:
+        why.append(f"incomplete: {c}")
+    if not (run_dir / K.JUDGE_CHECK_FILE).exists():
+        why.append(f"{K.JUDGE_CHECK_FILE} missing")
+    return why
 
 
 def main():
@@ -81,8 +110,18 @@ def main():
 
         rd = Path(a.run)
         rd.mkdir(parents=True, exist_ok=True)
-        print(json.dumps(run(BUILD, rd, "mock", draws(), a.workers)))
-        print(json.dumps(judge_check(rd, "mock")))
+        r = run(BUILD, rd, "mock", draws(), a.workers)
+        print(json.dumps(r))
+        if r["stopped"]:
+            sys.exit(3)
+        j = judge_check(rd, "mock")
+        print(json.dumps(j))
+        if not _judge_ok(j):
+            sys.exit(5)
+        why = _analysable(rd)
+        if why:
+            print(json.dumps({"analysis_refused": why}))
+            sys.exit(6)
         res = analyse(BUILD, rd, draws())
         print(json.dumps({h: {k: v[k] for k in ("p_iut", "reject")}
                           for h, v in res["confirmatory"]["hypotheses"].items()}))
@@ -118,12 +157,35 @@ def main():
         rd = Path(a.run)
         rd.mkdir(parents=True, exist_ok=True)
         if a.stage == "paid":
-            print(json.dumps(run(BUILD, rd, "paid", draws(), a.workers)))
+            r = run(BUILD, rd, "paid", draws(), a.workers)
+            print(json.dumps(r))
+            sys.exit(3 if r["stopped"] else 0)
         else:
-            print(json.dumps(judge_check(rd, "paid")))
+            if _analysable(rd) != [f"{K.JUDGE_CHECK_FILE} missing"]:
+                raise SystemExit(f"judge check needs a complete run: {_analysable(rd)}")
+            j = judge_check(rd, "paid")
+            print(json.dumps(j))
+            sys.exit(0 if _judge_ok(j) else 5)
+    elif a.stage == "preflight":
+        from .execute import estimate, ledger_summary, preservation
+        from .freeze import verify
+
+        rd = Path(a.run)
+        out = {"freeze": {k: v for k, v in verify(BUILD, MANIFEST, environment()).items()
+                          if k != "option_b"} if MANIFEST.exists() else "no v1.2 manifest yet",
+               "preservation": preservation(rd, PRESERVATION),
+               "ledger_at_stop": ledger_summary(rd / "budget_guard.sqlite"),
+               "migration_record": json.loads((rd / K.GUARD_MIGRATION).read_text())
+               if (rd / K.GUARD_MIGRATION).exists() else None,
+               "remaining": estimate(BUILD, draws(), run_dir=rd)}
+        print(json.dumps(out, indent=1))
     elif a.stage == "analyse":
         from .analysis import analyse
 
+        why = _analysable(Path(a.run))
+        if why:
+            print(json.dumps({"analysis_refused": why}))
+            sys.exit(6)
         res = analyse(BUILD, Path(a.run), draws())
         print((Path(a.run) / "RESULTS.md").read_text())
     else:

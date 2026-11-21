@@ -1,0 +1,294 @@
+{
+ "digest": "f04cc850dbfeda0552e98e2e7a3b6ef56b2b7da464d0c092b5785652ec45be5e",
+ "option_b": {
+  "frozen_modules_match_option_b": true,
+  "mismatch": [],
+  "option_b_verified": true
+ },
+ "protocol_id": "locomo-v1.2",
+ "files": {
+  "code": {
+   "locomo_v1/__init__.py": "f6fdb94acb5f4b1560c26eebd0ab79fcbaa319c7575f800733e4cb4a7a79bf77",
+   "locomo_v1/__main__.py": "4a67e5074a6c1c9a65aca94df6cf9bb6aa386b21b955a72ee2db8d8b796e6ad5",
+   "locomo_v1/analysis.py": "68a2c304abe12968e88f9bfb61e64952c651db8dbd2ca0e8ac041ce4234ec8f1",
+   "locomo_v1/build.py": "40daf17e6e9aaa5d2c2cdf411672b5316d7d29fd80429a3361e30d0903fb9ce6",
+   "locomo_v1/config.py": "a3a8978cbcabc2d1dd5606f69df14531a68720edb891e64ce3371b1da5f95a8a",
+   "locomo_v1/execute.py": "33b4887be3d8d96e54339a2ad12203e536e16569f8f0405fefc0949be0b8b59a",
+   "locomo_v1/freeze.py": "429407ec73d27dc127b40cf7a8bc643da28c4724331fc8c4b5a61db8fda83132",
+   "locomo_v1/tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "locomo_v1/tests/test_locomo_v1.py": "3f245f7bd58c187c7105fe7f2bbf453d7a45d291a07e5f96c79a4349a8971d25",
+   "locomo_v1/tests/test_v1_2_restart.py": "138ec1c56e3c5c36f9f6cf10974a0b76251b65d817444f2587d578e214ff50e2"
+  },
+  "reused": {
+   "research_data/locomo_feasibility_20261119/feasibility.py": "d6fdc25003d00ca41ede2e68c07deb4500cea803a2fb6464a25173781f87956c",
+   "minja_v2/adapter.py": "428a8d16b386e5eb608ffaa82100ef4eaab2b787b2ed49da50afe922c22c5f4d",
+   "minja_v2/runner.py": "7160d95cfb4ea36adc8fac9c846bbc586cf494b65f746974e0cac4dbcf7de3e2",
+   "src/ams/eval/locomo.py": "c78bb9fc3bff8d2367f7ae1e02db0646abb90f7c37805ca506c8fb64b3acc311",
+   "src/ams/data/locomo.py": "1761b598a26c71ef4a7b295a29b57948d3876759b686f8a33f79f8b94f046c41",
+   "src/ams/core/prompts.py": "eee842a9c9c98b66ffed5d716565ec40c8759865058864afb3906b2acbb684fe",
+   "src/ams/llm/budget.py": "e69e6b30f6cb72b86cf39c79b8ab5d2c15dba051cb94bc5f85222f56614e312a",
+   "src/ams/llm/pool.py": "c5483db90f1a9ede4fe6c7c430e56e17df64d032c9f3d078983d4136c3f6602d",
+   "src/ams/llm/cache.py": "0dbf26e27bd6ea3f842352eae652ff249dd1d1c3979f3f826e35ed3df9ac4349",
+   "src/ams/llm/registry.py": "b78b9fd9500a84f6a0fbb4d1543de641d98d51b40856d2b9347e220d7708c47b",
+   "src/ams/llm/providers/openai_client.py": "dde7f8e74303193f2ae045c064dade70428c25e81a78ad0f0343259a2a6b3152"
+  },
+  "frozen_modules": {
+   "src/ams/research/dynamic/ledger.py": "302e97da0a276f9686608179ff03a1febd279dfeb742d509498ea9273683c31f",
+   "src/ams/research/dynamic/policies.py": "a7d325ed7569dc9d8dc1696f5a331aa08acdd99d589fb2696fd6e3ffb58fb421",
+   "src/ams/research/dynamic/models.py": "023e5452c53428bc53b4138d38fd2b92d93193605bd975a49e3e8454dedd1524",
+   "src/ams/research/workload/lineage.py": "035b911bdde857346775b6ce609ebfd4d3d4b64c5f954c725ef26bf0f6dc90c6",
+   "src/ams/research/workload/integration.py": "ef1d969526334e428c120905a2bec649cd2cec3fe541a23e5dad6a52d14364d0",
+   "src/ams/research/workload/sv2.py": "10e0d7f29a35943d36dcca819f59608cc59384d5f37d9b1c9687413b130ceb5a",
+   "src/ams/baselines/memlineage.py": "2de989077e701ce81cf9252f957c6ae208de33f4132398ead5350b545e41df5c"
+  },
+  "prompts": {
+   "prompts/locomo_qa/v1.txt": "b16d23268297256fc13a5406109004ccd3091342e0f9d37cdc5503836b5e1e88",
+   "prompts/locomo_judge/v1.txt": "0dbab6aa68562b45c3c7d600f325875c53cfb7c604f763eaaa100046964b781b",
+   "prompts/locomo_memory_start/v1.txt": "7bd9c7759bba62d003003799d95dfc444348b12a2e1816443e2f6b38c9081388",
+   "prompts/sensitive_action/v1.txt": "0dfb417c266816afff3e2464fa94917a5b0498fcd5c1ce2f1c4d4beeaf5e373f"
+  },
+  "protocol": {
+   "reports/PROTOCOL_LOCOMO_V1.md": "8177510de19cae485fdd1d5af7104d775f402f6a6adb9221a8320623896f38fc",
+   "reports/PROTOCOL_LOCOMO_V1_1_AMENDMENT.md": "77405c318df5a92beec781a7fab59eb7f8c01b3efff53fcb03d7a45191147708",
+   "reports/PROTOCOL_LOCOMO_V1_2_AMENDMENT.md": "264849b3ad1ab5ebaf552c556b7021b2cc7e744f05455db4e65905b70e175d87"
+  },
+  "v1_2": {
+   "research_data/locomo_v1_freeze/openrouter_model_check_v1_2.json": "d2547b2872b1a1d2b3a9f42dc77e58062cf52acf006b44f6a52bfeb61ceac471",
+   "research_data/locomo_v1_2_pipeline.sh": "031994a11aab869773fac5dc9f4a85ff7bcf14f4113dd82ff48e4f3d2e446e47"
+  },
+  "verdicts": {
+   "sensitive_verdicts.json": "4ca18f674301b1cd6df275dcbc48e1d2cb3de19c515a1004cf1a51e879116f84"
+  },
+  "data": {
+   "data/locomo/locomo10.json": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4"
+  },
+  "build": {
+   "conv-26.contexts.jsonl.gz": "1ca8b19db6f3eae225fd58e7616ca896522ead28344f974dd2a3688ebf10e0d0",
+   "conv-26.jobs.jsonl.gz": "10092a546d427140b57a53d91023bc8c301d27ab964a4babd928a2169f548d4b",
+   "conv-26.scenarios.json": "5d38e23a4473e7e443e2693f68f7287d7e429cfc8715a1e754015ed17b168c48",
+   "conv-30.contexts.jsonl.gz": "e86920483808c2e38e3ec94ab53e6a4583110c33f0ae696bd5c678794399af32",
+   "conv-30.jobs.jsonl.gz": "31ba33367ef6f32dcbd328d96e4264e1a3a4056d7b32cdfb65edcb31e4b974f7",
+   "conv-30.scenarios.json": "b77827174dd5385ea1dd5c878cc780625ca780b275494274c8153d2541964b57",
+   "conv-41.contexts.jsonl.gz": "236ae4c2b856f4f3a30a6001b29ce38104739121185e9f2dd388ee6a149af904",
+   "conv-41.jobs.jsonl.gz": "1262a4abc2a102e3bd9df00bebe810f767c4f135d6e3574876d3700bedfd0aaa",
+   "conv-41.scenarios.json": "f545c39b7b05fd9e5bc04d3c5247680b879fb73c2a1d4917cafaac09c05e3377",
+   "conv-42.contexts.jsonl.gz": "bad96fd59beb284d885d75734adb4796cbdc32625154d6effa8ca26165f9e060",
+   "conv-42.jobs.jsonl.gz": "f8940a0f434380bc6344e6f5fc992902200f87a874e9e1534bb0e1d6382f2635",
+   "conv-42.scenarios.json": "63b53af9de8a2476a04e5de54a3cff5c0ef704a1a013ac57ab65ca31492080cd",
+   "conv-43.contexts.jsonl.gz": "52dba1005c49fb1a2e30f7ff5cebeb77bbf99949b183dc5d9438160f32179749",
+   "conv-43.jobs.jsonl.gz": "bd95630de0c6c898c10a87d8ae2c3ecba9f3385de08806a4674b19e9d4da610a",
+   "conv-43.scenarios.json": "56d804207c22ec7afc015fefc143728fc0cc800b16bc3f4f6dc88b8fd848120a",
+   "conv-44.contexts.jsonl.gz": "59b888ce2d311b7f0fd5bb00685536c545bb4e438a5cfb064b9d53466168e1ac",
+   "conv-44.jobs.jsonl.gz": "525206c35f79e1e327adfa5d55961dc0c76904907c0ba81d435ea742de4de4bb",
+   "conv-44.scenarios.json": "2e43555e89684829efe5b41a9754548e3e0aeefed05442f36b934e66ca04eb53",
+   "conv-47.contexts.jsonl.gz": "0ac37cda7ba49852d2f1119a9458eefb86aa5a0a60d9a2b73400130dd9e84d0a",
+   "conv-47.jobs.jsonl.gz": "e9103dfbe2817c16f07af153a6ed50a2b11be12e6af85b6af3cb6d5351272471",
+   "conv-47.scenarios.json": "936c8bbf491091f17dba140d23aaf3a75f607f1cf98e2cd5db0cbedf4142116b",
+   "conv-48.contexts.jsonl.gz": "be7f1e364e0b3000780cc880a9a95003bb234043e6f8268cc4e1a40a1bb63c22",
+   "conv-48.jobs.jsonl.gz": "b3c5a353721543999248019756fe362fc290aeab5df310b98e546053a34f01ef",
+   "conv-48.scenarios.json": "9855cddad3b2b5a4f3ac5c4543a7d9804dfdc50d39ad65a54447546fb17d1b86",
+   "conv-49.contexts.jsonl.gz": "41fb1faf11c21da2dc4e77faa69f134e0b6388342031e1365a8935bda2cdbec8",
+   "conv-49.jobs.jsonl.gz": "e810124257a02c4963ae11b9b1eeff800b28c365dd2d35fca2bc9693aff393aa",
+   "conv-49.scenarios.json": "35d74fceafdbd6d650bf7e80e7f08b8ec46aaba1d4e1652de9b7f4e567074d7c",
+   "conv-50.contexts.jsonl.gz": "4956582d4db2dd36b12dff0766872ddd8b3e0f1b77a56e18b4036a7d134fff0b",
+   "conv-50.jobs.jsonl.gz": "29a0734f713bb110f78c800dd628aa46d66289482e9f75b096b6ddceaacc8673",
+   "conv-50.scenarios.json": "45669efa2af103fe7fe17c80776a521bc312a4aab4c2eb7e263720f0df4091eb"
+  },
+  "draws": {
+   "draws.json": "c58f3c1bbf04a908660fe7c86e358eb73ca18f9e3c2d34b3fbc5dc42cd3052dc"
+  }
+ },
+ "environment": {
+  "python": "3.11.16",
+  "packages": [
+   "ams==0.1.0",
+   "annotated-doc==0.0.5",
+   "annotated-types==0.8.0",
+   "anyio==4.14.2",
+   "certifi==2026.7.22",
+   "click==8.5.0",
+   "contourpy==1.3.3",
+   "cycler==0.12.1",
+   "filelock==3.32.4",
+   "fonttools==4.63.0",
+   "fsspec==2026.7.0",
+   "h11==0.16.0",
+   "hf-xet==1.6.0",
+   "httpcore2==2.12.0",
+   "httpcore==1.0.9",
+   "httpx2==2.12.0",
+   "httpx==0.28.1",
+   "huggingface_hub==1.29.0",
+   "idna==3.19",
+   "iniconfig==2.3.0",
+   "jinja2==3.1.6",
+   "jiter==0.16.0",
+   "joblib==1.5.3",
+   "kiwisolver==1.5.1",
+   "markdown-it-py==4.2.0",
+   "markupsafe==3.0.3",
+   "matplotlib==3.11.1",
+   "mdurl==0.1.2",
+   "mpmath==1.3.0",
+   "narwhals==2.25.0",
+   "networkx==3.6.1",
+   "nltk==3.10.4",
+   "numpy==2.4.6",
+   "openai==3.6.0",
+   "packaging==26.3",
+   "pandas==3.0.5",
+   "pillow==12.3.0",
+   "pluggy==1.6.0",
+   "pydantic==2.13.5",
+   "pydantic_core==2.46.5",
+   "pygments==2.21.0",
+   "pyparsing==3.3.2",
+   "pytest==9.1.1",
+   "python-dateutil==2.9.0.post0",
+   "pyyaml==6.0.3",
+   "regex==2026.8.31",
+   "rich==15.0.0",
+   "ruff==0.16.5",
+   "safetensors==0.8.0",
+   "scikit-learn==1.9.0",
+   "scipy==1.17.1",
+   "sentence-transformers==6.0.0",
+   "setuptools==84.0.0",
+   "shellingham==1.5.4",
+   "six==1.17.0",
+   "sniffio==1.3.1",
+   "sympy==1.14.0",
+   "threadpoolctl==3.6.0",
+   "tokenizers==0.23.1",
+   "torch==2.13.0+cpu",
+   "tqdm==4.70.0",
+   "transformers==5.16.1",
+   "truststore==0.10.4",
+   "typer==0.27.2",
+   "typing-inspection==0.4.4",
+   "typing_extensions==4.16.0"
+  ]
+ },
+ "config": {
+  "REPO": "/mnt/c/Users/HP/Documents/sdp",
+  "PROTOCOL_ID": "locomo-v1.2",
+  "PROTOCOL_TEXT": "reports/PROTOCOL_LOCOMO_V1.md",
+  "AMENDMENT_TEXT": "reports/PROTOCOL_LOCOMO_V1_1_AMENDMENT.md",
+  "AMENDMENT_V1_2_TEXT": "reports/PROTOCOL_LOCOMO_V1_2_AMENDMENT.md",
+  "DATA": "/mnt/c/Users/HP/Documents/sdp/data/locomo/locomo10.json",
+  "DATA_SHA256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+  "FEASIBILITY": "/mnt/c/Users/HP/Documents/sdp/research_data/locomo_feasibility_20261119/feasibility.py",
+  "OPTION_B_MANIFEST": "research_data/protocol_v2_freeze_optionB_20261115/protocol_v2_optionB.json",
+  "OPTION_B_DIGEST": "1845a84d73b1961201dd63884e43807f363ed89b08a84662b2d1fb43922e4903",
+  "CONVS": [
+   "conv-26",
+   "conv-30",
+   "conv-41",
+   "conv-42",
+   "conv-43",
+   "conv-44",
+   "conv-47",
+   "conv-48",
+   "conv-49",
+   "conv-50"
+  ],
+  "PILOT_CONVS": [
+   "conv-48",
+   "conv-49"
+  ],
+  "CONFIRMATORY": [
+   "conv-26",
+   "conv-30",
+   "conv-41",
+   "conv-42",
+   "conv-43",
+   "conv-44",
+   "conv-47",
+   "conv-50"
+  ],
+  "ORIENTATIONS": [
+   0,
+   1
+  ],
+  "DRAWS_MAX": 5,
+  "DRAWS_MIN": 3,
+  "DRAWS_RULE_USD": 25.0,
+  "SHAPES": [
+   "1s",
+   "2s",
+   "quarter",
+   "spread"
+  ],
+  "AUDITORS": {
+   "A1": [
+    2,
+    0
+   ],
+   "A2": [
+    2,
+    10
+   ]
+  },
+  "ARMS": [
+   "static",
+   "R",
+   "C",
+   "M",
+   "S",
+   "SL",
+   "S2-ID"
+  ],
+  "POLICY_ARMS": [
+   "R",
+   "C",
+   "M",
+   "S",
+   "SL",
+   "S2-ID"
+  ],
+  "ATTACKS": [
+   "P1",
+   "P2"
+  ],
+  "P2_AUDITORS": [
+   "A1"
+  ],
+  "P2_ARMS": [
+   "static",
+   "C",
+   "M",
+   "S"
+  ],
+  "TOPK": 10,
+  "TAU": 0.8,
+  "QA_CATEGORIES": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "MODEL_SPEC": "openrouter:openai/gpt-4o-mini",
+  "MODEL": "openai/gpt-4o-mini",
+  "JUDGE_CHECK_SPEC": "openrouter:anthropic/claude-haiku-5.5",
+  "JUDGE_CHECK_MODEL": "anthropic/claude-haiku-5.5",
+  "JUDGE_CHECK_N": 400,
+  "CAP_USD": "30",
+  "JUDGE_CHECK_CAP_USD": "1",
+  "SENSITIVE_PROMPT_VERSION": "v1",
+  "SENSITIVE_CAP_USD": "1",
+  "PILOT_CALIBRATION": 0.8080688191881918,
+  "MAX_ERROR_RATE": 0.02,
+  "STATE_DIR": "/home/zhalat/.locomo_v1_state",
+  "GUARD_MIGRATION": "guard_migration_v1_2.json",
+  "JUDGE_CHECK_FILE": "judge_check_v1_2.jsonl",
+  "JUDGE_CHECK_GUARD": "judge_check_guard_v1_2.sqlite",
+  "JUDGE_CHECK_DROP": [
+   "temperature"
+  ],
+  "RETRY_PASSES": 1,
+  "MODEL_CHECK": "research_data/locomo_v1_freeze/openrouter_model_check_v1_2.json",
+  "ALPHA": 0.05,
+  "NI_MARGIN": 0.05,
+  "SEED_JUDGE_SAMPLE": 20261120
+ }
+}

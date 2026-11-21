@@ -1,0 +1,617 @@
+{"qid": "conv-30:14", "ctx": "c5800b6dc6af4aa9d25b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:17", "ctx": "3805b0ce601fd1fcd27f", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:23", "ctx": "0e8b1178edf7712f1ece", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:23", "ctx": "1c2a6bce3c143d998d85", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:42", "ctx": "6b39e4178b66e7b63bc8", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:44", "ctx": "064af19ec8214d9c162b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:44", "ctx": "24320b43871a9d3b875e", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:47", "ctx": "b2ec74b7c08191df218a", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:54", "ctx": "199aff9830923be7d0a6", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:56", "ctx": "ac5936850beb38f1b20a", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:60", "ctx": "5ace81ac1dd3485a0e48", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:63", "ctx": "526ac254a95447d8a386", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:68", "ctx": "ffd01c6a3523d5ac1814", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:71", "ctx": "22a637da66ba3f20ae2a", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:71", "ctx": "b8e7baeaeace69458f00", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:77", "ctx": "36529698f85e1cae5cd3", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:77", "ctx": "6833875ec4bed397c68b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:78", "ctx": "19a726d660371ac8fb3f", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:81", "ctx": "9d5b8ff4fb13c90fbff7", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:18", "prediction": "Yes, Jon's passion and commitment are awesome, and Gina's store is doing great.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:29", "prediction": "The context does not provide specific cities that Jon has visited.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:39", "prediction": "Helping with making content and managing his social media accounts.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:42", "prediction": "Gina's team won first place at a regionals with a contemporary dance piece.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:56", "prediction": "An app for dog walking and pet care.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:57", "prediction": "\"Stay resilient and focused is key for any entrepreneur. Keep going and don't give up!\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:59", "prediction": "\"to blend my love for dance and fashion.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:60", "prediction": "Hoodies.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:60", "prediction": "Jon's dance makes him \"happy\" and allows him to \"be himself.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:70", "prediction": "Jon is working on the grand opening.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:71", "prediction": "\"The studio looks amazing.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:73", "prediction": "\"it really speaks to me\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:77", "prediction": "Gina opened her online clothing store.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-30:78", "prediction": "A painting inspired by sunsets with a pink sky.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:10", "ctx": "ac224873f44a1b4437a7", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:10", "ctx": "c31a3fb0f79cae74de0b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:10", "ctx": "d0175a90d1c906fc5ce6", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:100", "ctx": "899f6450c9348a9b8ff0", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:100", "ctx": "a8bab05a8d70b38a5817", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:101", "ctx": "b8cdc0125c7df9b7b817", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:103", "ctx": "8b3773c80a3c036faf9a", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:104", "ctx": "807d1750ee3a53d7c4ca", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:104", "ctx": "a392a3f74269d74591fc", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:104", "ctx": "e4365fa749c8e036fe45", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:105", "ctx": "a96e947b144e8fcf38b3", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:107", "ctx": "07b2ffa6127e3e407092", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:107", "ctx": "fa277b32e18ba5ceec41", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:108", "ctx": "88043d19762e41bbc8f1", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:11", "ctx": "4686d0bb933d41fb33a3", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:111", "ctx": "dda0aee9c294397a770d", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:114", "ctx": "1c6f0a8b9d1fd3a4b93d", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:114", "ctx": "34c1a863b78b046b75b0", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:114", "ctx": "64b97f4b1f12b788f57c", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:115", "ctx": "0bff2bfefc3273491b62", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:115", "ctx": "50df836627e435f92afa", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:123", "ctx": "2d587f61ff3453a85884", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:123", "ctx": "47d59ecbe69bd880be58", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:124", "ctx": "795ee4b3d7684992b49d", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:125", "ctx": "2bbe4681d111b010e834", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:128", "ctx": "d15c3b4d893d000c3c41", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:131", "ctx": "556bbe7e04273f8567a5", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:131", "ctx": "621866fc3769c6c4a947", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:131", "ctx": "65802e9fd8707694cf83", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:131", "ctx": "74a6d65613da74e00102", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:131", "ctx": "7a7296bc49dcf22413c7", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:131", "ctx": "a5bffddc68df2d53e25e", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:133", "ctx": "3ce327943532096c0814", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:134", "ctx": "5cf985011060c57fa764", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:135", "ctx": "5911b29c24389d72706c", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:136", "ctx": "fdc04ac78e3db64e4e62", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:138", "ctx": "1e2fc1a05b67fca95ffd", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:138", "ctx": "56ec0fbe4b109ae06366", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:138", "ctx": "638e4245ba9b6bb0e909", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:138", "ctx": "6ee68a2d4ea034164fb6", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:138", "ctx": "e0d3c0e9a75d63f9267e", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:140", "ctx": "0d1db9c2079568d84537", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:142", "ctx": "b6ac2e7fd863bedbe563", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:143", "ctx": "6e98369aab5203bd1104", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:145", "ctx": "b19df48577c16c1a240d", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:146", "ctx": "c349e7aa250a052f6931", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:147", "ctx": "32437d7fb5347ddcb405", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:148", "ctx": "744a04937140c2970559", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:15", "ctx": "473010d9ed74fc85789a", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:150", "ctx": "48853e630bc206c1f4c3", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:151", "ctx": "8d976ca307da78c7e4d6", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:151", "ctx": "d137e4f06e02533bfb41", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:151", "ctx": "ddcd199fd9d157a4c24c", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:16", "ctx": "ce9ef124855da3072669", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:17", "ctx": "5c05642e97bb481ad6e2", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:18", "ctx": "69972ad4125f56cf0bf0", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:22", "ctx": "35f62899a9f6678aa4e7", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:23", "ctx": "a81e049920605d879bb7", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:23", "ctx": "aa657126ba6d90e4f3dc", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:25", "ctx": "92864a3dd5dbd9f2032a", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:27", "ctx": "58706837256d0d6ee901", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:27", "ctx": "ae3c5dec56f01a728005", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:29", "ctx": "5c93cd5f51af66bc59fa", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:29", "ctx": "93ecb6bc652bf5d7a3d1", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:30", "ctx": "c9955ae5681de4e082fb", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:33", "ctx": "3979ca0565bbfe55dbf9", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:36", "ctx": "0ec87a02e96011bbdbdc", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:36", "ctx": "1d5aca719fd4ba02518b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:40", "ctx": "4ad68a11639cb2e37916", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:40", "ctx": "ea57c13229e966fb1800", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:41", "ctx": "72c2cc3a414a54e47c23", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:42", "ctx": "3a538ba3ed949b8555cb", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:43", "ctx": "73de85afcbcffdf0805f", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:46", "ctx": "1fa0b50c6c9228c4a198", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:46", "ctx": "3680b4719a0151be000b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:46", "ctx": "4ae6fb6dcc55efec3aa2", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:46", "ctx": "ca7dbfa4e80e0a5c99c8", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:46", "ctx": "e3c4b2e51c7b34046b04", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:46", "ctx": "eee7f71b7c9962a8d740", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:47", "ctx": "4de839b81e0632bb0ce9", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:47", "ctx": "c96a1260b3f6165d0359", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:53", "ctx": "53768d8936f5bee4319d", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:54", "ctx": "b3af36374917a2b0abdb", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:55", "ctx": "e8f3529484f0bfedb0d1", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:58", "ctx": "4d08cbf305dcce6522bb", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:61", "ctx": "48f22d4845ffcff6e06a", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:61", "ctx": "cc1c92f12b29c77d3ee8", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:64", "ctx": "de25f36ac6d611ba4322", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:65", "ctx": "3d01e57b6c9633818c3c", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:67", "ctx": "4191fee7d59ff03688f2", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:68", "ctx": "d5358e0c842a62bfa834", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:68", "ctx": "d546c207c673724cdc22", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:69", "ctx": "ae7ad3ed8642ffc1039f", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:7", "ctx": "1821b8b9fc7318534c29", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:7", "ctx": "467b9ef430e6e5192ecb", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:7", "ctx": "cb9baee96d7330f00b4c", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:70", "ctx": "2eb3ff8eb45846aefe35", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:72", "ctx": "107b2034bb17c4f59073", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:72", "ctx": "58b8d7990dcc1c95dc05", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:72", "ctx": "7d53e779b26713551f96", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:72", "ctx": "b35d98e42792388167d9", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:73", "ctx": "7c7f25687648979add12", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:73", "ctx": "a34bf8eb3e686ae92350", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:73", "ctx": "aa2d7ce502d1d0c497eb", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:73", "ctx": "be72c5563f467c4dd171", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:73", "ctx": "d9d715f6468c601c2944", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "409faf9d4f8d49eb53e3", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "4b11b1c13e6b4dbe42f7", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "4b7b2dd72f6768f6e5da", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "66633419c00d716b0515", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "66c9523c100e1fa94450", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "6709c15b1e015fdc25a1", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "8b7ba3c89c771b960e11", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "90285a6bf9bfa7465138", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "a0d781a9fa4e5367e439", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "c95b0e66a3cae348a546", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "de836f09bf3fa961bba5", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "dfe760f59dfcef81c8e3", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "f3c8e8412e75d3adad39", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "f8edd58f36004f4c9297", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "ctx": "fa26c83f1a9684cae44d", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:75", "ctx": "01e72792bc5260a37800", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:75", "ctx": "56df649347afa649e162", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:75", "ctx": "c2fb07fff21069cd12c7", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:75", "ctx": "e1dccc0b1e358331b1bc", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:76", "ctx": "0e3a826090ec313f07e6", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:76", "ctx": "1899ebc84360a22fc20a", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:76", "ctx": "22f9ab85840873a359c8", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:76", "ctx": "2f8e53ec14bbd25c589c", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:76", "ctx": "3fc38b93565af52f39cb", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:76", "ctx": "5ee95f9ae923bdb13762", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:76", "ctx": "6be28fb24cc4c84448a0", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:76", "ctx": "6d658e94634308e86655", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:76", "ctx": "90ca8f66a4f041e30114", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:77", "ctx": "58673e06b614c2455489", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:77", "ctx": "d704098fcb19f08efd16", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:78", "ctx": "005fdda78d55f02210dc", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:78", "ctx": "039ba215f38a90ca6ea4", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:78", "ctx": "0beb967cb9f374747ff4", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:78", "ctx": "1db26c9512a476b88499", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:79", "ctx": "3d281dc15f0d50d1ba71", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:79", "ctx": "632aa19a45d6dbdd8e21", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:79", "ctx": "815927407f607f73e89b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:79", "ctx": "a34979b9935cb18b8210", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:79", "ctx": "ad30566bf167ba6a3b3f", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:79", "ctx": "c3527ec5034edf0f42c2", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "0efc4e2d2d96f3a797a7", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "12e215dbe6afb252c5a1", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "1f359033150feb328318", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "2524c6454521e7d2e15a", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "2c627c89770c425d44b2", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "2dc0161c7b9301e96a68", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "68a30c04be0b24200f70", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "8d535da5a7ecb0ea412b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "958a50197d034051148d", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "a5f31c9459c59850bd94", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "b6ffc6bb25d80c710359", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "bcb8d308bc00cec78812", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "e93d28f0c045a1bdcd42", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "ea510fdbb9da0db38847", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "f4a0dd7e85e91f8d3beb", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "ctx": "f91710ba5f4dff8e65d5", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:80", "ctx": "2aaef9c0b3ed9d4179b9", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:80", "ctx": "674a767e4027b5b243ac", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:80", "ctx": "7e84d670a4f9c2c08d9a", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:80", "ctx": "80eb8920b18744b6a1fb", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:80", "ctx": "aadb6d54a7d876d7257d", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:80", "ctx": "fa68494795b4ca14f368", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:81", "ctx": "1259a4047e2b34dd4fe6", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:81", "ctx": "47ff66a6283dda1da2c5", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:81", "ctx": "52aa9141c322dd25df24", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:81", "ctx": "58dead69e7257c73a6cb", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:82", "ctx": "0a804f3e13624bd0d113", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:82", "ctx": "0c3a98ebb896e54e7f46", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:82", "ctx": "0d5b8a3b5cce71e64cd8", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:82", "ctx": "3a31887b8022eaddfff1", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:82", "ctx": "5cea86a0880038627f0f", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:82", "ctx": "87b3e7205504f07a855b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:82", "ctx": "8fc2d2dfe5719d06bfe0", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:82", "ctx": "ab022381f871e6aa1785", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:82", "ctx": "cd6efbce7857b1824551", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:82", "ctx": "eecafcb10e4151e38dce", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:83", "ctx": "8504f30d33a7449366fa", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:83", "ctx": "967059ad08e63a32c466", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:83", "ctx": "9a390fb35538987afb6f", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "ctx": "1b25c203fd67ed852376", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "ctx": "2b233552b6203f4a8446", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "ctx": "32982ded2ce67b39c691", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "ctx": "38dadb5bbbad22c56f29", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "ctx": "5e805982dc010d2ee372", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "ctx": "98ae5ff3e7391a1d9965", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "ctx": "9cacc44bfc552f4c2ca8", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "ctx": "9dcec467e47aa46733e4", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "ctx": "ad760f49408ff6a49e39", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "ctx": "b4c9f725edd4863c2ed8", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "ctx": "bc3d4f1414096f128414", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "ctx": "e9b3cb7bd25ccdeb9e11", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "ctx": "f5f8939479b47102163e", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:85", "ctx": "458e1c76b5c50b4a4d0f", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:85", "ctx": "5225f0073109dc6c0c52", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:85", "ctx": "64955ccac9f6f10ba7ba", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:85", "ctx": "6c1003e4d20099500443", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:85", "ctx": "aecc23b686f1ea76eae0", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:85", "ctx": "bf2d1ab5af509950ca78", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:85", "ctx": "f2d13f8013ee661ef968", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:86", "ctx": "3ac532f911d339fd63e9", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:86", "ctx": "8d204399c5ace991688a", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:86", "ctx": "a458a2827773db265329", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:87", "ctx": "19b20e798467853b0075", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:87", "ctx": "36122e7269e10097f74b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:87", "ctx": "44e9eaa82713f2aad35d", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:87", "ctx": "a178d4f99eb96fd41d8d", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:87", "ctx": "abc453b82ae244faf04e", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:87", "ctx": "ad8388102ccf7617d7ab", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:87", "ctx": "af5a184696b91e95a606", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:87", "ctx": "fcf27ce1ae9b0e0cfde8", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:88", "ctx": "0f327b24296ffb4e0b58", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:88", "ctx": "1f5efffb03e7c7ecbf1b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:88", "ctx": "4625c476d2606d2edabf", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:88", "ctx": "8530cb720a1e9d5461fc", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:88", "ctx": "dd2fee8d5abd568f2c3a", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:89", "ctx": "60318319f796830c7ea6", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:89", "ctx": "7612927d0b4ea9653892", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:89", "ctx": "d499141941b5481777d7", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:89", "ctx": "ebed41f72f8ea5c2be8e", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:89", "ctx": "f033a52a80d577a3553b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:9", "ctx": "5bb9746e67859c70375b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:9", "ctx": "69b38d8dfe593970759e", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:9", "ctx": "76b6e800ba3952f7ae67", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:9", "ctx": "916efba2fae5c8e07966", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:9", "ctx": "c25eb231e85b0761a704", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:90", "ctx": "69cec64f5390881988a3", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:90", "ctx": "a034f5789c124f6da5ed", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:90", "ctx": "ac24d86065ae03e85389", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:91", "ctx": "40e5259c39935bce5368", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:91", "ctx": "458b15299647425c9461", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:91", "ctx": "8115567f4f735d274739", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:91", "ctx": "8ccb2b2bb7f0eef0be22", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:91", "ctx": "b679e1fbcc8d23a11632", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:91", "ctx": "df6bd2acd69282eaf0eb", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:91", "ctx": "fa3e41847d4bfa997fd8", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:92", "ctx": "15fb13691987b45f466a", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:92", "ctx": "23fe9842df2d56b27183", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:92", "ctx": "bec2d5793d93ba26a3a9", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:92", "ctx": "d34192e6bf1276be158d", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:93", "ctx": "1a6bcdc4dce940205625", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:93", "ctx": "1ddad0204e6e7d7574a9", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:93", "ctx": "270c7c6fa83313d97f72", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:93", "ctx": "32f7377ea0299c3a8d1b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:94", "ctx": "07918c7fe9dc64996c7c", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:94", "ctx": "7bb8165cfda8c44b7061", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:94", "ctx": "7cb75dc4bbe2654f7019", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:94", "ctx": "cb47d5950ac3cdf7e5f2", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:94", "ctx": "de7545ead22d9022f50b", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:94", "ctx": "e1c22afa6ee4b82878e4", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:94", "ctx": "e77441d44342a1f8642d", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:94", "ctx": "eb3a74985c39380bbadd", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:95", "ctx": "0a8df5e7b61d7e08af79", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:95", "ctx": "1680ea7ce9666b0cb0b3", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:95", "ctx": "1d49aee4d427dda619ea", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:95", "ctx": "3e3ef46bec7a87ff0c17", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:95", "ctx": "467308437d7bc6024183", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:95", "ctx": "711cfed9751ae6de80d9", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:95", "ctx": "91d0b0339f5907d5df50", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:95", "ctx": "935cf82ac4570ee02cfe", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:95", "ctx": "aa4b36a01451b0f87056", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:95", "ctx": "e84fd48b795c5c938ac1", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:96", "ctx": "74327d3ea3e82225954f", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:97", "ctx": "4709f2d3c2d1c92e06c3", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:97", "ctx": "4fa6cecd5c9df81f0a00", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:97", "ctx": "51ec52da7fb930d5a7bc", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:97", "ctx": "5c9ab28401ced3e17d77", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:98", "ctx": "2675d45635320dc5a0f4", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:98", "ctx": "3ca3aaa4c5846802fa04", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:98", "ctx": "505816dab533c08aab11", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:99", "ctx": "293ecdee9d1fe543aa41", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:99", "ctx": "8c0ef38688492052eabd", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:99", "ctx": "9a9ca9f0c448baba66ca", "prediction": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:0", "prediction": "It is March 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:0", "prediction": "Maria had dinner with her loved ones.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:0", "prediction": "Maria had dinner with her mother.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:0", "prediction": "Short answer: \"Nothing beats getting together with loved ones for a good meal - it makes some awesome memories!\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:0", "prediction": "Short answer: John and family on 22 December, 2022.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:0", "prediction": "Summer 2024.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:0", "prediction": "The context does not provide specific information about who Maria had dinner with on May 3, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:0", "prediction": "The conversation does not provide information about who Maria had dinner with on May 3, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:1", "prediction": "2022", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:1", "prediction": "August 27, 2022.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:1", "prediction": "Maria donated her car on or around 1 January, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:1", "prediction": "Short answer: 16 August, 2023", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:1", "prediction": "Short answer: 3 July, 2023", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:10", "prediction": "Maria did not mention meeting Jean in the provided context.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:10", "prediction": "Maria met Jean on 25 February, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:10", "prediction": "Yesterday, on 24 February, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:100", "prediction": "\"heartwarming\" and \"relieved and grateful\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:100", "prediction": "John felt \"heartwarming\" emotions and a sense of \"community and togetherness.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:102", "prediction": "\"Bring it on Home.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:102", "prediction": "\"Raising money is crucial for those in need.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:102", "prediction": "Her aunt.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:102", "prediction": "Maria needs to spread the word about \"the fundraiser for the volunteer shelter.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:105", "prediction": "\"Let's make sure we make progress in the coming weeks to ensure that we honor the memories of our loved ones.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:106", "prediction": "\"responsibility and compassion\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:107", "prediction": "\"More energy, gains in strength and endurance.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:107", "prediction": "Freedom and being true to herself.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:107", "prediction": "Manchester City.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:107", "prediction": "Maria received a medal from the homeless shelter.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:107", "prediction": "Pacific Northwest.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:107", "prediction": "She adopted her two years ago when feeling lonely.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:107", "prediction": "the resilience of the veterans and their inspiring stories", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:108", "prediction": "\"Hiking to the top and seeing this was awesome! Breath-taking.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:108", "prediction": "\"It was truly magical!\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:11", "prediction": "Maria has met and helped \"a family struggling on the streets\" and \"shelter residents.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:11", "prediction": "Maria has met and helped \"a family struggling on the streets\" and \"veterans.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:11", "prediction": "Maria has met and helped \"shelter residents\" and \"a woman\" who \"had a tough time, going through a divorce, losing her job,", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:11", "prediction": "Maria has met and helped people in Oregon and Florida.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:110", "prediction": "Maria mentioned that she was involved in community service on 31 July, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:110", "prediction": "Maria mentioned the name of her puppy, which she got two weeks before August 11, 2023: it is Pacific Northwest.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:110", "prediction": "There is no information about exciting news shared by Maria on 16 June, 2023, in the provided context.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:110", "prediction": "There is no record of Maria sharing any exciting news on 16 June, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:110", "prediction": "There is no record of Maria sharing exciting news on 16 June, 2023, in the provided context.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:110", "prediction": "There is no record of Maria sharing exciting news on 16 June, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:110", "prediction": "the resilience of the veterans and their inspiring stories", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:111", "prediction": "Flood", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:114", "prediction": "\"it is a safe and inviting place for people to grow.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:115", "prediction": "\"Community events like that are always amazing.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:115", "prediction": "\"an awesome day at the park with my family.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:115", "prediction": "An awesome day at the park.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:117", "prediction": "\"rescue mission\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:117", "prediction": "5K charity run", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:118", "prediction": "\"It was awesome, made me remember how much they sacrifice for us.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:118", "prediction": "\"Wow, John! What inspired you to join it?\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:118", "prediction": "Seeing the resilience of the veterans.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:12", "prediction": "Aptitude test", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:12", "prediction": "John has retaken the military aptitude test.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:12", "prediction": "The context does not provide information about any test that John has taken multiple times.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:12", "prediction": "The military aptitude test.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:12", "prediction": "military aptitude test", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:12", "prediction": "the military aptitude test", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:120", "prediction": "The context does not specify the exact natural disaster that affected John's old area on 7 July, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:121", "prediction": "lots of homes were ruined", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:122", "prediction": "\"Uniting is essential for making a difference.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:123", "prediction": "Maria planned to present at a virtual conference.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:123", "prediction": "Maria planned to use \"the Pomodoro Technique - 25 minutes work and 5-minute break, scheduler or to-do list, The Eisenhower Matrix, bullet", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:123", "prediction": "Taking time off to chill with pets.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:123", "prediction": "The context does not provide any information about Maria's plans for the evening of 7 July, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:125", "prediction": "\"It's so important to appreciate and support those who served in the military.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:125", "prediction": "\"Take something broken and make it into something awesome.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:125", "prediction": "John appreciates \"meeting some amazing people\" and \"the need to give back.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:125", "prediction": "John appreciates \"the need to give back\" and \"the resilience\" of the veterans he met.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:125", "prediction": "John said, \"It made me appreciate what we have and the need to give back.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:126", "prediction": "\"breaking tasks into smaller pieces and setting goals, using planners or schedulers.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:127", "prediction": "Completion of a university degree.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:127", "prediction": "It made me appreciate what we have and the need to give back.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:128", "prediction": "\"Little Women\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:128", "prediction": "\"discuss potential solutions for their community\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:128", "prediction": "Bought groceries and cooked food for the homeless.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:128", "prediction": "Enabled needed repairs and renovations, making the learning environment safer and more modern for students.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:128", "prediction": "Improving education and infrastructure.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:128", "prediction": "Maria did not mention a specific activity with her church friends in July 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:128", "prediction": "Respect for the military and the desire to show support.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:128", "prediction": "Teaching them to respect and appreciate those who served.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:130", "prediction": "John has not mentioned any specific activity apart from yoga at the studio in the provided context.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:131", "prediction": "Gonna explore more and volunteer at shelters next month.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:131", "prediction": "Maria did not mention any community service on 31 July, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:131", "prediction": "Maria mentioned she was \"Gonna explore more and volunteer at shelters next month.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:132", "prediction": "\"after witnessing a family struggling on the streets.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:132", "prediction": "Maria said, \"I started volunteering here about a year ago after witnessing a family struggling on the streets.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:133", "prediction": "John had a lot of fun on the playground with his kids.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:133", "prediction": "John went to a homeless shelter to give out food and supplies.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:134", "prediction": "\"it was a moving experience for all of us.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:134", "prediction": "The context does not provide specific information about John's kids' reaction at the military memorial.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:138", "prediction": "\"community service\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:138", "prediction": "5K charity run.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:138", "prediction": "Camping trip with Max.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:138", "prediction": "Camping.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:138", "prediction": "The context does not provide information about any activity Maria took up with her friends from church in August 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:138", "prediction": "community work", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:138", "prediction": "inspiring quotes, photos, and little keepsakes", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:138", "prediction": "making a delicious treat", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:139", "prediction": "\"helped renovate a rundown community center back home.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:141", "prediction": "A local organization that helps victims of domestic abuse.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:141", "prediction": "Matt Patterson.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:141", "prediction": "a local organization", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:142", "prediction": "\"it is pizza.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:142", "prediction": "Maria received \"lots of compliments from other volunteers.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:143", "prediction": "Coco", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:144", "prediction": "Camping trip", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:144", "prediction": "Robotics project.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:145", "prediction": "\"had a blast on our camping trip last summer. We hiked, swam, and made great memories. It was a really peaceful and awesome experience.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:145", "prediction": "\"it was a really peaceful and awesome experience.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:146", "prediction": "John feels stuck because he doesn't feel like he's making much of an impact and wants to find a better way to focus his passion and enthusiasm.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:146", "prediction": "John feels stuck because he doesn't feel like he's making much of an impact and wants to positively affect people and the world.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:148", "prediction": "\"She brings so much joy!\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:148", "prediction": "\"The little one is doing great - learning commands and house training.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:149", "prediction": "\"Therapy and a way to get away from everyday stress.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:149", "prediction": "John said, \"I set up a 5K charity run in our neighborhood.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:150", "prediction": "Climbing, sliding, playing games, going for hikes, hanging out at the park, having picnics, playing board games, and having movie nights at", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:151", "prediction": "\"canned food, toiletries, and clothes\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:16", "prediction": "The week of 26 March 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:17", "prediction": "Empowering individuals through education and mentorship.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:19", "prediction": "Broken windshield, Car broke down.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:19", "prediction": "John had an unexpected incident on his way home, resulting in a broken windshield.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:19", "prediction": "John's car broke down and had a broken windshield.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:2", "prediction": "John has done taekwondo and kickboxing.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:2", "prediction": "Kickboxing and taekwondo.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:2", "prediction": "Taekwondo, kickboxing", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:2", "prediction": "Taekwondo, kickboxing.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:21", "prediction": "East Coast and Pacific Northwest.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:22", "prediction": "Last month, March 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:22", "prediction": "Last month, in April 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:23", "prediction": "Maria has made cakes.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:23", "prediction": "Peach cobbler and cakes.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:23", "prediction": "Peach cobbler, cakes.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:24", "prediction": "last month (April 2023)", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:25", "prediction": "It is Sennheiser headphones, Logitech mouse, gaming desk.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:25", "prediction": "Spain", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:25", "prediction": "Spain and Italy.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:25", "prediction": "Spain and Scotland.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:25", "prediction": "The memories do not provide any information about the European countries Maria has been to.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:27", "prediction": "The context does not provide any information about John having a party with veterans.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:28", "prediction": "Poetry, creative writing, and underserved communities.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:28", "prediction": "Volunteering at a homeless shelter, politics and the government, and helping underserved communities get access to education, mentorship, job training, and resume building.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:29", "prediction": "Maria is \"getting ready for a fundraiser next week.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:3", "prediction": "Helping others and doing charity work.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:3", "prediction": "Helping people in need.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:30", "prediction": "The homeless shelter and the dog shelter.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:31", "prediction": "2020", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:31", "prediction": "John got his dog Max before 11 August, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:31", "prediction": "John got his dog Max before 17 December, 2022.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:31", "prediction": "John had Max for about 10 years before saying goodbye on 3 June, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:31", "prediction": "Short answer: around summer 2022", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:31", "prediction": "The weekend before 22 July 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:32", "prediction": "John has gone for hikes and explored the coast up in the Pacific Northwest.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:32", "prediction": "John has gone for hikes and held events.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:32", "prediction": "John has gone for hikes and hung out at the park.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:32", "prediction": "John has gone hiking and mountaineering.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:35", "prediction": "California, London, the Smoky Mountains.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:35", "prediction": "Pacific Northwest", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:35", "prediction": "Pacific northwest, east coast.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:35", "prediction": "The conversation does not provide specific information about the states Maria has vacationed at.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:36", "prediction": "John attended a live music event and a violin concert.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:36", "prediction": "John attended a violin concert and a live music event.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:36", "prediction": "The context does not provide specific details about the music events John has attended.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:36", "prediction": "Watching movies, making desserts.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:37", "prediction": "John participated in a 5K charity run and a marching event for veterans' rights.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:38", "prediction": "3 July, 2023", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:38", "prediction": "The week before 9 August 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:39", "prediction": "Around Independence Day.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:39", "prediction": "No, he has goals specifically in the U.S. like joining the military and running for office.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:4", "prediction": "John joined the online support group around 5 August, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:41", "prediction": "John lives close to a beach.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:41", "prediction": "John loves being outdoors - going for hikes, hanging out at the park, having picnics.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:41", "prediction": "John loves being outdoors and has shared beach pics, but there is no specific mention of living close to a beach or mountains.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:41", "prediction": "Yes.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:43", "prediction": "21 December 2022", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:43", "prediction": "Last week of June, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:43", "prediction": "last week on 7 July, 2023", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:44", "prediction": "\"Had a picnic with some friends from church\" and \"took up some community work with my friends from church.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:44", "prediction": "\"Had a picnic with some friends from church.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:44", "prediction": "\"had a picnic,\" \"played games,\" \"ate yummy food,\" \"took up some community work,\" \"organized a meal for the shelter residents.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:44", "prediction": "Gave out food and supplies at a homeless shelter, organized a toy drive for kids in need, had a picnic with some friends from church.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:44", "prediction": "Maria has gone hiking, had a picnic, and organized a meal for shelter residents with her church friends.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:44", "prediction": "Maria participated in community work and had a picnic with some friends from church.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:44", "prediction": "The context does not provide specific details about activities Maria has done with her church friends.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:45", "prediction": "The context does not provide a clear answer regarding John's openness to moving to another country.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:46", "prediction": "August 15, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:46", "prediction": "Last weekend (22 July, 2023).", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:46", "prediction": "Last weekend, on 22 July, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:46", "prediction": "The context does not provide a specific date for when Maria went hiking with her church friends. However, she mentioned having a picnic with friends from church on \"last", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:47", "prediction": "John has done yoga and kickboxing.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:47", "prediction": "Stretching and breathing.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:48", "prediction": "21 December 2022", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:48", "prediction": "Last Sunday, 31 July, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:5", "prediction": "Last month from 1 January, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:5", "prediction": "Last month from the conversation on 1 January, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:5", "prediction": "Maria went to the beach in December 2022.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:5", "prediction": "last month (December 2022)", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:50", "prediction": "Dedicated, inspired, appreciative, supportive, and family-oriented.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:50", "prediction": "John is \"motivated,\" \"inspired,\" and \"positive.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:50", "prediction": "Motivated, supportive, reflective, appreciative, proud.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:50", "prediction": "Passionate, inspired, kind, positive, loyal.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:51", "prediction": "\"about a year ago\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:51", "prediction": "About a year ago from 3 August, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:51", "prediction": "About a year ago from [6:20 pm on 3 August, 2023].", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:52", "prediction": "Cindy, a resident at the shelter.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:52", "prediction": "John", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:53", "prediction": "5 August, 2023", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:53", "prediction": "Last year, 5 August, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:53", "prediction": "Last year, in August 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:53", "prediction": "May, 2023", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:53", "prediction": "Short answer: 1 January, 2023", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:54", "prediction": "The summer of 2022.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:54", "prediction": "Yesterday, I took up some community work with my friends from church.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:55", "prediction": "Last week was wild - I volunteered at the homeless shelter and they gave me a medal!", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:55", "prediction": "Last week was wild - I volunteered at the homeless shelter and they gave me a medal! (approximately 2 August 2023)", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:55", "prediction": "The memories do not mention Maria receiving a medal from the homeless shelter.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:56", "prediction": "9 August, 2023", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:56", "prediction": "February, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:56", "prediction": "In 2013.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:56", "prediction": "John participated in a 5K charity run on 9 August, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:56", "prediction": "The week before 6 October, 2022.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:57", "prediction": "Domestic abuse and unemployment.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:57", "prediction": "John has done events for \"victims of domestic abuse\" and to address \"unemployment in our community.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:57", "prediction": "Raising awareness and funds for victims of domestic abuse.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:58", "prediction": "Maria got Coco two weeks ago from [12:10 am on 11 August, 2023], which would be around late July 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:59", "prediction": "21 February, 2023", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:59", "prediction": "First weekend of August 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:59", "prediction": "Short answer: summer 2022", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:6", "prediction": "Maria has made friends by \"listening and showing compassion\" and \"bringing people together and create a sense of comfort and community.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:60", "prediction": "The context does not provide the names of Maria's dogs.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:61", "prediction": "Approximately in early July 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:61", "prediction": "Maria adopted Shadow around 17 December, 2022.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:61", "prediction": "The context does not provide specific information about when Maria adopted Shadow.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:61", "prediction": "The week before 9 August 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:62", "prediction": "Maria adopted \"this cute pup\" named Shadow from the shelter.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:62", "prediction": "Maria adopted one dog from the shelter, named Shadow.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:62", "prediction": "Maria adopted one dog, named Shadow.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:62", "prediction": "two times", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:63", "prediction": "Approximately 3 weeks passed between Maria adopting Coco on 11 August 2023 and getting Shadow on 13 August 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:63", "prediction": "Approximately two weeks passed between Maria adopting Coco and Shadow. Coco was adopted on 27 July 2023, and Shadow was adopted two weeks before 11 August", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:63", "prediction": "Approximately two weeks passed between Maria adopting Coco on 11 August 2023 and Shadow on 13 August 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:63", "prediction": "Approximately two weeks.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:64", "prediction": "\"it is beach.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:64", "prediction": "Maria might pursue a job related to \"working with passionate people.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:64", "prediction": "Watch other people's videos to understand what the audience likes.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:67", "prediction": "\"It enabled needed repairs and renovations, making the learning environment safer and more modern for students.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:67", "prediction": "It enabled needed repairs and renovations, making the learning environment safer and more modern for students.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:68", "prediction": "The context does not provide information about the type of workout class Maria started doing in December 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:69", "prediction": "The context does not provide information about any donation made by Maria to a homeless shelter in December 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:69", "prediction": "The context does not provide information about what Maria donated to a homeless shelter in December 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:69", "prediction": "coffee and fresh pastries", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:7", "prediction": "Chili cook-off, ring-toss tournament.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:72", "prediction": "They held some events and went to a homeless shelter to give out food and supplies, and organized a toy drive for kids in need.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:73", "prediction": "\"How did it feel to be part of that event?\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "prediction": "Maria met the kids at the shelter.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "prediction": "Maria met the little girl at the shelter.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "prediction": "Maria participated in \"More energy, gains in strength and endurance.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "prediction": "Maria sat with the little girl at the shelter event because \"I'm glad you were there for her when she needed someone.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "prediction": "Maria sat with the little girl at the shelter event because \"she had a tough time, going through a divorce, losing her job, and ending up homeless.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "prediction": "Maria sat with the little girl at the shelter event because she \"values the little things and believes in the good of kindness.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "prediction": "Maria sat with the little girl at the shelter event to help bring people together and create a sense of comfort and community.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "prediction": "Maria shared a photo of three children sitting on a step smiling, indicating she connected with them during her time at the shelter.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:74", "prediction": "Maria shared a photo of three children sitting on a step smiling, indicating she met them at the shelter.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:76", "prediction": "\"After my last run, I saw the impact I could make in the community through politics.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:76", "prediction": "\"I guess I can't let go of my dream to make a difference in my community.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:76", "prediction": "\"to make a difference in my community.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:77", "prediction": "Rob invited John to a cooking show.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:77", "prediction": "The context does not provide any information about an invitation from John's colleague, Rob.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:77", "prediction": "The context does not provide information about an invitation from John's colleague, Rob. Therefore, I cannot provide a short answer based on the given memories.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:79", "prediction": "\"a few times a week.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "prediction": "It is hard work's paying off.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "prediction": "John might be experiencing \"an uphill battle.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "prediction": "John might be financially stable, as he mentioned, \"I got promoted at work!\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "prediction": "John's financial status is not explicitly mentioned in the context, but he expresses feelings of questioning his decisions and goals, which could imply some financial uncertainty.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "prediction": "Lately, I've been stumped about something. Don't feel like I'm making much of an impact here, which has me questioning my decisions and goals.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "prediction": "Not feeling like making much of an impact.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:8", "prediction": "The context does not provide specific information about John's financial status.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:81", "prediction": "\"that trip to England a few years ago - I was mesmerized by the castles.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:81", "prediction": "From that trip to England a few years ago.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:81", "prediction": "Maria got the idea from that trip to England a few years ago - I was mesmerized by the castles.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:82", "prediction": "John received a certificate for \"his journey.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:82", "prediction": "The context does not provide information about John receiving a certificate.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:83", "prediction": "Improving education and infrastructure in our community.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "prediction": "Lake Tahoe.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "prediction": "Maria did not participate in any specific event last weekend before April 10, 2023, based on the provided context.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "prediction": "Maria participated in a \"5K charity run.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "prediction": "Maria participated in a charity event.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "prediction": "Maria participated in a party with veterans.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "prediction": "Maria received a medal from the homeless shelter.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:84", "prediction": "The context does not provide specific information about Maria participating in any event last weekend before April 10, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:86", "prediction": "John had an unexpected incident on his way home.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:87", "prediction": "Fantasy.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:87", "prediction": "John explored the East Coast.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:89", "prediction": "\"to raise awareness and start conversations to create positive change.\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:90", "prediction": "\"making a real impact\" and \"way better education and infrastructure\"", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:91", "prediction": "John attended a group event focused on tech for change in March 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:91", "prediction": "John attended a group of people who were as stoked as him on tech for change on 18 April, 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:91", "prediction": "John attended an event related to tech for change in March 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:91", "prediction": "John started boot camp with his family in March 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:91", "prediction": "Short answer: \"Talking with the group of people who were as stoked as me on tech for change was awesome!\" [7:34 pm on 18", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:91", "prediction": "Talking with the group of people who were as stoked as me on tech for change was awesome!", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:95", "prediction": "Taking time off to chill with pets.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:95", "prediction": "The memories do not provide information about an activity that Maria and her mom did together in May 2023.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}
+{"qid": "conv-41:98", "prediction": "John hosted a small party and invited some veterans to share their stories.", "correct": null, "error": "BudgetAccountingError('Budget database operation failed')"}

@@ -1,0 +1,139 @@
+{
+ "retrieved_utc": "2026-11-19T21:01:18+00:00",
+ "source": [
+  "GET https://openrouter.ai/api/v1/models",
+  "GET https://openrouter.ai/api/v1/models/anthropic/claude-haiku-5.5/endpoints"
+ ],
+ "note": "public, unauthenticated; no key or user data sent",
+ "models": [
+  {
+   "id": "anthropic/claude-haiku-5.5",
+   "pricing_per_mtok": {
+    "prompt": 0.1,
+    "completion": 0.5
+   },
+   "context_length": 1000000
+  },
+  {
+   "id": "openai/gpt-4o-mini",
+   "pricing_per_mtok": {
+    "prompt": 0.15,
+    "completion": 0.6
+   },
+   "context_length": 128000
+  }
+ ],
+ "haiku_endpoints": [
+  {
+   "provider_name": "Google",
+   "supported_parameters": [
+    "include_reasoning",
+    "max_tokens",
+    "reasoning",
+    "reasoning_effort",
+    "response_format",
+    "stop",
+    "structured_outputs",
+    "tool_choice",
+    "tools",
+    "verbosity"
+   ],
+   "max_completion_tokens": 128000,
+   "pricing_per_mtok": {
+    "prompt": 0.1,
+    "completion": 0.5
+   }
+  },
+  {
+   "provider_name": "Claude Platform on AWS",
+   "supported_parameters": [
+    "include_reasoning",
+    "max_tokens",
+    "reasoning",
+    "reasoning_effort",
+    "response_format",
+    "stop",
+    "tool_choice",
+    "tools",
+    "verbosity"
+   ],
+   "max_completion_tokens": 128000,
+   "pricing_per_mtok": {
+    "prompt": 0.1,
+    "completion": 0.5
+   }
+  },
+  {
+   "provider_name": "Azure",
+   "supported_parameters": [
+    "include_reasoning",
+    "max_completion_tokens",
+    "max_tokens",
+    "reasoning",
+    "reasoning_effort",
+    "response_format",
+    "stop",
+    "structured_outputs",
+    "tool_choice",
+    "tools",
+    "verbosity"
+   ],
+   "max_completion_tokens": 128000,
+   "pricing_per_mtok": {
+    "prompt": 0.1,
+    "completion": 0.5
+   }
+  },
+  {
+   "provider_name": "Anthropic",
+   "supported_parameters": [
+    "include_reasoning",
+    "max_tokens",
+    "reasoning",
+    "reasoning_effort",
+    "response_format",
+    "stop",
+    "structured_outputs",
+    "tool_choice",
+    "tools",
+    "verbosity"
+   ],
+   "max_completion_tokens": 128000,
+   "pricing_per_mtok": {
+    "prompt": 0.1,
+    "completion": 0.5
+   }
+  },
+  {
+   "provider_name": "Amazon Bedrock",
+   "supported_parameters": [
+    "include_reasoning",
+    "max_tokens",
+    "reasoning",
+    "reasoning_effort",
+    "response_format",
+    "stop",
+    "tool_choice",
+    "tools",
+    "verbosity"
+   ],
+   "max_completion_tokens": 128000,
+   "pricing_per_mtok": {
+    "prompt": 0.1,
+    "completion": 0.5
+   }
+  }
+ ],
+ "haiku_parameters_supported_by_every_endpoint": [
+  "include_reasoning",
+  "max_tokens",
+  "reasoning",
+  "reasoning_effort",
+  "response_format",
+  "stop",
+  "tool_choice",
+  "tools",
+  "verbosity"
+ ],
+ "temperature_supported_by_any_endpoint": false
+}

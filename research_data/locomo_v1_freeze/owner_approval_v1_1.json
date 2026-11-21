@@ -1,0 +1,13 @@
+{
+ "protocol": "reports/PROTOCOL_LOCOMO_V1.md + reports/PROTOCOL_LOCOMO_V1_1_AMENDMENT.md",
+ "protocol_id": "locomo-v1.1",
+ "freeze_digest": "373e4b5af1321b2e258252f85c3125d7729a4a87168b66d99355a1883f4d9d22",
+ "cap_usd": "30",
+ "judge_check_cap_usd": "1",
+ "draws": 5,
+ "stages": ["paid", "judge-check", "analyse"],
+ "commit": "6abc2b9",
+ "approved_by": "project owner",
+ "approval_basis": "Owner chose 'Approve and run' for LoCoMo-v1.1 in the Claude Code session on 19 Nov 2026.",
+ "date": "2026-11-19"
+}

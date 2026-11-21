@@ -1,0 +1,36 @@
+{
+ "recorded_utc": "2026-11-19T21:09:03+00:00",
+ "append_only": {
+  "answers.jsonl": {
+   "bytes": 3133556,
+   "sha256": "0ed8cc8d0912d701d7d9cec43cf378b79e9b6590a642d1c8504b5fa13a2f652a"
+  },
+  "judgements.jsonl": {
+   "bytes": 636932,
+   "sha256": "8107a212676a1bf9854c78757b09c9adb0943a9d760e321668ba95379ba86ea5"
+  },
+  "errors.jsonl": {
+   "bytes": 101477,
+   "sha256": "9569fb1d134632e0367e8846c0ba1fd5aa723f5ea44cf993984adde1075eb4c5"
+  },
+  "progress.jsonl": {
+   "bytes": 150,
+   "sha256": "1f1afc90bee415e8902334b66d77ee3dadeddafeac92d4ff62a0880725552501"
+  }
+ },
+ "unchanged": {
+  "budget_guard.sqlite": "7f1babf1124dd305ea62088e64188836f63b38e4a6ff24609f55cb186aa318c3",
+  "budget_guard.sqlite-wal": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "judge_check.jsonl": "e8d803aa0b06cfc2727f95f303baf01b1584204b7c7e76fb74865c26b63dcdb6",
+  "judge_check_guard.sqlite": "4c1f80e2178241d33c03ff64b3fe1c0f06ad275bfd1a07c9f99ae3ba1d60ead4",
+  "judge_check_guard.sqlite-wal": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ "quarantine": {
+  "README.txt": "2a009dde5c19c3a27657fa0b3089ed3fe1013a45048ff4be5f5829e17fb7b2ed",
+  "RESULTS.md": "0b4f0fa3986e5afa9b1438ee507ce46dbfae16ac860040b2abdb3203fdfc020d",
+  "analyse.log": "e65378416dc114e9deca3971df19259642ddb0c8b65766917310b305ae789343",
+  "results.json": "c9c210e192171290273c71372d40b838c3d24e4c65f69666fcebbb40aa93f9e0"
+ },
+ "response_cache_rows": 27361,
+ "response_cache_keys_sha256": "c729b1cdcd53dcbda2c9ad0be146c557c6a20450ab80a82f89fe4409f8d016f1"
+}
