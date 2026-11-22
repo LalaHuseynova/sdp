@@ -749,6 +749,10 @@ The original project is credited in the [upstream README](UPSTREAM_README.md), i
 
 Newest entry first. **Future sessions: read this section first, then add an entry after every task.** Each entry records what was done, what was found, which files changed, what is completed or remaining, and the next step. Standing rules: never delete earlier documentation or results; make no paid API calls and no algorithm changes without the project owner's explicit permission.
 
+### 2026-11-22 — Merged into main on GitHub (free)
+
+**What:** merged `protocol-v2-option-b-freeze` into `main` (merge commit `b23290f`) and pushed `main` to `sdp`. Remote `main` had 2 new commits (methodology figure v3 and a merge of origin/main). They touch only `output/figures/methodology_s_20261114/`, so there was no overlap and no conflict. The branch was then fast-forwarded to `main`, so both point to the same commit.
+
 ### 2026-11-22 — GitHub push: results, paper tables and presentations (free)
 
 **What:** pushed branch `protocol-v2-option-b-freeze` to `sdp` (public). Pushed: README/plan updates, `paper_tables/` (results tables PDF/HTML, figure, scripts), Haiku prompt mirrors, and these presentations (force-added because `reports/` is git-ignored): S/SL/S2-ID HTML+PDF, MemLineage/RandEC HTML+PDF and pptx, and the 15 Nov SAFE-Mem vs S HTML. `sessions_rerun3/v2_backbone_answer/` gets the same `*` ignore file as the other session ledgers.
