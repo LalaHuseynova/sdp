@@ -41,8 +41,10 @@ APPROVED_MODELS = {
     "anthropic/claude-haiku-5.5": ("0.10", "0.50"),
 }
 _LABEL = re.compile(r"[A-Za-z0-9_.:/-]{1,128}\Z")
-# Exceptions raised before any reply arrived (revision 7 review only).
-_TRANSPORT_FAILURES = ("APITimeoutError", "APIConnectionError")
+# Exceptions raised before any reply arrived (revision 7 review only). Revision 8 (owner,
+# 21 Nov 2026) adds NotFoundError: HTTP 404 "no endpoint found", the router refused the request
+# before any model ran. Still booked at the full worst case, never lower.
+_TRANSPORT_FAILURES = ("APITimeoutError", "APIConnectionError", "NotFoundError")
 _METADATA_KEYS = frozenset(
     {
         "generation_id",

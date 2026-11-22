@@ -109,9 +109,10 @@ class OpenAIClient:
         kwargs: dict[str, Any] = {
             "model": request.model,
             "messages": [{"role": m.role, "content": m.content} for m in request.messages],
-            "temperature": request.temperature,
             "max_tokens": request.max_tokens,
         }
+        if request.temperature is not None:  # None: the model's default (revision 8, Haiku)
+            kwargs["temperature"] = request.temperature
         if request.reasoning_effort is not None and self._provider == "openrouter":
             effort = request.reasoning_effort
             kwargs["extra_body"] = {

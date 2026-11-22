@@ -22,7 +22,7 @@ class ChatRequest:
 
     messages: tuple[Message, ...]
     model: str
-    temperature: float = 0.7
+    temperature: float | None = 0.7  # None: not sent (revision 8, Claude Haiku answers)
     max_tokens: int = 1024
     stop: tuple[str, ...] = ()
     sample_index: int = 0

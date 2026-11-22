@@ -32,7 +32,11 @@ class BackboneRouter:
 
     def dispatch(self, stage, request):
         if stage in ANSWER_STAGES:
-            routed = replace(request, model=self.model)
+            # Revision 8 (owner, 21 Nov 2026): Haiku 5.5 endpoints accept no `temperature`;
+            # the answer is sent without it (model default). Revision 9: Haiku 5.5 reasons by
+            # default and the reasoning used up the 200-token limit; reasoning is disabled, like
+            # GPT-4o-mini (no reasoning). GPT requests are unchanged.
+            routed = replace(request, model=self.model, temperature=None, reasoning_effort="none")
             result = self.haiku.dispatch_v2(routed)
             self.counts["haiku_answers"] += 1
             return result["dispatch"]["call_id"], result

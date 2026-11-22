@@ -1,0 +1,1 @@
+41757e630803723bee24a8fc14129e6e49b7cfb263b856862b9b052430333a8c  research_data/protocol_v2_optionB_run_v1/archive_20261121/haiku_rev8_reasoning_on/haiku/queries.sqlite
