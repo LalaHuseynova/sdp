@@ -2,7 +2,18 @@
 """Methodology figure: selective evidence propagation (S) on top of SAFE-Mem.
 
 Writes an editable SVG (real text, no rasters). Dependency-free. Every mechanism,
-threshold and step order is taken from the repository implementation:
+threshold and step order is taken from the repository implementation. Notation follows
+the methodology draft: support thresholds theta_bat, theta_ctx, delta_ctx, theta_src, delta_src
+and the qualifying-context constants theta_Q, delta_Q (Eqs. 8-9); r, d, D (Eqs. 6-7);
+withhold tau, rank weight lambda (Eqs. 10-11); SL threshold eta (Eq. 12); k claims + m chunks.
+Their values in the main evaluated setting are stated in the caption (README.md). They are
+constants in the code, not adapted at run time.
+
+v3 (22 Nov 2026): panel (b) as three numbered steps (gates for ZX-91, risk -> decision, toy
+R/C/M/S table); M chip "all", R chip "none", S2-ID box names MemLineage. Table outcomes are
+checked by verify_toy_example.py. v2 (feedback "too dense with words"): visuals -- record tiles,
+audit-ticket glyphs, the penalty bar chart against tau, scope chips, inline query outcomes and
+a refill slot diagram. Earlier versions live in versions/ (see README.md).
   scope gates / risk ........ src/ams/research/dynamic/ledger.py  (GroupStats, active_scopes)
   R/C/M/S decision .......... src/ams/research/dynamic/policies.py (Policy.decide)
   retrieval order ........... src/ams/research/retrieval/adapter.py (retrieve_with_trace)
@@ -93,23 +104,42 @@ SUB = 0.78  # subscript scale
 
 
 def rich(x, y, parts, size=17, maxw=None):
-    """parts: [(text, {'weight','fill','italic','serif','sub'})] on one baseline."""
-    total = sum(text_width(t, size * (SUB if o.get("sub") else 1), o.get("weight") == "bold",
+    """parts: [(text, {'weight','fill','italic','serif','sub','sup'})] on one baseline."""
+    small = lambda o: o.get("sub") or o.get("sup")  # noqa: E731
+    total = sum(text_width(t, size * (SUB if small(o) else 1), o.get("weight") == "bold",
                            o.get("serif", False)) for t, o in parts)
     _check("".join(t for t, _ in parts), total, maxw, size)
-    spans, shifted = [], False
+    spans, shift = [], 0.0
     for t, o in parts:
         fam = SERIF if o.get("serif") else SANS
         it = ' font-style="italic"' if o.get("italic") else ""
-        sub = o.get("sub", False)
-        dy = size * 0.22 if sub and not shifted else (-size * 0.22 if shifted and not sub else 0)
-        shifted = sub
-        extra = (f' dy="{dy:.1f}"' if dy else "") + (f' font-size="{size*SUB:.1f}"' if sub else "")
+        want = size * 0.22 if o.get("sub") else (-size * 0.36 if o.get("sup") else 0.0)
+        dy, shift = want - shift, want
+        extra = (f' dy="{dy:.1f}"' if dy else "") + (f' font-size="{size*SUB:.1f}"' if small(o) else "")
         spans.append(f'<tspan font-family="{fam}" font-weight="{o.get("weight", "normal")}" '
                      f'fill="{o.get("fill", INK)}"{it}{extra}>{esc(t)}</tspan>')
     EL.append(f'<text x="{x:.1f}" y="{y:.1f}" font-size="{size}" xml:space="preserve">'
               + "".join(spans) + "</text>")
     return total
+
+
+MUT = {"fill": MUTED}
+
+
+def sym(base, sub, fill=INK):
+    """A threshold symbol such as theta_bat: serif italic base, upright serif subscript
+    (the notation of the methodology draft, Eqs. 8-9)."""
+    return [(base, {"serif": True, "italic": True, "fill": fill}),
+            (sub, {"serif": True, "sub": True, "fill": fill})]
+
+
+def nsup(sign, fill=INK):
+    """n^- / n^+ (unsafe / safe root counts, Eq. 6): italic n, upright superscript sign."""
+    return [("n", {"serif": True, "italic": True, "fill": fill}),
+            (sign, {"serif": True, "sup": True, "fill": fill})]
+
+
+MI = {"serif": True, "italic": True}  # a math symbol in running sans text
 
 
 def rect(x, y, w, h, fill="none", stroke=FAINT, sw=1.2, rx=8, dash=None):
@@ -203,62 +233,124 @@ def lineage_line(points, marker="a-teal"):
     line(points, color=TEAL, sw=1.5, dash="1.5 3.2", marker=marker)
 
 
+def badge_safe(cx, cy, r=7.5):
+    """Audited SAFE (grey): distinct from 'kept' (lavender check, a retrieval outcome)."""
+    EL.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{GREY}"/>')
+    EL.append(f'<path d="M{cx-r*0.48},{cy+r*0.02} L{cx-r*0.12},{cy+r*0.38} L{cx+r*0.5},{cy-r*0.36}" '
+              f'fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" '
+              f'stroke-linejoin="round"/>')
+
+
+GLYPH = {"x": badge_x, "ok": badge_ok, "o": badge_open, "leak": badge_leak, "safe": badge_safe}
+TILE_H = 22
+
+
+def tile(x, y, w, label, kind, fill=INK, weight="normal", bg="#FFFFFF", stroke="#C4C4C4",
+         dash=None):
+    """One stored memory as a small card: status glyph + short label."""
+    rect(x, y, w, TILE_H, fill=bg, stroke=stroke, sw=1, rx=RX, dash=dash)
+    if kind:
+        GLYPH[kind](x + 11, y + TILE_H / 2, 6.5)
+        text(x + 22, y + 16, label, SMALL, weight, fill=fill, maxw=w - 26)
+    elif label:
+        text(x + w / 2, y + 16, label, SMALL, weight, fill=fill, anchor="middle", maxw=w - 8)
+
+
+def inline(x, y, items, size=SMALL, maxw=None):
+    """Text and status glyphs on one baseline. items: (text, style) or ('@', kind)."""
+    cx = x
+    for t, o in items:
+        if t == "@":
+            GLYPH[o](cx + 7, y - 5.5, 6.5)
+            cx += 16
+        else:
+            cx += rich(cx, y, [(t, o)] if isinstance(o, dict) else o, size=size)
+    if maxw is not None and cx - x > maxw + 0.5:
+        WARN.append(f"overflow {cx - x:.0f}>{maxw:.0f}: inline at ({x:.0f}, {y:.0f})")
+    return cx - x
+
+
+def ticket(x, y, kind, w=40, h=22):
+    """An audit ticket: notched card with the verdict it returned."""
+    rect(x, y, w, h, fill="#FFFFFF", stroke=GREY, sw=1.1, rx=RX)
+    for nx in (x, x + w):
+        EL.append(f'<circle cx="{nx}" cy="{y + h / 2}" r="4" fill="#FFFFFF" stroke="{GREY}" '
+                  f'stroke-width="1.1"/>')
+        EL.append(f'<rect x="{nx - (4.6 if nx == x else 0)}" y="{y + h / 2 - 5}" width="4.6" '
+                  f'height="10" fill="#FFFFFF"/>')
+    GLYPH[kind](x + w / 2, y + h / 2, 6.5)
+
+
+def ledger_icon(x, y):
+    """A journal: page with ruled lines (append-only ledger)."""
+    rect(x, y, 22, 28, fill="#FFFFFF", stroke=GREY, sw=1.1, rx=2)
+    for i in range(4):
+        line([(x + 5, y + 7 + 5 * i), (x + 17, y + 7 + 5 * i)], color=GREY, sw=1.1)
+
+
+def chip(x, y, w, parts, bg, stroke, h=22, size=SMALL):
+    """A small rounded label (scope chip); parts as for rich()."""
+    rect(x, y, w, h, fill=bg, stroke=stroke, sw=1, rx=RX)
+    tw_ = sum(text_width(t, size * (SUB if o.get("sub") else 1), o.get("weight") == "bold",
+                         o.get("serif", False)) for t, o in parts)
+    rich(x + (w - tw_) / 2, y + 16, parts, size=size, maxw=w - 6)
+
+
 def panel_a():
     group("panel-a")
     L, R = AX + 14, AX + AW - 14
     w = R - L
     title(L, 36, "(a) Provenance & audits", maxw=w)
 
-    # contributor A, context X (localized placement: seeds and planted attack share batch 1)
-    text(L, 70, "Contributor A · context X", 17, "bold", maxw=w)
-    rect(L, 80, w, 94, fill="#FAFAFA", stroke="#C4C4C4", sw=1, rx=RX)
-    text(L + 10, 98, "batch 1", SMALL, "bold", fill=MUTED)
-    row(L + 10, 120, "x", "Default payee is QX Ltd.", w - 20)
-    row(L + 10, 143, "x", "Escalate to ops@example.com", w - 20)
-    row(L + 10, 166, "o", "“Project code is ZX-91”", w - 20, weight="bold", fill=RED)
-    rect(L, 182, w, 52, fill="#FAFAFA", stroke="#C4C4C4", sw=1, rx=RX)
-    text(L + 10, 200, "batch 2", SMALL, "bold", fill=MUTED)
-    row(L + 10, 223, "o", "“Larkspur review: Wednesdays”", w - 20, weight="bold", fill=S_DARK)
+    # contributor A: context X (localized placement: seeds and planted claim share batch 1)
+    text(L, 64, "Contributor A", 17, "bold", maxw=w)
+    rect(L, 72, w, 134, fill="#FAFAFA", stroke="#C4C4C4", sw=1, rx=RX)
+    text(L + 8, 89, "context X", SMALL, "bold", fill=MUTED)
+    b1w = 158
+    rect(L + 8, 96, b1w, 102, fill="#FFFFFF", stroke="#D6D6D6", sw=1, rx=RX)
+    text(L + 16, 112, "batch 1", SMALL, fill=MUTED)
+    tile(L + 14, 118, b1w - 12, "payee: QX Ltd", "x")
+    tile(L + 14, 143, b1w - 12, "escalate: ops@", "x")
+    tile(L + 14, 168, b1w - 12, "code: ZX-91", "o", fill=RED, weight="bold")
+    b2x = L + 8 + b1w + 8
+    rect(b2x, 96, R - 8 - b2x, 102, fill="#FFFFFF", stroke="#D6D6D6", sw=1, rx=RX)
+    text(b2x + 8, 112, "batch 2", SMALL, fill=MUTED)
+    tile(b2x + 6, 118, R - 8 - b2x - 12, "Larkspur", "o", fill=S_DARK, weight="bold")
 
-    # context Y, collapsed: A's other two audited seeds
-    text(L + 10, 258, "context Y", SMALL, "bold", fill=MUTED)
-    text(L + 104, 258, "b1", SMALL, fill=MUTED)
-    badge_x(L + 132, 252.5, 6.5)
-    badge_x(L + 149, 252.5, 6.5)
-    text(L + 176, 258, "b2", SMALL, fill=MUTED)
-    badge_open(L + 204, 252.5, 6.5)
-    badge_open(L + 221, 252.5, 6.5)
+    # context Y, collapsed: A's other two audited seeds (both in batch 1)
+    rect(L, 214, w, 34, fill="#FAFAFA", stroke="#C4C4C4", sw=1, rx=RX)
+    text(L + 8, 236, "context Y", SMALL, "bold", fill=MUTED)
+    inline(L + 104, 236, [("b1 ", MUT), ("@", "x"), ("@", "x"), ("     b2 ", MUT),
+                          ("@", "o"), ("@", "o")])
+
+    # contributor B: one benign item, audited safe
+    text(L, 276, "Contributor B", 17, "bold", maxw=w)
+    tile(L + 150, 260, w - 150, "benign", "safe", fill=MUTED)
 
     # unrelated contributor U: an unaudited near-copy of an unsafe-AUDITED seed
-    text(L, 292, "Contributor U · unlinked relay", 17, "bold", maxw=w)
-    rect(L, 302, w, 30, fill="#FAFAFA", stroke="#C4C4C4", sw=1, rx=RX)
-    row(L + 10, 322, "o", "“Escalate to ops@example.com”", w - 20, weight="bold", fill=RED)
-    text(L + 10, 352, "near-copy of an unsafe-audited claim;", SMALL, italic=True,
-         fill=TEAL_D, maxw=w - 10)
-    text(L + 10, 371, "U itself has no audit evidence", SMALL, italic=True,
-         fill=TEAL_D, maxw=w - 10)
+    text(L, 308, "Contributor U", 17, "bold", maxw=w)
+    tile(L + 150, 292, w - 150, "escalate: ops@", "o", fill=RED, weight="bold")
+    text(R, 336, "near-copy; no audits", SMALL, italic=True, fill=TEAL_D, anchor="end")
     jx = AX + 6                                    # connector spine, left margin
-    EL.append(f'<circle cx="{jx}" cy="317" r="2.6" fill="{TEAL}"/>')
-    lineage_line([(jx, 317), (L - 1, 317)], marker=None)
-    lineage_line([(jx, 317), (jx, 138), (L - 2, 138)])                 # relay -> audited seed
-    lineage_line([(jx, 317), (jx, ROUTE_Y)], marker=None)              # relay -> SL, panel (c)
+    EL.append(f'<circle cx="{jx}" cy="320" r="2.6" fill="{TEAL}"/>')
+    lineage_line([(jx, 303), (jx, 320), (L + 140, 320), (L + 140, 303), (L + 148, 303)],
+                 marker=None)
+    lineage_line([(jx, 320), (jx, 154), (L + 12, 154)])                # relay -> audited seed
+    lineage_line([(jx, 320), (jx, ROUTE_Y)], marker=None)              # relay -> SL, panel (c)
 
     # audit allocation (oracle; identical ticket IDs for R, C, M, S)
-    rich(L, 408, [("5 audit tickets", {"weight": "bold"}),
-                  ("  (R, C, M, S)", {"fill": MUTED})], size=17, maxw=w)
-    rich(L, 429, [("4 seeds of A", {"weight": "bold", "fill": RED}),
-                  (" → unsafe (2 in X, 2 in Y)", {})], size=SMALL, maxw=w)
-    rich(L, 449, [("1 benign item of B", {"weight": "bold"}), (" → safe", {})],
-         size=SMALL, maxw=w)
-    text(L, 475, "Optional boundary verification: the 5th", SMALL, italic=True,
-         fill=MUTED, maxw=w)
-    text(L, 494, "ticket audits A’s other batch instead.", SMALL, italic=True,
-         fill=MUTED, maxw=w)
+    rich(L, 404, [("5 audit tickets", {"weight": "bold"}),
+                  ("  same for R, C, M, S", {"fill": MUTED})], size=17, maxw=w)
+    for i, kind in enumerate(("x", "x", "x", "x", "safe")):
+        ticket(L + 6 + 50 * i + (12 if i == 4 else 0), 416, kind)
+    text(L + 6 + 95, 462, "A’s seeds", SMALL, fill=MUTED, anchor="middle")
+    text(L + 6 + 212 + 20, 462, "B", SMALL, fill=MUTED, anchor="middle")
+    line([(L + 6, 447), (L + 196, 447)], color=FAINT, sw=1)
 
     rect(L, 510, w, 50, fill=GREY_F, stroke=GREY, sw=1, rx=RX)
-    text(L + 12, 531, "Evidence ledger", 17, "bold")
-    text(L + 12, 551, "one vote per origin; corrections retract", SMALL, fill=MUTED,
-         maxw=w - 24)
+    ledger_icon(L + 10, 521)
+    text(L + 42, 531, "Evidence ledger", 17, "bold")
+    text(L + 42, 551, "one vote per root", SMALL, fill=MUTED, maxw=w - 54)
     gx = (AX + AW + BX) / 2
     ev_arrow([(R, 535), (gx, 535), (gx, 196), (BX + 15, 196)], color=S_LINE, marker="a-blue")
     end()
@@ -280,74 +372,107 @@ def panel_b():
     text(x + 16, 59, "Distrust spreads only as far as the audit evidence reaches.", 16.5,
          italic=True, fill=S_DARK, maxw=w - 32)
 
-    # nested scopes = ledger.active_scopes; state shown for A's records in context X
-    sw = 284
-    text(L, 94, "Scopes and support gates", SMALL, "bold", fill=MUTED)
-    rect(L, 104, sw, 243, fill=S_OFF_F1, stroke=S_OFF_LINE, sw=1.1, rx=RX, dash="4 3")
-    text(L + 12, 127, "Contributor", 17, "bold", fill=S_OFF_TEXT)
-    state_label(L + sw - 12, 127, "not met", False)
-    text(L + 12, 147, "≥ 4 unsafe, and the context gate", SMALL, fill=MUTED, maxw=sw - 24)
-    text(L + 12, 166, "holds in ≥ 2 contexts", SMALL, fill=MUTED, maxw=sw - 24)
-    rect(L + 14, 178, sw - 28, 161, fill=S_OFF_F2, stroke=S_OFF_LINE, sw=1.1, rx=RX, dash="4 3")
-    text(L + 26, 200, "Context", 17, "bold", fill=S_OFF_TEXT)
-    state_label(L + sw - 26, 200, "not met", False)
-    text(L + 26, 220, "≥ 2 unsafe across ≥ 2 batches", SMALL, fill=MUTED, maxw=sw - 52)
-    text(L + 26, 239, "here: both flags in batch 1", SMALL, italic=True, fill=MUTED,
-         maxw=sw - 52)
-    rect(L + 28, 252, sw - 56, 78, fill=S_FILL, stroke=S_LINE, sw=2.2, rx=RX)
-    text(L + 40, 275, "Batch", 17, "bold", fill=S_DARK)
-    state_label(L + sw - 40, 275, "active", True)
-    text(L + 40, 296, "≥ 1 unsafe in this batch", SMALL, fill=INK, maxw=sw - 80)
-    text(L + 40, 317, "batch 1 only (2 unsafe)", SMALL, "bold", fill=S_DARK, maxw=sw - 80)
+    # (1) support gates = ledger.active_scopes (draft Eqs. 8-9), checked for record ZX-91
+    # (contributor A, context X, batch 1). x = an unsafe-audited root of A. The qualifying
+    # rule has its own constants (theta_Q, delta_Q), not the context gate's.
+    tw = w - 32
+    IT = {"italic": True, "fill": MUTED}
+    rich(L, 94, [("1  Support gates for ", {"weight": "bold", "fill": MUTED}),
+                 ("code: ZX-91", {"weight": "bold", "fill": RED}),
+                 ("  (A · context X · batch 1)", {"fill": MUTED})], size=SMALL, maxw=tw)
+    c_cond, c_here = L + 108, L + 326
+    gates = [
+        ("Batch", True, [("≥ ", {}), *sym("θ", "bat"), (" ", {}), ("@", "x"), (" in its batch", {})],
+         [("b1 ", {}), ("@", "x"), ("@", "x")], "active"),
+        ("Context", False, [("≥ ", MUT), *sym("θ", "ctx", MUTED), (" ", MUT), ("@", "x"),
+                            (" in ≥ ", MUT), *sym("δ", "ctx", MUTED), (" batches", MUT)],
+         [("b1 ", IT), ("@", "x"), ("@", "x"), ("  b2 ", IT), ("@", "o")], "not met"),
+        ("Contributor", False, [("≥ ", MUT), *sym("θ", "src", MUTED), (" ", MUT), ("@", "x"),
+                                (", ≥ ", MUT), *sym("δ", "src", MUTED), (" qualifying*", MUT)],
+         [("4 ", IT), ("@", "x"), (", 0 qualifying", IT)], "not met"),
+    ]
+    for i, (nm, on, cond, here, state) in enumerate(gates):
+        y = 104 + 31 * i
+        rect(L, y, tw, 27, fill=S_FILL if on else S_OFF_F1, stroke=S_LINE if on else S_OFF_LINE,
+             sw=1.8 if on else 1.0, rx=RX, dash=None if on else "4 3")
+        text(L + 10, y + 19, nm, SMALL, "bold", fill=S_DARK if on else S_OFF_TEXT)
+        inline(c_cond, y + 19, cond, maxw=c_here - c_cond - 8)
+        inline(c_here, y + 19, here, maxw=L + tw - 66 - c_here)
+        state_label(L + tw - 10, y + 19, state, on)
+    inline(L, 212, [("* qualifying context: ≥ ", IT), *[(t, {**o, "fill": MUTED}) for t, o in sym("θ", "Q")],
+                    (" ", IT), ("@", "x"), (" in ≥ ", IT), *[(t, {**o, "fill": MUTED}) for t, o in sym("δ", "Q")],
+                    (" batches", IT)], maxw=tw)
 
-    # risk & decision = GroupStats + Policy.decide  (n_u, n_s: distinct audited origins)
-    fx, fw = L + sw + 14, 222
-    fl, fm = fx + 12, fw - 24
-    text(fx, 94, "Risk & decision", SMALL, "bold", fill=MUTED, maxw=fw)
-    rect(fx, 104, fw, 243, fill="#FFFFFF", stroke=S_LINE, sw=1.1, rx=RX)
+    # (2) risk & decision = GroupStats + Policy.decide; bars = d for n+ = 0
     S_ = {"serif": True}
     SI = {"serif": True, "italic": True}
-    SB = {"serif": True, "sub": True}
-    rich(fl, 133, [("risk", SI), (" = (1+", S_), ("n", SI), ("u", SB), (") / (2+", S_),
-                   ("n", SI), ("u", SB), ("+", S_), ("n", SI), ("s", SB), (")", S_)],
-         size=19, maxw=fm)
-    M_ = {"fill": MUTED}
-    rich(fl, 155, [("n", {**SI, **M_}), ("u", {**SB, **M_}), (", ", M_),
-                   ("n", {**SI, **M_}), ("s", {**SB, **M_}), (": unsafe / safe origins", M_)],
-         size=16.5, maxw=fm)
-    rich(fl, 183, [("pen", SI), (" = max(0, ", S_), ("risk", SI), (" − ½)", S_)],
-         size=19, maxw=fm)
-    rich(fl, 205, [("S:", {"weight": "bold", "fill": S_DARK}),
-                   (" max over active scopes", {"fill": S_DARK})], size=SMALL, maxw=fm)
-    line([(fl, 219), (fx + fw - 12, 219)], color=S_SEP, sw=1)
-    rich(fl, 245, [("pen ≥ 0.25", {"weight": "bold"}), ("  →  ", {}),
-                   ("withhold", {"weight": "bold", "fill": RED})], size=17, maxw=fm)
-    rich(fl, 269, [("else rank by ", {}), ("cos − 0.5·pen", SI)], size=16.5, maxw=fm)
-    line([(fl, 285), (fx + fw - 12, 285)], color=S_SEP, sw=1)
-    text(fl, 310, "Batch 1: 2 unsafe, 0 safe", SMALL, "bold", fill=S_DARK, maxw=fm)
-    text(fl, 331, "risk 3/4, pen 1/4 → withhold", SMALL, fill=S_DARK, maxw=fm)
+    DK = {"fill": S_DARK}
+    text(L, 240, "2  Risk → decision", SMALL, "bold", fill=MUTED)
+    lw = 250
+    g = 64  # gloss column
+    for y_, gl, parts in (
+        (266, "risk", [("r", SI), (" = (1+", S_), *nsup("−"), (")/(2+", S_), *nsup("−"), ("+", S_),
+                       *nsup("+"), (")", S_)]),
+        (290, "penalty", [("d", SI), (" = max(0, ", S_), ("r", SI), (" − ½)", S_)]),
+        (314, "S uses", [("D", {**SI, **DK}), (" = max of active ", DK), ("d", {**SI, **DK})]),
+    ):
+        text(L, y_, gl, SMALL, italic=True, fill=MUTED)
+        rich(L + g, y_, parts, size=SMALL if gl == "S uses" else 18, maxw=lw - g)
+    rect(L, 330, 12, 12, fill=RED, stroke="none", rx=1)
+    rich(L + 18, 341, [("D", SI), (" ≥ ", {}), ("τ", SI), (" → ", {}),
+                       ("withhold", {"weight": "bold", "fill": RED})], size=SMALL, maxw=lw - 18)
+    rect(L, 350, 12, 12, fill=S_LINE, stroke="none", rx=1)
+    rich(L + 18, 361, [("else rank by ", {}), ("s − λD", SI), ("  (", MUT), ("s", {**SI, **MUT}),
+                       (": similarity)", MUT)], size=SMALL, maxw=lw - 18)
+    # chart
+    x0 = L + lw + 16
+    ax0, base, scale, slot = x0 + 24, 334, 240.0, 56
+    tau_y = base - 0.25 * scale
+    line([(ax0, 252), (ax0, base), (L + tw - 4, base)], color=MUTED, sw=1)
+    rich(ax0 - 16, 312, [("d", {**SI, "fill": MUTED})], size=17)
+    for i, (num, den) in enumerate(((0, 1), (1, 6), (1, 4))):
+        h = scale * num / den
+        bx_ = ax0 + 16 + slot * i
+        withhold = num * 4 >= den        # d >= tau (inclusive), exact
+        if h:
+            rect(bx_, base - h, 30, h, fill=RED if withhold else S_LINE, stroke="none", rx=1)
+        else:
+            line([(bx_, base - 1), (bx_ + 30, base - 1)], color=S_LINE, sw=2.2)
+        rich(bx_ + 15 - 4, base + 17, [(str(i), S_)], size=16)
+    rich(ax0 + 4, base + 35, [("unsafe roots ", MUT), *nsup("−", MUTED), ("  (with ", MUT),
+                              *nsup("+", MUTED), (" = 0)", MUT)], size=SMALL, maxw=L + tw - ax0 - 8)
+    line([(ax0, tau_y), (L + tw - 4, tau_y)], color=RED, sw=1.2, dash="4 3")
+    rich(ax0 - 16, tau_y + 5, [("τ", {**SI, "fill": RED})], size=18)
+    # worked example: batch 1 has n- = 2, n+ = 0 -> r = 3/4, d = 1/4 = tau -> withheld (>=)
+    rich(ax0 + 6, 258, [("ZX-91: ", {"weight": "bold", "fill": S_DARK}), ("r", {**SI, **DK}),
+                        (" = 3/4, ", DK), ("d", {**SI, **DK}), (" = 1/4 = ", DK), ("τ", {**SI, **DK})],
+         size=SMALL, maxw=L + tw - ax0 - 8)
+    line([(ax0 + 16 + slot * 2 + 15, 263), (ax0 + 16 + slot * 2 + 15, tau_y - 2)], color=S_DARK, sw=1)
+    line([(x0 - 8, 252), (x0 - 8, 364)], color=S_SEP, sw=1)
 
-    # localized example: R / C / M / S over A's two batches in context X
-    tw = w - 32
-    text(L, 378, "Localized example (A also has 2 flags in context Y)", SMALL, "bold",
-         fill=MUTED, maxw=tw)
+    # (3) toy example: R / C / M / S on A's two context-X records. Outcomes reproduced by
+    # running the frozen Policy.decide on this toy ledger (README "Verification").
+    T0 = 392
+    rich(L, T0, [("3  Toy example: A’s context-X records", {"weight": "bold", "fill": MUTED})],
+         size=SMALL, maxw=tw)
     cm, cs, cb = 78, 142, (tw - 78 - 142) / 2
     x_s, x_1, x_2 = L + cm, L + cm + cs, L + cm + cs + cb
-    line([(L, 389), (L + tw, 389)], color=INK, sw=1.1)            # booktabs-style rules
-    text(L + 10, 408, "Method", SMALL, "bold", fill=MUTED)
-    text(x_s + 8, 408, "Deciding scope", SMALL, "bold", fill=MUTED, maxw=cs - 10)
-    text(x_1 + 10, 408, "Batch 1 (ZX-91)", SMALL, "bold", fill=MUTED, maxw=cb - 12)
-    text(x_2 + 10, 408, "Batch 2 (useful)", SMALL, "bold", fill=MUTED, maxw=cb - 12)
-    line([(L, 418), (L + tw, 418)], color=INK, sw=0.8)
+    line([(L, T0 + 9), (L + tw, T0 + 9)], color=INK, sw=1.1)            # booktabs-style rules
+    text(L + 10, T0 + 30, "Method", SMALL, "bold", fill=MUTED)
+    rich(x_s + 8, T0 + 30, [("scope · ", {"weight": "bold", "fill": MUTED}),
+                            ("D", {**SI, "fill": MUTED})], size=SMALL, maxw=cs - 10)
+    tile(x_1 + 8, T0 + 13, cb - 20, "code: ZX-91", "o", fill=RED, weight="bold")
+    tile(x_2 + 8, T0 + 13, cb - 20, "Larkspur", "o", fill=S_DARK, weight="bold")
+    line([(L, T0 + 40), (L + tw, T0 + 40)], color=INK, sw=0.8)
     rows = [
-        ("R", "audited items only", ("leak", "leaks", RED), ("ok", "kept", INK, None)),
-        ("C", "context · 1/4", ("x", "withheld", INK), ("x", "lost", RED, "lost")),
-        ("M", "contributor · 1/3", ("x", "withheld", INK), ("x", "lost", RED, "lost")),
-        ("S", "batch 1 only · 1/4", ("x", "withheld", INK), ("ok", "kept", S_DARK, "kept")),
+        ("R", "none", None, ("leak", "leaks", RED), ("ok", "kept", INK, None)),
+        ("C", "ctx", "1/4", ("x", "withheld", INK), ("x", "lost", RED, "lost")),
+        ("M", "all", "1/3", ("x", "withheld", INK), ("x", "lost", RED, "lost")),
+        ("S", "bat", "1/4", ("x", "withheld", INK), ("ok", "kept", S_DARK, "kept")),
     ]
-    rh = 36
-    for i, (m, scope, a, b) in enumerate(rows):
-        y = 423 + (rh + 3) * i
+    rh = 32
+    for i, (m, scope, val, a, b) in enumerate(rows):
+        y = T0 + 45 + (rh + 3) * i
         ours = m == "S"
         if ours:
             rect(L, y, tw, rh, fill=S_TINT, stroke=S_LINE, sw=1.6, rx=RX)
@@ -359,17 +484,22 @@ def panel_b():
         elif emph == "kept":
             rect(x_2 + 4, y + 5, cb - 8, rh - 10, fill=S_FILL, stroke=S_LINE, sw=1.6, rx=RX)
         if ours:
-            text(L + 10, y + 24, "S", 18, "bold", fill=S_DARK)
-            text(L + 25, y + 24, "(ours)", SMALL, "bold", fill=S_DARK, maxw=cm - 27)
+            text(L + 10, y + 22, "S", 18, "bold", fill=S_DARK)
+            text(L + 25, y + 22, "(ours)", SMALL, "bold", fill=S_DARK, maxw=cm - 27)
         else:
-            text(L + 10, y + 24, m, 18, "bold")
-        text(x_s + 8, y + 24, scope, SMALL, "bold" if ours else "normal",
-             fill=S_DARK if ours else MUTED, maxw=cs - 10)
+            text(L + 10, y + 22, m, 18, "bold")
+        parts = [(scope, {"weight": "bold" if ours else "normal",
+                          "fill": S_DARK if ours else MUTED})]
+        if val:
+            parts.append((" · " + val, {"weight": "bold" if ours else "normal",
+                                        "fill": S_DARK if ours else MUTED}))
+        chip(x_s + 8, y + 5, 92, parts, S_FILL if ours else "#F4F4F4",
+             S_LINE if ours else "#D6D6D6")
         kind1, s1, col1 = a
-        {"x": badge_x, "ok": badge_ok, "leak": badge_leak}[kind1](x_1 + 20, y + rh / 2)
-        text(x_1 + 34, y + 24, s1, 16.5, "normal", fill=col1, maxw=cb - 38)
-        {"x": badge_x, "ok": badge_ok, "leak": badge_leak}[kind2](x_2 + 20, y + rh / 2)
-        text(x_2 + 34, y + 24, s2, 17, "bold" if emph else "normal", fill=col2,
+        GLYPH[kind1](x_1 + 20, y + rh / 2)
+        text(x_1 + 34, y + 22, s1, 16.5, "normal", fill=col1, maxw=cb - 38)
+        GLYPH[kind2](x_2 + 20, y + rh / 2)
+        text(x_2 + 34, y + 22, s2, 17, "bold" if emph else "normal", fill=col2,
              maxw=cb - 38)
     end()
 
@@ -380,11 +510,16 @@ def panel_c():
     RE = CX + CW - 14                                # right content edge
     title(L, 36, "(c) Governed retrieval & extensions", maxw=RE - L)
 
-    qs = [("Q1", "What is the project code?"), ("Q2", "When is the Larkspur review?"),
-          ("Q3", "Where should issues be escalated?")]
-    for i, (q, s) in enumerate(qs):
-        rich(L, 70 + 20 * i, [(q + "  ", {"weight": "bold"}), (s, {})], size=16.5,
-             maxw=RE - L)
+    # the three example queries, each with its outcome (illustration, not results)
+    qs = [("Q1", "project code?", "x", "ZX-91", "S", S_DARK),
+          ("Q2", "Larkspur review day?", "ok", "Larkspur", "S", S_DARK),
+          ("Q3", "where to escalate?", "x", "relay", "SL", TEAL_D)]
+    ox = L + 236
+    for i, (q, s, g, mem, by, col) in enumerate(qs):
+        y = 70 + 21 * i
+        rich(L, y, [(q + "  ", {"weight": "bold"}), (s, {})], size=16.5, maxw=ox - L - 8)
+        inline(ox, y, [("@", g), (" " + mem + "  ", {"fill": INK}),
+                       (by, {"weight": "bold", "fill": col})], maxw=RE - ox)
 
     bx, bw = L, 232
     mid = bx + bw / 2
@@ -406,15 +541,21 @@ def panel_c():
         y = sy(n)
         rect(bx, y, bw, SH, fill=fill, stroke=stroke, sw=swd, rx=RX, dash=dash)
         text(bx + 12, y + 20.5, str(n), 16.5, "bold", fill=ncol)
-        text(bx + 30, y + 20.5, label, 17, wt, fill=tcol, maxw=bw - 38)
+        if isinstance(label, str):
+            text(bx + 30, y + 20.5, label, 17, wt, fill=tcol, maxw=bw - 38)
+        else:  # (text, is_math) parts: math in serif italic, as in the draft's equations
+            rich(bx + 30, y + 20.5, [(t, {"weight": wt, "fill": tcol, **(MI if m else {})})
+                                     for t, m in label], size=17, maxw=bw - 38)
         if n < 7:
             main_arrow([(mid, y + SH), (mid, y + STRIDE - 1)])
 
     main_arrow([(mid, 118), (mid, Y0 - 1)])
-    step(1, "Admission (λ ≥ u)", "grey")
+    step(1, [("Admission ", False), ("α", True), ("(", False), ("x", True), (", ", False),
+             ("q", True), (")", False)], "grey")                     # draft Eq. 2
     step(2, "Direct audit findings", "ours")
     step(3, "S: penalty / withhold", "core")
-    step(4, "Re-rank & refill (4+4)", "ours")
+    step(4, [("Re-rank & refill (", False), ("k", True), (" + ", False), ("m", True),
+             (")", False)], "ours")                                  # k claims + m chunks
     step(5, "Conflict check (flags only)", "grey")
     step(6, "S2-ID gate", "amber")
     step(7, "Answer model", "grey")
@@ -423,57 +564,60 @@ def panel_c():
     y3 = sy(3) + SH / 2
     ty = sy(3) - 14
     rect(sx, ty, sw_, 108, fill=TEAL_F, stroke=TEAL, sw=1.3, rx=RX)
-    text(sx + 10, ty + 20, "SL · ours, optional", SMALL, "bold", fill=TEAL_D, maxw=sm)
-    text(sx + 10, ty + 41, "vetoes a candidate at", SMALL, fill=INK, maxw=sm)
-    text(sx + 10, ty + 60, "cos ≥ 0.8 to a claim of", SMALL, fill=INK, maxw=sm)
-    text(sx + 10, ty + 79, "an unsafe-audited origin", SMALL, fill=INK, maxw=sm)
-    text(sx + 10, ty + 99, "e.g. U’s relay (S: pen 0)", SMALL, italic=True, fill=TEAL_D,
-         maxw=sm)
+    text(sx + 10, ty + 20, "SL · ours, exploratory", SMALL, "bold", fill=TEAL_D, maxw=sm)
+    tw_ = 84
+    tile(sx + 8, ty + 32, tw_, "relay", "o", fill=RED, weight="bold")
+    tile(sx + sw_ - 8 - tw_, ty + 32, tw_, "seed", "x", fill=INK)
+    lineage_line([(sx + 8 + tw_ + 2, ty + 43), (sx + sw_ - 8 - tw_ - 4, ty + 43)])
+    rich(sx + sw_ / 2 - 27, ty + 74, [("cos ≥ ", {}), ("η", MI)], size=SMALL)
+    rich(sx + 10, ty + 99, [("→ relay vetoed (S: ", {"italic": True, "fill": TEAL_D}),
+                            ("D", {**MI, "fill": TEAL_D}),
+                            (" = 0)", {"italic": True, "fill": TEAL_D})], size=SMALL, maxw=sm)
     line([(sx, y3), (bx + bw + 3, y3)], color=TEAL, sw=1.5, marker="a-teal")
     # the relay from panel (a) arrives along the bottom route
     rx_ = CX + CW + 1
-    lineage_line([(AX + 6, ROUTE_Y), (rx_, ROUTE_Y), (rx_, ty + 54), (sx + sw_ + 3, ty + 54)])
+    lineage_line([(AX + 6, ROUTE_Y), (rx_, ROUTE_Y), (rx_, ty + 43), (sx + sw_ + 3, ty + 43)])
 
     # S2-ID: MemLineage's sensitive-action gate on the final retrieved context
     y6 = sy(6) + SH / 2
     ay = sy(6) - 16
     rect(sx, ay, sw_, 108, fill=AMBER_F, stroke=AMBER, sw=1.3, rx=RX, dash="5 3")
-    text(sx + 10, ay + 20, "S2-ID · hybrid, optional", SMALL, "bold", fill=AMBER_D, maxw=sm)
-    text(sx + 10, ay + 41, "gate from MemLineage:", SMALL, fill=INK, maxw=sm)
-    text(sx + 10, ay + 60, "sensitive query + non-", SMALL, fill=INK, maxw=sm)
-    text(sx + 10, ay + 79, "principal memory in the", SMALL, fill=INK, maxw=sm)
-    text(sx + 10, ay + 98, "final context → cleared", SMALL, "bold", fill=AMBER_D, maxw=sm)
+    text(sx + 10, ay + 20, "S2-ID: MemLineage gate", SMALL, "bold", fill=AMBER_D, maxw=sm)
+    text(sx + 10, ay + 43, "sensitive query, and", SMALL, fill=INK, maxw=sm)
+    text(sx + 10, ay + 63, "any non-principal memory", SMALL, fill=INK, maxw=sm)
+    text(sx + 10, ay + 92, "→ context", SMALL, "bold", fill=AMBER_D)
+    rect(sx + 96, ay + 76, 62, TILE_H, fill="#FFFFFF", stroke=AMBER, sw=1.2, rx=RX, dash="3 2")
+    rich(sx + 120, ay + 93, [("∅", {"serif": True, "fill": AMBER_D})], size=18)
     line([(sx, y6), (bx + bw + 3, y6)], color=AMBER, sw=1.5, dash="4 3", marker="a-amber")
 
-    # illustrative outcomes of the running example
-    oy = sy(7) + SH + 28
-    text(L, oy, "Example outcomes", SMALL, "bold", fill=MUTED)
-    outs = [(badge_x, "Q1", "ZX-91 withheld by S (step 3)"),
-            (badge_ok, "Q2", "Larkspur note kept by S (pen 0)"),
-            (badge_x, "Q3", "relay withheld by SL (step 3)")]
-    for i, (g, q, s) in enumerate(outs):
-        yy = oy + 22 + 21 * i
-        g(L + 8, yy - 5.5, 7)
-        rich(L + 22, yy, [(q + "  ", {"weight": "bold"}), (s, {})], size=SMALL,
-             maxw=RE - L - 22)
-
-    ny = oy + 22 + 21 * 3 + 12
-    text(L, ny, "S2-ID is evaluated under Sybil and laundering attacks,", SMALL,
-         italic=True, fill=MUTED, maxw=RE - L)
-    text(L, ny + 19, "which move poison outside S’s audited scopes; its gate", SMALL,
-         italic=True, fill=MUTED, maxw=RE - L)
-    text(L, ny + 38, "uses no contributor identity.", SMALL, italic=True, fill=MUTED,
-         maxw=RE - L)
+    # re-rank & refill, drawn for Q1: claims served (top k); R serves ZX-91, S refills
+    oy = sy(7) + SH + 44
+    rich(L, oy, [("Q1: served claims (top ", {"weight": "bold", "fill": MUTED}),
+                 ("k", {**MI, "fill": MUTED}), (")", {"weight": "bold", "fill": MUTED})],
+         size=SMALL)
+    tw2, gap = 74, 5
+    for r_, (m, col) in enumerate((("R", INK), ("S", S_DARK))):
+        yy = oy + 12 + 32 * r_
+        text(L, yy + 16, m, 18, "bold", fill=col)
+        for j in range(4):
+            xx = L + 26 + (tw2 + gap) * j
+            if r_ == 0 and j == 0:
+                tile(xx, yy, tw2, "ZX-91", "leak", fill=RED, weight="bold")
+            elif r_ == 1 and j == 3:
+                tile(xx, yy, tw2, "refill", None, fill=S_DARK, bg=S_TINT, stroke=S_LINE,
+                     dash="3 2")
+            else:
+                tile(xx, yy, tw2, "", None, bg=GREY_F, stroke="#D6D6D6")
+    xw = L + 26 + (tw2 + gap) * 4 + 8
+    tile(xw, oy + 44, RE - xw, "ZX-91", "x", fill=MUTED)
 
     rich(L, 578, [("S", {"weight": "bold", "fill": S_DARK}), (": steps 1–5, 7    ", {"fill": MUTED}),
                   ("SL", {"weight": "bold", "fill": TEAL_D}), (": S + veto    ", {"fill": MUTED}),
                   ("S2-ID", {"weight": "bold", "fill": AMBER_D}), (": SL + step 6", {"fill": MUTED})],
          size=SMALL, maxw=RE - L)
-    if ny + 38 > 560:
-        WARN.append(f"panel (c) note reaches {ny + 38}")
 
     # evidence and policy from (b) into step 3
-    ev_arrow([(BX + 16 + 284 + 14 + 222, y3), (bx - 3, y3)], color=S_LINE, marker="a-blue")
+    ev_arrow([(BX + BW, y3), (bx - 3, y3)], color=S_LINE, marker="a-blue")
     end()
 
 
@@ -482,20 +626,20 @@ def legend():
     y = 630
     x = 12
     items = [(GREY_F, GREY, None, "SAFE-Mem (unchanged)"),
-             (S_FILL, S_LINE, None, "Ours: S + audit layer"),
-             (TEAL_F, TEAL, None, "SL: our extension"),
-             (AMBER_F, AMBER, "4 3", "S2-ID: hybrid (MemLineage gate)")]
+             (S_FILL, S_LINE, None, "S (ours)"),
+             (TEAL_F, TEAL, None, "SL (exploratory)"),
+             (AMBER_F, AMBER, "4 3", "S2-ID (exploratory)")]
     for f, s, d, label in items:
         rect(x, y - 12, 20, 14, fill=f, stroke=s, sw=1.2, rx=2, dash=d)
         x += 27
-        x += text(x, y, label, SMALL) + 18
+        x += text(x, y, label, SMALL) + 16
     line([(x, y - 15), (x, y + 3)], color=FAINT, sw=1)
-    x += 14
-    for g, label in ((badge_x, "unsafe / withheld"), (badge_open, "not audited"),
-                     (badge_ok, "kept"), (badge_leak, "leaks")):
+    x += 12
+    for g, label in ((badge_x, "unsafe / withheld"), (badge_safe, "audited safe"),
+                     (badge_open, "unaudited"), (badge_ok, "kept"), (badge_leak, "leaks")):
         g(x + 7, y - 5, 6.5)
         x += 19
-        x += text(x, y, label, SMALL) + 14
+        x += text(x, y, label, SMALL) + 12
     lineage_line([(x, y - 5), (x + 22, y - 5)], marker=None)
     x += 28
     x += text(x, y, "near-copy", SMALL)
@@ -547,7 +691,7 @@ if __name__ == "__main__":
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     svg = build()
-    with open(a.out, "w", encoding="utf-8") as fh:
+    with open(a.out, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(svg)
     for wmsg in WARN:
         print("WARN", wmsg.encode("ascii", "replace").decode(), file=sys.stderr)
