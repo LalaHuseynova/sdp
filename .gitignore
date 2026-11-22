@@ -281,3 +281,6 @@ data/
 .claude/
 scripts/export_anon.sh
 scripts/anon_README.md
+
+# Third-party Claude Code plugin (academic-research-skills), installed locally via `claude plugin`
+/academic-research-skills-main/
