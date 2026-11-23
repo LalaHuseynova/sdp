@@ -749,6 +749,16 @@ The original project is credited in the [upstream README](UPSTREAM_README.md), i
 
 Newest entry first. **Future sessions: read this section first, then add an entry after every task.** Each entry records what was done, what was found, which files changed, what is completed or remaining, and the next step. Standing rules: never delete earlier documentation or results; make no paid API calls and no algorithm changes without the project owner's explicit permission.
 
+### 2026-11-23 — Pushed the 22–23 Nov work to main (free)
+
+**What:** commit `725a378` on `protocol-v2-option-b-freeze`, fast-forwarded into `main` and pushed to `sdp`. Both branches point to the same commit.
+**Contents:**
+- the README updates;
+- 4 reports, force-added because `reports/` is git-ignored: the ICML critical review, the benchmark/model survey, the MEM-INV-Bench feasibility check and the LoCoMo suitability check;
+- `research_data/mem_inv_feasibility_20261123/` (script and output).
+
+**Still local only (unchanged reasons):** `CLAUDE_MEMORY_TRANSFER.md` (contains the owner's name), the large archives and `contexts/` (over GitHub's limits).
+
 ### 2026-11-23 — Check of the LoCoMo test set (free; read-only)
 
 **What:** checked the LoCoMo confirmatory set on branch `sdp/locomo-backup`. The branch files were extracted read-only with `git archive` into the scratchpad; the current branch was not switched. The partial run outcomes were **not opened**. No paid call.
