@@ -749,6 +749,96 @@ The original project is credited in the [upstream README](UPSTREAM_README.md), i
 
 Newest entry first. **Future sessions: read this section first, then add an entry after every task.** Each entry records what was done, what was found, which files changed, what is completed or remaining, and the next step. Standing rules: never delete earlier documentation or results; make no paid API calls and no algorithm changes without the project owner's explicit permission.
 
+### 2026-11-23 — Check of the LoCoMo test set (free; read-only)
+
+**What:** checked the LoCoMo confirmatory set on branch `sdp/locomo-backup`. The branch files were extracted read-only with `git archive` into the scratchpad; the current branch was not switched. The partial run outcomes were **not opened**. No paid call.
+**Correct:**
+- the data hash matches the freeze (`79fa87e9…`);
+- confirmatory set = conv-26, 30, 41, 42, 43, 44, 47, 50, i.e. all 10 conversations minus the pilot's conv-48/49;
+- the pilot's two conversations reproduce from the stated seed (`Random(20261119).sample`), so they were not hand-picked;
+- the pilot scenarios contain only conv-48/49;
+- question counts per conversation equal LoCoMo's category 1–4 counts (1,540 in total);
+- 80 scenarios per conversation (2 orientations × 5 draws × 4 shapes × 2 attacks);
+- the frozen methods (ledger, policies, lineage, sv2, memlineage, integration) are byte-identical to this checkout, so LoCoMo tests the paper's S, SL and S2-ID;
+- every branch file listed in freeze v1.2 matches its hash. `budget.py` and `openai_client.py` differ on main only because of the later Option B Haiku revisions 8–9; this is expected and does not affect LoCoMo.
+**To fix or disclose:**
+1. **conv-26 was answered before:** the 28 Oct SAFE-Mem smoke tests (`results/openrouter_locomo_smoke_{a,b}-20261028*`) asked 10 clean questions on 2 of its sessions, with no attack and no defence. Minor, but the protocol says "never answered", so add a deviation note.
+2. The partial v1.1 outcomes (`research_data/locomo_v1_run/answers.jsonl`, `judgements.jsonl` for conv-26/30/41) are **committed on the public branch**. They are still unread; keep them unread until the one analysis.
+3. Small inconsistency for the co-author: `build.log` gives 9,783 contexts for conv-48, while `draws.json` estimated 10,448.
+
+**Not done:** the byte-for-byte rebuild. The frozen `build/` outputs are not in git; the co-author's machine has them, and its earlier rebuild check passed.
+
+### 2026-11-23 — Is LoCoMo suitable as the second dataset? (free review)
+
+**What:** reviewed the LoCoMo feasibility study, pilot and frozen protocol (branch `sdp/locomo-backup`), and recomputed the data statistics locally. Report: `reports/LOCOMO_SUITABILITY_20261123.md`. The partial run outcomes were not opened. No paid call.
+**Verdict:** **suitable**, as an external check of the utility side and a regime map. It is not a blanket-win dataset.
+- **Pros:**
+  - speakers, sessions and questions are natural, not written by us;
+  - the random hijack start answers the "result by construction" criticism;
+  - the pilot found accuracy S .38 vs C/M .10 at equal 0% ASR (1-session hijack).
+- **Limits to state:**
+  - only one external speaker per conversation, so the contributor gate never fires and there is no innocent third party;
+  - the attack is ours;
+  - turn-level RAG, so no comparison with SAFE-Mem or the published defences on LoCoMo;
+  - S ≡ M under mixed audits;
+  - S leaks under 2-session hijacks.
+**Next:** owner approves the v1.2 resume (about $6.25) on the co-author's machine.
+
+### 2026-11-23 — MEM-INV-Bench feasibility check (free, $0)
+
+**What:** checked whether our frozen methods can be evaluated on MEM-INV-Bench (`third_party/mem-inv-bench`, MIT). This is the benchmark of TMA-NM, our closest competitor.
+- No LLM or network call was made; MiniLM ran locally. Third-party files were read as data only.
+- Frozen code unchanged.
+- Report: `reports/MEM_INV_BENCH_FEASIBILITY_20261123.md`. Script and output: `research_data/mem_inv_feasibility_20261123/`.
+
+**Found:**
+- **S, C and M cannot be tested on it, by construction:**
+  - each scenario holds 2–3 memory items;
+  - the poison items come from different channels;
+  - there are no same-source siblings, batches or retrieval.
+  - Once the poison is audited, R already removes it.
+- **SL can be tested.** Applying the same MiniLM model and cosine ≥ 0.8 to the raw texts:
+  - catches 21/21 attacker rewrites (v1-large) and 8/8 (head-to-head);
+  - catches 0/8 trusted-tool echoes and 3/8 manufactured corroborations;
+  - wrongly blocks the benign twin in 15/21 and 3/8 cases, because the twin shares a sentence with the poison.
+  - The self-summarisation channel was not testable (paraphrase transcripts not found on Hugging Face).
+
+**Decision:** no paid run and not a second dataset. Use MEM-INV-Bench in related work, as the TMA-NM positioning, and in one appendix item (SL vs laundering, plus the false-positive limitation). The second dataset stays LoCoMo v1.2, which still needs owner approval (about $6.25).
+
+### 2026-11-23 — Survey: second dataset and extra answer models (free)
+
+**What:** desk research into every memory-poisoning benchmark I could find, plus current Gemini, Qwen and Llama prices on OpenRouter (public model list). Written to `reports/BENCHMARKS_AND_MODELS_SURVEY_20261123.md`. Nothing was run and nothing was paid.
+**Found:**
+- **LoCoMo is already in progress** on branch `sdp/locomo-backup`, which a co-author built on a Windows machine. The pilot is done. The v1.1 run stopped by rule S2 after 3 of 10 conversations. v1.2 is re-frozen (`f04cc850…`) and waits for owner approval; about $6.25 remains to run.
+- Most poisoning benchmarks (MINJA, AgentPoison, ASB, MemForm, MemoryDojo, MemSecBench, MemPoison) have no sender provenance, so S cannot be tested on them.
+- **MEM-INV-Bench** (already in `third_party/`) is the closest competitor: TMA-NM, origin-bound authority with Sybil-resistant corroboration. It must be cited.
+- **EnronQA** is the best structural fit for a third dataset: real senders, threads and folders, with 528k QA pairs.
+- Name clash: Gao et al.'s "MemPoison-Bench" is not our MPBench.
+**Recommendation:**
+1. Finish LoCoMo v1.2.
+2. Run a free feasibility check on MEM-INV-Bench.
+3. Add EnronQA only if time allows.
+
+Extra models: Gemini 3.1 Flash-Lite ($0.25/$1.50) and/or the open-weight Qwen3-235B-A22B-2507 ($0.14/$0.80). Each needs an approved-model code change and a protocol amendment, so the owner decides.
+
+### 2026-11-22 — Critical ICML assessment of the paper (free)
+
+**What:** advisor-style critique of the paper plan and final results, covering limitations, novelty, contributions, likely reviewer comments and replies, and a prioritized action plan. Written to `reports/ICML_CRITICAL_REVIEW_20261122.md` (Claude's opinion, not data; git-ignored like the rest of `reports/`). No code, results or algorithms changed. No paid calls.
+**Main findings:**
+- In its current framing ("S is a new defence that beats published ones"), the paper is likely to be rejected. The three reasons are:
+  - the localized result is close to true by construction;
+  - adaptive attackers (Sybil, shift, laundering) defeat S, whose worst case is 65.6 vs MemLineage 43.8;
+  - there is little ML novelty.
+- Strongest defensible framing: a formalization and characterization of how far audit evidence should propagate, including a proven evasion boundary for every label-based rule.
+**Next (owner decides):** the free items come first:
+1. reframe the paper;
+2. write the formal proposition;
+3. run a localization sweep and a sensitivity frontier on exposure;
+4. do the human judge check;
+5. test with a real (non-oracle) auditor, starting with RandEC.
+
+Then decide between a fresh v5 run of 32 groups (paid) and a second-benchmark feasibility check. Section 4 of the draft still describes protocol v1 and needs updating.
+
 ### 2026-11-22 — Merged into main on GitHub (free)
 
 **What:** merged `protocol-v2-option-b-freeze` into `main` (merge commit `b23290f`) and pushed `main` to `sdp`. Remote `main` had 2 new commits (methodology figure v3 and a merge of origin/main). They touch only `output/figures/methodology_s_20261114/`, so there was no overlap and no conflict. The branch was then fast-forwarded to `main`, so both point to the same commit.
