@@ -749,6 +749,16 @@ The original project is credited in the [upstream README](UPSTREAM_README.md), i
 
 Newest entry first. **Future sessions: read this section first, then add an entry after every task.** Each entry records what was done, what was found, which files changed, what is completed or remaining, and the next step. Standing rules: never delete earlier documentation or results; make no paid API calls and no algorithm changes without the project owner's explicit permission.
 
+### 2026-11-24 — Removed old presentation files (owner request)
+
+| Removed | Size | What it was |
+|---|---|---|
+| `output/pptx/` | 22 MB | Old slide decks (1 Nov, 1 Nov v2, 8 Nov) |
+| `output/imagegen/` | 3.7 MB | Generated pipeline images (1 Nov) |
+| `SAFE_Mem_Implementation_Walkthrough.pptx` | 4.4 MB | Old walkthrough deck |
+
+No code used them. They can still be recovered from git history (any commit before this one).
+
 ### 2026-11-24 — Fixed two wrong descriptions (free, owner OK)
 
 | What | Before | After |

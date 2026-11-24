@@ -1,5 +1,0 @@
-# Suggested paper caption
-
-**Overview of the implemented selective evidence propagation pipeline.** Original MPBench inputs remain unchanged. Saved claims and reconstructed source chunks are linked to artifacts and source spans, with synthetic contributor, context and batch assignments stored separately. Scheduled audit findings enter an evidence ledger that deduplicates incidents and rebuilds state after corrections. R, C, M and our S policy differ in how they penalize uninspected related memories; S requires evidence spanning groups before activating broader scopes. Retrieval preserves original authority and access permissions, applies direct record/use findings and the selected policy, then ranks and refills eligible records for the original answer model. Private answer evaluation does not update trust. The preliminary workflow replays five saved AI audits before scored questions; these assessments await human validation. The proposed defense has not been evaluated on the full dataset.
-
-This is an implementation illustration, not a result figure or evidence of improved safety.
