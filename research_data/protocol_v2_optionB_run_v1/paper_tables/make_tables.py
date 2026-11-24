@@ -92,7 +92,7 @@ t2 = table("<b>Table 2:</b> Target ASR (%, &darr;) under <i>adaptive</i> attacks
            "SAFE-Mem. Best per column and model in <b>bold</b>.",
            '<th colspan="3" class="grp">Oracle audits</th><th colspan="2" class="grp">Random audits</th>',
            "<th>Sybil k=4</th><th>Sybil-own k=4</th><th>Launder r=1</th><th>Launder r=.75</th><th>Sybil-own k=4</th>",
-           t2cols, GROUPS, note='<p class="tnote"><b>Attacks.</b> <b>Sybil k=4</b>: the attacker spreads the poison over 4 fake contributor identities; <b>Sybil-own</b>: each identity arrives in its own batch. <b>Launder r</b>: a fraction r of the attack items is repeated (relayed) by innocent contributors (r = 1: all; r = .75: three quarters). <b>Oracle audits</b>: the audits inspect attack items; <b>random audits</b>: audited items are drawn at random (values averaged over 6 draws).</p>')
+           t2cols, GROUPS, note='<p class="tnote"><b>Attacks.</b> <b>Sybil k=4</b>: the attacker spreads the poison over 4 fake contributor identities; <b>Sybil-own</b>: each identity arrives in its own batch. <b>Launder r</b>: a fraction r of the attack items is repeated (relayed) by innocent contributors (r = 1: all; r = .75: three quarters). <b>Oracle audits</b>: the audits inspect attack items; <b>random audits</b>: in each context, 2 of the 4 attack items are picked at random for audit, so every audit still finds poison and only which items are caught is random (values averaged over 6 draws).</p>')
 
 
 # Table 3: worst case + hypotheses

@@ -749,6 +749,15 @@ The original project is credited in the [upstream README](UPSTREAM_README.md), i
 
 Newest entry first. **Future sessions: read this section first, then add an entry after every task.** Each entry records what was done, what was found, which files changed, what is completed or remaining, and the next step. Standing rules: never delete earlier documentation or results; make no paid API calls and no algorithm changes without the project owner's explicit permission.
 
+### 2026-11-24 — Fixed two wrong descriptions (free, owner OK)
+
+| What | Before | After |
+|---|---|---|
+| `analysis_gemini/THREE_MODEL_COMPARISON.md` §7 point 3 | "S2-ID is the best method under adaptive attacks on every model" | S2-ID is the strongest of **our** methods (worst case ⅓ lower than S; lowest 8-cell mean of all 11 methods: 22.8 / 10.7 / 21.6). In the worst cell MemLineage is better or equal (GPT 43.8 vs 46.9, Gemini 43.8 = 43.8, Haiku 16.7 vs 21.9) and A-MemGuard is lower on Haiku (14.6) |
+| Results PDF note, Table 2 (`paper_tables/make_tables.py`) | "random audits: audited items are drawn at random" | In each context, 2 of the 4 attack items are picked at random for audit, so every audit still finds poison; only which items are caught is random (6 draws) |
+
+Rebuilt `tables.html` and `SAFE-Mem_results_tables.pdf`. No numbers changed, no paid calls. The same correction was made in this README's P-B4 entry and noted in `reports/RESEARCH_AUDIT_20261124.md`. The archived two-model PDF (`two_models_20261122/`) is left as it was.
+
 ### 2026-11-24 — Pushed the Gemini work and the research audit to main (free)
 
 **What:** one commit on `protocol-v2-option-b-freeze`, fast-forwarded into `main` and pushed to `sdp` (owner: "push everything in main branch all necessary things").
@@ -772,7 +781,7 @@ Newest entry first. **Future sessions: read this section first, then add an entr
 - `CLAUDE_MEMORY_TRANSFER.md`: contains the owner's name;
 - the three owner files (`HANDOFF_20261121.txt`, `preview_main.pdf`, the `.gitignore` change).
 
-**Known text correction pending (owner OK needed):** `THREE_MODEL_COMPARISON.md` §7 point 3 ("S2-ID is the best method under adaptive attacks") is wrong. See the audit report, §8.
+**Text correction:** `THREE_MODEL_COMPARISON.md` §7 point 3 ("S2-ID is the best method under adaptive attacks") was wrong; fixed later on 24 Nov (see the entry above).
 
 ### 2026-11-24 — P-B4 Gemini finished; free three-model analysis and comparison
 
@@ -780,7 +789,7 @@ Newest entry first. **Future sessions: read this section first, then add an entr
 - **Spend:** `v2_backbone_gemini` $2.2907 (cap $10), `v2_stage3` judges $2.3824 total (+$0.12 for P-B4). **Project total $7.0031.**
 - **Answer length:** 11.2% of Gemini answers reached the 200-token limit (GPT-4o-mini 1.5%, Haiku 1.2%; same limit for all by design). The full-run check (`logs/PB4_all_answers_check.txt`) prints "FAILED" only because of this guide value (≤ 10%, meant for the first 30 answers). Strict utility is unaffected (equal to GPT-4o-mini in every cell). Stated as a limitation.
 - **Free analysis** (RUNBOOK §8 command, $0) → `research_data/protocol_v2_optionB_run_v1/analysis_gemini/`. GPT-4o-mini and Haiku results there are **identical** to the official `analysis/` (JSON content equal; `per_cell.md` and figures byte-identical; `tables.md` only gains the Gemini Table 7 row, `appendix.md` only gains A14). The official `analysis/` is untouched.
-- **Consolidated comparison:** `analysis_gemini/THREE_MODEL_COMPARISON.md` (labelled post-hoc). Findings: on Gemini, S/SL/S2-ID reach 0% target ASR on localized/distributed/fp1 with 91% strict utility, the same as GPT-4o-mini and Haiku; undefended Gemini follows poison almost as often as GPT-4o-mini (original SAFE-Mem 59% vs 63%; Haiku 29%); S2-ID is the best method under adaptive attacks on all three (worst case 47/22/44 vs S 66/32/64); hypothesis outcomes on Gemini equal GPT-4o-mini's (H1–H5 ✓ incl. H5 secondary, H6 ✗).
+- **Consolidated comparison:** `analysis_gemini/THREE_MODEL_COMPARISON.md` (labelled post-hoc). Findings: on Gemini, S/SL/S2-ID reach 0% target ASR on localized/distributed/fp1 with 91% strict utility, the same as GPT-4o-mini and Haiku; undefended Gemini follows poison almost as often as GPT-4o-mini (original SAFE-Mem 59% vs 63%; Haiku 29%); S2-ID is the strongest of our methods under adaptive attacks (worst case 47/22/44 vs S 66/32/64; lowest 8-cell mean of all methods), but in the worst case MemLineage is better or equal (44/17/44) and A-MemGuard is lower on Haiku (15) (corrected 24 Nov); hypothesis outcomes on Gemini equal GPT-4o-mini's (H1–H5 ✓ incl. H5 secondary, H6 ✗).
 - **Results PDF updated (owner: "YES PLEASE")**: `paper_tables/SAFE-Mem_results_tables.pdf` (now 6 pages) shows Gemini 3.1 Flash-Lite, marked *post-hoc*, next to GPT-4o-mini and Claude Haiku in Part A (Table 1 main result, Figure 1 with three panels, Table 2 adaptive attacks, Table 3 worst case, Table 4 hypotheses); Part B stays GPT-4o-mini only. `make_tables.py`/`make_figures.py` also read `analysis_gemini/extra_backbone_analysis.json`. The two-model version of 22 Nov is kept in `paper_tables/two_models_20261122/`.
 - **PDF wording (owner request):** the "post-hoc" labels were removed from the results PDF and "Original SAFE-Mem" is now written "SAFE-Mem" (tables, notes, Figure 1). Data unchanged. The post-hoc status is still recorded in the frozen protocol (§13 limitation 8, §15), `analysis_gemini/appendix.md` A14 and `THREE_MODEL_COMPARISON.md`; the paper should state it once (e.g. in the limitations).
 - **Next:** Gemini in the paper text; commit/push (owner decides); nothing committed yet.

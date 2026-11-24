@@ -131,6 +131,8 @@ Conclusion: the security comparison in Table 1 and H3 favours our method; the wo
 **No bug found** that changes any reported number.
 
 **Wording errors found (text, not code):**
+> **Status, 24 Nov 2026 (later):** (a) and (b) are fixed with the owner's OK. The PDF note now says that 2 of the 4 attack items per context are picked at random for audit; §7 point 3 of the comparison now says S2-ID is the strongest of our methods but not better than MemLineage or A-MemGuard in the worst case.
+
 - (a) The "random audits" description (§4).
 - (b) My own 24 Nov comparison (`analysis_gemini/THREE_MODEL_COMPARISON.md` §7 point 3, and the chat summary) says **"S2-ID is the best method under adaptive attacks on all three models". That is wrong.** Worst-case target ASR: GPT-4o-mini MemLineage 43.8 < S2-ID 46.9; Gemini MemLineage 43.8 = S2-ID 43.8; Claude Haiku A-MemGuard 14.6 and MemLineage 16.7 < S2-ID 21.9. Correct statement: *S2-ID is the best of our methods under adaptive attacks and beats S by about a third, but it is not better than the best published defence.* Fixing it needs the owner's OK, because the file is existing work.
 
