@@ -184,3 +184,127 @@ def test_haiku_shape_requires_reasoning_disabled(sessions):
         haiku.dispatch_v2(ChatRequest(answer_request().messages, HAIKU, temperature=None,
                                       max_tokens=200))  # fmt: skip  (reasoning left on)
     assert hseen == []
+
+
+# Revision 10 (post-hoc, owner 23 Nov 2026): Gemini 3.1 Flash-Lite as a THIRD answering backbone,
+# added after the main analysis (not pre-registered). Only the answering model changes, as for
+# Haiku. Gemini accepts temperature (endpoint list, 23 Nov), so its answers keep GPT-4o-mini's
+# temperature 0; it reasons by default ("minimal"), so reasoning is disabled, like the Haiku fix.
+# Its own purpose, cap and session: the Haiku scope (v2_backbone_answer) is never reused.
+
+from ams.research.protocol_v2.backbone import GEMINI  # noqa: E402
+
+
+@pytest.fixture
+def gemini_sessions(tmp_path):
+    ExecutionSession.create(tmp_path / "gpt_g", plan_hash="x").close()
+    ExecutionSession.create(tmp_path / "gemini", plan_hash="x", model=GEMINI).close()
+    gw, gseen = wire("gpt")
+    mw, mseen = wire("gemini")
+    gpt = ConstructionSession(tmp_path / "gpt_g")
+    gpt.arm_construction_mock("v2", V2_SPLIT, gw, Decimal("1.00"), purpose="v2_stage3",
+                              approval=approval("v2_stage3", MODEL))  # fmt: skip
+    gem = ConstructionSession(tmp_path / "gemini")
+    gem.arm_construction_mock("v2", V2_SPLIT, mw, Decimal("1.00"), purpose="v2_backbone_gemini",
+                              approval=approval("v2_backbone_gemini", GEMINI))  # fmt: skip
+    yield gpt, gem, gseen, mseen
+    gpt.close()
+    gem.close()
+
+
+def test_gemini_answers_go_to_gemini_judges_stay_on_gpt(gemini_sessions):
+    gpt, gem, gseen, mseen = gemini_sessions
+    router = BackboneRouter(gpt, gem, model=GEMINI)
+    _, ans = router.dispatch("answer", answer_request())
+    assert ans["response"]["text"] == "reply from gemini"
+    _, jud = router.dispatch("judge_answer", judge_request())
+    assert jud["response"]["text"] == "reply from gpt" and gseen[-1]["model"] == MODEL
+    router.dispatch("no_memory_answer", answer_request())  # identical request: reused
+    assert len(mseen) == 1 and len(gseen) == 1
+    assert router.counts == {"gemini_answers": 2, "gpt_calls": 1}
+
+
+def test_gemini_answer_settings_match_gpt_temperature_zero_reasoning_off(gemini_sessions):
+    gpt, gem, gseen, mseen = gemini_sessions
+    router = BackboneRouter(gpt, gem, model=GEMINI)
+    router.dispatch("answer", answer_request())
+    router.dispatch("judge_answer", judge_request())
+    sent = mseen[-1]
+    assert sent["model"] == GEMINI and sent["temperature"] == 0 and sent["max_tokens"] == 200
+    assert sent["reasoning"] == {"enabled": False}
+    assert sent["messages"] == [{"role": "user", "content": answer_request().messages[0].content}]
+    assert sent["provider"]["max_price"] == {"prompt": 0.25, "completion": 1.5, "request": 0}
+    assert sent["provider"]["require_parameters"] is True
+    assert sent["provider"]["allow_fallbacks"] is False
+    assert "reasoning" not in gseen[-1] and gseen[-1]["temperature"] == 0  # GPT unchanged
+    stored = json.loads(gem.db.execute("SELECT request FROM dispatches").fetchone()[0])
+    assert stored["temperature"] == 0 and stored["reasoning_effort"] == "none"
+
+
+def test_gemini_scope_refuses_every_other_shape(gemini_sessions):
+    gpt, gem, _, mseen = gemini_sessions
+    body = answer_request().messages
+    for bad in (ChatRequest(body, GEMINI, temperature=None, max_tokens=200,
+                            reasoning_effort="none"),  # Haiku's no-temperature shape
+                ChatRequest(body, GEMINI, temperature=0.0, max_tokens=200),  # reasoning left on
+                ChatRequest(body, GEMINI, temperature=0.0, max_tokens=300,
+                            reasoning_effort="none"),
+                ChatRequest(judge_request().messages, GEMINI, temperature=0.0, max_tokens=120,
+                            reasoning_effort="none")):  # fmt: skip
+        with pytest.raises(ValueError):
+            gem.dispatch_v2(bad)
+    with pytest.raises(LedgerError):
+        gem.dispatch("judge_answer", judge_request())  # not an evaluation scope
+    assert mseen == []
+
+
+def test_router_never_mixes_backbone_scopes(gemini_sessions, sessions):
+    gpt, gem, _, _ = gemini_sessions
+    _, haiku, _, _ = sessions
+    with pytest.raises(LedgerError):
+        BackboneRouter(gpt, haiku, model=GEMINI)  # Gemini on the Haiku scope
+    with pytest.raises(LedgerError):
+        BackboneRouter(gpt, gem)  # Haiku (default) on the Gemini scope
+    with pytest.raises(LedgerError):
+        BackboneRouter(gpt, gem, model="openai/gpt-4o")  # not a registered backbone
+
+
+def test_haiku_settings_unchanged_by_the_gemini_addition(sessions):
+    gpt, haiku, _, hseen = sessions
+    BackboneRouter(gpt, haiku).dispatch("answer", answer_request())
+    assert "temperature" not in hseen[-1] and hseen[-1]["reasoning"] == {"enabled": False}
+    assert hseen[-1]["model"] == HAIKU and hseen[-1]["max_tokens"] == 200
+
+
+class FakeClock:
+    def __init__(self):
+        self.now, self.sleeps = 1000.0, []
+
+    def monotonic(self):
+        return self.now
+
+    def sleep(self, s):
+        self.sleeps.append(round(s, 6))
+        self.now += s
+
+
+def test_gemini_calls_are_paced_and_replays_are_not(gemini_sessions, monkeypatch):
+    """Revision 11: at least PACE_S seconds between two Gemini network calls (provider rate
+    limit); GPT-4o-mini calls and replays of already-paid answers are never slowed."""
+    import ams.research.workload.transport as T
+
+    clock = FakeClock()
+    monkeypatch.setattr(T, "time", clock)
+    assert T.PACE_S == {"v2_backbone_gemini": 2.0}
+    gpt, gem, gseen, mseen = gemini_sessions
+    router = BackboneRouter(gpt, gem, model=GEMINI)
+    router.dispatch("answer", answer_request())
+    router.dispatch("judge_answer", judge_request())
+    assert clock.sleeps == []  # first Gemini call and the GPT judge: no wait
+    clock.now += 0.5
+    other = ChatRequest((Message("user", "Question: when?\nWhat you remember:\n- Monday\n"
+                                 "Answer:"),), MODEL, temperature=0.0, max_tokens=200)  # fmt: skip
+    router.dispatch("answer", other)
+    assert clock.sleeps == [1.5]  # waited out the rest of the 2 s gap
+    router.dispatch("answer", answer_request())  # replay: no network, no wait
+    assert clock.sleeps == [1.5] and len(mseen) == 2

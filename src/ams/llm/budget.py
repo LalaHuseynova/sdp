@@ -39,12 +39,18 @@ APPROVED_MODELS = {
     "openai/gpt-4o-mini": ("0.15", "0.60"),
     "anthropic/claude-sonnet-5.5": ("2.00", "10.00"),
     "anthropic/claude-haiku-5.5": ("0.10", "0.50"),
+    # Revision 10 (owner, 23 Nov 2026; post-hoc third backbone): OpenRouter list price of the
+    # standard endpoints (configs/research/pricing_gemini_3_1_flash_lite_20261123.json); the
+    # dearer "priority" endpoints are excluded by this ceiling.
+    "google/gemini-3.1-flash-lite": ("0.25", "1.50"),
 }
 _LABEL = re.compile(r"[A-Za-z0-9_.:/-]{1,128}\Z")
 # Exceptions raised before any reply arrived (revision 7 review only). Revision 8 (owner,
 # 21 Nov 2026) adds NotFoundError: HTTP 404 "no endpoint found", the router refused the request
-# before any model ran. Still booked at the full worst case, never lower.
-_TRANSPORT_FAILURES = ("APITimeoutError", "APIConnectionError", "NotFoundError")
+# before any model ran. Revision 11 (owner, 23 Nov 2026) adds RateLimitError: HTTP 429, the
+# provider refused the request before any model ran. Still booked at the full worst case.
+_TRANSPORT_FAILURES = ("APITimeoutError", "APIConnectionError", "NotFoundError",
+                       "RateLimitError")
 _METADATA_KEYS = frozenset(
     {
         "generation_id",

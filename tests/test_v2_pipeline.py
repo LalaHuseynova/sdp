@@ -97,6 +97,8 @@ def test_method_lists_follow_the_protocol():
         "v2_stage3", "v2_published_memlineage", "v2_published_amemguard",
         "v2_published_sanitiser"}  # fmt: skip
     assert PL.required_purposes(["S"], backbone="haiku") == {"v2_stage3", "v2_backbone_answer"}
+    # Revision 10 (post-hoc third backbone): Gemini has its own purpose, never Haiku's.
+    assert PL.required_purposes(["S"], backbone="gemini") == {"v2_stage3", "v2_backbone_gemini"}
 
 
 def test_internal_methods_reproduce_the_runner_exactly(world, tmp_path):
@@ -276,6 +278,9 @@ def test_cli_refuses_paid_runs_before_loading_anything(tmp_path):
     with pytest.raises(LedgerError, match="Haiku"):
         cli.main([*paid, "--confirm-paid", "--backbone", "haiku", "--contexts",
                   str(tmp_path / "ctx")])  # fmt: skip
+    with pytest.raises(LedgerError, match="Gemini"):  # revision 10: the same rule for Gemini
+        cli.main([*paid, "--confirm-paid", "--backbone", "gemini", "--contexts",
+                  str(tmp_path / "ctx")])  # fmt: skip
     # Step 2.2: a paid stage needs a valid freeze manifest named by the owner's approval.
     (tmp_path / "a.json").write_text(json.dumps({"approved_by": "owner",
                                                  "protocol_v2_digest": "0" * 64}))
@@ -361,3 +366,53 @@ def test_guarded_haiku_run_after_the_gpt_run_reuses_every_gpt_call(world, tmp_pa
     haiku = journal(tmp_path / "haiku")
     assert len(haiku) == 2 * 2 * len(group["probes"])
     assert all(r["outcome"] is not None for r in haiku)  # every Haiku answer was judged
+
+
+def test_guarded_gemini_run_after_the_gpt_run_reuses_every_gpt_call(world, tmp_path):
+    """Revision 10 (post-hoc third backbone): the Gemini run goes through the same guarded
+    sessions and original pipeline path as the Haiku run. Answers go to Gemini 3.1 Flash-Lite
+    with GPT-4o-mini's temperature 0 and reasoning disabled; judges stay on GPT-4o-mini; every
+    GPT request the GPT run already sent (conflict checks, MemLineage) is replayed, not re-sent."""
+    from ams.research.protocol_v2.backbone import GEMINI
+
+    rows, group, ext, mock = world
+    transport, seen = wire(mock)
+    gpt = ["v2_stage3", "v2_published_memlineage"]
+    both = [*gpt, "v2_backbone_gemini"]
+    appr = approval(both)
+    appr["models"]["v2_backbone_gemini"] = GEMINI
+    kw = dict(conditions=CONDITIONS[:2], methods=("S", "memlineage"))
+    for purposes, out in ((gpt, "gpt"), (both, "gemini")):
+        with PL.open_paid(tmp_path / "s", "v2", appr, purposes, transport=transport,
+                          confirmed=True) as paid:  # fmt: skip
+            PL.evaluate(rows, [ext], paid.stage3, tmp_path / out, **kw,
+                        defences={"memlineage": PL.memlineage(paid.sensitive)},
+                        sensitive=paid.sensitive)  # fmt: skip
+        if out == "gpt":
+            n_gpt = len(seen)
+    new = seen[n_gpt:]
+    answers = [b for b in new if b["max_tokens"] == 200]
+    assert answers and all(b["model"] == GEMINI for b in answers)
+    assert all(b["temperature"] == 0 and b["reasoning"] == {"enabled": False} for b in answers)
+    assert all(b["model"] == MODEL for b in new if b["max_tokens"] != 200)  # judges
+    assert not [b for b in new if b["max_tokens"] in (6, 4)]  # conflicts, MemLineage replayed
+    gem = journal(tmp_path / "gemini")
+    assert len(gem) == 2 * 2 * len(group["probes"])
+    assert all(r["outcome"] is not None for r in gem)  # every Gemini answer was judged
+    gpt_rows = journal(tmp_path / "gpt")  # same probes, conditions and methods as the GPT run
+    assert sorted((r["condition"], r["method"], r["probe_id"]) for r in gem) == sorted(
+        (r["condition"], r["method"], r["probe_id"]) for r in gpt_rows)
+
+
+def test_one_run_never_opens_two_answer_backbones(tmp_path):
+    from ams.research.protocol_v2.backbone import GEMINI, HAIKU
+
+    transport, seen = wire(PromptAwareMock())
+    purposes = ["v2_stage3", "v2_backbone_answer", "v2_backbone_gemini"]
+    appr = approval(purposes)
+    appr["models"].update({"v2_backbone_answer": HAIKU, "v2_backbone_gemini": GEMINI})
+    with pytest.raises(LedgerError, match="one answer backbone"):
+        with PL.open_paid(tmp_path / "s", "v2", appr, purposes, transport=transport,
+                          confirmed=True):  # fmt: skip
+            pass
+    assert seen == [] and not (tmp_path / "s").exists()

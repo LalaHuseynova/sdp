@@ -76,6 +76,8 @@ def required_purposes(methods, backbone: str = "gpt") -> set[str]:
             out.add(_EXTRA_PURPOSE[name])
     if backbone == "haiku":
         out.add("v2_backbone_answer")
+    if backbone == "gemini":  # revision 10: post-hoc third backbone, its own purpose and cap
+        out.add("v2_backbone_gemini")
     return out
 
 
@@ -273,7 +275,7 @@ def open_paid(root: Path, bundle_hash: str, approval, purposes, *, transport=Non
     from ams.baselines.memlineage import SensitiveAction
     from ams.core.prompts import PromptLibrary
     from ams.research.execution.session import MODEL, ExecutionSession
-    from ams.research.protocol_v2.backbone import BackboneRouter
+    from ams.research.protocol_v2.backbone import BACKBONES, BackboneRouter
     from ams.research.workload.transport import (
         V2_MODELS,
         V2_PURPOSES,
@@ -284,6 +286,8 @@ def open_paid(root: Path, bundle_hash: str, approval, purposes, *, transport=Non
     )
 
     check(confirmed, "Paid stages need the explicit --confirm-paid flag (owner confirmation)")
+    answer_scopes = {b["purpose"]: m for m, b in BACKBONES.items() if b["purpose"] in purposes}
+    check(len(answer_scopes) <= 1, "A paid run uses at most one answer backbone")
     caps = {}
     for p in sorted(purposes):  # validate everything before opening anything
         approved = (approval or {}).get("caps_usd", {}).get(p, "0.01") if isinstance(
@@ -311,8 +315,8 @@ def open_paid(root: Path, bundle_hash: str, approval, purposes, *, transport=Non
                 s.arm_construction(bundle_hash, V2_SPLIT, key, caps[p], purpose=p,
                                    approval=approval)  # fmt: skip
         stage3 = sessions["v2_stage3"]
-        if "v2_backbone_answer" in sessions:
-            stage3 = BackboneRouter(stage3, sessions["v2_backbone_answer"])
+        for purpose, model in answer_scopes.items():  # Haiku or (revision 10) Gemini
+            stage3 = BackboneRouter(stage3, sessions[purpose], model=model)
         sensitive = None
         if "v2_published_memlineage" in sessions:
             sensitive = SensitiveAction(client=GuardedV2Client(sessions["v2_published_memlineage"]),

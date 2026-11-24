@@ -110,6 +110,12 @@ def test_frozen_protocol_records_the_option_b_design_from_the_code():
     assert p["seeds"]["PYTHONHASHSEED"] == "0"
     assert p["models"]["answer"] == "openai/gpt-4o-mini"
     assert p["models"]["second_backbone"] == "anthropic/claude-haiku-5.5"
+    # Revision 10: Gemini 3.1 Flash-Lite, a post-hoc third backbone on the Haiku cells.
+    assert p["models"]["third_backbone"] == "google/gemini-3.1-flash-lite"
+    assert p["runs"]["gemini"]["cells"] == REG.SECOND_BACKBONE
+    assert p["runs"]["gemini"]["methods"] == list(A.MAIN_METHODS)
+    assert p["runs"]["gemini"]["post_hoc"] is True
+    assert p["runs"]["haiku"]["methods"] == list(A.MAIN_METHODS)  # Haiku run unchanged
     assert (F.REPO / p["protocol_text"]).exists()
 
 

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Paid steps of the option-B runbook (owner-approved 15 Nov 2026). Usage: paid.sh PB1|PB2|PB3
+# Paid steps of the option-B runbook (owner-approved 15 Nov 2026). Usage: paid.sh PB1|PB2|PB3|PB4
 set -u
 cd /Users/ulkerhuseynova/Desktop/SAFE-Mem
 export VIRTUAL_ENV=
@@ -27,5 +27,12 @@ case "$1" in
   PB3) uv run python scripts/run_protocol_v2.py paid --bundle $B --stage1 $S --out $RUN/haiku --backbone haiku \
          --cells localized distributed sybil_k4 sybilown_k4 launder_r4 launder_r3_rand sybilown_k4_rand imp_localized_fp1 \
          --methods static R C M a_memguard memlineage llm_sanitiser randec S SL S2-ID $COMMON ;;
-  *) echo "usage: paid.sh PB1|PB2|PB3"; exit 2 ;;
+  # Revision 10 (owner, 23 Nov 2026; post hoc): Gemini 3.1 Flash-Lite, third answering backbone, the same 8 cells and
+  # 11 methods as P-B3. Revision 11 (23 Nov): 429 retry + Gemini pacing; resumes under freeze/approval rev11.
+  PB4) uv run python scripts/run_protocol_v2.py paid --bundle $B --stage1 $S --out $RUN/gemini --backbone gemini \
+         --cells localized distributed sybil_k4 sybilown_k4 launder_r4 launder_r3_rand sybilown_k4_rand imp_localized_fp1 \
+         --methods static R C M a_memguard memlineage llm_sanitiser randec S SL S2-ID \
+         --sessions $SESS --approval $FZ/owner_approval_optionB_rev11.json --freeze $FZ/protocol_v2_optionB_rev11.json \
+         --confirm-paid ;;
+  *) echo "usage: paid.sh PB1|PB2|PB3|PB4"; exit 2 ;;
 esac

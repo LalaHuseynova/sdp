@@ -244,3 +244,87 @@ def test_worst_case_review_refuses_other_stops(tmp_path):
         g2.resolve_unknown_at_worst_case("owner_review")
     with pytest.raises(BudgetAccountingError, match="reason"):
         g2.resolve_unknown_at_worst_case("bad reason with spaces")
+
+
+# Revision 11 (owner, 23 Nov 2026): HTTP 429 (provider rate limit) refuses the request before
+# any model runs. The identical request is sent again after a wait (bounded), billed once; if
+# the limit never clears the run still halts, and an owner review may book that attempt at its
+# full worst case like a revision-7 transport failure.
+
+
+def limited_wire(failures, status=429):
+    good, seen = wire()
+    calls = []
+
+    def handler(request):
+        calls.append(1)
+        if len(calls) <= failures:
+            return httpx.Response(status, json={"error": {"code": status,
+                                                          "message": "offline: rate limited"}})
+        return good.handle_request(request)
+
+    return httpx.MockTransport(handler), seen, calls
+
+
+@pytest.fixture
+def no_limit_wait(monkeypatch):
+    import ams.research.workload.transport as T
+
+    monkeypatch.setattr(T, "RATE_LIMIT_WAIT_S", 0)
+    return T
+
+
+def test_rate_limited_call_waits_and_is_billed_once(sonnet_session, no_limit_wait):
+    transport, seen, calls = limited_wire(3)
+    with ConstructionSession(sonnet_session) as s:
+        s.arm_construction_mock("v2-bundle", V2_SPLIT, transport, Decimal("1.00"),
+                                purpose="v2_generation", approval=approval())  # fmt: skip
+        assert GuardedV2Client(s).complete(gen_request()).text == '{"ok": true}'
+        snap = s.guard.snapshot()
+        assert len(calls) == 4 and len(seen) == 1  # three refusals, one answered call
+        assert not snap["blocked"] and snap["held_nanodollars"] == 0
+        assert snap["used_nanodollars"] == 100_000 and snap["counts"]["settled"] == 1
+        assert [r[0] for r in s.db.execute("SELECT status FROM dispatches")] == ["completed"]
+
+
+def test_rate_limit_that_never_clears_still_halts(sonnet_session, no_limit_wait):
+    transport, seen, calls = limited_wire(10**6)
+    with ConstructionSession(sonnet_session) as s:
+        s.arm_construction_mock("v2-bundle", V2_SPLIT, transport, Decimal("1.00"),
+                                purpose="v2_generation", approval=approval())  # fmt: skip
+        with pytest.raises(LedgerError, match="no retry"):
+            GuardedV2Client(s).complete(gen_request())
+        assert len(calls) == no_limit_wait.RATE_LIMIT_RETRIES + 1 and not seen
+        assert s.guard.snapshot()["blocked"]
+
+
+@pytest.mark.parametrize("status", [400, 402, 500, 503])
+def test_other_http_errors_are_still_never_retried(sonnet_session, no_limit_wait, status):
+    transport, seen, calls = limited_wire(1, status)
+    with ConstructionSession(sonnet_session) as s:
+        s.arm_construction_mock("v2-bundle", V2_SPLIT, transport, Decimal("1.00"),
+                                purpose="v2_generation", approval=approval())  # fmt: skip
+        with pytest.raises(LedgerError, match="no retry"):
+            GuardedV2Client(s).complete(gen_request())
+        assert len(calls) == 1
+
+
+def test_reviewed_rate_limit_is_booked_at_worst_case_and_resent(sonnet_session, no_limit_wait,
+                                                               monkeypatch):  # fmt: skip
+    monkeypatch.setattr(no_limit_wait, "RATE_LIMIT_RETRIES", 0)  # the P-B4 halt (rev10 code)
+    transport, seen, calls = limited_wire(1)
+    with ConstructionSession(sonnet_session) as s:
+        s.arm_construction_mock("v2-bundle", V2_SPLIT, transport, Decimal("1.00"),
+                                purpose="v2_generation", approval=approval())  # fmt: skip
+        client = GuardedV2Client(s)
+        with pytest.raises(LedgerError, match="no retry"):
+            client.complete(gen_request())
+        held = s.guard.snapshot()["held_nanodollars"]
+        assert s.guard.snapshot()["blocked"] and held > 0
+        assert len(s.guard.resolve_unknown_at_worst_case("owner_review_rev11")) == 1
+        assert s.supersede_reviewed_failures("owner_review_rev11") == 1
+        assert client.complete(gen_request()).text == '{"ok": true}'
+        snap = s.guard.snapshot()
+        assert snap["used_nanodollars"] == held + 100_000 and not snap["blocked"]
+        kept = s.db.execute("SELECT status, reason FROM superseded_dispatches").fetchall()
+        assert [tuple(r) for r in kept] == [("failed", "owner_review_rev11")]

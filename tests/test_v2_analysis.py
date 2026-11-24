@@ -400,3 +400,41 @@ def test_backbone_appendix_a13_has_all_eleven_methods_and_the_hypotheses():
     for m in A.MAIN_METHODS:
         assert f"| {A.LABEL[m]} |" in md
     assert "H1 vs C" in md and "n = 10 groups" in md
+
+
+def test_haiku_appendix_title_is_unchanged_and_gemini_gets_a14_marked_post_hoc():
+    res = _replication()
+    haiku = A.render_backbone(res)
+    assert haiku.startswith("## Appendix A13 — Second backbone: Claude Haiku answers, "
+                            "GPT-4o-mini judge; all 11 methods (data: MPBench v4 (reused); ")
+    assert "post-hoc" not in haiku
+    gem = A.render_backbone(res, model="Gemini 3.1 Flash-Lite", appendix="A14",
+                            ordinal="Third", post_hoc=True)  # fmt: skip
+    assert gem.startswith("## Appendix A14 — Third backbone: Gemini 3.1 Flash-Lite answers, "
+                          "GPT-4o-mini judge; all 11 methods")
+    assert "post-hoc" in gem and "not pre-registered" in gem
+    assert gem.split("\n\n")[1].startswith("**Post-hoc")
+    assert gem.split("\n\n")[2:5] == haiku.split("\n\n")[1:4]  # same Table-1 layout and footnote
+    assert "### A14 hypotheses" in gem and "### A13 hypotheses" in haiku
+
+
+def test_table7_takes_a_third_backbone_row():
+    res = _replication()
+    md = A.render_table7({"v4, GPT-4o-mini": res, "v4, Claude Haiku": res,
+                          "v4, Gemini 3.1 Flash-Lite (post-hoc)": res})  # fmt: skip
+    lines = [x.split(" | ")[0] for x in md.splitlines() if x.startswith("| ") and "Data" not in x]
+    assert lines == ["| v4, GPT-4o-mini", "| v4, Claude Haiku",
+                     "| v4, Gemini 3.1 Flash-Lite (post-hoc)"]
+
+
+def test_cli_extra_backbone_needs_its_label_before_reading_anything(tmp_path):
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("ap2", "scripts/analyse_protocol_v2.py")
+    cli = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cli)
+    with pytest.raises(Exception, match="extra-backbone-label"):
+        cli.main(["--journal", str(tmp_path), "--bundle", str(tmp_path / "missing"),
+                  "--label", "x", "--out", str(tmp_path / "out"),
+                  "--extra-backbone-journal", str(tmp_path)])  # fmt: skip
+    assert not (tmp_path / "out").exists()

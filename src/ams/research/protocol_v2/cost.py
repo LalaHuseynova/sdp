@@ -39,7 +39,8 @@ PUBLISHED_DEV = REPO / "research_data/published_paid_dev_v3_20261112"
 STAGE1_DEV = REPO / "research_data/controlled_workload_stage1_dev_v3_20261108"
 DEV_PUBLISHED_PROBES = 280  # dev published runs: 8 groups x 35 probes, one context each
 ALLOWANCE_LEFT = 26.57  # plan.md budget table, 14 Nov 2026
-CEILINGS = {"v2_generation": 10, "v2_backbone_answer": 10, "v2_stage3": 80,
+CEILINGS = {"v2_generation": 10, "v2_backbone_answer": 10, "v2_backbone_gemini": 10,
+            "v2_stage3": 80,
             "v2_inclusion": 5, "v2_stage1": 5, "v2_published_memlineage": 0.5,
             "v2_published_amemguard": 20, "v2_published_sanitiser": 10}  # fmt: skip
 # Option B for the gate/tau ablations (pending decision, README step 1.10 finding 2)

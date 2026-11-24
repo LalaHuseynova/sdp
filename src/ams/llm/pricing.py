@@ -32,6 +32,7 @@ PRICES: dict[str, Price] = {
     "azure:text-embedding-3-small": Price(0.02, 0.0),
     "azure:text-embedding-3-large": Price(0.13, 0.0),
     "openrouter:anthropic/claude-haiku-5.5": Price(0.10, 0.50),
+    "openrouter:google/gemini-3.1-flash-lite": Price(0.25, 1.50),
     "openrouter:qwen/qwen3.8-flash": Price(0.15, 0.47),
     "vllm:*": Price(0.0, 0.0),
     "local:*": Price(0.0, 0.0),

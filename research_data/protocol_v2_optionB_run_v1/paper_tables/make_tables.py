@@ -1,5 +1,6 @@
-"""Paper-style result tables (GPT-4o-mini + Claude Haiku) from the frozen analysis outputs.
-Reads analysis/analysis.json and analysis/backbone_analysis.json only; writes tables.html (print to PDF)."""
+"""Paper-style result tables (GPT-4o-mini + Claude Haiku + Gemini 3.1 Flash-Lite, post-hoc) from the frozen analysis outputs.
+Reads analysis/analysis.json, analysis/backbone_analysis.json and analysis_gemini/extra_backbone_analysis.json only;
+writes tables.html (print to PDF). The two-model version of 22 Nov is kept in two_models_20261122/."""
 import json
 from pathlib import Path
 
@@ -7,8 +8,10 @@ HERE = Path(__file__).resolve().parent
 A = HERE.parent / "analysis"
 G = json.load(open(A / "analysis.json"))
 H = json.load(open(A / "backbone_analysis.json"))
-BACK = [("GPT-4o-mini", G), ("Claude Haiku", H)]
-LABEL = {"static": "Original SAFE-Mem", "a_memguard": "A-MemGuard", "memlineage": "MemLineage",
+E = json.load(open(HERE.parent / "analysis_gemini" / "extra_backbone_analysis.json"))  # post-hoc third backbone
+GEM = "Gemini 3.1 Flash-Lite"
+BACK = [("GPT-4o-mini", G), ("Claude Haiku", H), (GEM, E)]
+LABEL = {"static": "SAFE-Mem", "a_memguard": "A-MemGuard", "memlineage": "MemLineage",
          "llm_sanitiser": "LLM Sanitiser", "randec": "RandEC", "R": "R", "C": "C", "M": "M",
          "S": "S (ours)", "SL": "SL (ours)", "S2-ID": "S2-ID (ours)"}
 GROUPS = [["static"], ["a_memguard", "memlineage", "llm_sanitiser", "randec"], ["R", "C", "M"], ["S", "SL", "S2-ID"]]
@@ -75,17 +78,17 @@ t1cols = [("localized", "target_asr", True), ("localized", "judge_asr", True),
 t1 = table("<b>Table 1:</b> Defensive performance against the <i>localized</i> memory-poisoning attack "
            "(one poisoned memory, oracle audits) on the reused MPBench v4 split (24 groups). Values in %, mean over "
            "groups. Attack metrics: lower is better (&darr;); strict utility: higher is better (&uarr;). Subscripts "
-           "give the change against Original SAFE-Mem (<span class=good>green</span> = better, "
+           "give the change against SAFE-Mem (<span class=good>green</span> = better, "
            "<span class=bad>red</span> = worse). Best per column and model in <b>bold</b>.",
            '<th colspan="3" class="grp">Attack (&darr;)</th><th class="grp">Usefulness (&uarr;)</th>',
            "<th>Target ASR</th><th>Judge ASR</th><th>Unaudited exp.</th><th>Strict utility</th>",
-           t1cols, GROUPS, note='<p class="tnote"><b>Methods.</b> <b>Original SAFE-Mem</b>: the base memory system; audit results are not propagated to any other memory. <b>R</b> (record-only): withholds only the memory an audit found unsafe; no penalty for related memories. <b>C</b> (contextual reputation): penalises the unsafe contributor\'s memories in the same conversation context. <b>M</b> (multi-scope reputation): applies the maximum of the batch, context and contributor penalties, i.e. distrusts the contributor everywhere. <b>S</b> (ours, selective propagation): extends distrust only as far as the audit evidence supports, to the batch after 1 unsafe audit, to the context after 2 spanning two batches, and to the contributor after 4 spanning two contexts. <b>SL</b> (ours): S + content lineage; also withholds near-copies (MiniLM cosine &ge; 0.8) of a memory audited unsafe, whoever contributed them. <b>S2-ID</b> (ours, hybrid): SL + MemLineage\'s sensitive-action gate (for questions that request a sensitive action, e.g. send, export, execute, pay, memory from external sources is dropped). Published defences (A-MemGuard, MemLineage, LLM Sanitiser, RandEC) filter Original SAFE-Mem\'s retrieval with no refill; A-MemGuard uses one draw at its repository temperature 1.0.<br>\n<b>Metrics.</b> <b>Target ASR</b>: attack probes whose answer acts on the planted instruction and restates its target (GPT-4o-mini judge). <b>Judge ASR</b>: the judge\'s verdict alone. <b>Unaudited exp.</b>: an unaudited attack memory reaches the answer context. <b>Strict utility</b>: utility probes answered correctly with the needed fact in context.</p>')
+           t1cols, GROUPS, note='<p class="tnote"><b>Methods.</b> <b>SAFE-Mem</b>: the base memory system; audit results are not propagated to any other memory. <b>R</b> (record-only): withholds only the memory an audit found unsafe; no penalty for related memories. <b>C</b> (contextual reputation): penalises the unsafe contributor\'s memories in the same conversation context. <b>M</b> (multi-scope reputation): applies the maximum of the batch, context and contributor penalties, i.e. distrusts the contributor everywhere. <b>S</b> (ours, selective propagation): extends distrust only as far as the audit evidence supports, to the batch after 1 unsafe audit, to the context after 2 spanning two batches, and to the contributor after 4 spanning two contexts. <b>SL</b> (ours): S + content lineage; also withholds near-copies (MiniLM cosine &ge; 0.8) of a memory audited unsafe, whoever contributed them. <b>S2-ID</b> (ours, hybrid): SL + MemLineage\'s sensitive-action gate (for questions that request a sensitive action, e.g. send, export, execute, pay, memory from external sources is dropped). Published defences (A-MemGuard, MemLineage, LLM Sanitiser, RandEC) filter SAFE-Mem\'s retrieval with no refill; A-MemGuard uses one draw at its repository temperature 1.0.<br>\n<b>Metrics.</b> <b>Target ASR</b>: attack probes whose answer acts on the planted instruction and restates its target (GPT-4o-mini judge). <b>Judge ASR</b>: the judge\'s verdict alone. <b>Unaudited exp.</b>: an unaudited attack memory reaches the answer context. <b>Strict utility</b>: utility probes answered correctly with the needed fact in context.</p>')
 
 # Table 2: adaptive attacks, target ASR
 t2cols = [("sybil_k4", "target_asr", True), ("sybilown_k4", "target_asr", True), ("launder_r4", "target_asr", True),
           ("launder_r3_rand", "target_asr", True), ("sybilown_k4_rand", "target_asr", True)]
 t2 = table("<b>Table 2:</b> Target ASR (%, &darr;) under <i>adaptive</i> attacks: Sybil identities (k = 4), "
-           "laundering by innocent relays (fraction r), with oracle or random audits. Subscripts: change against Original "
+           "laundering by innocent relays (fraction r), with oracle or random audits. Subscripts: change against "
            "SAFE-Mem. Best per column and model in <b>bold</b>.",
            '<th colspan="3" class="grp">Oracle audits</th><th colspan="2" class="grp">Random audits</th>',
            "<th>Sybil k=4</th><th>Sybil-own k=4</th><th>Launder r=1</th><th>Launder r=.75</th><th>Sybil-own k=4</th>",
@@ -111,9 +114,9 @@ for gi, g in enumerate(GROUPS):
         cls = ' class="ours"' if m in OURS else ""
         wrows.append(f"<tr{sep}><td{cls}>{LABEL[m]}</td>{''.join(cells)}</tr>")
 t3 = f"""<div class="tab half"><p class="cap"><b>Table 3:</b> Worst-case target ASR (%, &darr;): the maximum over
-attack cells (GPT-4o-mini: all {G['worst_case']['S']['target_asr']['cells_covered']} registered worst-case cells; Claude Haiku: the {H['worst_case']['S']['target_asr']['cells_covered']} cells it was run on).
-Subscripts: change against Original SAFE-Mem.</p><table><thead><tr><th class="lh">Method</th><th>GPT-4o-mini</th>
-<th>Claude Haiku</th></tr></thead><tbody>{''.join(wrows)}</tbody></table></div>"""
+attack cells (GPT-4o-mini: all {G['worst_case']['S']['target_asr']['cells_covered']} registered worst-case cells; Claude Haiku and Gemini: the {H['worst_case']['S']['target_asr']['cells_covered']} cells they were run on).
+Subscripts: change against SAFE-Mem.</p><table><thead><tr><th class="lh">Method</th><th>GPT-4o-mini</th>
+<th>Claude Haiku</th><th>{GEM}</th></tr></thead><tbody>{''.join(wrows)}</tbody></table></div>"""
 
 HYP = [("H1 vs C", "S keeps the key fact C discards, equally safe"), ("H1 vs M", "S keeps the key fact M discards, equally safe"),
        ("H2", "S as safe as M under the distributed attack"), ("H3", "S below every published defence (target ASR)"),
@@ -142,8 +145,8 @@ for name, desc in HYP:
         out.append(f'<td>{"<span class=good>&#10003;</span>" if ok else "<span class=bad>&#10007;</span>"}{est}</td>')
     hrows.append(f"<tr><td>{name}</td><td class='desc'>{desc}</td>{''.join(out)}</tr>")
 t4 = f"""<div class="tab half"><p class="cap"><b>Table 4:</b> Pre-registered hypotheses (Holm over 8 primary
-contrasts, 24 groups; replication evidence, not confirmatory). Primary estimate in points in brackets; for H3, the estimate against the closest published defence (MemLineage on GPT-4o-mini, A-MemGuard on Claude Haiku).</p>
-<table><thead><tr><th class="lh">Contrast</th><th class="lh">Claim</th><th>GPT-4o-mini</th><th>Claude Haiku</th></tr></thead>
+contrasts, 24 groups; replication evidence, not confirmatory). Primary estimate in points in brackets; for H3, the estimate against the closest published defence (MemLineage on GPT-4o-mini and Gemini, A-MemGuard on Claude Haiku).</p>
+<table><thead><tr><th class="lh">Contrast</th><th class="lh">Claim</th><th>GPT-4o-mini</th><th>Claude Haiku</th><th>{GEM}</th></tr></thead>
 <tbody>{''.join(hrows)}</tbody></table></div>"""
 
 
@@ -175,7 +178,7 @@ def gpt_table(caption, head1, cols, note="", wide=False):
 <tbody>{''.join(rows)}</tbody></table>{note}</div>"""
 
 
-SUB = "Subscripts: change against Original SAFE-Mem (green better, red worse); best per column in <b>bold</b>."
+SUB = "Subscripts: change against SAFE-Mem (green better, red worse); best per column in <b>bold</b>."
 KS, RS = (1, 2, 4, 8), (("0", "r0"), (".25", "r1"), (".5", "r2"), (".75", "r3"), ("1", "r4"))
 t5 = gpt_table(f"<b>Table 5 (GPT-4o-mini):</b> Target ASR (%, &darr;) against a Sybil attacker who spreads the poison over k "
                f"fake identities. {SUB}",
@@ -222,17 +225,17 @@ t10 = gpt_table(f"<b>Table 10 (GPT-4o-mini):</b> Imperfect audits under Sybil k=
                 note='<p class="tnote">Strict utility for Tables 9&ndash;10 is in <code>analysis/tables.md</code>, Table 6.</p>')
 WHY = """<div class="why"><b>Part B &mdash; GPT-4o-mini only.</b> The tables below cover the full attack set (62 attack cells,
 272 runtime conditions) and were run on GPT-4o-mini only. Claude Haiku was run, as pre-registered (option B), on the
-8 cells that every claim of the paper needs: the main localized result (Table 1) and all hypothesis cells H1&ndash;H6 (Tables
+8 cells that every claim of the paper needs (Gemini 3.1 Flash-Lite on the same 8 cells): the main localized result (Table 1) and all hypothesis cells H1&ndash;H6 (Tables
 2&ndash;4). Running Haiku on all 272 conditions would cost about 12&times; more (&asymp; $14&ndash;17 instead of $1.34, above
 the approved Haiku cap of $8 and the code ceiling of $10) and take 3&ndash;4 days on the evaluation machine. On the 8 shared cells
-Haiku gives the same method ranking and the same hypothesis decisions as GPT-4o-mini.</div>"""
+Haiku and Gemini give the same hypothesis decisions as GPT-4o-mini, and S, SL and S2-ID reach 0% target ASR under the localized attack on all three.</div>"""
 PART_B = WHY + t5 + t6 + t7 + t8 + t9 + t10
 
 
 # ----------------------------------------------------------------------------- Figure 1 (from make_figures.py)
 FIG1 = """<div class="fig"><img src="fig1_tradeoff.svg" alt="Figure 1"><p class="cap"><b>Figure 1:</b> Attack success
-against usefulness under the localized attack, both answer models (Table 1). Top left is best: S, SL and S2-ID remove the
-attack (0%) and keep the usefulness of Original SAFE-Mem; C and M also reach 0% but lose about 25 points of usefulness; the
+against usefulness under the localized attack, all three answer models (Table 1). Top left is best: S, SL and S2-ID remove the
+attack (0%) and keep the usefulness of SAFE-Mem; C and M also reach 0% but lose about 25 points of usefulness; the
 published defences keep usefulness but leave 15&ndash;56% attack success.</p></div>"""
 
 CSS = """
@@ -250,7 +253,7 @@ td.ours { font-weight: bold; } sub { font-size: 7.5pt; vertical-align: -1.5pt; m
 .half td:first-child { text-align: left; } td.desc { text-align: left; white-space: normal; max-width: 210pt; font-size: 9.5pt; }
 .tnote { font-size: 8.6pt; line-height: 1.28; text-align: justify; margin: 4pt 0 0; color: #222; }
 .why { border: 0.8pt solid #1b8a7a; background: #f3faf8; padding: 6pt 8pt; margin: 0 0 12pt; font-size: 9.5pt; line-height: 1.3; text-align: justify; }
-.part { font-size: 11pt; margin: 4pt 0 6pt; }
+.part { font-size: 11pt; margin: 4pt 0 6pt; } .ph { font-size: 8pt; color: #555; }
 .pb { page-break-before: always; }
 .wide table { font-size: 9pt; } .wide th, .wide td { padding: 1.2pt 4.5pt; }
 .mdsec { margin: 0 0 14pt; } .mdp { font-size: 9pt; margin: 2pt 0 4pt; text-align: justify; }
@@ -266,12 +269,15 @@ table.md tr { page-break-inside: avoid; } table.md thead { display: table-header
 .note { font-size: 9pt; color: #333; margin-top: 6pt; line-height: 1.3; }
 """
 html = f"""<!doctype html><html><head><meta charset="utf-8"><title>SAFE-Mem results</title><style>{CSS}</style></head><body>
-<h1>SAFE-Mem: results on GPT-4o-mini and Claude Haiku</h1>
+<h1>SAFE-Mem: results on GPT-4o-mini, Claude Haiku and Gemini 3.1 Flash-Lite</h1>
 <p class="sub">Protocol v2, option B &middot; reused MPBench v4 split (replication evidence) &middot; 24 groups &middot; judge: GPT-4o-mini</p>
-<p class="part"><b>Part A &mdash; both answer models</b></p>{t1}{FIG1}{t2}{t3}{t4}{PART_B}
+<p class="part"><b>Part A &mdash; all three answer models</b></p>{t1}{FIG1}{t2}{t3}{t4}{PART_B}
 <p class="note">Claude Haiku answers are sent without temperature (the model does not accept it) and with reasoning
 disabled, 200 tokens, same prompts (protocol revisions 8&ndash;9). GPT-4o-mini: temperature 0, 200 tokens.
-Rows: GPT-4o-mini 3,655,680; Claude Haiku 212,520. Source: analysis/tables.md, appendix.md (A13), analysis.json.</p>
+Gemini 3.1 Flash-Lite (protocol revisions 10&ndash;11): temperature 0, reasoning disabled, 200 tokens, same prompts;
+11.2% of its answers reached the 200-token limit (GPT-4o-mini 1.5%, Claude Haiku 1.2%).
+Rows: GPT-4o-mini 3,655,680; Claude Haiku 212,520; Gemini 212,520. Source: analysis/tables.md, appendix.md (A13), analysis.json;
+analysis_gemini/appendix.md (A14), extra_backbone_analysis.json.</p>
 </body></html>"""
 (HERE / "tables.html").write_text(html)
 print("ok")

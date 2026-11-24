@@ -1,0 +1,24 @@
+{
+  "schema": "dynamic-pricing-observation-v1",
+  "checked_on": "2026-11-23",
+  "provider": "openrouter",
+  "model": "google/gemini-3.1-flash-lite",
+  "currency": "USD",
+  "input_usd_per_million": "0.25",
+  "output_usd_per_million": "1.50",
+  "context_tokens": 1048576,
+  "source": "https://openrouter.ai/api/v1/models and /api/v1/models/google/gemini-3.1-flash-lite/endpoints (public, unauthenticated)",
+  "use": "protocol v2 revision 10: post-hoc third answering backbone (owner, 23 Nov 2026), answers only; the judge stays GPT-4o-mini",
+  "endpoints_seen": {
+    "google-ai-studio, google-vertex/global (standard)": "0.25 / 1.50",
+    "google-ai-studio/flex, google-vertex/global/flex": "0.125 / 0.75",
+    "google-ai-studio/priority, google-vertex/global/priority": "0.45 / 2.70 (excluded by the max_price ceiling)"
+  },
+  "supported_parameters_all_endpoints": ["max_tokens", "temperature", "reasoning", "reasoning_effort"],
+  "reasoning": "default enabled (effort 'minimal'), not mandatory, effort 'none' supported: sent with reasoning disabled",
+  "guard_context_token_bound": 128000,
+  "observation": "Public OpenRouter list price of the standard endpoints, used as the guard's maximum rate; cheaper flex endpoints may serve requests (never dearer). No batch or cache discount assumed.",
+  "routing_requirement": "Enforce these maximum prompt/completion rates; no higher-rate fallback or per-request fee.",
+  "recheck_before_paid_execution": true,
+  "paid_api_calls_for_this_observation": 0
+}

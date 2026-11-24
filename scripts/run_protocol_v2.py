@@ -7,11 +7,12 @@
         (step 1.12 counts the distinct ones). Shard with --groups and run shards in
         parallel foreground processes; each shard writes its own --out.
     paid --bundle B --stage1 S --out DIR --sessions ROOT --approval FILE --confirm-paid
-         [--backbone haiku] [--cells ...] [--methods ...]
+         [--backbone haiku|gemini] [--cells ...] [--methods ...]
         PAID, one process (each session's own lock makes it the single writer). Refused
         unless the owner's approval file covers EVERY purpose the chosen methods need
         (v2_stage3; v2_published_* for MemLineage/S2-ID, A-MemGuard, LLM sanitiser;
-        v2_backbone_answer for Haiku), each with its model and cap, and names the frozen
+        v2_backbone_answer for Haiku, v2_backbone_gemini for Gemini 3.1 Flash-Lite, the
+        post-hoc third backbone of revision 10), each with its model and cap, and names the frozen
         protocol-v2 digest. A rerun resumes: paid replies are replayed from the ledger.
          [--contexts DIR ...] reads the internal arms' verified contexts (step 2 below)
          instead of recomputing retrieval (step-1.12 runtime fix 2; identical rows).
@@ -29,7 +30,7 @@ Every run uses PYTHONHASHSEED=0 (owner decision; `protocol_v2.hashseed`).
 Step 2.2 (freeze): `conflicts` and `paid` need --freeze MANIFEST. Before anything is read
 or opened, the manifest must verify (`protocol_v2.freeze`: every frozen file unchanged),
 the owner's approval must name its digest, and --bundle / --stage1 must be the frozen ones.
-`paid --backbone haiku` runs on the original path (no --contexts).
+`paid --backbone haiku|gemini` runs on the original path (no --contexts).
 
 Old Stage-1 stores (dev v3, v4 test; 8 Nov) checkpoint the 35 prompt files that existed
 then; protocol v2 later added 4 generator prompts. Every command that loads stores serves
@@ -140,7 +141,7 @@ def main(argv=None):
     paid = sub.choices["paid"]
     paid.add_argument("--methods", nargs="*",
                       default=list(PL.MAIN_METHODS + PL.APPENDIX_METHODS))  # fmt: skip
-    paid.add_argument("--backbone", choices=["gpt", "haiku"], default="gpt")
+    paid.add_argument("--backbone", choices=["gpt", "haiku", "gemini"], default="gpt")
     paid.add_argument("--contexts", type=Path, nargs="*")
     args = ap.parse_args(argv)
     conditions = conditions_for(getattr(args, "cells", []))
@@ -199,8 +200,9 @@ def main(argv=None):
     check(args.confirm_paid,
           "Paid stages need the explicit --confirm-paid flag (owner confirmation)")
     check(not args.groups, "A paid run covers every group")
-    check(not (args.contexts and args.backbone == "haiku"),
-          "Claude Haiku answers run on the original path: omit --contexts")  # fmt: skip
+    check(not (args.contexts and args.backbone != "gpt"),
+          {"haiku": "Claude Haiku", "gemini": "Gemini"}.get(args.backbone, "")
+          + " answers run on the original path: omit --contexts")  # fmt: skip
     approval = json.loads(args.approval.read_text())
     FZ.check_paid(args.freeze, approval, bundle=args.bundle, stage1=args.stage1)
     hashseed.require()

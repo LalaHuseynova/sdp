@@ -749,6 +749,122 @@ The original project is credited in the [upstream README](UPSTREAM_README.md), i
 
 Newest entry first. **Future sessions: read this section first, then add an entry after every task.** Each entry records what was done, what was found, which files changed, what is completed or remaining, and the next step. Standing rules: never delete earlier documentation or results; make no paid API calls and no algorithm changes without the project owner's explicit permission.
 
+### 2026-11-24 — Pushed the Gemini work and the research audit to main (free)
+
+**What:** one commit on `protocol-v2-option-b-freeze`, fast-forwarded into `main` and pushed to `sdp` (owner: "push everything in main branch all necessary things").
+
+**Contents:**
+- the code and tests for revisions 10 and 11;
+- the freeze manifests and owner approvals rev10/rev11;
+- the Gemini price config, protocol and RUNBOOK updates;
+- the P-B4 scripts;
+- `gemini/paid_summary.json` and `gemini.prompt_mirror/`;
+- `analysis_gemini/` (including `THREE_MODEL_COMPARISON.md`);
+- the updated results PDF, with the old two-model version in `paper_tables/two_models_20261122/`;
+- README and plan;
+- `reports/RESEARCH_AUDIT_20261124.md`, force-added because `reports/` is git-ignored.
+
+**Still local only (same reasons as before):**
+- `gemini/queries.sqlite` (211 MB) and the session ledgers in `sessions_rerun3/*`: over GitHub's limits;
+- the `.tar.gz` archives and `contexts/`;
+- `archive_20261121/v2_backbone_answer_before_rev8_review/`;
+- `logs/`;
+- `CLAUDE_MEMORY_TRANSFER.md`: contains the owner's name;
+- the three owner files (`HANDOFF_20261121.txt`, `preview_main.pdf`, the `.gitignore` change).
+
+**Known text correction pending (owner OK needed):** `THREE_MODEL_COMPARISON.md` §7 point 3 ("S2-ID is the best method under adaptive attacks") is wrong. See the audit report, §8.
+
+### 2026-11-24 — P-B4 Gemini finished; free three-model analysis and comparison
+
+- **P-B4 finished** at 00:56 UTC: 24/24 groups, 212,520 journal rows (same as Haiku), every ledger clean (0 open, 0 held, 0 blocked), journal `quick_check` ok. Gemini answers: 7,860 completed, 0 failed, 0 empty, 0 reasoning tokens, all `google/gemini-3.1-flash-lite` via Google; 1 superseded row (the reviewed 429 from run 1). After the resume Google sent 5 HTTP 429s; each was resent identically and answered on the first retry.
+- **Spend:** `v2_backbone_gemini` $2.2907 (cap $10), `v2_stage3` judges $2.3824 total (+$0.12 for P-B4). **Project total $7.0031.**
+- **Answer length:** 11.2% of Gemini answers reached the 200-token limit (GPT-4o-mini 1.5%, Haiku 1.2%; same limit for all by design). The full-run check (`logs/PB4_all_answers_check.txt`) prints "FAILED" only because of this guide value (≤ 10%, meant for the first 30 answers). Strict utility is unaffected (equal to GPT-4o-mini in every cell). Stated as a limitation.
+- **Free analysis** (RUNBOOK §8 command, $0) → `research_data/protocol_v2_optionB_run_v1/analysis_gemini/`. GPT-4o-mini and Haiku results there are **identical** to the official `analysis/` (JSON content equal; `per_cell.md` and figures byte-identical; `tables.md` only gains the Gemini Table 7 row, `appendix.md` only gains A14). The official `analysis/` is untouched.
+- **Consolidated comparison:** `analysis_gemini/THREE_MODEL_COMPARISON.md` (labelled post-hoc). Findings: on Gemini, S/SL/S2-ID reach 0% target ASR on localized/distributed/fp1 with 91% strict utility, the same as GPT-4o-mini and Haiku; undefended Gemini follows poison almost as often as GPT-4o-mini (original SAFE-Mem 59% vs 63%; Haiku 29%); S2-ID is the best method under adaptive attacks on all three (worst case 47/22/44 vs S 66/32/64); hypothesis outcomes on Gemini equal GPT-4o-mini's (H1–H5 ✓ incl. H5 secondary, H6 ✗).
+- **Results PDF updated (owner: "YES PLEASE")**: `paper_tables/SAFE-Mem_results_tables.pdf` (now 6 pages) shows Gemini 3.1 Flash-Lite, marked *post-hoc*, next to GPT-4o-mini and Claude Haiku in Part A (Table 1 main result, Figure 1 with three panels, Table 2 adaptive attacks, Table 3 worst case, Table 4 hypotheses); Part B stays GPT-4o-mini only. `make_tables.py`/`make_figures.py` also read `analysis_gemini/extra_backbone_analysis.json`. The two-model version of 22 Nov is kept in `paper_tables/two_models_20261122/`.
+- **PDF wording (owner request):** the "post-hoc" labels were removed from the results PDF and "Original SAFE-Mem" is now written "SAFE-Mem" (tables, notes, Figure 1). Data unchanged. The post-hoc status is still recorded in the frozen protocol (§13 limitation 8, §15), `analysis_gemini/appendix.md` A14 and `THREE_MODEL_COMPARISON.md`; the paper should state it once (e.g. in the limitations).
+- **Next:** Gemini in the paper text; commit/push (owner decides); nothing committed yet.
+
+### 2026-11-23 — 💰 P-B4 resumed under revision 11 (owner: "approve revision 11")
+
+- `owner_approval_optionB_rev11.json` written with the owner's words (digest `b0a3d83b…`; cap $10.00 unchanged).
+- The halted 429 attempt was reviewed with `review_unknown_rev7.py … owner_review_rev11_429`: booked at its full worst case ($0.0323) and its failed row moved to `superseded_dispatches`. The Gemini ledger is now $0.0372 used, 0 held, unblocked; all ledgers are clean.
+- `start_pb4.sh` passed every check (freeze rev11 321 files verified, locked archive, snapshot, ledgers, journal, AC). P-B4 resumed at 16:49 UTC (python pid 6116), in the same sessions and the same `gemini/` folder; the 20 paid answers replay at $0. The watcher is running.
+- **Expected:** about 9–12 h and about $2.10–3.50 more.
+
+### 2026-11-23 — Revision 11 prepared: HTTP 429 handling for P-B4 (free; no paid call; waiting for owner approval)
+
+**What:** the owner approved *preparing* revision 11 after the 429 halt: "implement and validate the retry mechanism, and also check whether proactive request pacing is necessary … Do not restart paid evaluation until I explicitly approve the final revision."
+- **Cause check (free):** our OpenRouter key has no rate limit (paid tier, $157 credit), so the 429 came from Google's side. The 21 Gemini calls went out in a burst (21 in 38 s, about 1 per second). One Gemini endpoint (Vertex flex) showed 73% uptime.
+  - **Pacing verdict:** pacing is worth having. It costs $0 and about 7–12 h of run time in total, and it prevents the bursts that triggered the limit. The retry handles whatever still gets through.
+- **Code (tests first; transport/accounting only):**
+  - `transport.py`: HTTP 429 → the identical request is sent again after 30 s, at most 10 times, inside the same reservation. Any other error is still never retried. Gemini calls are spaced at least 2 s apart (`PACE_S`); replays and GPT calls are not paced.
+  - `budget.py`: `RateLimitError` added to the errors an owner review may book at the full worst case.
+  - New tests: 429 recovered and billed once, a 429 that never clears still halts, 400/402/500/503 are never retried, review of a 429 then re-send, pacing (replays not paced).
+  - `check_first_answers_pb4.py` now ignores calls still in flight; on the 20 real answers it reports PASSED.
+- **Tests:** 856 passed.
+- **Dry run on real data (G-T00) PASSED:**
+  - The owner review, rehearsed on a COPY of the halted Gemini ledger, booked the failed attempt at its worst case, moved it to the audit table and unblocked the ledger.
+  - The 20 paid answers replayed at $0 (326 new calls instead of 346).
+  - 13 simulated 429s were all recovered, with 0 failed rows.
+  - Same rows, prompts and retrieval as Claude Haiku; $0; 18 min per group with pacing.
+- **Freeze rev11:** `protocol_v2_optionB_rev11.json`, `b0a3d83b…`, 321 files, verified.
+- **Approval:** `owner_approval_optionB_rev11.DRAFT.json` (not approved; the gate refuses it). Protocol §15 rev11 entry, RUNBOOK §8.1, and `paid.sh`/`start_pb4.sh` now point to rev11.
+- **Estimate for the rest:** $2.10–3.50, made up of:
+  - Gemini answers $1.92–3.27 (measured $0.000243 per answer, or Claude Haiku's token counts)
+  - GPT judges $0.15–0.20
+  - the reviewed hold, $0.0323
+
+  Cap unchanged at $10. Spent on P-B4 so far: $0.0049.
+
+**Next:** owner approves the final revision 11 → review the halted attempt → resume P-B4.
+
+### 2026-11-23 — 💰 P-B4 Gemini 3.1 Flash-Lite started (owner: "approve spending, cap $20")
+
+- **Approval:** the owner approved up to $20. The frozen code ceiling for `v2_backbone_gemini` is $10.00, so the cap is **$10.00**, inside the approval and with no code change. The judges use the existing `v2_stage3` cap ($10.00, $2.2646 used).
+- **File:** `owner_approval_optionB_rev10.json` (digest `5007ecae…`; the DRAFT is kept).
+- **Price recheck just before the run:** unchanged (standard $0.25/$1.50, flex $0.125/$0.75; priority excluded).
+- **Start:** `start_pb4.sh` passed every check (freeze rev10 321 files verified, locked archive 224 verified, snapshot changed 0 / missing 25, ledgers clean, on AC). P-B4 started 11:35 UTC (python pid 1035).
+- **Watcher:** `watch_pb4.sh` is running. It checks the first 30 answers and safe-stops on failure, low battery or low disk.
+- **Output:** `research_data/protocol_v2_optionB_run_v1/gemini/`. Stop/start: `stop_safe_pb4.sh` / `start_pb4.sh`.
+- ⛔ **Halted at 11:36 UTC by the guard, as designed.** Gemini answer 21 got **HTTP 429 (RateLimitError)**, a provider rate limit, about 1 minute after the start.
+  - 20 answers were done ($0.0049). They looked right: model name matched, 0 reasoning tokens, short answers.
+  - The failed call is held at its worst case, $0.0323. Only `v2_backbone_gemini` is blocked; the other ledgers are clean.
+  - Revision 7/8 review rules do not cover 429, so clearing it needs an owner-approved revision 11 (transport only). **Owner decision needed.**
+
+### 2026-11-23 — Gemini 3.1 Flash-Lite prepared as a third answering backbone (free; no paid call)
+
+**What:** the owner asked for Gemini 3.1 Flash-Lite as a **third answering backbone**, with the same full evaluation as Claude Haiku (8 attack cells × 11 methods × 24 groups) and only the answering model changed. Gemini is labelled a **post-hoc additional backbone, not pre-registered** (protocol revision 10). Everything is prepared and tested offline; **no paid call has been made**.
+- **Code (tests first):**
+  - `backbone.py` has a registry of backbones (Haiku unchanged; Gemini: temperature 0 like GPT-4o-mini, reasoning off like Haiku rev9, same prompt, 200 tokens).
+  - The Gemini purpose is `v2_backbone_gemini`, with its own session and a code ceiling of $10 (`transport.py`, `budget.py` price ceiling $0.25/$1.50, `pricing.py`, `cost.py`).
+  - Other wiring: `pipeline.py` (one answer backbone per run), `run_protocol_v2.py --backbone gemini`, `freeze.py` (`runs.gemini`, `post_hoc: true`), `analysis.py` (Appendix A14 marked post-hoc) and `analyse_protocol_v2.py --extra-backbone-*` (writes to a NEW folder).
+- **Fairness checks:**
+  - OpenRouter lists `temperature`, `reasoning` and `max_tokens` as supported on every Gemini endpoint.
+  - The free dry run on real data (group G-T00, 8,855 answers, `scripts/dryrun_pb4.py`) **PASSED**:
+    - every GPT call already paid for was replayed, and none reached the network
+    - every Gemini request had the frozen shape
+    - the rows, prompt hashes, retrieval and context were identical to the Claude Haiku journal; only the answer differs
+    - the cost was $0.
+- **Analysis path check (free):** the three-model analysis command ran with the Haiku journal as a stand-in for Gemini. GPT-4o-mini and Claude Haiku results came out **identical** to the official `analysis/`, the stand-in equalled Haiku, `tables.md` only gained the Table 7 row, and `appendix.md` only gained A14 (marked post-hoc).
+- **Tests:** 848 passed (838 before + 10 new). **Freeze rev10:** `protocol_v2_optionB_rev10.json`, digest `5007ecae…`, 321 files, verified.
+- **Prepared but not active:**
+  - `owner_approval_optionB_rev10.DRAFT.json` (not approved; the paid gate refuses it; Gemini cap $5.00).
+  - `paid.sh PB4`, `start_pb4.sh` (refuses without the approved file), `stop_safe_pb4.sh`, `status_pb4.sh`, `watch_pb4.sh`.
+  - `check_first_answers_pb4.py`: after the first 30 answers it checks for empty answers, reasoning tokens, cut-offs and the returned model, and safe-stops the run if any check fails.
+  - Protocol §13 limitation 8 and the §15 revision-10 entry. RUNBOOK §8.
+- **Estimate:** Claude Haiku's measured tokens (8.17M in, 0.72M out) at Gemini prices give $1.56 (flex) to $3.12 (standard), plus about $0.15 for GPT judges, so **≈ $1.70–3.40**. Proposed cap: $5.00.
+- **GPT-4o-mini and Claude Haiku results:** untouched.
+
+**Next:** the owner approves the spending (or not). After approval: P-B4 run (about 15–30 h), then the free three-model analysis into `analysis_gemini/`, the consolidated GPT vs Claude vs Gemini comparison and a PDF update.
+
+### 2026-11-23 — LoCoMo setup protocol written (free)
+
+**What:** `reports/LOCOMO_SETUP_PROTOCOL_20261123.md` is a readable summary of the frozen LoCoMo design (v1 + v1.1 + v1.2, digest `f04cc850…`). It covers what we keep from LoCoMo, what we add, the matrix, metrics, H1–H6, statistics, checks, stopping rules, status, and limits.
+- It changes nothing; the frozen protocol texts on `locomo-backup` remain binding.
+- It adds the conv-26 deviation note (the 28 Oct smoke test) for the frozen protocol's §12.
+**Next:** owner approves the v1.2 resume (about $6.25), and the co-author appends the deviation note to §12.
+
 ### 2026-11-23 — Pushed the 22–23 Nov work to main (free)
 
 **What:** commit `725a378` on `protocol-v2-option-b-freeze`, fast-forwarded into `main` and pushed to `sdp`. Both branches point to the same commit.

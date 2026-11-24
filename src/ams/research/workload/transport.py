@@ -42,6 +42,12 @@ from ams.research.llm_review.transport import _CaptureSDK
 from ams.research.sequential.clients import response_from
 
 CONNECT_RETRIES, CONNECT_WAIT_S = 10, 30
+# Revision 11 (owner, 23 Nov 2026): P-B4 halted on HTTP 429 from the Gemini provider. A 429 is
+# a refusal before any model runs (OpenRouter bills nothing); the identical request is sent
+# again after a wait, bounded, inside the same reservation. Gemini network calls are also
+# paced (seconds between two calls of that purpose); replays are never paced.
+RATE_LIMIT_RETRIES, RATE_LIMIT_WAIT_S = 10, 30
+PACE_S = {"v2_backbone_gemini": 2.0}
 
 
 def never_connected(exc) -> bool:
@@ -54,8 +60,16 @@ def never_connected(exc) -> bool:
     )
 
 
+def rate_limited(exc) -> bool:
+    """HTTP 429 (revision 11): the provider refused the request; no model ran, nothing billed."""
+    from openai import RateLimitError
+
+    return isinstance(exc, RateLimitError)
+
+
 class _ConnectRetrySDK:
-    """Retry only never-connected attempts (bounded); re-raise everything else unchanged."""
+    """Retry only never-connected attempts and, from revision 11, HTTP 429 refusals (each
+    bounded); re-raise everything else unchanged."""
 
     def __init__(self, sdk):
         self.sdk, self.base_url = sdk, sdk.base_url
@@ -65,16 +79,25 @@ class _ConnectRetrySDK:
         return _ConnectRetrySDK(self.sdk.with_options(**kwargs))
 
     def create(self, **kwargs):
-        for attempt in range(1, CONNECT_RETRIES + 2):
+        connects = limits = 0
+        while True:
             try:
                 return self.sdk.chat.completions.create(**kwargs)
             except Exception as exc:
-                if attempt > CONNECT_RETRIES or not never_connected(exc):
+                if never_connected(exc) and connects < CONNECT_RETRIES:
+                    connects += 1
+                    print(f"connection not made ({type(exc.__cause__).__name__}); "
+                          f"retry {connects}/{CONNECT_RETRIES} in {CONNECT_WAIT_S}s",
+                          file=sys.stderr, flush=True)  # fmt: skip
+                    time.sleep(CONNECT_WAIT_S)
+                elif rate_limited(exc) and limits < RATE_LIMIT_RETRIES:
+                    limits += 1
+                    print(f"rate limited (HTTP 429); same request again "
+                          f"{limits}/{RATE_LIMIT_RETRIES} in {RATE_LIMIT_WAIT_S}s",
+                          file=sys.stderr, flush=True)  # fmt: skip
+                    time.sleep(RATE_LIMIT_WAIT_S)
+                else:
                     raise
-                print(f"connection not made ({type(exc.__cause__).__name__}); "
-                      f"retry {attempt}/{CONNECT_RETRIES} in {CONNECT_WAIT_S}s",
-                      file=sys.stderr, flush=True)  # fmt: skip
-                time.sleep(CONNECT_WAIT_S)
 
 
 SHARED_SESSION = Path("research_data/dynamic_execution_prep_v1_20261031/session")
@@ -105,6 +128,7 @@ PURPOSE_CAPS.update(PUBLISHED_PURPOSES)
 V2_PURPOSES = {
     "v2_generation": Decimal("10.00"),       # Claude Sonnet: attack + benign generation
     "v2_backbone_answer": Decimal("10.00"),  # Claude Haiku: second-backbone answers only
+    "v2_backbone_gemini": Decimal("10.00"),  # Gemini 3.1 Flash-Lite: third backbone (rev 10)
     "v2_stage3": Decimal("80.00"),           # GPT-4o-mini: v2 answers, conflicts, judges
     "v2_inclusion": Decimal("5.00"),         # GPT-4o-mini: E2 classifier + I1 write path
     "v2_stage1": Decimal("5.00"),            # GPT-4o-mini: memory building, 96 groups
@@ -119,6 +143,7 @@ V2_CONSTRUCTION = {"v2_inclusion", "v2_stage1"}  # use the frozen construction s
 V2_MODELS = {
     "v2_generation": "anthropic/claude-sonnet-5.5",
     "v2_backbone_answer": "anthropic/claude-haiku-5.5",
+    "v2_backbone_gemini": "google/gemini-3.1-flash-lite",
 }
 PURPOSE_CAPS.update(V2_PURPOSES)
 V2_SPLIT = "v2_heldout"
@@ -199,6 +224,18 @@ def v2_stage(purpose: str, request: ChatRequest, model: str) -> str:
         )
         if ok:
             return "v2_backbone_answer"
+    if purpose == "v2_backbone_gemini":  # revision 10 (post hoc): third answering backbone
+        body = request.messages[-1].content
+        ok = (
+            request.model == model
+            and request.temperature == 0  # Gemini accepts temperature: GPT-4o-mini's setting
+            and request.reasoning_effort == "none"  # reasons by default: disabled, as Haiku
+            and request.max_tokens == 200
+            and len(request.messages) == 1
+            and "What you remember:" in body
+        )
+        if ok:
+            return "v2_backbone_gemini"
     raise ValueError("Request shape does not match the approved protocol-v2 stage")
 
 
@@ -358,6 +395,15 @@ class ConstructionSession(ExecutionSession):
             self.start_used
         )
 
+    def _pace(self):
+        """Revision 11: at least PACE_S[purpose] seconds between two network calls."""
+        gap = PACE_S.get(getattr(self, "purpose", None), 0)
+        if gap:
+            last = getattr(self, "_last_sent", None)
+            if last is not None and last + gap > time.monotonic():
+                time.sleep(last + gap - time.monotonic())
+            self._last_sent = time.monotonic()
+
     def supersede_reviewed_failures(self, reason: str) -> int:
         """Revision 7: once the guard booked a failed attempt at its worst case after owner
         review, move its failed row to `superseded_dispatches` (kept for audit, never deleted)
@@ -478,6 +524,7 @@ class ConstructionSession(ExecutionSession):
             measurement["input_token_proxy"] + request.max_tokens <= 128000,
             "Oversized prompt proxy; inspect before dispatch",
         )
+        self._pace()  # revision 11: before the row exists, so a safe stop sees nothing open
         self.db.execute(
             "INSERT INTO dispatches VALUES (?,?,?,?,'started',NULL,NULL,NULL)",
             (call_id, key, stage, text),

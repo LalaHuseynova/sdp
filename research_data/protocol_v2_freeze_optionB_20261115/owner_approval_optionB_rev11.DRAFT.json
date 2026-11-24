@@ -1,0 +1,44 @@
+{
+ "approved_by": "NOT YET - owner must approve the final revision 11 before P-B4 resumes (change to \"owner\" only on the owner's explicit approval)",
+ "date": "2026-11-23 (draft)",
+ "protocol_v2_digest": "b0a3d83be5f1fcd99182c0934bc03fb5a4b5420f22464819343368fa443882bd",
+ "protocol_text": "reports/PROTOCOL_V2_OPTION_B_20261115.md",
+ "scope": "Revision 10 (post hoc): P-B4, Gemini 3.1 Flash-Lite as a THIRD answering backbone on exactly the Claude Haiku scope: 8 cells (Table 1 + H1-H6; 23 runtime conditions) x 11 main methods x 24 groups of the reused MPBench v4 split. Only the answering model changes; judge GPT-4o-mini. Added after the main analysis: post-hoc additional backbone, not pre-registered. P-B1..P-B3 are complete and are not re-run.",
+ "stages": [
+  "P-B4 Gemini 3.1 Flash-Lite evaluation (post hoc)"
+ ],
+ "estimate_usd": {
+  "low": "2.10",
+  "high": "3.50",
+  "basis": "remaining 7,874-8,284 Gemini answers at the measured $0.000243 per answer ($1.92-2.02) or at Claude Haiku's token counts ($3.11-3.27), plus GPT-4o-mini judges ($0.15-0.20) and the reviewed hold ($0.0323); spent so far $0.0049"
+ },
+ "caps_usd": {
+  "v2_stage3": "10.00",
+  "v2_published_amemguard": "4.50",
+  "v2_published_sanitiser": "0.60",
+  "v2_published_memlineage": "0.05",
+  "v2_backbone_answer": "8.00",
+  "v2_backbone_gemini": "10.00"
+ },
+ "models": {
+  "v2_stage3": "openai/gpt-4o-mini",
+  "v2_published_amemguard": "openai/gpt-4o-mini",
+  "v2_published_sanitiser": "openai/gpt-4o-mini",
+  "v2_published_memlineage": "openai/gpt-4o-mini",
+  "v2_backbone_answer": "anthropic/claude-haiku-5.5",
+  "v2_backbone_gemini": "google/gemini-3.1-flash-lite"
+ },
+ "spending_now": "only v2_backbone_gemini (new, cap $10.00) and v2_stage3 judges (existing cap $10.00, $2.2646 used); every other GPT-4o-mini call replays at $0",
+ "owner_statement": "PENDING (rev10 spending approval: \"approve spending, cap $20\"; rev11 preparation: \"I approve preparing Revision 11 to handle HTTP 429 rate limits\")",
+ "not_covered": [
+  "ablations (stage 6.2) and the optional ablation cells",
+  "any v5 generation or evaluation",
+  "any re-run of P-B1, P-B2 or P-B3",
+  "Gemini on cells beyond the 8 Claude Haiku cells"
+ ],
+ "revision": "11 (transport/accounting only: HTTP 429 sent again after 30 s, at most 10 times, same reservation; Gemini calls paced >= 2 s apart; owner review may book a RateLimitError attempt at its full worst case; protocol §15)",
+ "supersedes": "owner_approval_optionB_rev10.json (for the rest of P-B4; its 20 answers and the halted attempt stay on record)",
+ "cap_note": "The owner approved up to $20. The frozen code ceiling for v2_backbone_gemini (transport.V2_PURPOSES) is $10.00 and the guard refuses a higher cap, so the cap is $10.00: inside the owner's approval, no code change. Estimate $1.70-3.40.",
+ "price_recheck": "2026-11-23 before the run: OpenRouter endpoints unchanged (standard $0.25/$1.50, flex $0.125/$0.75, priority $0.45/$2.70 excluded by max_price); temperature and reasoning supported on all",
+ "review_before_resume": "review_unknown_rev7.py sessions_rerun3/v2_backbone_gemini owner_review_rev11_429: books the halted 429 attempt at its full worst case ($0.0323) and moves its failed row to superseded_dispatches"
+}

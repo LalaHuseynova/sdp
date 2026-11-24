@@ -119,3 +119,39 @@ Code ceilings (`transport.V2_PURPOSES`): stage3 $80, A-MemGuard $20, sanitiser $
 
 - Free space now ≈ 9.5 GB. Needed ≈ 4 GB (precompute ≈ 0.9 GB, contexts ≈ 2.2 GB, paid journals ≈ 0.5–1 GB).
 - Wall time ≈ 3–5 days in total (12 h + minutes + 12 h + 25–54 h + 15–30 h).
+
+## 8. Revision 10 (post hoc, 23 Nov 2026): P-B4, Gemini 3.1 Flash-Lite as a third answering backbone
+
+Added after the final analysis of 22 Nov at the owner's request: **post-hoc additional backbone, not pre-registered**. Same scope as P-B3 (8 cells, 23 runtime conditions, 11 main methods, 24 groups); only the answering model changes (`google/gemini-3.1-flash-lite`: temperature 0 as GPT-4o-mini, reasoning disabled, same prompt, 200 tokens). Judge GPT-4o-mini. Own purpose `v2_backbone_gemini` (code ceiling $10). P-B1..P-B3 outputs are never touched.
+
+**Order (stop at every 💰 until the owner approves):**
+
+1. Free: tests (`.venv/bin/python scripts/check_research_offline.py -q tests`), freeze `protocol_v2_optionB_rev10.json` (`scripts/freeze_protocol_v2.py prepare --out ...`), verify it.
+2. Free dry run on real data, no network: `PYTHONHASHSEED=0 uv run python $RUN/scripts/dryrun_pb4.py <scratch dir> G-T00`. Must print `"PASSED": true` (every already-paid GPT call replays; Gemini requests have the frozen shape; same rows, prompts and retrieval as the Haiku journal; $0).
+3. 💰 Owner approves the Gemini cap: `owner_approval_optionB_rev10.DRAFT.json` → `owner_approval_optionB_rev10.json` with `"approved_by": "owner"`, the rev10 digest and the owner's statement. Estimate $1.70–3.40 (Haiku's measured tokens at Gemini prices + judges); proposed cap `v2_backbone_gemini` **$5.00**; judges stay inside `v2_stage3` $10.00 ($2.2646 used).
+4. 💰 Run: `sh $RUN/scripts/start_pb4.sh` (refuses without the approval file, on battery, or if the freeze does not verify), then `sh $RUN/scripts/watch_pb4.sh` in the background. The watcher checks the first 30 Gemini answers (`check_first_answers_pb4.py`: no empty answers, no reasoning tokens, ≤ 10% cut at 200 tokens, model `google/gemini-3.1-flash-lite`, no failed call) and safe-stops for review if that fails. Owner "stop"/"start": `stop_safe_pb4.sh` / `start_pb4.sh` (same sessions and `gemini/` folder; finished calls replay at $0). Status: `status_pb4.sh`.
+5. Free analysis into a **new** folder (the official `analysis/` is not changed; GPT-4o-mini and Claude Haiku numbers must come out identical to it):
+
+```bash
+uv run python scripts/analyse_protocol_v2.py --journal $RUN/gpt_rerun3 --bundle $BUNDLE \
+  --label "MPBench v4 split (reused), GPT-4o-mini" \
+  --backbone-journal $RUN/haiku --backbone-label "MPBench v4 split (reused), Claude Haiku" \
+  --extra-backbone-journal $RUN/gemini \
+  --extra-backbone-label "MPBench v4 split (reused), Gemini 3.1 Flash-Lite (post-hoc)" \
+  --extra-backbone-model "Gemini 3.1 Flash-Lite" \
+  --not-run "Fresh v5, GPT-4o-mini" "Fresh v5, Claude Haiku" \
+  --evidence replication --mpbench data/mpbench/adversarial_data.jsonl.jsonl \
+  --allow-heldout --out $RUN/analysis_gemini
+```
+
+Writes the same files as §7 plus `extra_backbone_analysis.json` and Appendix A14 (marked post-hoc); Table 7 gains the Gemini row.
+
+### 8.1 Revision 11 (23 Nov 2026): resume P-B4 after the HTTP 429 halt
+
+P-B4 halted after 20 Gemini answers on a provider rate limit (HTTP 429). Revision 11 (transport/accounting only) adds: a bounded 429 retry with the identical request (30 s × ≤ 10), Gemini pacing ≥ 2 s between calls, and 429 as a reviewable failure (booked at its full worst case). Freeze `protocol_v2_optionB_rev11.json` (`b0a3d83b…`, 321 files).
+
+**💰 Only after the owner approves the final revision 11:**
+
+1. `owner_approval_optionB_rev11.DRAFT.json` → `owner_approval_optionB_rev11.json` with `"approved_by": "owner"` and the owner's words.
+2. Review the halted attempt (P-B4 must not be running): `uv run python $RUN/scripts/review_unknown_rev7.py $RUN/sessions_rerun3/v2_backbone_gemini owner_review_rev11_429`. This books $0.0323 and moves the failed row to `superseded_dispatches`.
+3. `sh $RUN/scripts/stop_safe_pb4.sh --check` (all ledgers clean), then `sh $RUN/scripts/start_pb4.sh` and `sh $RUN/scripts/watch_pb4.sh` in the background. The 20 paid answers replay at $0. A 429 shows up as `rate limited (HTTP 429); same request again k/10` in `logs/PB4.log`.

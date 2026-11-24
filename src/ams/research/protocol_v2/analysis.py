@@ -744,17 +744,26 @@ def render_table7(rows: dict, not_run=()) -> str:
     return "\n".join([*lines, "", *notes]) + "\n"
 
 
-def render_backbone(results) -> str:
+POST_HOC_NOTE = ("**Post-hoc additional backbone (revision 10):** added after the main "
+                 "analysis (post-hoc); not pre-registered. Same cells, methods, prompts, "
+                 "retrieval, judge and metrics as the Claude Haiku run; only the answering "
+                 "model changes. Exploratory evidence of generalization, not confirmatory.")
+
+
+def render_backbone(results, model: str = "Claude Haiku", appendix: str = "A13",
+                    ordinal: str = "Second", post_hoc: bool = False) -> str:
     """Appendix A13: the second backbone (Claude Haiku answers, GPT-4o-mini judge), all 11
-    methods on Table 1's cell and the hypothesis cells (decision 23)."""
+    methods on Table 1's cell and the hypothesis cells (decision 23). Revision 10: the same
+    layout for the post-hoc third backbone (Gemini 3.1 Flash-Lite, Appendix A14)."""
     r = results
     return "\n\n".join([
-        f"## Appendix A13 — Second backbone: Claude Haiku answers, GPT-4o-mini judge; all 11 "
-        f"methods (data: {r['label']}; {_evidence(r)}; {r['groups']} groups)",
+        f"## Appendix {appendix} — {ordinal} backbone: {model} answers, GPT-4o-mini judge; "
+        f"all 11 methods (data: {r['label']}; {_evidence(r)}; {r['groups']} groups)",
+        *([POST_HOC_NOTE] if post_hoc else []),
         "Table 1 layout, localized, oracle audits; value [95% CI]",
         _grid(r, TABLE_COLUMNS["table1"]), footnote(r),
-        render_table8(r).replace("## Table 8", "### A13 hypotheses (descriptive for this "
-                                               "backbone)", 1),
+        render_table8(r).replace("## Table 8", f"### {appendix} hypotheses (descriptive for "
+                                               "this backbone)", 1),
     ]) + "\n"  # fmt: skip
 
 

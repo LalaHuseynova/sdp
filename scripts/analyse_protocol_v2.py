@@ -5,11 +5,16 @@
         [--mpbench data/mpbench/adversarial_data.jsonl.jsonl] [--resamples 10000]
         [--evidence confirmatory|replication|exploratory|dev]
         [--backbone-journal HJ ... --backbone-label L] [--not-run LABEL ...]
+        [--extra-backbone-journal GJ ... --extra-backbone-label L2
+         --extra-backbone-model NAME]
 
 Option B (step 2.1): --evidence replication labels every table "reused MPBench v4 split:
 replication evidence, not fresh held-out" and Table 8 "not confirmatory". A Claude Haiku
 journal (--backbone-journal) is analysed with the main run's pre-specified Table-7
 baselines and rendered as Appendix A13; --not-run lists Table-7 rows not produced.
+Revision 10: a post-hoc third backbone (--extra-backbone-*, Gemini 3.1 Flash-Lite) is
+analysed the same way, rendered as Appendix A14 marked post-hoc, added as a Table-7 row and
+saved to extra_backbone_analysis.json. Run it into a NEW --out: the official outputs stay.
 
 Reads pipeline / runner journals (queries.sqlite) READ-ONLY and checks every row's hash.
 Free: no model call. Refuses held-out rows unless --allow-heldout (only for the single
@@ -60,9 +65,14 @@ def main(argv=None):
     ap.add_argument("--backbone-journal", type=Path, nargs="+")
     ap.add_argument("--backbone-label")
     ap.add_argument("--not-run", nargs="*", default=[])
+    ap.add_argument("--extra-backbone-journal", type=Path, nargs="+")
+    ap.add_argument("--extra-backbone-label")
+    ap.add_argument("--extra-backbone-model", default="Gemini 3.1 Flash-Lite")
     args = ap.parse_args(argv)
     check(not args.backbone_journal or bool(args.backbone_label),
           "--backbone-journal needs --backbone-label")  # fmt: skip
+    check(not args.extra_backbone_journal or bool(args.extra_backbone_label),
+          "--extra-backbone-journal needs --extra-backbone-label")  # fmt: skip
     check(not args.out.exists(), "Refuse to overwrite an existing directory")
     rows = [r for j in args.journal for r in journal_rows(j / "queries.sqlite"
                                                           if j.is_dir() else j)]  # fmt: skip
@@ -84,6 +94,18 @@ def main(argv=None):
         backbone["inputs"] = {"journals": [str(j) for j in args.backbone_journal],
                               "rows": len(brows)}  # fmt: skip
         table7[args.backbone_label] = backbone
+    extra = None
+    if args.extra_backbone_journal:  # revision 10: post-hoc third backbone, same analysis
+        erows = [r for j in args.extra_backbone_journal
+                 for r in journal_rows(j / "queries.sqlite" if j.is_dir() else j)]  # fmt: skip
+        extra = A.analyse(erows, info, resamples=args.resamples,
+                          label=args.extra_backbone_label, evidence=args.evidence,
+                          with_covariates=False,
+                          selection={k: res["table7"][k]
+                                     for k in ("best_published", "best_internal")})  # fmt: skip
+        extra["inputs"] = {"journals": [str(j) for j in args.extra_backbone_journal],
+                           "rows": len(erows), "post_hoc": True}  # fmt: skip
+        table7[args.extra_backbone_label] = extra
     args.out.mkdir(parents=True)
     res["inputs"] = {"journals": [str(j) for j in args.journal], "bundle": str(args.bundle),
                      "rows": len(rows), "splits": sorted(splits)}  # fmt: skip
@@ -91,9 +113,14 @@ def main(argv=None):
     (args.out / "tables.md").write_text(A.render_tables(res) + "\n"
                                         + A.render_table7(table7, args.not_run))  # fmt: skip
     (args.out / "appendix.md").write_text(A.render_appendix(res) + (
-        "\n" + A.render_backbone(backbone) if backbone else ""))
+        "\n" + A.render_backbone(backbone) if backbone else "") + (
+        "\n" + A.render_backbone(extra, model=args.extra_backbone_model, appendix="A14",
+                                 ordinal="Third", post_hoc=True) if extra else ""))  # fmt: skip
     if backbone:
         (args.out / "backbone_analysis.json").write_text(json.dumps(backbone, indent=1) + "\n")
+    if extra:
+        (args.out / "extra_backbone_analysis.json").write_text(json.dumps(extra, indent=1)
+                                                                + "\n")  # fmt: skip
     (args.out / "per_cell.md").write_text(A.render_per_cell(res))
     paths = A.figures(res, args.out)
     print(json.dumps({"rows": len(rows), "groups": res["groups"], "methods": res["methods"],

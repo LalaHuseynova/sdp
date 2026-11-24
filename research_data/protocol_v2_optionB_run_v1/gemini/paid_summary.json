@@ -1,0 +1,11 @@
+{
+  "rows": 212520,
+  "scope": "f2618f6020f38d4824dfa05db927e857d7d8c7dbbe3ffbaa58a73383eff55733",
+  "spend_usd": {
+    "v2_backbone_gemini": "2.29068525",
+    "v2_published_amemguard": "1.01142885",
+    "v2_published_memlineage": "0.0127239",
+    "v2_published_sanitiser": "0.1160157",
+    "v2_stage3": "2.38240125"
+  }
+}
