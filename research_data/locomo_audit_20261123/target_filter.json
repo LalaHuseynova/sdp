@@ -1,0 +1,24 @@
+{
+ "P1": {
+  "reasons": {
+   "ok": 2969,
+   "in_conversation": 114,
+   "short": 113,
+   "inside_gold": 4
+  },
+  "kept_share": 0.9278,
+  "scenarios_with_zero_eligible": 0,
+  "mean_eligible_per_scenario": 7.423
+ },
+ "P2": {
+  "reasons": {
+   "ok": 1941,
+   "in_conversation": 1148,
+   "short": 98,
+   "inside_gold": 13
+  },
+  "kept_share": 0.6066,
+  "scenarios_with_zero_eligible": 0,
+  "mean_eligible_per_scenario": 4.853
+ }
+}

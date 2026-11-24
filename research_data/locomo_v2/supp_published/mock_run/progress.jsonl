@@ -1,0 +1,4 @@
+{"segment": "locomo-v1.2", "mode": "mock", "workers": 8, "started_utc": "2026-11-23T20:26:31+00:00", "answered_before": 0, "judged_before": 0}
+{"conv": "conv-48", "pass": 0, "calls": 4604, "failed": 0, "segment": "locomo-v1.2"}
+{"conv": "conv-49", "pass": 0, "calls": 8694, "failed": 0, "segment": "locomo-v1.2"}
+{"segment_done": "locomo-v1.2", "stopped": null, "calls": 8694, "failed": 0, "selected_keys": 8021, "missing_answers": 0, "missing_judgements": 0}

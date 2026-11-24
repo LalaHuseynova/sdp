@@ -1,0 +1,88 @@
+{
+ "freeze": {
+  "digest": "3a2c2df80305758d3cf2cfe19a3514c78f636d35a7f21e35a73bda6aab9176f3",
+  "files": 65,
+  "verified": true,
+  "recomputed": "3a2c2df80305758d3cf2cfe19a3514c78f636d35a7f21e35a73bda6aab9176f3"
+ },
+ "data_sha256_ok": true,
+ "api_key_present_in_worktree_env": true,
+ "guard": {
+  "run_dir_exists": false,
+  "live_ledger_exists": false,
+  "state_dir": "/home/zhalat/.locomo_v2_state",
+  "cap_usd": "40",
+  "fresh_start": true
+ },
+ "approval_signed": false,
+ "cache": {
+  "caches": {
+   "v1.1 run": 27361,
+   "pilot": 3383
+  },
+  "answer_requests": 117713,
+  "answer_requests_in_cache": 15726,
+  "per_conversation": {
+   "conv-26": {
+    "answer_requests": 13669,
+    "in_cache": 6146
+   },
+   "conv-30": {
+    "answer_requests": 7516,
+    "in_cache": 3097
+   },
+   "conv-41": {
+    "answer_requests": 10074,
+    "in_cache": 4215
+   },
+   "conv-42": {
+    "answer_requests": 13524,
+    "in_cache": 0
+   },
+   "conv-43": {
+    "answer_requests": 12206,
+    "in_cache": 0
+   },
+   "conv-44": {
+    "answer_requests": 11543,
+    "in_cache": 0
+   },
+   "conv-47": {
+    "answer_requests": 10243,
+    "in_cache": 0
+   },
+   "conv-48": {
+    "answer_requests": 14505,
+    "in_cache": 1271
+   },
+   "conv-49": {
+    "answer_requests": 13373,
+    "in_cache": 997
+   },
+   "conv-50": {
+    "answer_requests": 11060,
+    "in_cache": 0
+   }
+  },
+  "note": "keys only; judge requests depend on predictions and are not counted"
+ },
+ "cost_usd": {
+  "no_reuse_raw_calibrated": [
+   14.668,
+   11.853
+  ],
+  "with_cache_reuse_raw_calibrated": [
+   12.668,
+   10.237
+  ],
+  "cap": "40"
+ },
+ "disk_free_gb": 73.5,
+ "environment": {
+  "python": "3.11.16",
+  "platform": "Linux-6.18.58.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "numpy": "2.4.6",
+  "torch": "2.13.0+cpu",
+  "sentence_transformers": "6.0.0"
+ }
+}

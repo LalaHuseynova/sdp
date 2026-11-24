@@ -1,0 +1,17 @@
+{
+ "frozen_v2_digest": "3a2c2df80305758d3cf2cfe19a3514c78f636d35a7f21e35a73bda6aab9176f3",
+ "files": {
+  "locomo_v2_supp/published_supp.py": "74eea9578baab9acd687d0be61a8fa5ab9389457a71f9a81f72983d1cbca9323",
+  "locomo_v2_supp/published_paid.py": "b2500bb5e4ffd7d674148d5d862fa7cbdf050fc0c1851f67cc08d27e94a61939",
+  "locomo_v2_supp/runner.py": "39f55afb17df00b295025990e8981e5f4b8361f7ab61abcf4032c4170c56931d",
+  "locomo_v2_supp/supp_baselines_analysis.py": "78fdb9570acdfdb88ae90f2bada68be9791f1f1de21bb96d5d2751cae4488694",
+  "reports/LOCOMO_V2_SUPP_PUBLISHED_BASELINES_NOTE.md": "4341d5a9c9bb6f7ad01685db55c4af2a113771da804a0064f663424ffd807f6f",
+  "src/ams/baselines/amemguard.py": "f30083a308391775a27916c4dff16f857a68c7eac90faa06c06aefe0324b61f6",
+  "src/ams/baselines/amemguard_borrowed.py": "9751000a9990c32aaae8f4298ef9bc630f2f38f7e90bb1b310ec075ac0746d39",
+  "prompts/sanitiser_audit/v1.txt": "df37af7c1018571abe6858a21be30b053351f76b9e41c2d0f3bec763b0faaf00",
+  "prompts/sanitiser_clean/v1.txt": "97437fb1e128aee6170bb08cbce1ecc7eb7d634e1ca0ccc6c88936ab21ab6f4e",
+  "prompts/sanitiser_system/v1.txt": "e02ecbd1d93ec91d630326b64a7c54f03d9a5b466d467ec110e8ff037b2f05b8"
+ },
+ "digest": "40346c9fe9c1592693336b6d8b2fa83a9b12f281d686a5fb8b2838da5ff413c1",
+ "utc": "2026-11-23T21:09:15+00:00"
+}

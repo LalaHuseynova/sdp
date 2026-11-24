@@ -1,0 +1,11 @@
+{
+ "evaluation": "LoCoMo v2 supplementary published baselines (LLM sanitiser + A-MemGuard, all four hijack shapes, run together)",
+ "digest": "40346c9fe9c1592693336b6d8b2fa83a9b12f281d686a5fb8b2838da5ff413c1",
+ "frozen_v2_digest": "3a2c2df80305758d3cf2cfe19a3514c78f636d35a7f21e35a73bda6aab9176f3",
+ "defence_cap_usd": "26",
+ "answer_cap_usd": "6",
+ "total_cap_usd": "32",
+ "approved_by": "owner (chat, 24 Nov 2026)",
+ "approval_text": "Let's keep the existing implementation and run both LLM Sanitiser and A-MemGuard together as originally designed... Use the approved $32 total cap ($26 for defense calls and $6 for answers)... If all checks pass, proceed with the paid supplementary evaluation using the existing setup.",
+ "recorded_utc": "2026-11-23T21:13:52+00:00"
+}

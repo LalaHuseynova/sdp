@@ -1,0 +1,19 @@
+{
+ "draws": 5,
+ "unique_answer_prompts": 117713,
+ "per_conversation": {
+  "conv-26": 13669,
+  "conv-30": 7516,
+  "conv-41": 10074,
+  "conv-42": 13524,
+  "conv-43": 12206,
+  "conv-44": 11543,
+  "conv-47": 10243,
+  "conv-48": 14505,
+  "conv-49": 13373,
+  "conv-50": 11060
+ },
+ "raw_estimate_usd": 14.603,
+ "calibrated_usd": 11.8,
+ "calibration": 0.8081
+}

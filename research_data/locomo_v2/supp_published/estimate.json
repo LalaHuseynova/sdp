@@ -1,0 +1,39 @@
+{
+ "defence_requests": {
+  "san_audit": {
+   "requests": 6974,
+   "input_chars": 9840063
+  },
+  "amg_chain": {
+   "requests": 60352,
+   "input_chars": 70477661
+  },
+  "amg_judge": {
+   "requests": 30980,
+   "input_chars": 49648435
+  }
+ },
+ "defence_cost_usd": {
+  "san_audit": 0.402,
+  "amg_chain": 6.988,
+  "amg_judge": 4.836
+ },
+ "rewrite_note": "san_clean requests counted here are 0 under the neutral recorder; real count = number of distinct turns the sanitiser calls harmful (bounded by san_audit requests)",
+ "san_clean_upper_bound_usd": 0.814,
+ "answer_keys_supp": 31246,
+ "answer_keys_already_answered": 31246,
+ "answer_cost_if_contexts_unchanged_usd": 0.0,
+ "answer_cost_upper_bound_usd": 2.535,
+ "assumptions": {
+  "output_tokens": {
+   "san_audit": 8,
+   "san_clean": 80,
+   "amg_chain": 120,
+   "amg_judge": 160
+  },
+  "prices_per_token": [
+   1.5e-07,
+   6e-07
+  ]
+ }
+}

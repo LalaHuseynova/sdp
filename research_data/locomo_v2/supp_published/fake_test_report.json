@@ -1,0 +1,27 @@
+{
+ "A": {
+  "status": "complete",
+  "stage": "answers",
+  "dispatched": 3916,
+  "failed": 0
+ },
+ "A_calls": 9962,
+ "B_first": {
+  "status": "paused_by_user",
+  "stage": "defence"
+ },
+ "B_calls_at_stop": 2490,
+ "B_build_exists_after_stop": false,
+ "B": {
+  "status": "complete",
+  "stage": "answers",
+  "dispatched": 3916,
+  "failed": 0
+ },
+ "B_calls_total": 9776,
+ "identical_defended_contexts": true,
+ "identical_answers": true,
+ "extra_calls_B_vs_A": -186,
+ "analysis_rows": 44,
+ "analysis_has_supp_arms": true
+}

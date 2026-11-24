@@ -1,0 +1,26 @@
+{
+ "conv-48": {
+  "jobs": 9550,
+  "contexts": 3959,
+  "flagged": {
+   "llm_sanitiser": 5718,
+   "a_memguard": 1387
+  },
+  "kept": {
+   "llm_sanitiser": 76400,
+   "a_memguard": 17713
+  }
+ },
+ "conv-49": {
+  "jobs": 7800,
+  "contexts": 3788,
+  "flagged": {
+   "llm_sanitiser": 5299,
+   "a_memguard": 1366
+  },
+  "kept": {
+   "llm_sanitiser": 62400,
+   "a_memguard": 14234
+  }
+ }
+}

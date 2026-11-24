@@ -1,0 +1,148 @@
+{
+ "A": {
+  "result": {
+   "status": "complete",
+   "dispatched": 15032,
+   "failed": 0
+  },
+  "answers": 7516,
+  "judgements": 7516,
+  "fake_calls": 15032,
+  "ledger": {
+   "used": 300640000,
+   "held": 0,
+   "blocked": 0,
+   "settled": 15032
+  }
+ },
+ "B": {
+  "at_kill": {
+   "fake_calls": 5020,
+   "ledger": {
+    "used": 100300000,
+    "held": 96096000,
+    "blocked": 0,
+    "pending": 5,
+    "settled": 5015
+   },
+   "answers_saved": 0
+  },
+  "result": {
+   "status": "complete",
+   "dispatched": 10020,
+   "failed": 0
+  },
+  "identical_to_A": true,
+  "fake_calls_total": 15040,
+  "extra_calls_vs_A": 8,
+  "ledger": {
+   "used": 300700000,
+   "held": 96096000,
+   "blocked": 0,
+   "pending": 5,
+   "settled": 15035
+  }
+ },
+ "C": {
+  "first": {
+   "status": "paused_by_user",
+   "dispatched": 5026,
+   "failed": 0
+  },
+  "ledger_at_stop": {
+   "used": 100520000,
+   "held": 0,
+   "blocked": 0,
+   "settled": 5026
+  },
+  "result": {
+   "status": "complete",
+   "dispatched": 10006,
+   "failed": 0
+  },
+  "identical_to_A": true,
+  "extra_calls_vs_A": 0,
+  "ledger": {
+   "used": 300640000,
+   "held": 0,
+   "blocked": 0,
+   "settled": 15032
+  }
+ },
+ "D": {
+  "result": {
+   "status": "complete",
+   "dispatched": 15082,
+   "failed": 50
+  },
+  "identical_to_A": true,
+  "extra_calls_vs_A": 50,
+  "ledger": {
+   "used": 300640000,
+   "held": 960960000,
+   "blocked": 0,
+   "settled": 15032,
+   "unknown": 50
+  },
+  "resume_log": [
+   "segment_start",
+   "breaker_tripped_waiting",
+   "breaker_tripped_waiting",
+   "breaker_tripped_waiting",
+   "breaker_tripped_waiting",
+   "breaker_tripped_waiting",
+   "conversation_complete",
+   "all_complete"
+  ]
+ },
+ "D2": {
+  "first": {
+   "status": "S2_review_required",
+   "dispatched": 3065,
+   "failed": 66
+  },
+  "resume_without_review": {
+   "status": "S2_review_required",
+   "detail": "rerun with --owner-reviewed-s2 after review"
+  },
+  "result": {
+   "status": "complete",
+   "dispatched": 12033,
+   "failed": 0
+  },
+  "identical_to_A": true,
+  "extra_calls_vs_A": 66,
+  "ledger": {
+   "used": 300640000,
+   "held": 1268467200,
+   "blocked": 0,
+   "settled": 15032,
+   "unknown": 66
+  },
+  "resume_log": [
+   "segment_start",
+   "breaker_tripped_waiting",
+   "breaker_tripped_waiting",
+   "breaker_tripped_waiting",
+   "breaker_tripped_waiting",
+   "S2_review_required",
+   "refused_s2_review_pending",
+   "owner_reviewed_s2_override",
+   "segment_start",
+   "conversation_complete",
+   "all_complete"
+  ]
+ },
+ "E": {
+  "result": {
+   "status": "complete",
+   "dispatched": 0,
+   "failed": 0
+  },
+  "identical_to_A": true,
+  "repairs": [
+   "answers.jsonl.20261123T165353Z.partial"
+  ],
+  "new_calls": 0
+ }
+}

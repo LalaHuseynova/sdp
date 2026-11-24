@@ -1,0 +1,16 @@
+{
+ "protocol": "locomo-v2.0",
+ "protocol_text": "reports/PROTOCOL_LOCOMO_V2.md",
+ "digest": "3a2c2df80305758d3cf2cfe19a3514c78f636d35a7f21e35a73bda6aab9176f3",
+ "cap_usd": "40",
+ "estimate_usd": {
+  "calibrated_with_cache_reuse": 10.24,
+  "calibrated_no_reuse": 11.85
+ },
+ "reuse_v1_1_response_cache": "yes",
+ "scope": "all 10 conversations; families loc, fn20, sybil, shift, relay, frame; arms static, R, C, M, S, SL, S2-ID, memlineage, randec; paid published defences not included",
+ "execution": "locomo_v2_supp.runner (execution level; reports/LOCOMO_V2_EXECUTION_ADDENDUM.md); conv-48 canary first",
+ "approved_by": "owner (chat, 23 Nov 2026)",
+ "approval_text": "I approve starting the frozen LoCoMo v2 paid evaluation with a maximum budget of $40. ... Reuse the 15,726 identical cached answers. Start with conv-48 to verify execution and spending. Continue with the remaining conversations if all checks pass.",
+ "recorded_utc": "2026-11-23T16:54:20+00:00"
+}

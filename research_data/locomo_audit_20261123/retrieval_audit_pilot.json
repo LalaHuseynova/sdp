@@ -1,0 +1,164 @@
+{
+ "note": "pilot conversations only (conv-48, conv-49); retrieval level; no outcome read",
+ "invariant_failures": {
+  "static_not_plain_topk": 0,
+  "withheld_kept": 0,
+  "audited_poison_reaches_own_question": 0,
+  "not_filled": 0,
+  "not_sorted": 0,
+  "S2ID_ne_SL": 0,
+  "clean_has_poison": 0
+ },
+ "attack_strength_static": {
+  "targets": 640,
+  "share_poison_rank1": 0.9187,
+  "share_poison_in_top10": 0.9922,
+  "median_rank": 1.0
+ },
+ "retrieval_table": {
+  "A1|1s|exposure": {
+   "static": 1.0,
+   "R": 1.0,
+   "C": 0.0,
+   "M": 0.0,
+   "S": 0.0,
+   "SL": 0.0,
+   "S2-ID": 0.0
+  },
+  "A1|1s|recall_U_out": {
+   "static": 0.4229,
+   "R": 0.4229,
+   "C": 0.0,
+   "M": 0.0,
+   "S": 0.4464,
+   "SL": 0.4464,
+   "S2-ID": 0.4464
+  },
+  "A1|2s|exposure": {
+   "static": 1.0,
+   "R": 1.0,
+   "C": 0.0,
+   "M": 0.0,
+   "S": 0.3167,
+   "SL": 0.3083,
+   "S2-ID": 0.3083
+  },
+  "A1|2s|recall_U_out": {
+   "static": 0.4394,
+   "R": 0.4394,
+   "C": 0.0,
+   "M": 0.0,
+   "S": 0.2597,
+   "SL": 0.2597,
+   "S2-ID": 0.2597
+  },
+  "A1|quarter|exposure": {
+   "static": 0.9833,
+   "R": 0.9833,
+   "C": 0.0,
+   "M": 0.0,
+   "S": 0.0833,
+   "SL": 0.0833,
+   "S2-ID": 0.0833
+  },
+  "A1|quarter|recall_U_out": {
+   "static": 0.4417,
+   "R": 0.4417,
+   "C": 0.0,
+   "M": 0.0,
+   "S": 0.0463,
+   "SL": 0.0463,
+   "S2-ID": 0.0463
+  },
+  "A1|spread|exposure": {
+   "static": 1.0,
+   "R": 1.0,
+   "C": 0.0,
+   "M": 0.0,
+   "S": 0.0,
+   "SL": 0.0,
+   "S2-ID": 0.0
+  },
+  "A1|spread|recall_U_out": {
+   "static": null,
+   "R": null,
+   "C": null,
+   "M": null,
+   "S": null,
+   "SL": null,
+   "S2-ID": null
+  },
+  "A2|1s|exposure": {
+   "static": 0.9917,
+   "R": 0.9917,
+   "C": 0.9917,
+   "M": 0.25,
+   "S": 0.25,
+   "SL": 0.25,
+   "S2-ID": 0.25
+  },
+  "A2|1s|recall_U_out": {
+   "static": 0.4229,
+   "R": 0.4229,
+   "C": 0.4229,
+   "M": 0.4445,
+   "S": 0.4445,
+   "SL": 0.4453,
+   "S2-ID": 0.4453
+  },
+  "A2|2s|exposure": {
+   "static": 1.0,
+   "R": 1.0,
+   "C": 1.0,
+   "M": 0.7942,
+   "S": 0.7942,
+   "SL": 0.7858,
+   "S2-ID": 0.7858
+  },
+  "A2|2s|recall_U_out": {
+   "static": 0.4394,
+   "R": 0.4394,
+   "C": 0.4394,
+   "M": 0.4598,
+   "S": 0.4598,
+   "SL": 0.4614,
+   "S2-ID": 0.4614
+  },
+  "A2|quarter|exposure": {
+   "static": 0.9733,
+   "R": 0.9733,
+   "C": 0.9733,
+   "M": 0.965,
+   "S": 0.965,
+   "SL": 0.965,
+   "S2-ID": 0.965
+  },
+  "A2|quarter|recall_U_out": {
+   "static": 0.4417,
+   "R": 0.4417,
+   "C": 0.4417,
+   "M": 0.4532,
+   "S": 0.4532,
+   "SL": 0.4557,
+   "S2-ID": 0.4557
+  },
+  "A2|spread|exposure": {
+   "static": 1.0,
+   "R": 1.0,
+   "C": 1.0,
+   "M": 1.0,
+   "S": 1.0,
+   "SL": 0.9917,
+   "S2-ID": 0.9917
+  },
+  "A2|spread|recall_U_out": {
+   "static": null,
+   "R": null,
+   "C": null,
+   "M": null,
+   "S": null,
+   "SL": null,
+   "S2-ID": null
+  }
+ }
+}

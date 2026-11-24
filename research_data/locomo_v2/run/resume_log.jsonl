@@ -1,0 +1,16 @@
+{"utc": "2026-11-23T16:55:43+00:00", "event": "cache_seeded", "rows_before": 0, "rows_after": 30744, "sources": ["v1.1 run", "pilot"]}
+{"utc": "2026-11-23T16:55:59+00:00", "event": "segment_start", "convs": ["conv-48"], "protocol": "locomo-v2.0", "cap": "40"}
+{"utc": "2026-11-23T17:12:57+00:00", "event": "conversation_complete", "conv": "conv-48", "selected_keys": 14505, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-23T17:12:57+00:00", "event": "all_complete", "dispatched": 14893, "failed": 0}
+{"utc": "2026-11-23T17:14:03+00:00", "event": "segment_start", "convs": ["conv-48", "conv-26", "conv-30", "conv-41", "conv-42", "conv-43", "conv-44", "conv-47", "conv-49", "conv-50"], "protocol": "locomo-v2.0", "cap": "40"}
+{"utc": "2026-11-23T17:14:14+00:00", "event": "conversation_complete", "conv": "conv-48", "selected_keys": 14505, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-23T17:24:33+00:00", "event": "conversation_complete", "conv": "conv-26", "selected_keys": 13669, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-23T17:29:44+00:00", "event": "conversation_complete", "conv": "conv-30", "selected_keys": 7516, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-23T17:36:58+00:00", "event": "conversation_complete", "conv": "conv-41", "selected_keys": 10074, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-23T17:53:57+00:00", "event": "conversation_complete", "conv": "conv-42", "selected_keys": 13524, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-23T18:08:48+00:00", "event": "conversation_complete", "conv": "conv-43", "selected_keys": 12206, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-23T18:22:07+00:00", "event": "conversation_complete", "conv": "conv-44", "selected_keys": 11543, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-23T18:34:00+00:00", "event": "conversation_complete", "conv": "conv-47", "selected_keys": 10243, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-23T18:48:20+00:00", "event": "conversation_complete", "conv": "conv-49", "selected_keys": 13373, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-23T19:02:16+00:00", "event": "conversation_complete", "conv": "conv-50", "selected_keys": 11060, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-23T19:02:16+00:00", "event": "all_complete", "dispatched": 106347, "failed": 0}

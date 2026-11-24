@@ -1,0 +1,23 @@
+{"utc": "2026-11-23T21:14:46+00:00", "event": "answer_cache_seeded", "rows": 151984}
+{"utc": "2026-11-23T21:57:42+00:00", "event": "defence_conversation_complete", "conv": "conv-48"}
+{"utc": "2026-11-23T22:35:30+00:00", "event": "defence_conversation_complete", "conv": "conv-26"}
+{"utc": "2026-11-23T22:54:07+00:00", "event": "defence_conversation_complete", "conv": "conv-30"}
+{"utc": "2026-11-23T23:24:02+00:00", "event": "defence_conversation_complete", "conv": "conv-41"}
+{"utc": "2026-11-23T23:57:12+00:00", "event": "defence_conversation_complete", "conv": "conv-42"}
+{"utc": "2026-11-24T00:32:24+00:00", "event": "defence_conversation_complete", "conv": "conv-43"}
+{"utc": "2026-11-24T01:03:26+00:00", "event": "defence_conversation_complete", "conv": "conv-44"}
+{"utc": "2026-11-24T01:33:36+00:00", "event": "defence_conversation_complete", "conv": "conv-47"}
+{"utc": "2026-11-24T02:14:20+00:00", "event": "defence_conversation_complete", "conv": "conv-49"}
+{"utc": "2026-11-24T02:48:46+00:00", "event": "defence_conversation_complete", "conv": "conv-50"}
+{"utc": "2026-11-24T02:48:46+00:00", "event": "segment_start", "convs": ["conv-48", "conv-26", "conv-30", "conv-41", "conv-42", "conv-43", "conv-44", "conv-47", "conv-49", "conv-50"], "protocol": "locomo-v2.0", "cap": "40"}
+{"utc": "2026-11-24T02:51:08+00:00", "event": "conversation_complete", "conv": "conv-48", "selected_keys": 5729, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-24T02:53:05+00:00", "event": "conversation_complete", "conv": "conv-26", "selected_keys": 5271, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-24T02:54:23+00:00", "event": "conversation_complete", "conv": "conv-30", "selected_keys": 2917, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-24T02:56:09+00:00", "event": "conversation_complete", "conv": "conv-41", "selected_keys": 4157, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-24T02:58:23+00:00", "event": "conversation_complete", "conv": "conv-42", "selected_keys": 5272, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-24T03:00:10+00:00", "event": "conversation_complete", "conv": "conv-43", "selected_keys": 4754, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-24T03:02:03+00:00", "event": "conversation_complete", "conv": "conv-44", "selected_keys": 4377, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-24T03:03:51+00:00", "event": "conversation_complete", "conv": "conv-47", "selected_keys": 4225, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-24T03:05:56+00:00", "event": "conversation_complete", "conv": "conv-49", "selected_keys": 5222, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-24T03:08:10+00:00", "event": "conversation_complete", "conv": "conv-50", "selected_keys": 4490, "missing_answers": 0, "missing_judgements": 0}
+{"utc": "2026-11-24T03:08:10+00:00", "event": "all_complete", "dispatched": 19707, "failed": 0}

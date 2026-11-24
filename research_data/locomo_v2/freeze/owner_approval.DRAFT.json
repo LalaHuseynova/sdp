@@ -1,0 +1,13 @@
+{
+  "status": "DRAFT - unsigned; rename to owner_approval.json and fill in only after the owner approves",
+  "protocol": "locomo-v2.0",
+  "protocol_text": "reports/PROTOCOL_LOCOMO_V2.md",
+  "digest": "<the digest printed by: -m locomo_v2 freeze verify>",
+  "cap_usd": "40",
+  "estimate_usd": {"calibrated": 11.80, "raw": 14.60, "unique_answer_prompts": 117713},
+  "scope": "all 10 conversations; families loc, fn20, sybil, shift, relay, frame; arms static, R, C, M, S, SL, S2-ID, memlineage, randec",
+  "paid_published_defences": "not included (separate decision)",
+  "reuse_v1_1_response_cache": "<yes|no>",
+  "approved_by": "<owner>",
+  "approved_utc": "<timestamp>"
+}

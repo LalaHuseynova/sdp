@@ -1,0 +1,13 @@
+{
+ "label": "pre-unblinding supplementary manifest",
+ "utc": "2026-11-23T15:11:54+00:00",
+ "frozen_protocol_digest": "3a2c2df80305758d3cf2cfe19a3514c78f636d35a7f21e35a73bda6aab9176f3",
+ "paid_run_exists": false,
+ "files": {
+  "reports/LOCOMO_V2_SUPPLEMENTARY_ANALYSIS_NOTE.md": "185c3ec70f3792fe7c87ebfdb96f04e141db3388f1e46267193026cb6a3c51c8",
+  "locomo_v2_supp/supplementary.py": "0ad299dc8dde7572d936c80cb420e90e03a05d604a9e75f314f401251ac2a01d",
+  "locomo_v2_supp/readiness.py": "70a37f1820eac54e3e577c2628618d780bc650252ecbf5b167c6e960338176c9",
+  "locomo_v2_supp/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ "digest": "4742a448b476ad046c7685c987bff425c1494d6419efc7061b03afcd1b5804e8"
+}
