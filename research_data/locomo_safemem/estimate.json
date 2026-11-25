@@ -1,0 +1,38 @@
+{
+ "P1a_construction": {
+  "requests": {
+   "classifier": 1529,
+   "extraction": 7019
+  },
+  "input_tokens_chars_over_4": {
+   "classifier": 633371,
+   "extraction": 3337530
+  },
+  "single_turn_extractions": 6103,
+  "usd_low": 0.871,
+  "usd_expected": 1.647,
+  "usd_cap_bound": 10.725
+ },
+ "P3_answers": {
+  "answer_keys_projected": 341489,
+  "usd_projected": 39.7,
+  "usd_uncalibrated": 49.13
+ },
+ "P1c_conflicts": {
+  "distinct_checks_projected_from_mock": 2569,
+  "usd_projected": 0.08,
+  "usd_at_5x": 0.401,
+  "note": "mock claim relations differ from GPT-4o-mini's: the exact count comes from the free precompute pass after P1a, before P1c is sent"
+ },
+ "P2_defences": {
+  "distinct_requests_dev_mock": {
+   "san_audit": 8870,
+   "amg_chain": 37887,
+   "amg_judge": 11042
+  },
+  "requests_projected": 256514,
+  "usd_projected": 48.27,
+  "note": "A-MemGuard + LLM sanitiser on the loc stores' static contexts; priced at the LoCoMo v2 supplement's realized USD per call; exact count recomputed after P1 (estimate-final)"
+ },
+ "total_projected_usd": 90.02
+}

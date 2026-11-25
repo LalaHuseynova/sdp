@@ -1,0 +1,26 @@
+{
+ "groups": [
+  "G-T00"
+ ],
+ "conditions": [
+  "localized",
+  "distributed",
+  "sybil_k4",
+  "launder_r4",
+  "imp_localized_fp1_d0",
+  "imp_localized_late_d0"
+ ],
+ "arms": [
+  "static",
+  "R",
+  "C",
+  "M",
+  "S",
+  "SL",
+  "S2-ID"
+ ],
+ "retrievals": 1470,
+ "differences": [],
+ "contested_claims_seen": 58,
+ "identical": true
+}

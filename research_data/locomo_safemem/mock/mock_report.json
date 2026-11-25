@@ -1,0 +1,112 @@
+{
+ "pass": {
+  "mode": "mock",
+  "shards": 24,
+  "seconds": 19535.7
+ },
+ "errors": [],
+ "retrievals": 1600867,
+ "sentinel_checked_vs_frozen": 64021,
+ "jobs": 811980,
+ "contexts": 63508,
+ "static_loc": 80,
+ "defence_jobs_added": 27760,
+ "randec": {
+  "distinct_texts": 8870,
+  "newly_decided": 7651,
+  "seconds": 3625.5,
+  "jobs_added": 13880
+ },
+ "answers": {
+  "stopped": null,
+  "calls": 85201,
+  "failed": 0,
+  "selected_keys": 76946,
+  "missing_answers": 0,
+  "missing_judgements": 0
+ },
+ "analysis_hypotheses": {
+  "H1 vs C": 0.0,
+  "H1 vs M": 0.0,
+  "H2": 0.0,
+  "H3": 0.0,
+  "H4": 0.0,
+  "H5": 0.0,
+  "H6 vs C": 0.0,
+  "H6 vs M": 0.0,
+  "H6' vs C (MPBench fp1 cell)": 0.0
+ },
+ "mechanism": {
+  "ambiguous_chunks": {
+   "mean": 131.504,
+   "min": 106,
+   "max": 158
+  },
+  "chunks": {
+   "mean": 321.076,
+   "min": 270,
+   "max": 371
+  },
+  "claims": {
+   "mean": 798.469,
+   "min": 705,
+   "max": 891
+  },
+  "contributions": {
+   "mean": 35.714,
+   "min": 25,
+   "max": 46
+  },
+  "external_chunks": {
+   "mean": 99.054,
+   "min": 77,
+   "max": 116
+  },
+  "poison_contributions": {
+   "mean": 7.143,
+   "min": 0,
+   "max": 8
+  },
+  "poison_roots_with_claims": {
+   "mean": 7.143,
+   "min": 0,
+   "max": 8
+  },
+  "poison_writes_value_in_claim": {
+   "mean": 7.125,
+   "min": 0,
+   "max": 8
+  },
+  "poison_writes_with_claims": {
+   "mean": 7.143,
+   "min": 0,
+   "max": 8
+  },
+  "principal_chunks": {
+   "mean": 90.518,
+   "min": 77,
+   "max": 102
+  },
+  "roots": {
+   "mean": 90.714,
+   "min": 75,
+   "max": 106
+  },
+  "session_writes": {
+   "mean": 27.5,
+   "min": 25,
+   "max": 30
+  },
+  "session_writes_at_cap": {
+   "mean": 15.058,
+   "min": 12,
+   "max": 19
+  },
+  "ratios": {
+   "session_writes_at_claim_cap": 0.5476,
+   "poison_writes_with_claims": 1.0,
+   "poison_writes_value_in_claim": 0.9975,
+   "ambiguous_chunk_share": 0.4096
+  }
+ }
+}

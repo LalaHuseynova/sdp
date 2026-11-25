@@ -1,0 +1,15 @@
+{
+ "_status": "DRAFT - not valid. To approve, copy to owner_approval.json and fill approved_by / approval_text.",
+ "study": "LoCoMo + SAFE-Mem (supplementary, exploratory), reports/PROTOCOL_LOCOMO_SAFEMEM.md",
+ "digest": "2ec7d1bcfb397d051f7938c86031695960dc04676a7e8142bc1bf9245645c62a",
+ "caps_usd": {
+  "construct": "12",
+  "conflicts": "3",
+  "defences": "60",
+  "answers": "55"
+ },
+ "total_cap_usd": "130",
+ "approved_by": "",
+ "approval_text": "",
+ "_note": "Full scope as frozen. A reduced scope (protocol 9.1 options) needs a small code change and a re-freeze first; the digest then changes."
+}
