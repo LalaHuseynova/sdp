@@ -749,6 +749,10 @@ The original project is credited in the [upstream README](UPSTREAM_README.md), i
 
 Newest entry first. **Future sessions: read this section first, then add an entry after every task.** Each entry records what was done, what was found, which files changed, what is completed or remaining, and the next step. Standing rules: never delete earlier documentation or results; make no paid API calls and no algorithm changes without the project owner's explicit permission.
 
+### 2026-11-25 — Removed the old paper drafts from GitHub (owner request)
+
+The six files `reports/PAPER_PLAN_20261122.md` and `reports/PAPER_SECTION4_*` (.md/.txt) are no longer on GitHub. They are outdated drafts (some predate the 24 Nov wording fixes) and will be rewritten. **The local copies are kept** (`reports/` is git-ignored), so they can serve as the starting point for the update.
+
 ### 2026-11-25 — Cost audit: MPBench Option B vs LoCoMo + SAFE-Mem Option A (read-only, free)
 
 Saved as `reports/COST_AUDIT_OPTION_A_20261125.md`. No code, protocol, frozen file or cache changed; no paid call.
