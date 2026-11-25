@@ -749,9 +749,17 @@ The original project is credited in the [upstream README](UPSTREAM_README.md), i
 
 Newest entry first. **Future sessions: read this section first, then add an entry after every task.** Each entry records what was done, what was found, which files changed, what is completed or remaining, and the next step. Standing rules: never delete earlier documentation or results; make no paid API calls and no algorithm changes without the project owner's explicit permission.
 
+### 2026-11-25 — Added `reports/INDEX.md` (start-here page for teammates)
+
+`reports/` mixes current documents with pre-protocol-v2 history. The planned move of the old files into an archive folder was **not done**:
+- 48 of them are recorded by path in the frozen snapshot `research_data/archive_pre_protocol_v2_20261113/file_hashes.jsonl` (Option B RUNBOOK expects `changed: 0, missing: 25`; a move would make it 73);
+- 13 old research scripts read or hash some of them at fixed paths.
+
+Instead, the new `reports/INDEX.md` lists what is current (MPBench Option B, workload design, original SAFE-Mem reproduction, audits, LoCoMo, method explanations) and what is history only. No file was moved or edited; the snapshot check still gives `changed: 0, missing: 25`.
+
 ### 2026-11-25 — Removed the old paper drafts from GitHub (owner request)
 
-The six files `reports/PAPER_PLAN_20261122.md` and `reports/PAPER_SECTION4_*` (.md/.txt) are no longer on GitHub. They are outdated drafts (some predate the 24 Nov wording fixes) and will be rewritten. **The local copies are kept** (`reports/` is git-ignored), so they can serve as the starting point for the update.
+The six files `reports/PAPER_PLAN_20261122.md` and `reports/PAPER_SECTION4_*` (.md/.txt) are no longer on GitHub. They are outdated drafts (some predate the 24 Nov wording fixes) and will be rewritten. Later the same day the owner also had the 7 local drafts deleted (these six plus `PAPER_PREVIEW_INTEGRITY_STAGE25_20261122.md`, which was never pushed). The six pushed ones can still be recovered from git history (commit `9a5ce46`).
 
 ### 2026-11-25 — Cost audit: MPBench Option B vs LoCoMo + SAFE-Mem Option A (read-only, free)
 
