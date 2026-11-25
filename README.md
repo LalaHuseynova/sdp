@@ -749,6 +749,18 @@ The original project is credited in the [upstream README](UPSTREAM_README.md), i
 
 Newest entry first. **Future sessions: read this section first, then add an entry after every task.** Each entry records what was done, what was found, which files changed, what is completed or remaining, and the next step. Standing rules: never delete earlier documentation or results; make no paid API calls and no algorithm changes without the project owner's explicit permission.
 
+### 2026-11-25 — Cost audit: MPBench Option B vs LoCoMo + SAFE-Mem Option A (read-only, free)
+
+Saved as `reports/COST_AUDIT_OPTION_A_20261125.md`. No code, protocol, frozen file or cache changed; no paid call.
+
+| Finding | Value |
+|---|---|
+| MPBench Option B actual spend (provider receipts) | $7.0031; A-MemGuard $1.01 (7,900 calls), sanitiser $0.12 (2,089 calls) |
+| Why LoCoMo costs more | 50× more distinct defence contexts (975 vs ≈ 49,000: 400 independent attacked stores × 154 questions); per context LoCoMo is ≈ 20% cheaper |
+| Option A projection | $90 frozen estimate; audit estimate ≈ $78 (range $65–95). The sanitiser is over-priced 3.4×; answer + judge calls are ≈ 413k, not 683k |
+| Real inefficiency | No guard against concurrent identical requests, so duplicates can be billed (≈ 3–10% of the defence stage, ≈ $1–4) |
+| Recommendation | Keep the frozen code (`2ec7d1bc…`, verified); approve construction first, then use the free `estimate-final` for exact counts and caps |
+
 ### 2026-11-24 — Removed old presentation files (owner request)
 
 | Removed | Size | What it was |

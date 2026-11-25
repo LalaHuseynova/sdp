@@ -1,0 +1,5 @@
+metric,numerator,denominator,reproduced_percent,published_percent,difference_percentage_points
+asr,176,2999,5.868622874291431,6.2,-0.3313771257085696
+retention_recall,213,249,85.5421686746988,85.9,-0.35783132530120554
+restraint,1273,2607,48.83007288070579,50.6,-1.7699271192942092
+combined_benign_utility,1486,2856,52.030812324929975,,
