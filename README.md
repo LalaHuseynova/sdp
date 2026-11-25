@@ -749,6 +749,768 @@ The original project is credited in the [upstream README](UPSTREAM_README.md), i
 
 Newest entry first. **Future sessions: read this section first, then add an entry after every task.** Each entry records what was done, what was found, which files changed, what is completed or remaining, and the next step. Standing rules: never delete earlier documentation or results; make no paid API calls and no algorithm changes without the project owner's explicit permission.
 
+### 2026-11-25 (Windows machine) — Pushed this machine's log and LoCoMo / ICML reports to main (owner: "for my teammate to see")
+
+- **Pulled first:** `origin/main` fast-forward to `f5d58ee` (teammate: wording fixes, merge of the S2-ID script and figures, old presentation files removed). README §10 conflict resolved by keeping both sets of entries, GitHub's first; nothing removed.
+- **Pushed to main:** this README log (LoCoMo v2, supplement, SAFE-Mem study entries) and 12 report files (force-added because `reports/` is gitignored): the LoCoMo v2 protocol, results, addendum, supplementary notes and results, the ICML audit, the SAFE-Mem assessment, protocol, readiness and A-vs-B reports, and the LoCoMo results-tables PDF.
+- **Documents only:** LoCoMo code and data stay on `locomo-backup` (`121cc58`). Not pushed: `plan_minja.md` (excluded), the arXiv PDF, `CLAUDE_MEMORY_TRANSFER.md`, the PISanitizer deck.
+
+### 2026-11-24 — Removed old presentation files (owner request)
+
+| Removed | Size | What it was |
+|---|---|---|
+| `output/pptx/` | 22 MB | Old slide decks (1 Nov, 1 Nov v2, 8 Nov) |
+| `output/imagegen/` | 3.7 MB | Generated pipeline images (1 Nov) |
+| `SAFE_Mem_Implementation_Walkthrough.pptx` | 4.4 MB | Old walkthrough deck |
+
+No code used them. They can still be recovered from git history (any commit before this one).
+
+### 2026-11-24 — Fixed two wrong descriptions (free, owner OK)
+
+| What | Before | After |
+|---|---|---|
+| `analysis_gemini/THREE_MODEL_COMPARISON.md` §7 point 3 | "S2-ID is the best method under adaptive attacks on every model" | S2-ID is the strongest of **our** methods (worst case ⅓ lower than S; lowest 8-cell mean of all 11 methods: 22.8 / 10.7 / 21.6). In the worst cell MemLineage is better or equal (GPT 43.8 vs 46.9, Gemini 43.8 = 43.8, Haiku 16.7 vs 21.9) and A-MemGuard is lower on Haiku (14.6) |
+| Results PDF note, Table 2 (`paper_tables/make_tables.py`) | "random audits: audited items are drawn at random" | In each context, 2 of the 4 attack items are picked at random for audit, so every audit still finds poison; only which items are caught is random (6 draws) |
+
+Rebuilt `tables.html` and `SAFE-Mem_results_tables.pdf`. No numbers changed, no paid calls. The same correction was made in this README's P-B4 entry and noted in `reports/RESEARCH_AUDIT_20261124.md`. The archived two-model PDF (`two_models_20261122/`) is left as it was.
+
+
+
+### 2026-11-24 (Windows machine, night) — LoCoMo + SAFE-Mem: Option A vs B decision report (free, read-only)
+
+- **Measured from the dev mock (× 4.438 by question count):**
+  - **A:** ≈ $90.0 (P2 256,514 defence calls $48.27; P3 341,489 answer keys $39.70; construction $1.65; conflicts ≤ $0.40).
+  - **B:** ≈ $66.8 (P2 165,233 / $31.10; P3 286,453 / $33.61).
+  - 85% of B's ≈ $23 saving comes from dropping A-MemGuard + Sanitiser on the 2-session and quarter shapes. A2, follow-up and S2-BS together save ≈ $3.50.
+- **Recommendation: A.** B removes the published-defence comparison exactly where S is weakest (partial localization), and A is already frozen. B keeps every MPBench hypothesis cell otherwise. S2-ID ≡ SL on LoCoMo in both options (no sensitive questions), so S2-ID claims must rest on MPBench.
+- **Report:** `reports/LOCOMO_SAFEMEM_OPTION_A_VS_B_20261124.md` (worktree + main). No code or freeze change; $0 spent.
+### 2026-11-24 (Windows machine, evening) — LoCoMo + SAFE-Mem study: implemented, validated for free, frozen; awaiting approval ($0 spent)
+
+- **Owner request:** evaluate S on LoCoMo with the actual SAFE-Mem memory, not plain RAG, following MPBench Option B; full engineering and free validation; no paid call.
+- **Built:** `locomo_safemem/` (worktree `sdp-locomo-audit`, branch `locomo-audit`, kept off main).
+  - Original SAFE-Mem is used unchanged: `write_dialogue` ingestion with its published LoCoMo settings `v31_locomo_withhold`.
+  - Every poison, relay or Sybil turn is its own write, giving MPBench-style roots and provenance.
+  - The frozen policies, lineage, S2-ID gate and published baselines are reused.
+  - The one new semantic: a counterpart turn counts as an external source.
+  - Attack instances are identical to LoCoMo v2 (same seeds).
+  - The full Option B matrix is mapped; 6 cells are not transferable, with reasons.
+- **Validated (free):**
+  - governance copy = frozen MPBench layer (1,470/1,470 retrievals);
+  - 14 tests pass;
+  - dry pass: exact 8,548 construction requests;
+  - full-matrix mock on dev: 1.6M retrievals, 64,021 frozen-path re-checks, all identical; answers and judges through the frozen v2 engine; analysis and tables;
+  - one shard recomputed: identical.
+- **Fixed during validation:** relay metric population (v2 definition), late-audit state separation, a speed-patch clash; RandEC moved to its own stage (≈ 2 s per long SAFE-Mem chunk).
+- **Freeze:** `2ec7d1bc…` (155 files); verify ok; LoCoMo v2 freeze intact; no frozen file changed.
+- **Cost:** ≈ $90 projected, proposed caps $130 in total:
+  - construction $1.65 (exact list);
+  - conflicts < $0.5;
+  - A-MemGuard + sanitiser ≈ $48;
+  - answers ≈ $40.
+
+  Compute is ≈ 1.5–2 days of local passes.
+- **Reports:** `reports/PROTOCOL_LOCOMO_SAFEMEM.md` and `reports/LOCOMO_SAFEMEM_READINESS_20261124.md` (copies on main). Approval draft: `research_data/locomo_safemem/owner_approval.DRAFT.json`. Nothing committed.
+### 2026-11-24 (Windows machine, afternoon) — Pulled the Gemini commit; pushed non-LoCoMo items to main; LoCoMo kept off main
+
+- **Owner decision:** LoCoMo must not enter `main` yet. This machine's README log (mostly LoCoMo) stays **local and uncommitted** (option b).
+- **Pulled:** `origin/main` fast-forward `223765f` → `ad6467c` (co-author: Gemini 3.1 Flash-Lite third backbone, three-model analysis, results PDF, research audit). None of its 91 files is in the LoCoMo v2 freeze.
+- **Pushed to main:** `5bd9dc6`, containing `scripts/s2id_factorial_contrasts.py` and `output/figures/method_overview_20261123/`. No LoCoMo code, data or text.
+- **README:** local entries stashed before the pull, then re-applied on top of GitHub's §10, with GitHub's entries first and nothing removed. Backup of the pre-pull README in the session scratchpad. Stash `local README log entries 24 Nov` kept until confirmed.
+- **Not pushed:** the LoCoMo worktree (`locomo-audit`), `plan_minja.md` (excluded), the arXiv PDF, `CLAUDE_MEMORY_TRANSFER.md` and the PISanitizer deck.
+
+### 2026-11-24 — Pushed the Gemini work and the research audit to main (free)
+
+**What:** one commit on `protocol-v2-option-b-freeze`, fast-forwarded into `main` and pushed to `sdp` (owner: "push everything in main branch all necessary things").
+
+**Contents:**
+- the code and tests for revisions 10 and 11;
+- the freeze manifests and owner approvals rev10/rev11;
+- the Gemini price config, protocol and RUNBOOK updates;
+- the P-B4 scripts;
+- `gemini/paid_summary.json` and `gemini.prompt_mirror/`;
+- `analysis_gemini/` (including `THREE_MODEL_COMPARISON.md`);
+- the updated results PDF, with the old two-model version in `paper_tables/two_models_20261122/`;
+- README and plan;
+- `reports/RESEARCH_AUDIT_20261124.md`, force-added because `reports/` is git-ignored.
+
+**Still local only (same reasons as before):**
+- `gemini/queries.sqlite` (211 MB) and the session ledgers in `sessions_rerun3/*`: over GitHub's limits;
+- the `.tar.gz` archives and `contexts/`;
+- `archive_20261121/v2_backbone_answer_before_rev8_review/`;
+- `logs/`;
+- `CLAUDE_MEMORY_TRANSFER.md`: contains the owner's name;
+- the three owner files (`HANDOFF_20261121.txt`, `preview_main.pdf`, the `.gitignore` change).
+
+**Text correction:** `THREE_MODEL_COMPARISON.md` §7 point 3 ("S2-ID is the best method under adaptive attacks") was wrong; fixed later on 24 Nov (see the entry above).
+
+### 2026-11-24 — P-B4 Gemini finished; free three-model analysis and comparison
+
+- **P-B4 finished** at 00:56 UTC: 24/24 groups, 212,520 journal rows (same as Haiku), every ledger clean (0 open, 0 held, 0 blocked), journal `quick_check` ok. Gemini answers: 7,860 completed, 0 failed, 0 empty, 0 reasoning tokens, all `google/gemini-3.1-flash-lite` via Google; 1 superseded row (the reviewed 429 from run 1). After the resume Google sent 5 HTTP 429s; each was resent identically and answered on the first retry.
+- **Spend:** `v2_backbone_gemini` $2.2907 (cap $10), `v2_stage3` judges $2.3824 total (+$0.12 for P-B4). **Project total $7.0031.**
+- **Answer length:** 11.2% of Gemini answers reached the 200-token limit (GPT-4o-mini 1.5%, Haiku 1.2%; same limit for all by design). The full-run check (`logs/PB4_all_answers_check.txt`) prints "FAILED" only because of this guide value (≤ 10%, meant for the first 30 answers). Strict utility is unaffected (equal to GPT-4o-mini in every cell). Stated as a limitation.
+- **Free analysis** (RUNBOOK §8 command, $0) → `research_data/protocol_v2_optionB_run_v1/analysis_gemini/`. GPT-4o-mini and Haiku results there are **identical** to the official `analysis/` (JSON content equal; `per_cell.md` and figures byte-identical; `tables.md` only gains the Gemini Table 7 row, `appendix.md` only gains A14). The official `analysis/` is untouched.
+- **Consolidated comparison:** `analysis_gemini/THREE_MODEL_COMPARISON.md` (labelled post-hoc). Findings: on Gemini, S/SL/S2-ID reach 0% target ASR on localized/distributed/fp1 with 91% strict utility, the same as GPT-4o-mini and Haiku; undefended Gemini follows poison almost as often as GPT-4o-mini (original SAFE-Mem 59% vs 63%; Haiku 29%); S2-ID is the strongest of our methods under adaptive attacks (worst case 47/22/44 vs S 66/32/64; lowest 8-cell mean of all methods), but in the worst case MemLineage is better or equal (44/17/44) and A-MemGuard is lower on Haiku (15) (corrected 24 Nov); hypothesis outcomes on Gemini equal GPT-4o-mini's (H1–H5 ✓ incl. H5 secondary, H6 ✗).
+- **Results PDF updated (owner: "YES PLEASE")**: `paper_tables/SAFE-Mem_results_tables.pdf` (now 6 pages) shows Gemini 3.1 Flash-Lite, marked *post-hoc*, next to GPT-4o-mini and Claude Haiku in Part A (Table 1 main result, Figure 1 with three panels, Table 2 adaptive attacks, Table 3 worst case, Table 4 hypotheses); Part B stays GPT-4o-mini only. `make_tables.py`/`make_figures.py` also read `analysis_gemini/extra_backbone_analysis.json`. The two-model version of 22 Nov is kept in `paper_tables/two_models_20261122/`.
+- **PDF wording (owner request):** the "post-hoc" labels were removed from the results PDF and "Original SAFE-Mem" is now written "SAFE-Mem" (tables, notes, Figure 1). Data unchanged. The post-hoc status is still recorded in the frozen protocol (§13 limitation 8, §15), `analysis_gemini/appendix.md` A14 and `THREE_MODEL_COMPARISON.md`; the paper should state it once (e.g. in the limitations).
+- **Next:** Gemini in the paper text; commit/push (owner decides); nothing committed yet.
+
+### 2026-11-23 — 💰 P-B4 resumed under revision 11 (owner: "approve revision 11")
+
+- `owner_approval_optionB_rev11.json` written with the owner's words (digest `b0a3d83b…`; cap $10.00 unchanged).
+- The halted 429 attempt was reviewed with `review_unknown_rev7.py … owner_review_rev11_429`: booked at its full worst case ($0.0323) and its failed row moved to `superseded_dispatches`. The Gemini ledger is now $0.0372 used, 0 held, unblocked; all ledgers are clean.
+- `start_pb4.sh` passed every check (freeze rev11 321 files verified, locked archive, snapshot, ledgers, journal, AC). P-B4 resumed at 16:49 UTC (python pid 6116), in the same sessions and the same `gemini/` folder; the 20 paid answers replay at $0. The watcher is running.
+- **Expected:** about 9–12 h and about $2.10–3.50 more.
+
+### 2026-11-23 — Revision 11 prepared: HTTP 429 handling for P-B4 (free; no paid call; waiting for owner approval)
+
+**What:** the owner approved *preparing* revision 11 after the 429 halt: "implement and validate the retry mechanism, and also check whether proactive request pacing is necessary … Do not restart paid evaluation until I explicitly approve the final revision."
+- **Cause check (free):** our OpenRouter key has no rate limit (paid tier, $157 credit), so the 429 came from Google's side. The 21 Gemini calls went out in a burst (21 in 38 s, about 1 per second). One Gemini endpoint (Vertex flex) showed 73% uptime.
+  - **Pacing verdict:** pacing is worth having. It costs $0 and about 7–12 h of run time in total, and it prevents the bursts that triggered the limit. The retry handles whatever still gets through.
+- **Code (tests first; transport/accounting only):**
+  - `transport.py`: HTTP 429 → the identical request is sent again after 30 s, at most 10 times, inside the same reservation. Any other error is still never retried. Gemini calls are spaced at least 2 s apart (`PACE_S`); replays and GPT calls are not paced.
+  - `budget.py`: `RateLimitError` added to the errors an owner review may book at the full worst case.
+  - New tests: 429 recovered and billed once, a 429 that never clears still halts, 400/402/500/503 are never retried, review of a 429 then re-send, pacing (replays not paced).
+  - `check_first_answers_pb4.py` now ignores calls still in flight; on the 20 real answers it reports PASSED.
+- **Tests:** 856 passed.
+- **Dry run on real data (G-T00) PASSED:**
+  - The owner review, rehearsed on a COPY of the halted Gemini ledger, booked the failed attempt at its worst case, moved it to the audit table and unblocked the ledger.
+  - The 20 paid answers replayed at $0 (326 new calls instead of 346).
+  - 13 simulated 429s were all recovered, with 0 failed rows.
+  - Same rows, prompts and retrieval as Claude Haiku; $0; 18 min per group with pacing.
+- **Freeze rev11:** `protocol_v2_optionB_rev11.json`, `b0a3d83b…`, 321 files, verified.
+- **Approval:** `owner_approval_optionB_rev11.DRAFT.json` (not approved; the gate refuses it). Protocol §15 rev11 entry, RUNBOOK §8.1, and `paid.sh`/`start_pb4.sh` now point to rev11.
+- **Estimate for the rest:** $2.10–3.50, made up of:
+  - Gemini answers $1.92–3.27 (measured $0.000243 per answer, or Claude Haiku's token counts)
+  - GPT judges $0.15–0.20
+  - the reviewed hold, $0.0323
+
+  Cap unchanged at $10. Spent on P-B4 so far: $0.0049.
+
+**Next:** owner approves the final revision 11 → review the halted attempt → resume P-B4.
+
+### 2026-11-23 — 💰 P-B4 Gemini 3.1 Flash-Lite started (owner: "approve spending, cap $20")
+
+- **Approval:** the owner approved up to $20. The frozen code ceiling for `v2_backbone_gemini` is $10.00, so the cap is **$10.00**, inside the approval and with no code change. The judges use the existing `v2_stage3` cap ($10.00, $2.2646 used).
+- **File:** `owner_approval_optionB_rev10.json` (digest `5007ecae…`; the DRAFT is kept).
+- **Price recheck just before the run:** unchanged (standard $0.25/$1.50, flex $0.125/$0.75; priority excluded).
+- **Start:** `start_pb4.sh` passed every check (freeze rev10 321 files verified, locked archive 224 verified, snapshot changed 0 / missing 25, ledgers clean, on AC). P-B4 started 11:35 UTC (python pid 1035).
+- **Watcher:** `watch_pb4.sh` is running. It checks the first 30 answers and safe-stops on failure, low battery or low disk.
+- **Output:** `research_data/protocol_v2_optionB_run_v1/gemini/`. Stop/start: `stop_safe_pb4.sh` / `start_pb4.sh`.
+- ⛔ **Halted at 11:36 UTC by the guard, as designed.** Gemini answer 21 got **HTTP 429 (RateLimitError)**, a provider rate limit, about 1 minute after the start.
+  - 20 answers were done ($0.0049). They looked right: model name matched, 0 reasoning tokens, short answers.
+  - The failed call is held at its worst case, $0.0323. Only `v2_backbone_gemini` is blocked; the other ledgers are clean.
+  - Revision 7/8 review rules do not cover 429, so clearing it needs an owner-approved revision 11 (transport only). **Owner decision needed.**
+
+### 2026-11-23 — Gemini 3.1 Flash-Lite prepared as a third answering backbone (free; no paid call)
+
+**What:** the owner asked for Gemini 3.1 Flash-Lite as a **third answering backbone**, with the same full evaluation as Claude Haiku (8 attack cells × 11 methods × 24 groups) and only the answering model changed. Gemini is labelled a **post-hoc additional backbone, not pre-registered** (protocol revision 10). Everything is prepared and tested offline; **no paid call has been made**.
+- **Code (tests first):**
+  - `backbone.py` has a registry of backbones (Haiku unchanged; Gemini: temperature 0 like GPT-4o-mini, reasoning off like Haiku rev9, same prompt, 200 tokens).
+  - The Gemini purpose is `v2_backbone_gemini`, with its own session and a code ceiling of $10 (`transport.py`, `budget.py` price ceiling $0.25/$1.50, `pricing.py`, `cost.py`).
+  - Other wiring: `pipeline.py` (one answer backbone per run), `run_protocol_v2.py --backbone gemini`, `freeze.py` (`runs.gemini`, `post_hoc: true`), `analysis.py` (Appendix A14 marked post-hoc) and `analyse_protocol_v2.py --extra-backbone-*` (writes to a NEW folder).
+- **Fairness checks:**
+  - OpenRouter lists `temperature`, `reasoning` and `max_tokens` as supported on every Gemini endpoint.
+  - The free dry run on real data (group G-T00, 8,855 answers, `scripts/dryrun_pb4.py`) **PASSED**:
+    - every GPT call already paid for was replayed, and none reached the network
+    - every Gemini request had the frozen shape
+    - the rows, prompt hashes, retrieval and context were identical to the Claude Haiku journal; only the answer differs
+    - the cost was $0.
+- **Analysis path check (free):** the three-model analysis command ran with the Haiku journal as a stand-in for Gemini. GPT-4o-mini and Claude Haiku results came out **identical** to the official `analysis/`, the stand-in equalled Haiku, `tables.md` only gained the Table 7 row, and `appendix.md` only gained A14 (marked post-hoc).
+- **Tests:** 848 passed (838 before + 10 new). **Freeze rev10:** `protocol_v2_optionB_rev10.json`, digest `5007ecae…`, 321 files, verified.
+- **Prepared but not active:**
+  - `owner_approval_optionB_rev10.DRAFT.json` (not approved; the paid gate refuses it; Gemini cap $5.00).
+  - `paid.sh PB4`, `start_pb4.sh` (refuses without the approved file), `stop_safe_pb4.sh`, `status_pb4.sh`, `watch_pb4.sh`.
+  - `check_first_answers_pb4.py`: after the first 30 answers it checks for empty answers, reasoning tokens, cut-offs and the returned model, and safe-stops the run if any check fails.
+  - Protocol §13 limitation 8 and the §15 revision-10 entry. RUNBOOK §8.
+- **Estimate:** Claude Haiku's measured tokens (8.17M in, 0.72M out) at Gemini prices give $1.56 (flex) to $3.12 (standard), plus about $0.15 for GPT judges, so **≈ $1.70–3.40**. Proposed cap: $5.00.
+- **GPT-4o-mini and Claude Haiku results:** untouched.
+
+**Next:** the owner approves the spending (or not). After approval: P-B4 run (about 15–30 h), then the free three-model analysis into `analysis_gemini/`, the consolidated GPT vs Claude vs Gemini comparison and a PDF update.
+
+### 2026-11-23 — LoCoMo setup protocol written (free)
+
+**What:** `reports/LOCOMO_SETUP_PROTOCOL_20261123.md` is a readable summary of the frozen LoCoMo design (v1 + v1.1 + v1.2, digest `f04cc850…`). It covers what we keep from LoCoMo, what we add, the matrix, metrics, H1–H6, statistics, checks, stopping rules, status, and limits.
+- It changes nothing; the frozen protocol texts on `locomo-backup` remain binding.
+- It adds the conv-26 deviation note (the 28 Oct smoke test) for the frozen protocol's §12.
+**Next:** owner approves the v1.2 resume (about $6.25), and the co-author appends the deviation note to §12.
+
+### 2026-11-23 (Windows machine) — Method figure A, family version with SL and S2-ID (free; figure only)
+
+- New `fig_A_family.*` in `output/figures/method_overview_20261123/`: Figure A unchanged, plus an "Exploratory extensions" band. SL (teal) has a dashed hook into the S decision step (`LineagePolicy.decide`); S2-ID (amber, dashed) has a gate marker on the final context before the answer model (`_GatedReader`). Each has a one-line note on the gap it covers (unlinked near-copy → D = 0; identity-blind for Sybils). Caption and ICML usage advice in the folder README. The S-only Figure A is kept. No code, protocol, data or result changed; no paid call; nothing committed.
+
+### 2026-11-23 (Windows machine) — Method figure C: how far S spreads distrust (free; figure only)
+
+- New `fig_C_spread.*` in `output/figures/method_overview_20261123/`: one contributor's memory at three evidence stages (one incident → batch, recurs across batches → context, recurs across contexts → contributor), each record shaded kept / penalised / withheld. Values (D = 1/6, 1/4, 1/3) are the frozen `Policy("S")` output (`verify_figure_c.py`). Caption in the folder README. No code, protocol, data or result changed; no paid call; nothing committed.
+
+### 2026-11-23 (Windows machine) — Method figures v4: overview (Figure A) + worked example (Figure B) (free; figures only)
+
+- **Request:** redesign the dense method figure as two simpler figures in the style of arXiv 2606.09935 (GitInject): A shows how S works, B shows what S does to one concrete case.
+- **Figure A** (`output/figures/method_overview_20261123/fig_A_overview.*`, 77 words, 6.75 × 2.11 in), three numbered stages:
+  1. audit evidence: provenance (u, c, b), *T* tickets, ledger with one vote per root;
+  2. S (ours, the only accent colour): nested scopes with gate locks, "a scope opens only when verified incidents span it", r / d / D;
+  3. SAFE-Mem retrieval: admission → withhold or rank s − λD → top k + m with refill → conflict check → answer model.
+- **Figure B** (`fig_B_example.*`, 100 words, 6.75 × 3.04 in): two rows (planted ZX-91 vs. A's useful Larkspur note) through four numbered steps: record → A's evidence grid → supported scopes → D → retrieval decision. A bottom strip shows R/C/M/S on the same two records. All values are the frozen `Policy.decide` output on the toy ledger (`verify_toy_example.py`).
+- **Removed from both:** SL, S2-ID, the relay and the penalty chart (exploratory / redundant). The v3 figure stays in `output/figures/methodology_s_20261114/` as a possible appendix figure. The folder README lists every keep / merge / remove decision, the two captions and a code cross-check.
+- **Notation:** B uses θ_bat, δ_ctx, δ_src, as in the pending `PAPER_LATEX_EDITS.md`. The 21 Nov draft still uses numbers; the README gives the three-chip fallback.
+- **Files:** new folder `output/figures/method_overview_20261123/` (generator, 2 × SVG/PDF/PNG, README). Both PDFs are vector with no raster images; 0 layout warnings. No research code, protocol, data or result changed; no paid call; nothing committed.
+
+### 2026-11-24 (Windows machine, noon) — Should LoCoMo also run on the original SAFE-Mem pipeline? Assessment (free, read-only)
+
+- **Question (owner):** MPBench uses SAFE-Mem's claim memory, while LoCoMo v2 uses plain RAG. Is a SAFE-Mem LoCoMo evaluation needed for the ICML generalization claim?
+- **Found:**
+  - The original SAFE-Mem paper already ran LoCoMo (benign accuracy only; configs `v31_locomo_withhold_{a,b}`).
+  - The policy adapter `GovernedRetrieval` supports exactly that configuration.
+  - There is no attacked SAFE-Mem LoCoMo run and no record-to-root binding.
+- **Faithfulness:** memory, retrieval, policies, attacks and metrics carry over. The central compromise is **provenance granularity**: dialogue mode attributes all of a counterpart's session claims to its first turn, so the root becomes speaker × session and R coincides with S's first gate.
+- **Other problems:**
+  - The binding layer only accepts MPBench roles; `src/ams` must not change, because it is hashed in the Option B freeze.
+  - SAFE-Mem's conflict downgrading interacts with the poison: both conflicting claims get contested at equal standing.
+  - Extraction can transform or crowd out the poison.
+  - Contexts differ from v2's (4 claims + 4 chunks).
+- **Minimum evaluation:** 1-session and all-sessions hijacks, Original SAFE-Mem vs R/C/M/S/SL (plus MemLineage and RandEC), 8 held-out conversations, estimation-only. Cost ≈ $15–25 (cap $30; +$5–8 with A-MemGuard and the sanitiser). Engineering 2–4 days.
+- **Recommendation:** do it, as a pre-registered substrate check, free steps first (adapter, mock, exact counts, parity and freeze checks). It is not needed for the mechanism-transfer claim, but it is needed for "SAFE-Mem + S generalizes" and answers a predictable reviewer objection. If not run: reframe the paper and retitle the LoCoMo PDF (it currently says "SAFE-Mem").
+- **Report:** `reports/LOCOMO_SAFEMEM_ASSESSMENT_20261124.md` (main and worktree). No code, data or result changed; nothing committed.
+
+### 2026-11-24 (Windows machine, late morning) — LoCoMo paper-style results PDF, in the MPBench table layout (free)
+
+- **What:** `SAFE-Mem_LoCoMo_results_tables.pdf` (5 pages), built with the same layout and conventions as the MPBench `SAFE-Mem_results_tables.pdf`: changes against the base as coloured subscripts, best per column in bold, method groups.
+- **Part A** (all 11 methods):
+  - Table 1: the localized hijack;
+  - Figure 1: ASR vs net utility for the four hijack shapes;
+  - Table 2: the four shapes;
+  - Table 3: hypotheses, LoCoMo next to MPBench;
+  - Table 4: S − every baseline per shape, with k/8;
+  - Table 5: MPBench vs LoCoMo, localized.
+- **Part B** (frozen v2 conditions):
+  - Tables 6a/6b: Sybil, shift, relay, missed audits (ASR, net utility);
+  - Table 7: A2 review dilution and framing.
+- **Sources:** reads only the finished analyses (`run/analysis.json`, `supp_baselines_analysis{,_dev}.json`, MPBench `analysis.json`). Nothing is recomputed, no API call.
+- **Files:**
+  - generator `research_data/locomo_v2/paper_tables/make_tables.py` (worktree), with `tables.html`, `fig1_tradeoff.svg` and the PDF (HTML printed with headless Edge);
+  - copy on main: `reports/SAFE-Mem_LoCoMo_results_tables_20261124.pdf`.
+- Nothing committed.
+
+### 2026-11-24 (Windows machine, morning) — Supplementary LLM sanitiser + A-MemGuard on LoCoMo: PAID run complete; comparison tables and MPBench–LoCoMo generalization ($19.56)
+
+- **Owner approval:** run both defences together as designed. Caps: $26 for defences, $6 for answers ($32 total). Recorded in `supp_published/owner_approval_supp.json`, naming manifest `40346c9f…` and freeze `3a2c2df8…`.
+- **Run:** 23 Nov 21:14 → 24 Nov 03:08 UTC.
+  - One process, no pauses, no breaker trips, 0 failed calls.
+  - 10/10 conversations; 108,598 defence reservations, all settled.
+  - 19,707 new answer and judge calls, 0 missing.
+- **Spend:** defences **$18.50**, answers **$1.06**, total **$19.56** of $32.
+- **Integrity after the run:** the frozen v2 files, the supplementary code/note hashes and the frozen `run/analysis.json` are all unchanged.
+- **Analysis:** run once (held-out 8 conversations, plus dev reported separately). Output in `supp_published/run_supp/supp_baselines_analysis{,_dev}.json`.
+- **Results** (held-out; ASR in %):
+  - **1s:** no defence 49.5; sanitiser 48.2; A-MemGuard 34.2; S 0.4.
+    - S − A-MemGuard: −33.8 [−41.0, −25.8], 8/8; U_all +2.5 (CI includes 0).
+  - **Every shape:** S is below both new baselines on ASR in 8/8 conversations.
+  - **Multi-poison shapes (2s, quarter, spread):** S has 6–13 points lower U_all than A-MemGuard. The published defences barely change utility in any shape.
+  - **LLM sanitiser:** nearly inactive. The injected value stays in context 93–96% of the time; ASR −1 point.
+  - **A-MemGuard:** removes the value in ~45% of attacked contexts, matching the 52.5% contradiction co-retrieval measured before the run. ASR −13 to −15 points; U_all −2 points.
+- **Generalization:** the localized-attack ranking is the same on MPBench and LoCoMo (S ≈ C/M < A-MemGuard < sanitiser ≤ none), and only S keeps baseline utility. The utility cost of S under multi-signal attacks also mirrors MPBench (framing and shift, Table 7b). All of this is descriptive; the frozen H3 decision is unchanged.
+- **Known issue (not fixed, hashed file):** `published_paid status` crashes while the defence stage is incomplete. It works after completion.
+- **Files:** `reports/LOCOMO_V2_SUPP_PUBLISHED_BASELINES_RESULTS_20261124.md` (worktree and main). Nothing committed.
+
+### 2026-11-24 (Windows machine, later) — Supplementary LLM sanitiser + A-MemGuard on LoCoMo: prepared, validated for free, costed (no paid call)
+
+- **Owner goal:** complete the MPBench published-baseline comparison on LoCoMo, on all four hijack shapes; the frozen v2 results stay untouched.
+- **Code** (worktree `../sdp-locomo-audit`, outside the frozen set):
+  - `locomo_v2_supp/published_supp.py`: frozen MPBench classes; the sanitiser **keeps rewrites** (`text_from_defence`), no refill, original order; every no-defence context is asserted against the frozen hash;
+  - `published_paid.py`: its own approval gate, two separate guards, per-conversation defence segments, STOP and breaker, then answers through the verified runner, with the answer cache seeded from the frozen run;
+  - `supp_baselines_analysis.py`: S vs every baseline per shape, with exact CIs and value exposure.
+- **Pre-registration:** `reports/LOCOMO_V2_SUPP_PUBLISHED_BASELINES_NOTE.md`, hashed in `research_data/locomo_v2/supp_published/supp_manifest.json`.
+- **Free validation:**
+  - 6/6 faithfulness tests;
+  - a dev mock end to end (8,021 keys, 0 failures);
+  - a fake paid-path test: a STOP during the defence stage then resume gives byte-identical contexts and answers; the analysis covers both new arms.
+- **Exact distinct calls** (all 10 conversations, 4 shapes):
+  - sanitiser audits: 6,974;
+  - A-MemGuard: 60,352 chains + 30,980 judgments.
+- **Cost:**
+  - **sanitiser:** $0.40, plus ≤ $0.81 for rewrites;
+  - **A-MemGuard:** $11.8, or ≈ $23 if its outputs are longer;
+  - **answers:** $0–5.1;
+  - **duplicates:** +~5% from concurrent identical calls;
+  - **total:** ≈ $13–30.
+- **Meaningfulness:** the sanitiser audits turns in isolation and may be inactive on factual misinformation. A-MemGuard's contradiction evidence is co-retrieved in 52.5% of attacked contexts. The information asymmetry is the same as on MPBench.
+- **Next:** owner approval (proposed caps: defence $26, answers $6).
+
+### 2026-11-24 (Windows machine) — LoCoMo v2 vs the full MPBench matrix: coverage gap list and costs (free, read-only)
+
+- **Owner goal:** reproduce the MPBench methodology on LoCoMo as closely as possible (methods, published baselines, attacks); no new directions.
+- **Coverage:**
+  - **Methods:** all of R, C, M, S, SL, S2-ID, plus MemLineage and RandEC. The LLM sanitiser and A-MemGuard are missing.
+  - **Conditions:** about half have a faithful analogue; several are not portable (contributor gate, own-batch Sybils, late audits, shift_context).
+  - **Haiku backbone:** not run.
+- **Fidelity finding:** the MPBench sanitiser rewrites flagged memories and keeps the rewrite (scored from the defence's text). The v2 `Published` hook would drop them instead, so a supplementary port must use the frozen `LLMSanitiser.filter` semantics. A-MemGuard reads only the query and memory texts, so it is portable.
+- **Proposed supplementary list (owner approval needed):**
+  1. LLM sanitiser on loc cells (≈ $2–7);
+  2. A-MemGuard on the H3 cells (≈ $20–60; free call-count estimate first);
+  3. optional Haiku backbone on the hypothesis cells (≈ $3–6).
+- **No files changed** except this log.
+
+### 2026-11-23 (Windows machine, late night) — What LoCoMo v2 does and does not show: reviewer assessment (free, read-only)
+
+- **Asked:** does LoCoMo v2 show that S generalizes, or only confirm the propagation rules by construction? Separate mechanism transfer, answer-level generalization and superiority; is the LLM sanitiser worth adding? No run, no protocol change.
+- **Assessment:**
+  - **Mechanism transfer:** shown, but mostly implied by the rules once the attack and oracle audits are fixed.
+  - **Answer-level follow-through:** shown, as a modest independent result (+37 pt, 8/8; retrieval and answer agree).
+  - **Superiority over published defences on LoCoMo:** NOT shown. MemLineage and RandEC are inactive there (no sensitive queries; a prompt-injection detector on misinformation), so H3 is S vs no defence. The superiority evidence rests only on MPBench, which is replication-level and gives S audits the baselines lack.
+  - **Generalization of S's failure modes:** shown; they reproduce on LoCoMo.
+- **LLM sanitiser:** as a competitor it adds little (the same information asymmetry; post hoc). As an **audit source for S** (detector-driven audits), it would address the oracle-audit and asymmetry criticisms; that would be a new, separately pre-registered exploratory study.
+- **No files changed** except this log.
+
+### 2026-11-23 (Windows machine, night) — LoCoMo v2 PAID evaluation complete; primary + supplementary analyses ($9.55)
+
+- **Owner approval:** a $40 cap, reuse of the cached answers, conv-48 canary first. Recorded in `research_data/locomo_v2/freeze/owner_approval.json` (worktree `../sdp-locomo-audit`).
+- **Safe pause/resume:** `locomo_v2_supp/runner.py` (execution level only; `reports/LOCOMO_V2_EXECUTION_ADDENDUM.md`). It adds a STOP file, an attempt-level circuit breaker, a free connectivity probe, per-conversation S2 with an owner-review marker, and pre-flight journal repair.
+  - **Verified free** with a fake offline API (`research_data/locomo_v2/resume_test_report.json`): a hard kill, a graceful stop, short and long outages, and a truncated journal line all resume to identical answers and judgements. A graceful stop leaves 0 holds; a hard kill causes ≤ in-flight duplicate calls.
+- **Cache seeded:** 30,744 rows (v1.1 + pilot), copied, never read.
+- **Run** (16:55–19:02 UTC): all 10 conversations complete, 117,713 answer keys, 0 failed calls, 0 pauses. **Spent $9.55** (estimate $10.24), $0 held, freeze `3a2c2df8…` verified after the run.
+- **Primary analysis** (frozen, once, held-out n = 8): **all 7 contrasts reject after Holm.**
+  - H1 vs C/M: utility +37.4 pt, ASR 0 (8/8).
+  - H2: ASR S − M +2.1 pt (7/8; conv-41 +8.3).
+  - H3: −49.1 pt vs MemLineage/RandEC, both ≡ no defence on LoCoMo.
+  - H5: relay exposure −100 pt, utility +0.2.
+  - H6 vs C/M: +36.1 pt.
+  - The all-10 secondary analysis gives the same 7 decisions.
+- **Supplementary:**
+  - exact CIs consistent with the t-CIs;
+  - retrieval-vs-answer sign agreement 8/8, except H5's utility part (6/8, ≈ 0);
+  - chance ASR 0;
+  - **F1 flag on H5's utility part** (+0.2 vs −0.1 pt, both ≈ 0; non-inferiority holds either way).
+- **Estimation** (reproduces MPBench):
+  - S's security cost grows with spread (.13 / .05 / .02);
+  - the audit-aware shift breaks S (.47 vs C/M 0);
+  - Sybil k = 4 defeats all rules;
+  - fn20 is equal for C/M/S, with S keeping utility;
+  - review dilution disables C;
+  - SL blocks relays;
+  - S protects the falsely accused in one session (.48 vs .11).
+- **Report:** `reports/LOCOMO_V2_RESULTS_20261123.md`.
+- **Next (owner):** decide what additional evidence the ICML paper needs. Candidates: the S2-ID factorial CIs on the Mac; human judge validation; the optional Haiku κ re-judge.
+
+### 2026-11-23 (Windows machine, final) — LoCoMo v2: supplementary note pre-registered; paid-run readiness verified (free; no paid call)
+
+- **Owner decisions:** no third benchmark; LoCoMo v2 stays frozen; the supplementary statistical note is approved before unblinding; no paid call without explicit approval.
+- **Supplementary note:** `reports/LOCOMO_V2_SUPPLEMENTARY_ANALYSIS_NOTE.md`, with code `locomo_v2_supp/supplementary.py` (worktree `../sdp-locomo-audit`, outside the frozen file set).
+  - **What it adds:** exact sign-flip-inverted intervals; per-conversation k/8 counts and a forest plot; retrieval-vs-answer sign agreement; the all-10 secondary analysis via the frozen function; and the protocol §10 checks (chance ASR > 0.05 flag, F1 sign) that the frozen analysis does not apply.
+  - **Hashed before unblinding** in `research_data/locomo_v2/supplementary_manifest.json` (no paid run exists).
+  - **Tested** end to end on the mock outputs.
+- **Readiness** (`locomo_v2_supp/readiness.py` → `research_data/locomo_v2/readiness.json`):
+  - freeze `3a2c2df8…` verified (65 files); data hash OK;
+  - the API key is present in the worktree `.env`, copied from `main` (git-ignored, never printed). It was missing before, which would have stopped the paid stage;
+  - the budget guard starts fresh on WSL ext4 (`~/.locomo_v2_state`), cap $40; no approval signed;
+  - disk 73.5 GB free; Python 3.11.16, torch 2.13.0+cpu, sentence-transformers 6.0.0.
+- **Cache coverage** (keys only, opened read-only): 15,726 of 117,713 answer requests are already in the v1.1 (27,361 rows) and pilot (3,383) caches.
+- **Cost:**
+  - **without reuse:** $11.85 calibrated ($14.67 raw);
+  - **with reuse:** $10.24 calibrated ($12.67 raw);
+  - **cap:** $40.
+- **Next:** the owner signs `research_data/locomo_v2/freeze/owner_approval.json` (digest, cap, cache reuse yes/no). Then a conv-48 canary segment, then the rest; the frozen primary analysis once; then the supplementary analysis.
+
+### 2026-11-23 (Windows machine, latest) — Is n = 8 LoCoMo conversations enough? Statistical review (free, read-only; v2 unchanged)
+
+- **Asked:**
+  - whether 8 held-out conversations can support the generalization claims;
+  - whether the tests are sound;
+  - whether more seeds, scenarios or questions help;
+  - other benchmarks, and more conversations.
+- **Checked:** build metadata only, no outcomes. Per held-out conversation, the loc-1s cell has 30–83 U_out questions per scenario, and frame fp2c has 36–91 U_ext questions, × 10 scenarios. Within-conversation precision is high, so the binding limit is the 8 clusters.
+- **Findings:**
+  - **Holm first step:** with exact sign-flip over 8 conversations and Holm m = 7, the first step (α/7 = .0071) passes only at p = 1/256, which needs all 8 conversations to agree.
+  - **Power:** adequate for the mechanism-scale contrasts (H1, H2, H3, H5, H6), weak for small effects.
+  - **Limiting factor:** inferential scope. LoCoMo is 10 LLM-generated, human-edited conversations, so "natural" must be worded as "third-party".
+  - **Pseudoreplication:** more draws, scenarios or questions add within-cluster precision only; counting them as units would be pseudoreplication.
+- **Recommendation:**
+  - keep v2 frozen and run it as is; any extra analyses go in a separate pre-unblinding supplementary note (needs approval);
+  - address n with a separately pre-registered **EnronQA** study (real senders, 150 inboxes; a free feasibility check first);
+  - not LongMemEval (one human speaker, no contributors);
+  - no self-generated LoCoMo-style conversations.
+- **No files changed** except this log.
+
+### 2026-11-23 (Windows machine, later) — LoCoMo Protocol v2 implemented, validated, frozen (free; no paid call; no LoCoMo outcome read)
+
+- **Asked:** a LoCoMo Protocol v2 that tests the MPBench attacks, defences and baselines on LoCoMo, including S2-ID where appropriate. Fix the ASR bug and the other issues, implement and validate everything for free, prepare the final evaluation, and make no paid call.
+- **S2-ID re-evaluated** (owner clarification: correctness, not exclusion). The implementation is valid: frozen S + lineage + the same MemLineage gate and verdicts as the baseline.
+  - On MPBench it is the 4th cell of a 2×2 (propagation × gate). It is better than *both* components under partial evasion (Sybil k=2, laundering r=.25–.75, random detection: 5–14 pts, point estimates), equal where S works, and 1–3 pts worse than MemLineage under full evasion (SL refill).
+  - **Kept as a named hybrid / factorial ablation; S stays the main contribution.**
+  - New `scripts/s2id_factorial_contrasts.py` (on `main`) computes the paired CIs with the frozen bootstrap. It is checked on synthetic rows and must be run on the Mac, where the journals are.
+  - On LoCoMo, S2-ID ≡ SL (0 SENSITIVE questions); kept, footnoted.
+- **Protocol:** `reports/PROTOCOL_LOCOMO_V2.md` (copy on `main`; canonical in worktree `../sdp-locomo-audit`, branch `locomo-audit`, uncommitted).
+  - **Families**, each paired on the v1 scenarios:
+    - `loc`: 4 shapes × A1/A2;
+    - `fn20`: MPBench imp_fn20;
+    - `sybil`: k = 2, 4;
+    - `shift`: audit-aware batch;
+    - `relay`: unknown-origin copies, r = .5, 1 (H5);
+    - `frame`: false accusations fp1/fp2c/fp2s (H6).
+  - **Arms:** none, R, C, M, S, SL, S2-ID, MemLineage, RandEC. The LLM sanitiser and A-MemGuard are an owner decision.
+  - **Metrics:** word-bounded ASR on targets kept by an outcome-free eligibility rule (92.8%), relay exposure/ASR, judge accuracy by stratum, including U_ext.
+  - **Tests:** primary H1–H6 mapped from MPBench (H4 not applicable), Holm over 7 contrasts, exact sign-flip over 8 held-out conversations. Dev = conv-48/49.
+- **Code:** `locomo_v2/{config,scenarios,build,analysis,metrics,target_filter,__main__}.py` and `locomo_v2/tests/`. The v1 execution engine (guard, cache, retry, S2 rule) is reused unchanged. No frozen file was edited.
+- **Bug found and fixed during development:** LoCoMo has duplicate question texts (1,529 unique of 1,540), and a direct audit finding must cover every question with the audited use. It was caught by the build-invariant test.
+- **Design fix:** H6's metric changed from U_in to U_ext (all of the accused speaker's evidence), because the conv-48 mechanism showed every rule withholds the accused session itself. Retrieval level, dev only.
+- **Free validation:**
+  - all 10 conversations built (140 scenarios each), and the rebuild is byte-identical;
+  - tests 43/43 (v1 26, audit 7, v2 10);
+  - mock: 162,124 calls, 0 failures, 117,713/117,713 keys complete;
+  - analysis end to end on the mock;
+  - freeze `3a2c2df80305758d3cf2cfe19a3514c78f636d35a7f21e35a73bda6aab9176f3` (65 files) verified;
+  - unsigned approval draft at `research_data/locomo_v2/freeze/owner_approval.DRAFT.json`.
+- **Dev mechanism (retrieval level, conv-48/49; not results):**
+  - **loc 1s A1:** S exposure 0 and U_out recall .45, vs C/M 0/0 and none 1.00/.42.
+  - **Partial evasion (2s, quarter):** S leaks .30 and .08.
+  - **A2:** C = none (.99), S = M (.25 at 1s).
+  - **Sybil:** k2 all ≈ .83–.87, k4 all ≈ 1.
+  - **Shift:** S 1.00 vs C/M 0.
+  - **Relay:** SL/S2-ID 0 vs S .97.
+  - **Frame fp2c U_ext recall:** S .44 vs C/M 0.
+  - **Published defences:** MemLineage = RandEC = none.
+- **Cost of the paid stage:** $11.80 calibrated ($14.60 raw), proposed cap $40. **Needs the owner's approval** of the digest and cap.
+- **Next (owner):**
+  1. approve or reject v2 and the cap, and whether to reuse the v1.1 response cache;
+  2. decide on the paid published defences;
+  3. run `scripts/s2id_factorial_contrasts.py` on the Mac.
+
+### 2026-11-23 (Windows machine) — ICML audit: MPBench evidence, S2-ID, LoCoMo setup; LoCoMo v2 draft (free; no paid call; no LoCoMo outcome read)
+
+- **Asked:** a critical ICML-style audit of all MPBench work, an evidence-based S2-ID decision, an audit of the existing LoCoMo setup (redesigning it if invalid), a rigorous generalization design, implementation and free validation.
+- **Report:** `reports/ICML_AUDIT_MPBENCH_S2ID_LOCOMO_20261123.md`, with evidence labels: verified, recorded, proposal, hypothesis.
+- **Worktree:** `../sdp-locomo-audit`, on local branch `locomo-audit` from `locomo-backup` (uncommitted).
+  - **New code:** `locomo_audit/` (static and retrieval audits plus 7 tests) and `locomo_v2/` (word-bounded ASR, outcome-free target filter, 2 tests).
+  - **Outputs:** `research_data/locomo_audit_20261123/`.
+  - **Tests:** 35/35 pass (26 existing).
+  - No frozen file was edited. `answers.jsonl` and `judgements.jsonl` were never opened.
+- **MPBench findings:**
+  - Only the 8 Nov locked test is confirmatory; Option B is replication.
+  - The localized result is close to true by construction.
+  - **H6 is a non-test:** one false audit cannot trigger withholding under any rule (n⁻ ≥ 3n⁺ + 2), so every rule keeps 92 innocent utility.
+  - **SL was motivated by relay leaks on the locked test split**, the split H5 was later tested on.
+- **S2-ID decision:** remove it from the method and contributions. Report H4 as pre-registered, but interpret it as composition evidence: the gain is MemLineage's gate, and S2-ID's worst case of 47 is worse than MemLineage alone (44). Drop it from LoCoMo: 0 of 1,529 questions are SENSITIVE, so S2-ID ≡ SL, confirmed on every pilot context.
+- **LoCoMo, implementation correct:** injection, gates (21,760 session checks against an independent closed form, 0 mismatches, contributor gate never active), principal handling, R ≡ none, and the retrieval invariants on conv-48/49 all pass.
+- **LoCoMo, problems:**
+  - **ASR bug:** the test is a character substring ("no" matches "not"). 113 of 3,200 P1 values have ≤ 3 characters, and P2 values already occur in the conversation for 1,148 of 3,200 targets.
+  - **Hypotheses fixed in advance:** H2–H4 are largely decided at decision level by the hijack shape. S ≠ C only when both detections fall in one session: 100%, 53%, 14%, 5% by shape.
+  - **H5 is an identity:** under A2, S ≡ M in 100% of scenarios, and C contains nothing.
+  - **New finding, benign-audit dilution:** under A2, S/M withhold on average only 77%, 19%, 1.5%, 0.5% of the unaudited poison.
+  - **Coverage gaps:** no contributor gate, no published defences, one attack family, oracle audits only.
+- **Verdict:** keep the verified pipeline, and replace the v1.2 confirmatory plan with the draft v2 (report §4): a fixed metric, a shape curve as estimation, E1–E3 primary (E3 with a realistic detector auditor A4), a paraphrase attack, P2 and S2-ID dropped, and published defences as an option. This is legitimate only while the outcomes stay unread.
+- **Next (owner):** approve or reject v2; then a dev-only design of P1-para and A4, a mock run, a freeze, and a paid estimate.
+
+### 2026-11-23 (Windows machine) — Pulled origin/main (free; no commit, no push)
+
+- **Pulled:** 5 new commits, fast-forward `4576a4c` → `223765f`. They add the S/SL/S2-ID presentation, the paper result tables (`research_data/protocol_v2_optionB_run_v1/paper_tables/`), the Haiku prompt mirrors, and the 22–23 Nov reports (ICML review, benchmark/model survey, MEM-INV-Bench feasibility, LoCoMo suitability, LoCoMo test-set check).
+- **README conflict:** both GitHub and this machine had added entries at the top of §10. Resolved by keeping both: GitHub's entries first, then this machine's five uncommitted 22 Nov entries (LoCoMo decision, figure v2 and v3, the PISanitizer and SAFE-Mem decks). +82 lines, nothing removed. Line endings stay LF. The safety stash `stash@{0}` is kept.
+- **Found missing (not caused by the pull):** the untracked `SPD-Report/` folder, with the template and the four SDP report versions, is no longer in the working tree. It is not in any branch, stash or the 21 Nov cleanup record. The SDP log entries from 19–21 Nov are also absent from every branch. Copies of all four report versions survive in `%TEMP%\chrome_drag28980_*`, and the build scripts are in the session scratchpad.
+
+### 2026-11-23 — Pushed the 22–23 Nov work to main (free)
+
+**What:** commit `725a378` on `protocol-v2-option-b-freeze`, fast-forwarded into `main` and pushed to `sdp`. Both branches point to the same commit.
+**Contents:**
+- the README updates;
+- 4 reports, force-added because `reports/` is git-ignored: the ICML critical review, the benchmark/model survey, the MEM-INV-Bench feasibility check and the LoCoMo suitability check;
+- `research_data/mem_inv_feasibility_20261123/` (script and output).
+
+**Still local only (unchanged reasons):** `CLAUDE_MEMORY_TRANSFER.md` (contains the owner's name), the large archives and `contexts/` (over GitHub's limits).
+
+### 2026-11-23 — Check of the LoCoMo test set (free; read-only)
+
+**What:** checked the LoCoMo confirmatory set on branch `sdp/locomo-backup`. The branch files were extracted read-only with `git archive` into the scratchpad; the current branch was not switched. The partial run outcomes were **not opened**. No paid call.
+**Correct:**
+- the data hash matches the freeze (`79fa87e9…`);
+- confirmatory set = conv-26, 30, 41, 42, 43, 44, 47, 50, i.e. all 10 conversations minus the pilot's conv-48/49;
+- the pilot's two conversations reproduce from the stated seed (`Random(20261119).sample`), so they were not hand-picked;
+- the pilot scenarios contain only conv-48/49;
+- question counts per conversation equal LoCoMo's category 1–4 counts (1,540 in total);
+- 80 scenarios per conversation (2 orientations × 5 draws × 4 shapes × 2 attacks);
+- the frozen methods (ledger, policies, lineage, sv2, memlineage, integration) are byte-identical to this checkout, so LoCoMo tests the paper's S, SL and S2-ID;
+- every branch file listed in freeze v1.2 matches its hash. `budget.py` and `openai_client.py` differ on main only because of the later Option B Haiku revisions 8–9; this is expected and does not affect LoCoMo.
+**To fix or disclose:**
+1. **conv-26 was answered before:** the 28 Oct SAFE-Mem smoke tests (`results/openrouter_locomo_smoke_{a,b}-20261028*`) asked 10 clean questions on 2 of its sessions, with no attack and no defence. Minor, but the protocol says "never answered", so add a deviation note.
+2. The partial v1.1 outcomes (`research_data/locomo_v1_run/answers.jsonl`, `judgements.jsonl` for conv-26/30/41) are **committed on the public branch**. They are still unread; keep them unread until the one analysis.
+3. Small inconsistency for the co-author: `build.log` gives 9,783 contexts for conv-48, while `draws.json` estimated 10,448.
+
+**Not done:** the byte-for-byte rebuild. The frozen `build/` outputs are not in git; the co-author's machine has them, and its earlier rebuild check passed.
+
+### 2026-11-23 — Is LoCoMo suitable as the second dataset? (free review)
+
+**What:** reviewed the LoCoMo feasibility study, pilot and frozen protocol (branch `sdp/locomo-backup`), and recomputed the data statistics locally. Report: `reports/LOCOMO_SUITABILITY_20261123.md`. The partial run outcomes were not opened. No paid call.
+**Verdict:** **suitable**, as an external check of the utility side and a regime map. It is not a blanket-win dataset.
+- **Pros:**
+  - speakers, sessions and questions are natural, not written by us;
+  - the random hijack start answers the "result by construction" criticism;
+  - the pilot found accuracy S .38 vs C/M .10 at equal 0% ASR (1-session hijack).
+- **Limits to state:**
+  - only one external speaker per conversation, so the contributor gate never fires and there is no innocent third party;
+  - the attack is ours;
+  - turn-level RAG, so no comparison with SAFE-Mem or the published defences on LoCoMo;
+  - S ≡ M under mixed audits;
+  - S leaks under 2-session hijacks.
+**Next:** owner approves the v1.2 resume (about $6.25) on the co-author's machine.
+
+### 2026-11-23 — MEM-INV-Bench feasibility check (free, $0)
+
+**What:** checked whether our frozen methods can be evaluated on MEM-INV-Bench (`third_party/mem-inv-bench`, MIT). This is the benchmark of TMA-NM, our closest competitor.
+- No LLM or network call was made; MiniLM ran locally. Third-party files were read as data only.
+- Frozen code unchanged.
+- Report: `reports/MEM_INV_BENCH_FEASIBILITY_20261123.md`. Script and output: `research_data/mem_inv_feasibility_20261123/`.
+
+**Found:**
+- **S, C and M cannot be tested on it, by construction:**
+  - each scenario holds 2–3 memory items;
+  - the poison items come from different channels;
+  - there are no same-source siblings, batches or retrieval.
+  - Once the poison is audited, R already removes it.
+- **SL can be tested.** Applying the same MiniLM model and cosine ≥ 0.8 to the raw texts:
+  - catches 21/21 attacker rewrites (v1-large) and 8/8 (head-to-head);
+  - catches 0/8 trusted-tool echoes and 3/8 manufactured corroborations;
+  - wrongly blocks the benign twin in 15/21 and 3/8 cases, because the twin shares a sentence with the poison.
+  - The self-summarisation channel was not testable (paraphrase transcripts not found on Hugging Face).
+
+**Decision:** no paid run and not a second dataset. Use MEM-INV-Bench in related work, as the TMA-NM positioning, and in one appendix item (SL vs laundering, plus the false-positive limitation). The second dataset stays LoCoMo v1.2, which still needs owner approval (about $6.25).
+
+### 2026-11-23 — Survey: second dataset and extra answer models (free)
+
+**What:** desk research into every memory-poisoning benchmark I could find, plus current Gemini, Qwen and Llama prices on OpenRouter (public model list). Written to `reports/BENCHMARKS_AND_MODELS_SURVEY_20261123.md`. Nothing was run and nothing was paid.
+**Found:**
+- **LoCoMo is already in progress** on branch `sdp/locomo-backup`, which a co-author built on a Windows machine. The pilot is done. The v1.1 run stopped by rule S2 after 3 of 10 conversations. v1.2 is re-frozen (`f04cc850…`) and waits for owner approval; about $6.25 remains to run.
+- Most poisoning benchmarks (MINJA, AgentPoison, ASB, MemForm, MemoryDojo, MemSecBench, MemPoison) have no sender provenance, so S cannot be tested on them.
+- **MEM-INV-Bench** (already in `third_party/`) is the closest competitor: TMA-NM, origin-bound authority with Sybil-resistant corroboration. It must be cited.
+- **EnronQA** is the best structural fit for a third dataset: real senders, threads and folders, with 528k QA pairs.
+- Name clash: Gao et al.'s "MemPoison-Bench" is not our MPBench.
+**Recommendation:**
+1. Finish LoCoMo v1.2.
+2. Run a free feasibility check on MEM-INV-Bench.
+3. Add EnronQA only if time allows.
+
+Extra models: Gemini 3.1 Flash-Lite ($0.25/$1.50) and/or the open-weight Qwen3-235B-A22B-2507 ($0.14/$0.80). Each needs an approved-model code change and a protocol amendment, so the owner decides.
+
+### 2026-11-22 — Critical ICML assessment of the paper (free)
+
+**What:** advisor-style critique of the paper plan and final results, covering limitations, novelty, contributions, likely reviewer comments and replies, and a prioritized action plan. Written to `reports/ICML_CRITICAL_REVIEW_20261122.md` (Claude's opinion, not data; git-ignored like the rest of `reports/`). No code, results or algorithms changed. No paid calls.
+**Main findings:**
+- In its current framing ("S is a new defence that beats published ones"), the paper is likely to be rejected. The three reasons are:
+  - the localized result is close to true by construction;
+  - adaptive attackers (Sybil, shift, laundering) defeat S, whose worst case is 65.6 vs MemLineage 43.8;
+  - there is little ML novelty.
+- Strongest defensible framing: a formalization and characterization of how far audit evidence should propagate, including a proven evasion boundary for every label-based rule.
+**Next (owner decides):** the free items come first:
+1. reframe the paper;
+2. write the formal proposition;
+3. run a localization sweep and a sensitivity frontier on exposure;
+4. do the human judge check;
+5. test with a real (non-oracle) auditor, starting with RandEC.
+
+Then decide between a fresh v5 run of 32 groups (paid) and a second-benchmark feasibility check. Section 4 of the draft still describes protocol v1 and needs updating.
+
+### 2026-11-22 — Merged into main on GitHub (free)
+
+**What:** merged `protocol-v2-option-b-freeze` into `main` (merge commit `b23290f`) and pushed `main` to `sdp`. Remote `main` had 2 new commits (methodology figure v3 and a merge of origin/main). They touch only `output/figures/methodology_s_20261114/`, so there was no overlap and no conflict. The branch was then fast-forwarded to `main`, so both point to the same commit.
+
+### 2026-11-22 — GitHub push: results, paper tables and presentations (free)
+
+**What:** pushed branch `protocol-v2-option-b-freeze` to `sdp` (public). Pushed: README/plan updates, `paper_tables/` (results tables PDF/HTML, figure, scripts), Haiku prompt mirrors, and these presentations (force-added because `reports/` is git-ignored): S/SL/S2-ID HTML+PDF, MemLineage/RandEC HTML+PDF and pptx, and the 15 Nov SAFE-Mem vs S HTML. `sessions_rerun3/v2_backbone_answer/` gets the same `*` ignore file as the other session ledgers.
+**Not pushed (kept locally):**
+- **Too large for GitHub (100 MB file limit):** the tar.gz archives (their sha256 files are already in git), `contexts/` (2.8 GB) and the backbone dispatch ledger.
+- **Kept off a public repo, pending the owner's decision:** the unpublished paper drafts (`preview_main.pdf`, `reports/PAPER_*`), the third-party papers `memlinage.pdf` and `randec.pdf`, and `CLAUDE_MEMORY_TRANSFER.md` (it contains the owner's name).
+
+### 2026-11-22 — Presentation: our methods S, SL and S2-ID explained (free, no research code touched)
+
+**What:** a 40-slide HTML presentation with a matching PDF. There is no PPTX, as the owner requested.
+- **Slides 1–20, methods:** intro to memory poisoning, audits, the problem (too narrow / too broad / audit-blind), our contribution, provenance labels, the shared scoring rule, R/C/M, then S, SL and S2-ID. Each method gets its main idea, steps, a visual example, and advantages and limitations. Then S vs SL vs S2-ID, and S2-ID vs MemLineage.
+- **Slides 21–29, results:** setup, oracle vs random audits, Table 1 and why, the adaptive attacks illustrated, Table 2 and why, Table 3 worst case (both models) and why MemLineage beats S2-ID there.
+- **Slides 30–40:** findings, limitations, a "details we could not verify" slide, a 14-term visual glossary (definition, example, diagram, why it matters), and conclusions.
+- **Visual conventions:** consistent memory chips throughout: orange poisoned, blue benign, purple ring audited, green ✓ retained, hatched ✕ blocked. The same illustrative memories are used on every slide.
+- **HTML features:** arrow-key and swipe navigation, transitions, scaling to any screen, speaker notes (N), and print as one slide per page.
+
+**Checked against:** the algorithms in `dynamic/policies.py`, `dynamic/ledger.py`, `workload/lineage.py`, `workload/sv2.py`, `workload/adaptive.py`, `workload/design.py`, `workload/generator.py` and `workload/integration.py`. All numbers come from `paper_tables/tables.html`, plus `analysis/per_cell.md` for relay exposure, Sybil k=4 exposure, confidence intervals and distributed utility.
+
+**Flagged as not verified (stated on slide 32):**
+- the number of test-split questions MemLineage classified SENSITIVE (only dev is recorded: 7/216);
+- the cause of the 3.1-point worst-case gap between S2-ID and MemLineage (refill is only a hypothesis);
+- why SL is 1–4 points above S in some Sybil cells;
+- how the linked copy is scored under each policy (omitted from the pictures).
+
+**PDF check:** printed with Chrome at 1920×1080. All 40 pages were rendered and inspected; layout issues were fixed and an automated overflow check passes. The PDF has vector text and diagrams (no raster images) and embedded fonts.
+
+**Files added:** `reports/SAFE_MEM_S_SL_S2ID_METHODS_20261122.html` and `.pdf`. No code, data, protocol or result changed. No paid call.
+**Update (same day, owner request):** the HTML now opens as one scrollable page with all 40 slides stacked and scaled to the window width. The "▶ Present (P)" button switches to one-slide-at-a-time presentation mode (arrow keys, N for notes); Esc returns to scrolling. The PDF was regenerated; its content is unchanged.
+
+### 2026-11-22 — Slides: MemLineage and RandEC explained (free, no research code touched)
+
+**What:** a 10-slide PowerPoint deck: a title slide, 4 slides per method (main idea → methodology → worked example → results), then a side-by-side comparison. Speaker notes are on every slide. All numbers are copied from the two PDFs in the repo root: `memlinage.pdf` (Ouyang & Hou, arXiv 2605.14421) and `randec.pdf`.
+**Found:** `randec.pdf` is Kumar et al., "Certifying LLM Safety against Adversarial Prompting" (COLM 2024, arXiv 2309.02705). Its main method is the certified erase-and-check. RandEC is its randomized, empirical-only variant (Section 7.1), so the RandEC slides explain erase-and-check first. The RandEC worked example (slide 8) uses illustrative filter outputs and is labelled as such.
+**Files added:** `reports/MEMLINEAGE_RANDEC_SLIDES_20261122.pptx`. No code, data, protocol or result changed. No paid call.
+**Update (same day, owner request):** rebuilt as a simple 8-slide HTML deck in the same style as the 15 Nov Chrome presentation (paper background, serif titles, plain cards). Both methods use one neutral template: main idea → how it works → example → results. There is no title slide and no comparison slide, so more methods can be added later as 4 more `<div class="frame">` blocks. Files: `reports/DEFENSE_METHODS_EXPLAINED_20261122.html` (open in Chrome) and a `.pdf` copy. The .pptx is kept. Slide 2 (MemLineage, how it works) was then redrawn as a picture: a sample signed memory label, a small family-tree diagram, the gate allowing, blocking or repairing actions, and a coloured trust scale. Slide 3's invoice example was later removed at the owner's request (slides 1–2 already cover it). Slide 3 is now a full comparison slide: the composition S + content linking + MemLineage's gate = S2-ID, then a ✓/✗ table. Its numbers are unchanged from the earlier comparison strip: MemLineage alone (outside means untrusted; acts only on sensitive questions) vs our S2-ID = S + MemLineage's gate (also uses audits and blocks near-copies). Numbers come from `research_data/protocol_v2_optionB_run_v1/analysis/tables.md`, GPT-4o-mini, localized attack: target ASR 44% vs 0%, both at 91% strict utility. Caveat shown on the slide: worst case over adaptive attacks is S2-ID 47% vs MemLineage 44%. Order then changed at the owner's request: slide 3 = MemLineage's own results, slide 4 = comparison with our S2-ID. Slide 6 (RandEC, how it works) was then redrawn as a picture in the same style as slide 2: erased token rows, a random 30% pick, the filter deciding reject or send to the LLM, and a trade-off scale. Final check: every number was compared against both papers and `analysis/tables.md`, and all match. Three wording fixes: slide 3 says the AgentDojo 0/6 is a stress test; slide 7 no longer says "always caught" (it depends on the filter recognising the clean request); slide 4 says its numbers come from our test, not the paper's. The PDF was regenerated from the final HTML.
+
+### 2026-11-22 (Windows machine) — Second-benchmark decision: LoCoMo v1.2 over MemPoison, MINJA, MemoryDojo, AgentPoison (free, read-only)
+
+- **Asked:** pick the strongest second benchmark for the ICML paper from scratch, without favouring LoCoMo or MINJA.
+- **Method:** read the code, protocols, Option B final tables and the LoCoMo v1.2 records (`git show locomo-backup:…` only). Availability checked on the web today.
+- **Availability found today:**
+  - MemoryDojo (arXiv 2611.09721): **code not released**, and only one payload per trajectory.
+  - MemPoison: HF, CC BY 4.0.
+  - AgentPoison: optimised triggers not released.
+  - MemSecBench, MAP-Graph, SND: no release link.
+- **Decision:**
+  - **Resume LoCoMo v1.2 as frozen** and use it as the second benchmark. It is the only one where S vs C/M depends on natural sessions and independently annotated questions. It is also the only confirmatory test in reach (about $6.25 left).
+  - **Runner-up:** MemPoison, as a breadth and containment check only.
+  - **MINJA:** do not return to it as the second benchmark.
+  - **Owner decision before resuming:** a descriptive misaligned-hijack shape (v1.3), against the objection that batch-aligned compromise favours S.
+- **Report:** `reports/SECOND_BENCHMARK_DECISION_20261122.md`.
+- **Changed:** that report and the log entries in this README and `plan_minja.md`. No code, protocol, data or result changed; no paid call; nothing committed.
+- **Next:** the owner decides on the v1.3 shape, then signs the LoCoMo approval.
+
+### 2026-11-22 (Windows machine) — Methodology figure v3: panel (b) simplified, symbols glossed, checked against the code (free; figure only)
+
+- **Request:** simplify panel (b), clarify the symbols, and make sure the figure shows what the implementation does; the figure must not read as evidence that S, SL or S2-ID work.
+- **Panel (b)** is now three numbered steps:
+  1. a gate checklist for ZX-91 (condition, evidence, result per scope; θ_Q, δ_Q kept as a separate footnote);
+  2. risk → decision, with glosses (risk, penalty, S uses, s = similarity) and the chart axis labelled "unsafe roots n⁻ (with n⁺ = 0)";
+  3. the toy R/C/M/S table.
+- **Fidelity fixes found by re-reading `policies.py`, `ledger.py`, `lineage.py`, `sv2.py`:**
+  - M's chip "src · 1/3" → "all · 1/3": M always takes the max over all three scopes, ungated;
+  - R's chip "local" → "none";
+  - the S2-ID box now names MemLineage's gate.
+  - Everything else (step order, inclusive ≥, SL claims-only non-principal veto, S2-ID = SL + gate) matched.
+- **Executed check:** new `output/figures/methodology_s_20261114/verify_toy_example.py` builds panel (a)'s toy ledger in memory and calls the frozen `Policy.decide`; it reproduces every cell of the table (offline, no repository file modified).
+- **Caption:** now says "illustrative toy example", states that the table is the frozen rule's output on that ledger, and that evidence of effectiveness comes only from the evaluation sections.
+- **Files:** v2 archived in `versions/v2_visual/`; current SVG/PDF/PNG regenerated (0 warnings, vector PDF, 199 words). No research code, protocol, data or result changed; no API calls; nothing committed.
+
+### 2026-11-22 (Windows machine) — Methodology figure v2: fewer words, more visuals (free; figure only)
+
+**What was done** (no research code, protocol, configuration, data or result changed; no API call; nothing committed; on branch `main`):
+- **Recovery first.** The 15 Nov notation-aligned figure (v1) and its README/log entries were never committed. The fast-forward pull of 22 Nov 01:16 reset `output/figures/methodology_s_20261114/` and README §10 to the committed versions.
+  - v1 SVG: recovered from the 15 Nov render page in the session scratchpad.
+  - v1 generator: rebuilt by replaying the recorded edits onto commit 047d085; it reproduces the recovered SVG byte for byte.
+  - Both are kept in `versions/v1_notation/`; the original figure is in `versions/v0_original/`.
+- **v2 figure.** Same canvas, three panels, palette, notation and worked example; the words in the figure dropped from 311 to 198.
+  - (a): record tiles grouped by contributor/context/batch, and five audit-ticket glyphs with their verdicts.
+  - (b): ✗ glyphs in the gate conditions, and the "not met" reason drawn as b1 ✗✗ b2 ○.
+  - (b): a penalty bar chart (d for n⁻ = 0, 1, 2 against τ; batch 1 on the boundary, withheld because ≥), and scope chips in the R/C/M/S table.
+  - (c): inline query outcomes, SL drawn as relay ⋯ seed (cos ≥ η), S2-ID as "→ context ∅", and a Q1 slot diagram for refill.
+  - Moved to the caption: boundary verification and the S2-ID note.
+  - Legend: shorter labels, plus "audited safe".
+- Re-exported SVG, vector PDF (6.75 × 3.11 in, no rasters) and PNG (2780 × 1280); 0 overflow warnings.
+- **Figure README rewritten:** files, versions, caption, notation table, limitation and verification.
+
+**Found:** P-B2 (completed 20 Nov) evaluated SL (H5) and S2-ID (H4) on the reused v4 split. The caption's earlier "development split only" was therefore outdated. It is now "development split and, as replication evidence (not fresh held-out, not confirmatory), protocol v2", and `PAPER_LATEX_EDITS.md` item 7 was updated to match.
+
+**Files:** `output/figures/methodology_s_20261114/` (`make_figure.py`, `fig_method.svg/.pdf/.png`, `README.md`, `PAPER_LATEX_EDITS.md`, new `versions/`), `README.md`, `plan_minja.md`.
+
+**Next:** the owner and supervisor review v2. If v1 is preferred, copy `versions/v1_notation/` back. Commit the figure folder so it is not lost again.
+
+### 2026-11-22 (Windows machine) — PISanitizer paper explainer deck (free; presentation only)
+
+- **Asked:** a newcomer-friendly deck on `2511.10720v1 llm sanitization.pdf` (Geng et al., *PISanitizer: Preventing Prompt Injection to Long-Context LLMs via Prompt Sanitization*). It covers the main idea, methodology, results and one example, in the style of the `DEFENSE_METHODS_EXPLAINED_20261122` deck.
+- **Done:** `PISanitizer_presentation.pptx`, 4 slides with speaker notes.
+  1. **Main idea:** a 4-step story of a long-context injection, plus the gap and the idea.
+  2. **How it works:** Obey (sanitization instruction, one output token), Measure (attention from that one token), Cut (smooth, group, remove the top group above θ), plus a bar showing the attacker's dilemma.
+  3. **Example:** the paper's own injected prompt from Appendix E inside a long context, with attention bars, the θ line and three outcome cards. The bar heights are labelled as illustrative, not measured.
+  4. **Results:** the HotpotQA columns of Table 4 (Combined and GCG attacks, 7 defenses), 4 stat cards and a Limits line.
+- **Not included:** a "compared with our idea" slide. Nothing in this repo uses PISanitizer, so I could find no direct link to our project.
+- **Checks:** passes the pptx validator, and the font-metric fit check finds no overflow. No renderer is installed on this machine, so the slides have not been inspected visually.
+- **Changed files:** new `PISanitizer_presentation.pptx`; this entry. No code, data, method or result changed.
+
+### 2026-11-22 (Windows machine) — SAFE-Mem paper explainer deck, restyled to match the team's method-explainer deck (free; presentation only)
+
+- **Asked:** a short, newcomer-friendly PPTX of the SAFE-Mem paper (`safe-mem_paper.pdf`) that mainly covers the idea and methodology, the results and one example, in the style of `DEFENSE_METHODS_EXPLAINED_20261122` (the MemLineage and RandEC slides).
+- **Done:** `SAFE-Mem_presentation.pptx`, 5 slides with the "SAFE-MEM · n / 5" kicker, paper-colored backgrounds, one blue, orange for the attack, and citation footers.
+  1. **Main idea:** the Alice/LockNest attack as a 4-step story, plus the gap and the idea.
+  2. **How it works:** Label (kind, authority, level), Link (sentence, claim and entity graph) and Check (admit per question, re-check tool calls), plus a bar showing the five kinds of claim and where each source's authority stops.
+  3. **Example:** the paper's Appendix D case study, showing what gets stored at which level and how the two questions get different answers from the same memory.
+  4. **Results:** the GPT-4o-mini rows of Table 1, 4 stat cards and a Limits line.
+  5. **Compared with our idea:** SAFE-Mem alone vs our S. On the locked test (localized), attack success is 77% vs 0%, with strict utility 546/600 = 91% for both. Shown with the caveat about the 5 extra audits and H3.
+- **Checks:** all numbers come from the paper or this README, and the speaker notes give the full detail. The file passes the pptx validator. Text fit was estimated with the real fonts because there is no renderer on this machine, so the slides have not been inspected visually.
+- **Changed files:** new `SAFE-Mem_presentation.pptx`; this entry. No code, data, method or result changed.
+- **Next:** the owner reviews the slides in PowerPoint.
+
+### 2026-11-22 — Paper check: full integrity check of preview_main.pdf against code and data (ARS Stage 2.5; free, read-only)
+
+**What:** every factual sentence of all 6 pages (Section 4, Figure 1, Tables 1–3, Appendix A.1–A.6, 5 references) compared against the code, the v4 workload files, the run reports and protocols v1/v2; references verified online; 156 offline tests pass. Report: `reports/PAPER_PREVIEW_INTEGRITY_STAGE25_20261122.md`.
+**Verdict:** FAIL (correctable). 0 fabricated references, 0 code bugs.
+- **Serious:** (S1) the preview describes protocol v1 (5 methods, H1–H3, one backbone, 13,440 rows, seed 20261108, dev-only adaptive/published studies); the paper reports protocol v2 option B on the same v4 split, so "Metrics" and "Statistics" must be rewritten and v1 moved to an appendix; (S2) A.4's "failed calls halt, never retried" needs the v2 deviations (rev 6–9); (S3) the judge uses 120 output tokens, not 4; (S4) the v1 test had 3,875 distinct Stage-3 requests, not 5,229 (dollar costs correct).
+- **Medium:** audits apply per use (R withholds a record only for the audited question); a linked copy is inside its seed's audited bundle, so even R withholds it; S's penalties sit exactly at the 0.25 threshold; exposure counts only records of the probe's own carriers (relay probe: relay + seed); the dev sweep has 63 conditions + 3 reference conditions (66); 6 unresolved "??" references; the 21 Nov corrections are not yet in the preview.
+- **Confirmed:** Table 1 counts, Figure 1 layouts, roles per group (relay repeats a seed of context Y, copy a seed of X), five tickets, policy constants and gates, SAFE-Mem configuration, metric definitions, v1 statistics, split checks, A.5/A.6 counts and costs; 67 distinct MPBench cases fill the 96 scored-attack slots.
+- **References:** Dash et al. (arXiv 2606.04329, ICML 2026), Li et al. SAFE-Mem (arXiv 2610.22959, authors match the PDF metadata), Ouyang & Hou (arXiv 2605.14421), Wei et al. A-MemGuard (arXiv 2510.02373; PMLR v306), Reimers & Gurevych 2019: all verified; add arXiv ids/venues.
+**Files changed:** new report above; this log; `plan.md`. No code, data, protocol or result changed. No paid call. P-B3 untouched (21/24 groups started, 0 errors, $4.41 total).
+**Next:** owner acknowledges failure mode 6 (stale methodology) → rewrite Metrics/Statistics for v2 in the Overleaf source → re-check (round 2) → Stage 3 mock review.
+
+### 2026-11-22 — Tooling: installed the academic-research-skills Claude Code plugin (free, no research code touched)
+
+**What:** installed the third-party plugin `academic-research-skills` v3.24.4 (Imbad0202, CC-BY-NC-4.0) to help with paper writing, mock review, citation checks and the rebuttal. The owner downloaded it to `academic-research-skills-main/`; the plugin is registered as a local-directory marketplace that reads from that folder, and is enabled for this project only (`--scope local`, recorded in the git-ignored `.claude/settings.local.json`). Commands: `/ars-plan`, `/ars-reviewer`, `/ars-citation-check`, `/ars-rebuttal-audit`, `/ars-lit-review`, etc. (in VS Code, reload the window first).
+**Notes:** the plugin adds a SessionStart message and a PreToolUse write-scope guard on Write/Edit/Bash (passes through on failure; it never auto-approves). Its optional cross-model citation verifier would make paid OpenAI/Gemini calls; it is not configured and must not be without owner approval.
+**Files changed:** `.gitignore` (ignores `/academic-research-skills-main/`), this log. No code, data, protocol or result changed. No paid call.
+**To remove:** `claude plugin uninstall academic-research-skills@academic-research-skills --scope local`, then delete the folder.
+
+### 2026-11-15 — Explainer presentation: SAFE-Mem vs our method S (free, no research code touched)
+
+**What:** a 17-slide deck for first-time readers: the problem → SAFE-Mem (typed claims, authority gate) → its blind spot (a planted fact is a "description": 77% ASR) → what we add (provenance + audits) → the spreading question (R / C / M / S) → one real dev group (G-D00, controlled workload v4, localized placement) as a running example → S's evidence rule → the three placements → the pipeline → locked-test results and H1–H3 → limits (Sybil, laundering, published methods, S2-ID; dev exposure) → side-by-side summary → protocol v2 option B status. All numbers are copied from `RESEARCH_OVERVIEW.md` / `IMPLEMENTATION.md`; the example texts come from the dev split only.
+**Files added:** `reports/SAFE_MEM_VS_S_PRESENTATION_20261115.html` (a standalone HTML copy; open it in a browser). No code, data, protocol or earlier result changed. No paid call.
+**Update (same day, 22 slides):** added the old H3 (no-signal utility, ✗, now a "no-signal control" column), SL (content linking; H5), S2-ID (SL + MemLineage's gate; H4), a plain-words H1–H6 table for protocol v2, and the new H3 (S vs each of the 4 published methods, intersection-union test).
+**Online deck (private):** https://claude.ai/artifact/C5upTEFrje93dJKJYs1bbK. A first deck, `Aqy9ddB6aswb4bSFwFh1Cq`, stays empty: a permission check blocked publishing to it because it was shared by link.
+
+### 2026-11-15 (Phase 2 → 4) — Owner approved the freeze and the caps; option B execution started
+
+**Approval:** the owner approved option B, the revision-5 freeze (digest `1845a84d…4903`) and the paid evaluation within the proposed caps. Recorded in `research_data/protocol_v2_freeze_optionB_20261115/owner_approval_optionB.json` (`approved_by: owner`; caps v2_stage3 $10, A-MemGuard $4.50, sanitiser $0.60, MemLineage $0.05, Haiku $8; ablations and v5 not covered).
+
+**Run directory:** `research_data/protocol_v2_optionB_run_v1/` (logs, shard and paid wrappers in `scripts/`). Integrity checks before the run: freeze verified; v1 archive verified; pre-v2 snapshot 0 changed / 3 missing (the approved cleanup).
+
+**Progress:** free precompute started (24 groups, 6 parallel shards). A first attempt with 3 shards was stopped after 2 minutes to use 6 (each shard needs ≈ 0.3 GB); its partial outputs are kept in `aborted_precompute_P3_restart/`. An even earlier launch did nothing (macOS `xargs -I` command-length limit). This entry will be updated at each stage.
+
+- **Precompute done** (06:32–15:24 UTC, ≈ 8.9 h wall; slowed by memory swapping on the 8 GB Mac): 24/24 groups, 66,640 rows each, no errors; 60 conflict-check requests (0–6 per group).
+- **Integrity before P-B1** (`logs/integrity_before_PB1_run.txt`): freeze verified (320 files); v1 archive verified (224); snapshot 0 changed / 3 missing (approved cleanup).
+- **💰 P-B1 done:** 60 conflict checks sent (GPT-4o-mini), **spend $0.0009528** (`v2_stage3`, cap $10); replies in `conflict_replies.json`, ledger in `sessions/v2_stage3`.
+- **Free contexts done** (15 Nov 15:25 → 16 Nov 09:24 UTC; ≈ 18 h wall because the Mac slept on battery overnight; work paused, nothing lost): 24/24 groups, 66,640 rows each, scope fingerprints equal to the precompute's, 67,866 conflict replies replayed from P-B1 (0 new), 2.8 GB, no errors.
+- **Integrity before P-B2** (`logs/integrity_before_PB2.txt`): freeze verified (320); v1 archive verified (224); snapshot 0 changed / 3 missing.
+- **💰 P-B2 started** 16 Nov 09:25 UTC on AC power, as a detached process (`nohup` + own session, `caffeinate -ims`; pid in `logs/PB2.pid`) so it survives a Claude Code restart. First attempt stopped after seconds with no paid call: the wrapper's glob `contexts/G-T*` also matched the 24 `.prompt_mirror` folders (the reader would have refused them); fixed to `G-T??` in `scripts/paid.sh`, log kept as `logs/PB2_attempt1_glob_matched_prompt_mirrors.log`. Caps confirmed in the session ledgers: v2_stage3 $10.00, A-MemGuard $4.50, sanitiser $0.60, MemLineage $0.05. Read-only progress/spend: `scripts/status.sh`.
+- **P-B2 interruption and restart (16 Nov, 13:11 UTC):** after 4/24 groups (608,280 rows, $0.61 spent) P-B2 stopped with `sqlite3.OperationalError: database is locked`. Cause: my progress check in `scripts/status.sh` scanned the live result journal with a normal read lock for longer than the writer's 5 s wait. The failed insert wrote nothing (autocommit), so the journal stayed consistent. Fix: the status script now opens the journal and ledgers with `immutable=1` (no locks). P-B2 restarted 13:12 UTC with the same command; saved rows are re-checked and completed calls replay from the ledger at $0 (spend unchanged after restart). Logs kept: `logs/PB2_run1_*`. No code, data or frozen file changed.
+- **P-B2 pace (before the stop):** ≈ 48 min per group, ≈ $0.125 per group (projection P-B2 ≈ $3.0); journal ≈ 161 MB per group (≈ 3.9 GB in total). The process' memory footprint was ≈ 6.5 GB (mostly swapped), which grows swap on the 8 GB Mac; the restart reset it.
+- **P-B2 after the restart (16 Nov, 18:50 local):** the replay of G-T00..G-T03 finished with spend unchanged ($0.6144), then new calls resumed. At 18:49 local: 5/24 groups complete at exactly 152,320 rows each, G-T05 in progress, $0.7523 spent in total, 0 error lines, footprint flat ≈ 6.6 GB, Mac on AC power. A direct `immutable=1` scan of the journal now fails with "database disk image is malformed". It reads pages while the writer is inserting, and inserts are continuous now. The writer and the file are fine: an instant APFS clone (`cp -c`, copy-on-write, no extra disk) passes `PRAGMA quick_check: ok`. `scripts/status.sh` now counts rows on such a clone. Read-only tooling change only; no code, data or frozen file changed.
+- **P-B2 halted by the budget guard (16 Nov, 19:06 UTC), owner decision needed:** the charger was unplugged at about 20:00 local and the Mac slept on battery. One GPT-4o-mini answer call (stage3, G-T06) was in flight. When the Mac woke briefly, the call failed (`ProviderError`) with **unknown billing**. As designed, the guard preserved the failed receipt, held the worst case ($0.01932) and **halted the `v2_stage3` session** (`blocked_reason = unresolved_workload_construction_billing`). P-B2 exited with `LedgerError: Construction dispatch failed; receipt preserved, no retry`. State: 6/24 groups complete (152,320 rows each), G-T06 117,922 rows, journal `quick_check: ok`. Settled spend $0.9486 (stage3 $0.6138, A-MemGuard $0.2961, sanitiser $0.0340, MemLineage $0.0047) + $0.01932 held. The three published sessions are clean. The frozen code has no way to continue in this session: `resume_after_review` only clears an `unverified_billing` stop, and a restart would replay the stored failed result. Editing the ledger or the code would break the audit trail or the freeze, so nothing was changed. Exit log kept: `logs/PB2_restart1_exit_tail.txt`.
+- **P-B2 rerun 1 prepared (17 Nov, ~00:30 local; owner chose option 1, conditional on the checks below):** (1) OpenRouter key valid; key limit $200 with **$166.29 remaining**; account credits **$404.58 remaining** (OpenRouter's usage today, $0.9478, matches the guard's settled P-B2 spend to within $0.0002, so the failed call cost at most ≈ $0.0002). (2) Projection for a full fresh P-B2: measured $0.140 per group × 24 ≈ **$3.4** (runbook high estimate $6.9). New caps: stage3 $10, A-MemGuard $4.50, sanitiser $0.60, MemLineage $0.05 (MemLineage projected ≈ $0.017 plus one worst-case reservation ≈ $0.02, which fits). Caps for P-B2 + P-B3 total $23.15, and $25.62 of the project allowance is left after the halted run. (3) Integrity checks as expected (`logs/integrity_before_PB2_rerun1.txt`). (4) Stored contexts re-verify only against conflict replies present in the session's own ledger, so **P-B1 was re-sent into the fresh session `sessions_rerun1/`**: 60 checks, $0.0009528, and all 60 replies are **identical** to `conflict_replies.json` (call IDs do not depend on the session), so the stored contexts stay valid. (5) Cause of the halt: the lid was closed on battery ('Clamshell Sleep', 20:01 local); caffeinate cannot prevent that. Launch: `scripts/launch_pb2_rerun1.sh` runs detached and starts `paid.sh PB2` (now → `sessions_rerun1/`, `gpt_rerun1/`) once on AC power, logging `logs/PB2_rerun1*.{log,txt,pid}`. `scripts/status.sh` now reads the rerun paths. The halted run (`sessions/`, `gpt/`, `conflict_replies.json`, logs) is kept unchanged as the record. No code, data or frozen file changed.
+- **P-B2 rerun 1 started (17 Nov, 00:46 local = 16 Nov 20:46 UTC)** when AC power came on. After 10 min: $0.0277 spent, rows being saved, 0 errors, 7.9 GB free. (The launcher's resource log records the wrong process' RSS, so it shows ≈ 1 MB; monitoring only.)
+- **Disk freed during P-B2 rerun 1 (17 Nov, ~07:00 local; owner-approved):** free disk fell to 3.0 GB (swap grew to 10 GB; P-B2 still needs ≈ 2.7 GB). `scripts/archive_dir.py` hashed every file (SHA-256 manifest), wrote a .tar.gz, re-hashed every archive member, and deleted the original only after all matched: `precompute/` (888 files, 1.1 GB → `archive_20261117/precompute.tar.gz` 259 MB) and the halted first run's journal `gpt/` (1.0 GB → `archive_20261117/gpt.tar.gz` 286 MB). Manifests: `archive_20261117/*.sha256.json`; restore with `tar xzf`. Free disk 3.0 → 4.7 GB. Neither folder is read by P-B2 rerun, P-B3 or the analysis. Also: the Mac has been on battery since ≈ 01:41 although the charger was reported plugged in (adapter not delivering power); P-B2 was 7/24 at 06:53, 0 errors.
+- **P-B2 rerun 1 paused for travel (17 Nov, 07:38 local = 03:38 UTC):** the owner had to close the lid. Because the client never retries (`max_retries=0`), a call in flight during sleep would halt the guard again. So `scripts/pause_pb2.sh` freezes the python process (SIGSTOP) only when no session's dispatch ledger has a `started` row; it paused on the first try with 0 open reservations ($1.1055 spent, 7/24 groups + G-T07 partial). `scripts/resume_pb2.sh` sends SIGCONT only after OpenRouter answers (public `/models`, no paid call). An idle connection pool expires after 5 s, so a resumed call opens a fresh connection. Pauses are logged in `logs/PB2_rerun1_pauses.txt`.
+- **P-B2 rerun 1 halted by the guard (17 Nov, 09:34:44 local = 05:34:44 UTC):** after the resume (08:52) new paid calls worked (G-T07 finished, G-T08 reached 69,512 rows). Then one stage3 answer call failed with `APIConnectionError` 8 ms after its reservation (no native response recorded, no sleep event; the Mac was on university Wi-Fi). The receipt is `unknown` ($0.01932 held), and `sessions_rerun1/v2_stage3` is blocked (`unresolved_workload_construction_billing`), as in the first run. State: 8/24 groups complete + G-T08 69,512 rows; settled $1.2080 (stage3 $0.7774, A-MemGuard $0.3807, sanitiser $0.0440, MemLineage $0.0059). Exit log: `logs/PB2_rerun1_exit_tail.txt`. Lesson: with `max_retries=0` and the frozen guard, any network drop during a call ends the session, so P-B2 needs about 20 h on a stable network without interruption. Owner decision needed. Nothing changed.
+- **P-B2 rerun 2 prepared (17 Nov, ~10:00 local; owner chose 'rerun 2 at home'):** `paid.sh` now writes to `sessions_rerun2/`, `gpt_rerun2/` and `conflict_replies_rerun2.json`; rerun 1's folders are kept. Integrity checks as expected (`logs/integrity_before_PB2_rerun2.txt`). P-B1 needs `precompute/G-T*/conflict_requests.json`, so those 24 files were extracted from `archive_20261117/precompute.tar.gz` and matched the SHA-256 manifest. To avoid a network drop during P-B1, nothing was sent yet. `scripts/start_pb2_rerun2.sh` does everything at home in one step: it requires AC power and a reachable OpenRouter, re-sends P-B1, requires all 60 replies to be identical, then starts P-B2 detached with a resource log. `pause_pb2.sh` / `resume_pb2.sh` now target rerun 2. Budget: settled so far in option B $2.16 (first run $0.9486, rerun 1 $1.2080, P-B1 ×2 $0.0019) + 2 × $0.0193 held; remaining allowance ≈ $24.4 vs caps $23.15 for P-B2 + P-B3.
+- **P-B2 rerun 2 started (17 Nov, 10:38 local = 06:38 UTC)** with `scripts/start_pb2_rerun2.sh` at home on AC (30 W adapter): P-B1 re-sent into `sessions_rerun2/` ($0.0009528), all 60 replies identical to the stored ones, P-B2 launched detached (pgid 95050).
+- **Disk during rerun 2 (17 Nov, ~12:00 local; owner-approved):** swap grew to 10 GB and free disk fell to 5.4 GB. The halted rerun-1 journal `gpt_rerun1/` (1.3 GB) was archived with `scripts/archive_dir.py` (SHA-256 verified before deletion) → `archive_20261117/gpt_rerun1.tar.gz` (359 MB). Free 6.4 → 7.4 GB; rerun 2 kept running (1/24 groups, 0 errors, $0.15).
+- **P-B2 rerun 2 halted (17 Nov, 16:57 local = 12:57:14 UTC):** at 6/24 groups (+ G-T06 41,511 rows) one stage3 answer call failed with `APIConnectionError` 17 ms after it was sent (no connection made; most likely a short home Wi-Fi/DNS drop). The call was not retried, the reservation stays `unknown` ($0.0193 held), and the guard blocked `v2_stage3` (`unresolved_workload_construction_billing`). The Mac was on AC and awake; it idle-slept only at 16:57:35, after the process had exited and caffeinate ended with it, so sleep was not the cause. Settled in rerun 2: $0.9097 (stage3 $0.5763, A-MemGuard $0.2946, sanitiser $0.0340, MemLineage $0.0047). `sessions_rerun2/`, `gpt_rerun2/` and `conflict_replies_rerun2.json` are kept as the record; exit record in `logs/PB2_rerun2_exit_tail.txt`. This is the third halt from a single transport failure (sleep, university Wi-Fi, home Wi-Fi): without retries, a ~25 h run is unlikely to finish. Owner decision needed.
+- **Freeze revision 6 and P-B2 rerun 3 (17 Nov, owner chose 'Retry fix, then rerun 3'):** transport-only fix, tests first. `_ConnectRetrySDK` in `src/ams/research/workload/transport.py` retries an attempt only when the SDK's `APIConnectionError` is caused by httpx `ConnectError`/`ConnectTimeout` (DNS/TCP/TLS setup failed, so no request byte was sent and nothing can be billed), at most 10 times, 30 s apart, inside the same dispatch. Every other failure still halts. 4 new tests in `tests/test_v2_transport.py` (connect error and connect timeout recover and are billed once; a connection that never returns still halts; a drop after sending is never retried); full suite 831 passed. Protocol §15 records the deviation. New manifest `protocol_v2_optionB_rev6.json` (digest `41400f05…47d3`; differs from revision 5 only in `transport.py` and the protocol text; protocol constants identical) and `owner_approval_optionB_rev6.json` (same caps, models and stages); `check_paid` passes; integrity checks as expected (`logs/integrity_before_PB2_rerun3.txt`). OpenRouter: key $164.17 left, account $393.86. Rerun 3 started 17:49 local (13:49:37 UTC) with `scripts/start_pb2_rerun3.sh`: P-B1 re-sent into `sessions_rerun3/` ($0.0009528), 60/60 replies identical; P-B2 → `gpt_rerun3/` (pgid 15826). Retries, if any, appear in `logs/PB2_rerun3.log` as 'connection not made … retry n/10'.
+- **Safe stop / continue rule (owner, 17 Nov):** `scripts/stop_safe_pb2.sh` freezes P-B2 at a moment with no call in flight, ends it only if every ledger is clean (all calls completed and settled, nothing held, no session blocked) and checks the result journal; otherwise it leaves P-B2 running. `scripts/start_resume_pb2.sh` continues rerun 3 in the same session and folder (finished calls replay at $0), after checking AC, OpenRouter, the revision-6 freeze and the ledgers. Stops/resumes are logged in `logs/PB2_rerun3_stops.txt`. At 18:50 local an interrupted pause left P-B2 frozen for about 12 min with one call open; it was resumed at 19:02 and the call completed normally (`logs/PB2_rerun3_pauses.txt`).
+- **Mid-run correctness check of rerun 3 (18 Nov, 19:10 local; read-only, on a `cp -c` clone):** 17/24 groups complete at exactly 152,320 rows, journal `quick_check: ok`, 0 duplicate keys, the same 16-method mix in every group. Ledgers: every dispatch completed and every reservation settled (stage3 13,166; A-MemGuard 5,905; sanitiser 1,563; MemLineage 474), 0 duplicate call IDs, no session blocked; two safe stops and two resumes (`logs/PB2_rerun3_stops.txt`); 0 connect retries used; freeze revision 6 still verifies. **Run-to-run check (rerun 3 vs the halted rerun 2 on G-T00..G-T05, 913,920 matched rows):** same scored outcome on 98.89% of rows, identical answer text on 78.84% (GPT-4o-mini is not fully deterministic at temperature 0). Attack-success rates agree within ±0.2 pt for static, R, C, M, S, SL, S2-BS, RandEC and the sanitiser; larger differences for A-MemGuard (+12.5 pt; one draw at temperature 1.0 by design), A-MemGuard+R (+9.8 pt), MemLineage (+4.2 pt), MemLineage+R (+2.8 pt) and S2-ID (+1.8 pt). These are provider-side non-determinism, not a code fault; the paper should report this variability (limitation 6) and treat A-MemGuard and MemLineage single-run numbers with care.
+- **P-B2 rerun 3 halted near the end (19 Nov, 02:01 local = 22:01:35 UTC):** at 23/24 groups + G-T23 112,074 of 152,320 rows (≈ 98.9% of P-B2), one stage3 **judge** call timed out after 120 s (`APITimeoutError`): the request had been sent but no reply came back. Its billing is unknown, so the guard held the worst case ($0.019272) and blocked `v2_stage3`, exactly as designed. Revision 6 does not cover this case, because a call that was sent may have been billed. The Mac was on AC and awake. Settled in rerun 3: $3.2159 (stage3 $2.0758, A-MemGuard $1.0114, sanitiser $0.1160, MemLineage $0.0127). Journal and ledgers kept as they are; exit record in `logs/PB2_rerun3_exit_tail.txt`. Owner decision needed.
+- **Freeze revision 7 and recovery (19 Nov, owner chose the recovery fix: 'continue fix and finsih please'):** accounting/transport-only, tests first. `BudgetGuard.resolve_unknown_at_worst_case` (src/ams/llm/budget.py) books an owner-reviewed unknown attempt whose error is `APITimeoutError`/`APIConnectionError` (no reply received) as **charged at its full reserved worst case** (never lower), clears only the `unresolved_workload_construction_billing` stop and records a review event `worst_case:<reason>`; breaches, settlement discrepancies, reply-bearing unknowns and other stops still cannot be cleared. `ConstructionSession.supersede_reviewed_failures` (transport.py) then moves the failed dispatch row, unchanged, to `superseded_dispatches` (audit) so the same request can be sent again. 2 new tests (a reviewed timeout is booked at worst case and re-sent once; other stops are refused); full suite 833 passed. Protocol §15 updated. New manifest `protocol_v2_optionB_rev7.json` (digest `898ddc60…1f6e`; differs from revision 6 only in `budget.py`, `transport.py` and the protocol text; constants identical) and `owner_approval_optionB_rev7.json` (same caps, models and stages); `check_paid` passes; integrity checks as expected (`logs/integrity_before_PB2_rerun3_rev7.txt`). The stage3 session was copied first (`archive_20261119/v2_stage3_before_rev7_review/`). Review run (`scripts/review_unknown_rev7.py`, `logs/review_unknown_rev7.txt`): 1 unknown judge attempt booked at $0.019272 (stage3 used $2.0758 → $2.0950, held $0), stop cleared, 1 failed row superseded. P-B2 rerun 3 resumed in the same session at 12:03 local (08:03:53 UTC): finished calls replay at $0, then the remaining ≈ 40,246 rows of G-T23 run. **Safe stop (19 Nov, 17:42 local, owner "stop"):** stopped during the $0 replay after 5 h 38 min (slow: 8 GB RAM, heavy swap); ledgers clean, journal ok, no new paid call, spend $3.2352; `logs/PB2_rerun3_stops.txt`. On "start" the replay runs again from the beginning, then G-T23 finishes.
+- **P-B2 complete (20 Nov, 01:17 local; resumed 19 Nov 19:17 on owner "start"):** `gpt_rerun3/` holds 24/24 groups × 152,320 = **3,655,680 rows** (unique keys, journal quick_check ok, every row has an answer and outcome). The $0 replay took ≈ 4.8 h, then 139 new stage3 calls ($0.0155) finished G-T23. **Total P-B2 spend $3.2507** (stage3 $2.1105 incl. the $0.0193 worst-case review booking, A-MemGuard $1.0114, sanitiser $0.1160, MemLineage $0.0127; all within the RUNBOOK estimate and caps). Ledgers clean; 0 connect retries; no new errors. Integrity after P-B2 as expected (`logs/integrity_after_PB2_rerun3.txt`). Next: P-B3 (Claude Haiku), only when the owner says so.
+- **Early GPT-4o-mini analysis (20 Nov, owner chose "Analyse now"):** deviation from "the analysis runs once" (protocol §9): the frozen analysis is run on the complete P-B2 journal before P-B3, output `analysis_gpt_early/`; the final combined run after P-B3 goes to `analysis/`. Record: `logs/deviation_early_gpt_analysis.md`. Result (09:08, ≈ 6 h on 8 GB): 3,655,680 rows, 24 groups, 16 methods; `tables.md`, `appendix.md`, `per_cell.md`, 3 figures. Table 8 (replication, not confirmatory): H1 vs C ✓, H1 vs M ✓, H2 ✓, H3 ✓, H4 ✓, H5 ✓; **H6 vs C ✗, H6 vs M ✗** (innocent utility under 1% false-positive audits: S = C = M = 92). Localized: S target ASR 0 with utility 91 (original SAFE-Mem 63/91; best published MemLineage 44/91; C, M 0/66). Negatives: S fails under audit-aware batch shift (target ASR 66 vs 0 for C, M), Sybil k≥4 and laundering r=1 (64–66, no better than original); worst case S 66 vs MemLineage 44 (S2-ID 47); framing harms innocents (S 53 vs 92 original); distributed utility 66 (same as C, M). Label note: Table 7 prints "not run (needs fresh v5 data)" also for the pending Claude Haiku row (generic frozen text; Haiku is pending P-B3, not v5).
+- **Repository inspection (21 Nov, owner asked; read-only, nothing moved or deleted):** old docs: `README_BEFORE_RESEARCH_20261101.md` (pre-research README copy), `IMPLEMENTATION.md` (10 Nov), `RESEARCH_OVERVIEW.md` (last 12–14 Nov), `brainstorm.md`, `CLAUDE_MEMORY_TRANSFER.md` (15 Nov) and `research_data/README.md` (Phase 1 only, 28 Oct) are out of date; `UPSTREAM_README.md` is the original authors' README (keep). 119 `research_data/` folders: 79 from the first MPBench phase (29 Oct–1 Nov, 1.9 GB), superseded workload versions v1–v3, dry runs and a mock, and inside the option-B run the halted P-B2 attempts (sessions, rerun1, rerun2, archives). **Nothing may move before P-B3:** `archive_snapshot.py verify` fingerprints 3,910 files across almost all old `research_data/` and `reports/` folders (RUNBOOK §1 expects changed 0, missing 3), and the rev7 freeze hashes the v3/v4 workload and stores. Any tidy-up (compress, never delete) waits for P-B3 and owner approval.
+- **Cleanup (21 Nov, owner: "most unnecessary ones delete, less necessary compact"):** deleted `.venv-minja/` (909 MB, package list saved), 4 dry-run/mock folders (≈ 20 MB, SHA-256 recorded, mostly in git), `README_BEFORE_RESEARCH_20261101.md` (in git) and caches; compacted the halted P-B2 attempts (sessions, rerun1, rerun2 ledgers, `gpt_rerun2`, old prompt mirrors and conflict replies, aborted precompute, `archive_20261119`) from 1.2 GB to a verified 297 MB archive `archive_20261121/halted_attempts_20261121.tar.gz`. Not touched: current run, frozen inputs, first-phase folders read by code/tests, paid caches. After: rev7 freeze verified (320), locked v1 verified (224), snapshot changed 0 / missing 25 (new expected value, RUNBOOK §1 updated), ledgers clean, **833 tests passed**. Freed ≈ 1.9 GiB (repo 19.2 → 17.3 GiB). Record: `reports/CLEANUP_AUDIT_20261121.md`.
+- **Pushed to GitHub (21 Nov, owner: "push all necessary things with result"):** commit `255fad7` on `LalaHuseynova/sdp`, branch `protocol-v2-option-b-freeze` (code rev6/rev7 + tests, freeze manifests and approvals, protocol, RUNBOOK, README, plan, P-B2 scripts/requests/replies/summary, early GPT-4o-mini analysis, cleanup records). Kept local only (too big for GitHub or ignored): `gpt_rerun3/queries.sqlite` (3.9 GB), `contexts/` (2.8 GB), `sessions_rerun3/*.sqlite`, the four `.tar.gz` archives (250-360 MB each), `provisional_extension_results_v1_20261101/queries.sqlite.tar.gz` (210 MB), `logs/` (except the deviation note and integrity record), `CLAUDE_MEMORY_TRANSFER.md` (outdated; update before a move).
+- **Merged into `main` (21 Nov, 15:30 local; owner did not see the results on the GitHub front page):** PR #1 had been merged before commits `255fad7`/`a022914`, so `main` lacked the P-B2 results. Merged `protocol-v2-option-b-freeze` into `sdp/main` (no conflicts; kept the owner's `047d085` method figure) → merge `4466227`, pushed. No large files, no secrets added.
+- **💰 P-B3 started (21 Nov, 16:24 local = 12:24 UTC; owner: "start P-B3"):** Claude Haiku, 8 cells × 11 methods, `paid.sh PB3` → `haiku/`, same `sessions_rerun3/` (GPT calls replay at $0; new purpose `v2_backbone_answer`, cap $8.00 from approval rev7). Pre-checks OK: AC, OpenRouter reachable, rev7 freeze verified (320), locked archive verified (224), snapshot differs changed 0 / missing 25 (expected after the 21 Nov cleanup), all 4 ledgers clean, 9.4 GB free (`logs/integrity_before_PB3.txt`). New scripts (copies of the P-B2 ones, pointed at P-B3/haiku): `scripts/start_pb3.sh` (first start and resume, same session), `stop_safe_pb3.sh` (owner "stop"), `status_pb3.sh`, `watch_pb3.sh` (5-min resource log `logs/PB3_resources.log`; safe stop on battery ≤ 30% or disk < 1.5 GB). Estimate 6–12 h, $0.80–3.90.
+- **⚠️ P-B3 halted at its first Haiku answer (21 Nov, 16:24 local, ~40 s after start; $0 spent):** OpenRouter `NotFoundError` (404) for `anthropic/claude-haiku-5.5`. Cause (checked on OpenRouter's public endpoints list): none of Haiku 5.5's 5 providers supports the `temperature` parameter, and the guarded client sends `temperature: 0` with `require_parameters: true`, so no endpoint matches. The model itself is listed (0.10/0.50 per M, as approved). The guard did its job: `v2_backbone_answer` is blocked on one unknown receipt (held $0.0129, worst case; a 404 is not billed). GPT sessions untouched; no Haiku rows written. Missed in step 2.3 because the end-to-end test uses a fake transport. **Waiting for the owner:** fix needs a request-shape change for Haiku (protocol deviation, freeze revision 8). Haiku 4.5 supports temperature but costs 10× (≈ $6.5–35, above the $8 cap).
+- **Freeze revision 8 and P-B3 restart (21 Nov, owner chose 'Remove temperature (Recommended)'):** Haiku request shape + accounting only, tests first (3 new tests in `tests/test_v2_backbone.py`: Haiku answer sent without `temperature`, GPT unchanged at 0; `None` accepted only for Haiku answers; a reviewed 404 is booked at worst case and re-sent). Code: `BackboneRouter` re-addresses answers with `temperature=None`; `ChatRequest.temperature` may be `None`; `OpenAIClient` omits the parameter only when `None`; `v2_stage`/`_dispatch` accept `None` only for `v2_backbone_answer`; `_TRANSPORT_FAILURES` adds `NotFoundError`. **Full suite 836 passed.** Protocol §15: early-analysis entry (20 Nov) and revision 8 entry; §13 limitation 7 (Haiku answers at model-default temperature). New manifest `protocol_v2_optionB_rev8.json` (digest `32fc26a0…8532`; 320 files; differs from rev7 only in the protocol text and `budget.py`, `openai_client.py`, `types.py`, `backbone.py`, `transport.py`; constants identical) and `owner_approval_optionB_rev8.json` (same caps, models, stages); `check_paid` passes. Haiku session copied first (`archive_20261121/v2_backbone_answer_before_rev8_review/`); review (`logs/review_unknown_rev8.txt`): the 404 attempt booked at $0.0129 worst case, stop cleared, failed row superseded. `paid.sh` and `start_pb3.sh` now use rev8. P-B3 restarted 17:45 local (13:45:20 UTC) in the same sessions; pre-checks OK (`logs/integrity_resume_PB3.txt`). Total spend $3.2636 (P-B2 $3.2507 + $0.0129 booked).
+- **⚠️ P-B3 safe stop after 34 Haiku answers (21 Nov, 17:46 local = 13:46:49 UTC; stopped by Claude on a validity problem, `stop_safe_pb3.sh` printed SAFE TO SHUT DOWN):** Claude Haiku 5.5 reasons by default and its reasoning tokens count against the 200-token answer limit: of 34 answers 9 finished with `length` and 6 are empty (reasoning 71–200 tokens each; one answer used 0). GPT-4o-mini does not reason, so these answers are not comparable and not usable. Spend for the 34: $0.0058 (Haiku total $0.0187 incl. the $0.0129 booked 404); ledgers clean; journal `haiku/` holds 34 rows of G-T00 (to be archived, not used). Waiting for the owner on the fix.
+- **Freeze revision 9 and P-B3 restart (21 Nov, owner chose 'Turn thinking off (Recommended)'):** Haiku request shape only, tests first (2 new tests: Haiku answers carry `reasoning: {enabled: false}`, GPT requests carry no reasoning field; the Haiku shape refuses reasoning left on). Code: `BackboneRouter` adds `reasoning_effort="none"`; `v2_stage` requires it for `v2_backbone_answer`. **Full suite 838 passed.** Protocol §15 revision 9 entry; §13 limitation 7 updated. Manifest `protocol_v2_optionB_rev9.json` (digest `c3d6e855…a644`; 320 files; differs from rev8 only in the protocol text, `backbone.py`, `transport.py`; constants identical), `owner_approval_optionB_rev9.json` (same caps, models, stages); `check_paid` passes. The 34 rev8 rows moved unchanged to `archive_20261121/haiku_rev8_reasoning_on/` (journal + prompt mirror + SHA-256; not analysed); old log kept as `logs/PB3_attempts_rev7_rev8.log`. `paid.sh`/`start_pb3.sh` use rev9 (start script no longer truncates the log). P-B3 restarted 18:47 local (14:47:11 UTC) with a fresh `haiku/` in the same sessions.
+- **22 Nov 2026 (~02:05 local): ✅ P-B3 complete.** 24/24 groups × 8,855 = 212,520 rows (8 cells = 23 runtime conditions × 11 methods; unique keys, journal quick_check ok, 0 rows without answer/outcome, 0 empty answers; finish `stop` 210,737, `length` 1,783 = 0.8%); `haiku/paid_summary.json`. 7,860 Haiku answers after revision 9 (0 thinking tokens, 0 errors, no halt). Spend: Haiku `v2_backbone_answer` $1.189822 (incl. the $0.0129 booked 404 and $0.0058 for the 34 rev8 answers) of cap $8; GPT judges `v2_stage3` +$0.1541 (→ $2.26462965); published defences replayed at $0. **Total option-B spend $4.5946** (P-B2 $3.2507 + P-B3 $1.3439), inside the estimate $4.19–10.82. Ledgers clean. Integrity after P-B3 as expected (rev9 freeze verified 320; locked 224 verified; snapshot changed 0 / missing 25; `logs/integrity_after_PB3.txt`). **Final combined analysis started** 02:2x local (RUNBOOK §7 with `--journal gpt_rerun3`, `--backbone-journal haiku`, out `analysis/`; log `logs/analysis_final.log`; ≈ 6–7 h on 8 GB).
+- **22 Nov 2026 (02:40 local): ✅ final combined analysis complete** (RUNBOOK §7; 17 min this time, the 20 Nov run took ≈ 6 h; a pause/resume guard `scripts/guard_analysis.sh` was armed because the Mac was on battery, never triggered). Output `analysis/` (`tables.md`, `appendix.md` incl. A13, `per_cell.md`, `analysis.json`, `backbone_analysis.json`, 3 figures). **GPT-4o-mini numbers identical to `analysis_gpt_early/`** (`analysis.json` and `per_cell.md` byte-identical; `tables.md` differs only in Table 7's Haiku row). **Claude Haiku (A13, localized, target ASR / strict utility):** Original SAFE-Mem 29/91, A-MemGuard 15/85, MemLineage 17/91, LLM sanitiser 25/91, RandEC 29/91, C = M 0/66, **S 0/91**, SL 0/91, S2-ID 0/91. Table 7 Haiku row: S 0/91, best published MemLineage 17/91, best internal C 0/66; S − MemLineage target ASR −17 [−22, −11]; S − C strict utility +25 [+23, +27]. A13 hypotheses (descriptive, replication): H1 vs C ✓, H1 vs M ✓, H2 ✓, H3 ✓, H4 ✓ (S2-ID − S −7 [−12, −3]), H5 ✓; **H6 vs C ✗, H6 vs M ✗** (same pattern as GPT-4o-mini); secondary H5 relay target ASR ✗ (p 0.041). Haiku is less attack-prone without defence (29% vs 63% for GPT-4o-mini) but the ranking of methods is the same; S fails under Sybil k=4 / laundering r=1 (30–32% vs Original 29%) as with GPT.
+- **Paper-style result tables (22 Nov, owner asked for a PDF like a top-conference table):** `paper_tables/make_tables.py` reads only `analysis/analysis.json` and `backbone_analysis.json` and writes `tables.html` → `SAFE-Mem_results_tables.pdf` (Chrome print; no LaTeX on this Mac). Table 1 localized (target ASR, judge ASR, unaudited exposure, strict utility), Table 2 adaptive attacks (target ASR), Table 3 worst case, Table 4 hypotheses; both answer models; subscripts = change vs Original SAFE-Mem (green better / red worse), best per column in bold. Note: on Claude Haiku the lowest worst case is A-MemGuard 14.6 (utility 85), then MemLineage 16.7; on GPT-4o-mini MemLineage 43.8, then S2-ID 46.9.
+- **21 Nov 2026:** **Free go/no-go check of the proposed 'graded distrust' idea (S-G: cap a suspect's authority rung instead of removing; owner asked for a simple test before implementing). Result: NO-GO, not implemented.** Read-only, dev split v3 only (8 groups), cached replies mapped with the project's own `classifier_request` (0 cache misses, no API call, no code changed). (1) Question rungs: all 32 attack probes, all 200 utility probes and all 16 copy probes need only `description`; only the 32 principal probes need preference/attribute. (2) Stored claims: every external claim (258 attack, 526 benign-fact, 43 copies) is already `usable_as = description`; SAFE-Mem caps all external content at the lowest rung by design. So a rung cap cannot separate attacks from benign facts in this workload: it either blocks nothing or equals removal. Ideas still open: goal lineage (needs attack data that reuses goals), active boundary auditing (low novelty).
+- **21 Nov 2026:** **Free similarity check (owner approved): are uncaught attacks closer to caught seeds than benign facts are? Result: weak signal, not worth a method.** Read-only, dev split v3 (8 groups), stored MiniLM claim vectors, max cosine of each target/fact claim to any caught-seed claim. Medians: uncaught attacks 0.372 (n=32), benign facts 0.262 (n=192); AUC 0.73. Sanity: linked copies 1.000. Blocking at tau: 0.6 blocks 1/32 attacks, 0 benign lost; 0.5 blocks 7/32 (22%) for 6/192 (3%) benign lost; 0.35 blocks 59% for 23% lost. So a softer SL could at best take ~1/5 of attacks at small utility cost; the AUC is probably inflated, because the workload's benign facts are deliberately unlike attack targets. Script kept outside the repo (session scratchpad); no code, data or result changed, no API call.
+- **21 Nov 2026:** **Paper text check: Section 4 'Question and workload' (preview_main.pdf) verified against code and v4 data (read-only, no API call, no code or data changed).** The newest freeze (rev9) and `paid.sh` confirm P-B1, P-B2 (GPT-4o-mini) and P-B3 (Haiku) all use the v4 test split and its Stage-1 stores; v5 was never run. Confirmed: 102/3,241 reachable, 100 templates, 40 contributions and 35 probes per group, A/B two batches of 4 per context, U one batch of 2 per context, P no context/batch, external text `description@global`. Corrections for the paper: batches are provenance labels, not consecutive blocks (ingestion order is shuffled once per group; also fix the Figure 1 caption); B holds poison in the uninformative condition; copies, relays and principal statements are newly written; 74/960 test contributions yield zero claims (chunks are always stored); each store is built once and every condition is a relabelling (the three main conditions change contributor/batch labels; adaptive conditions may also change contexts, identities or audited items); Appendix A.1: one seed per context comes from the 102 reachable pool, and test reuses scored attacks (96 slots, 67 distinct cases). Re-check: all 256 seed and scored-attack texts (dev+test) equal their MPBench originals word for word (context and user query); `build_states` builds one store per group and attaches per-condition provenance afterwards. Corrected text and file-by-file record: `reports/PAPER_SECTION4_QUESTION_WORKLOAD_20261121.md`. Same check for 'Contents, conditions and audits' (all counts confirmed in all groups; fixes: tickets and 'scored attacks never audited' hold only in the three main conditions, since random detection can audit scored attacks and imperfect audits change tickets; relay repeats a seed of the other context; uninformative shuffles within each context; key stratum = 7 benign facts per group, 168 in test): `reports/PAPER_SECTION4_CONTENTS_CONDITIONS_AUDITS_20261121.txt`.
+- **22 Nov 2026:** **Paper plan written (free, no code or data changed):** `reports/PAPER_PLAN_20261122.md`: core story, claims C1-C5 and limits L1-L2 mapped to existing evidence, 8-page section budget, figure/table list, writing order (Haiku analysis first, then Section 4 for protocol v2, Results, Method, limits, Intro), and 4 open owner decisions (human judge annotators, fresh v5 test, how to present protocol v1, Overleaf source). P-B3 status at 00:41: 19/24 groups done, 0 errors, total spend $4.37.
+- **22 Nov 2026:** **Paper text check: Section 4 'Methods and settings' (free, read-only).** Checked against `dynamic/policies.py`, `dynamic/ledger.py`, `retrieval/adapter.py`, `workload/lineage.py`, `workload/sv2.py`, `workload/published.py`, `protocol_v2/pipeline.py`, `eval/judge.py`, `workload/transport.py`, protocol v2 §3/§10/§15 and a stored snapshot. Preview text described protocol v1; rewritten for the 11 v2 methods. Fixes: penalty rule made explicit (Beta(1,1), penalty = risk − 1/2, rank −0.5×penalty, withhold at 0.25 = two unsafe, no safe; one count per root); internal methods refill freed slots, published defenses filter without refill; GPT-4o-mini also does retention and conflict checks; Haiku answers in 8 cells, reasoning off, default temperature, GPT-4o-mini judge; SL/S2-ID designed after v1 test results; no-memory control is not part of v2. Appendix A.2 error: the judge uses 120 output tokens, not 4 (4 tokens is MemLineage's sensitivity classifier). Text: `reports/PAPER_SECTION4_METHODS_SETTINGS_20261122.txt`. Re-check: withholding needs two unsafe outcomes only when the scope has no safe outcome (one safe outcome raises it to five); R's withholding is per question (audit `use_id`); the hashed-before-test statement covers only R/C/M/S constants (SL's tau 0.8 came later); contributor gate = four unsafe in total plus two contexts that each meet the context gate; GPT-4o-mini also serves the published defenses' LLM calls. File updated.
+- **22 Nov 2026:** **Final re-check of Section 4 up to Metrics (free, read-only).** Question and workload: unchanged. Contents, conditions and audits: two fixes. (1) The unlinked relay repeats a seed of the second context and sits in that same context (all 32 groups); the old wording 'a seed of the other context' was misleading. (2) Only random-detection, boundary-verification and imperfect-audit conditions change the five tickets; shift, Sybil (oracle), laundering (oracle) and framing keep them (`adaptive.overlay_and_tickets`). Methods and settings: Haiku sentence now says 'for the eleven methods' (appendix methods were not run with Haiku). All three `.txt` files in `reports/` updated.
+- **22 Nov 2026:** **Paper text check: Section 4 'Metrics' (free, read-only).** Checked against `protocol_v2/analysis.py` (`_scores`, `group_values`, H1-H6 components), `workload/grading.py`, `workload/runner.py` (`exposure`, `_grade`), `protocol_v2/pipeline.py`, `eval/judge.py`, protocol v2 §5 and the probe carrier sets. Preview described v1. Fixes: v2 has no plain alias-match utility (strict utility everywhere); estimates are per-group rates averaged over groups (v1 pooled successes over probes); judge ASR (H1, H2) and target-specific ASR (main tables, H3, H4) are both primary; exposure counts only records of the probed contribution (seed + copy for copy probes); unaudited exposure excludes scored attacks audited themselves; key and innocent strict utility and relay exposure added; linked-copy and principal-control probes enter no v2 metric. Appendix A.3 must be updated the same way. Text: `reports/PAPER_SECTION4_METRICS_20261122.txt`.
+- **22 Nov 2026: paper tables PDF extended and checked (free, no analysis or data change).** Notes under Table 1 (what Original SAFE-Mem, R, C, M, S, SL, S2-ID, the published defences and each metric mean) and under Table 2 (attacks). Label fixes, also in the shared Claude Docs report: `launder_r4` is laundering **r=1** (not "r=4"), `launder_r3` is **r=.75**; `fp1` means **1 of 5 audits is a false positive** (not "1%"). New Part B (GPT-4o-mini only, from `analysis.json`): Sybil k=1/2/4/8 (oracle and random), laundering r=0…1, remaining attacks (no-signal, audit-aware shift, framing; target ASR and strict utility), harm to innocents, imperfect audits (localized, distributed, Sybil k=2, laundering r=.5), with a box explaining why Haiku ran on the 8 pre-registered cells only (cost ≈ 12×, over the $8 cap, 3-4 days). Fixes found in the full check: subscripts now use the printed (rounded) values; Table 4 H3 now shows the binding contrast (closest published defence: MemLineage −44 on GPT-4o-mini, A-MemGuard −15 on Haiku) instead of the first component (A-MemGuard −49). All 5 pages rendered and inspected; numbers spot-checked against `analysis/tables.md`.
+- **22 Nov 2026: paper tables PDF, Parts C and D added (free, no analysis or data change; 11 pages).** Part C: Table 1 with 95% CIs for both models (official Table 1 and A13), generalization (official Table 7), full hypothesis details for both models (official Table 8 and A13), and 3 new figures from `paper_tables/make_figures.py` (reads `analysis/*.json` only; colour-blind-safe): attack success vs usefulness (both models), Sybil-k sweep, laundering-r sweep. The old analysis PNGs are kept unchanged. Part D: official Tables 2, 2b, 3-6 (incl. exposure and utility panels) and Appendix A1-A7, copied verbatim from `analysis/tables.md` and `appendix.md` (tables over 16 columns printed transposed, values unchanged); A8 (11,808 per-cell rows) is referenced, not printed; cost and runtime table (P-B2 $3.2507, P-B3 $1.3439, total $4.5946). All pages rendered and inspected.
+- **22 Nov 2026: Parts C and D removed from the paper tables PDF again (owner: too complicated); only Figure 1 kept.** Figure 1 (attack success vs usefulness, both models, `paper_tables/make_figures.py`) now sits right after Table 1. The Figure 2/3 code and SVGs were removed. PDF back to 5 pages (Part A + Part B). The full official tables stay in `analysis/tables.md` and `appendix.md`.
+- **22 Nov 2026: `CLAUDE_MEMORY_TRANSFER.md` updated for a new chat (free, docs only).** New TL;DR, rules (simple language, stop/start, battery, privacy, files not to commit), freeze revisions 6-9, §8 current status (all runs done, commit `0304417`, results PDF, Docs report, paper plan, label pitfalls), new §8b final results for both models, budget ($4.5946 Option B, ≈ $22 left), integrity commands for rev9, open items and limitations with how to defend them. A Claude memory note `option-b-finished-status` points new chats to this file.
+- **22 Nov 2026: `CLAUDE_MEMORY_TRANSFER.md` §2.5 added (docs only):** the paper story, claims C1-C5 and limits L1-L2 with final numbers for both models, novelty position, ideas tried and rejected (graded distrust NO-GO, similarity signal weak, S2-BS), planned paper structure. Notes that the paper plan's H3 number (−49 vs A-MemGuard) should be the binding −44 vs MemLineage.
+- **22 Nov 2026: `CLAUDE_MEMORY_TRANSFER.md` §12b added (docs only): code reading guide**: which file to open for the method (policies, ledger `active_scopes`, lineage, sv2, published, retrieval adapter), data and attacks (generator, adaptive, registry), the run (run_protocol_v2, pipeline, two_phase, backbone, transport/budget, judge/grading, freeze, run scripts), the numbers (analysis.py, analysis outputs and JSON shape, paper_tables scripts) and tests. Paths and line numbers checked against the code.
+
 ### 2026-11-20 (Windows machine) — LoCoMo-v1.2 technical restart: fixes, free tests, mock, re-freeze (free; no paid call)
 
 - **Asked:** after the S2 stop, fix the budget-ledger failures, the pipeline stop check and the Haiku judge check. Keep every method, dataset, attack, audit rule, hypothesis and metric unchanged. Preserve all earlier records, run free tests and a full mock, re-freeze, and report for approval. Make no paid calls.
