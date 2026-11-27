@@ -1,0 +1,36 @@
+% Shared symbols for the three introductory figures (drawn 25 Nov 2026).
+% Conceptual toy examples only. Encoding used in all three figures:
+%   red circle = unsafe record, green circle = benign record, dark grey = principal,
+%   black ring = audited, dashed grey circle = withheld from the agent,
+%   purple = the main method S, amber = exploratory extensions (SL, S2-ID).
+% Behaviours depicted were checked against src/ams/research/workload/lineage.py
+% (SL), sv2.py (S2-ID gate) and Section 3 / Appendix C of the paper.
+\definecolor{iPoison}{HTML}{D1495B}
+\definecolor{iBenign}{HTML}{3A9D78}
+\definecolor{iOurs}{HTML}{5B4BB7}
+\definecolor{iOursBg}{HTML}{F1EFFA}
+\definecolor{iExt}{HTML}{C77D0A}
+\definecolor{iExtBg}{HTML}{FDF3E0}
+\definecolor{iGrey}{HTML}{9AA0A6}
+\definecolor{iPrin}{HTML}{4A4F57}
+\newcommand{\dsz}{0.42}
+\newcommand{\dotR}[1]{\fill[iPoison] (#1) circle (\dsz/2);}
+\newcommand{\dotG}[1]{\fill[iBenign] (#1) circle (\dsz/2);}
+\newcommand{\dotP}[1]{\fill[iPrin] (#1) circle (\dsz/2);}
+\newcommand{\dotW}[1]{\draw[iGrey, dashed, line width=0.7pt, fill=white] (#1) circle (\dsz/2);}
+\newcommand{\dotA}[1]{\fill[iPoison] (#1) circle (\dsz/2); \draw[black, line width=0.9pt] (#1) circle (\dsz/2+0.05);}
+\newcommand{\dotV}[1]{\draw[iGrey, dashed, line width=0.7pt, fill=white] (#1) circle (\dsz/2); \draw[black, line width=0.9pt] (#1) circle (\dsz/2+0.05);}
+% batch of four circles at (0,0) of the current scope: states top-left, top-right, bottom-left, bottom-right
+% states: R unsafe, G benign, W withheld, A audited unsafe, V audited and withheld
+\newcommand{\batch}[5]{%
+  \csname dot#1\endcsname{-0.3,0.3}  \csname dot#2\endcsname{0.3,0.3}
+  \csname dot#3\endcsname{-0.3,-0.3} \csname dot#4\endcsname{0.3,-0.3}
+  \draw[#5, rounded corners=3pt, line width=0.7pt] (-0.62,-0.62) rectangle (0.62,0.62);}
+\newcommand{\audit}[1]{% magnifier at point #1
+  \draw[black!80, line width=1.1pt] (#1) circle (0.15);
+  \draw[black!85, line width=1.7pt, line cap=round] ($(#1)+(-0.105,-0.105)$) -- ($(#1)+(-0.26,-0.26)$);}
+\tikzset{
+  flow/.style={->, line width=1pt, iGrey!90!black},
+  ttl/.style={font=\sffamily\footnotesize\bfseries},
+  sub/.style={font=\sffamily\scriptsize, text=black!60},
+}

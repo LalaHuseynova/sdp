@@ -1,0 +1,166 @@
+% ===========================================================================
+% Figure 1 (motivation), redesign v2, 25 Nov 2026, second pass (compact). The earlier abstract-circle
+% version is kept as fig_intro_problem_v1_kept_20261125.tex (unused).
+% Fictional workplace-assistant scenario (not the content of the method figure):
+%   one external contributor ("Vendor contact") in ONE context sends two arrival
+%   batches. Monday: two audited-unsafe emails (two distinct incident roots) and one
+%   poisoned email that is never audited. Thursday: benign emails.
+% Rows (all checked offline with the frozen Policy.decide on this exact ledger,
+% see verify_fig1_scenario.py):
+%   no propagation (R)   withholds the 2 audited emails only
+%   selective (S, ours)  batch scope supported only -> withholds Monday, keeps Thursday
+%   whole contributor    (C and M coincide here: one context) withholds both batches
+% Marks follow Figure 2: ring/magnifier = audited, dashed = withheld, purple = S.
+% No equations, thresholds or method letters appear in the drawing.
+% ===========================================================================
+\begingroup
+\sffamily
+\begin{tikzpicture}[font=\sffamily\footnotesize, >={Stealth[length=2.2mm]}, line cap=round]
+\input{figures/intro/intro_style}
+\definecolor{rNo}{HTML}{6C7A89}
+\definecolor{rNoBg}{HTML}{EEF1F4}
+\definecolor{rOk}{HTML}{3A9D78}
+\definecolor{rBad}{HTML}{D1495B}%
+% ---------- icons ----------------------------------------------------------
+\newcommand{\env}[4]{% cx, cy, width, draw options
+  \draw[#4, line width=0.6pt, rounded corners=0.5pt] (#1-#3/2,#2-0.35*#3) rectangle (#1+#3/2,#2+0.35*#3);
+  \draw[#4, line width=0.6pt] (#1-#3/2,#2+0.35*#3) -- (#1,#2) -- (#1+#3/2,#2+0.35*#3);}
+% simple glyphs (explicit coordinates are written out below to keep TeX arithmetic trivial)
+\newcommand{\XX}[3]{\draw[#3, line width=1.5pt] ($(#1)+(-#2,-#2)$) -- ($(#1)+(#2,#2)$) ($(#1)+(-#2,#2)$) -- ($(#1)+(#2,-#2)$);}
+\newcommand{\VV}[3]{\draw[#3, line width=1.6pt, line join=round] ($(#1)+(-1.1*#2,0)$) -- ($(#1)+(-0.3*#2,-0.9*#2)$) -- ($(#1)+(1.1*#2,1.0*#2)$);}
+\newcommand{\lensx}[1]{% magnifier at point #1 (lens centre)
+  \draw[black!85, line width=1.0pt, fill=white] (#1) circle (0.14);
+  \draw[black!85, line width=1.6pt] ($(#1)+(-0.10,-0.10)$) -- ($(#1)+(-0.25,-0.25)$);}
+\newcommand{\robot}[3]{% x, y, scale
+  \begin{scope}[shift={(#1,#2)}, scale=#3]
+    \draw[black!75, line width=0.8pt, fill=white, rounded corners=2pt] (-0.3,0) rectangle (0.3,0.42);
+    \fill[black!75] (-0.13,0.22) circle (0.045) (0.13,0.22) circle (0.045);
+    \draw[black!75, line width=0.8pt] (0,0.42) -- (0,0.56); \fill[black!75] (0,0.58) circle (0.04);
+    \draw[black!75, line width=0.8pt, fill=white, rounded corners=2pt] (-0.2,-0.3) rectangle (0.2,-0.05);
+  \end{scope}}
+\newcommand{\store}[3]{% x, y, scale: memory store (cylinder)
+  \begin{scope}[shift={(#1,#2)}, scale=#3]
+    \draw[black!75, line width=0.8pt, fill=white] (-0.3,0.22) -- (-0.3,-0.22) arc[start angle=180, end angle=360, x radius=0.3, y radius=0.1] -- (0.3,0.22);
+    \draw[black!75, line width=0.8pt, fill=white] (0,0.22) ellipse [x radius=0.3, y radius=0.1];
+    \draw[black!60, line width=0.6pt] (-0.3,0.0) arc[start angle=180, end angle=360, x radius=0.3, y radius=0.1];
+  \end{scope}}
+\newcommand{\person}[3]{% x, y, scale: auditor
+  \begin{scope}[shift={(#1,#2)}, scale=#3]
+    \draw[black!75, line width=0.8pt, fill=white] (0,0.3) circle (0.13);
+    \draw[black!75, line width=0.8pt, fill=white] (-0.24,-0.12) arc[start angle=180, end angle=0, radius=0.24] -- cycle;
+  \end{scope}}
+\newcommand{\ticket}[2]{% x, y
+  \draw[black!70, line width=0.7pt, fill=white, rounded corners=1pt] (#1-0.22,#2-0.13) rectangle (#1+0.22,#2+0.13);
+  \draw[black!45, dashed, line width=0.5pt] (#1+0.07,#2-0.13) -- (#1+0.07,#2+0.13);}
+\newcommand{\chipok}[4]{% x(left), y(centre), Q label, text
+  \draw[rOk, fill=rOk!10, rounded corners=3pt, line width=0.8pt] (#1,#2-0.21) rectangle (#1+3.5,#2+0.21);
+  \node[anchor=west, font=\sffamily\scriptsize\bfseries, text=black!60] at (#1+0.1,#2) {#3};
+  \VV{#1+0.78,#2}{0.1}{rOk}
+  \node[anchor=west, text=black!85, font=\sffamily\scriptsize] at (#1+1.02,#2) {#4};}
+\newcommand{\chipbad}[4]{%
+  \draw[rBad, fill=rBad!10, rounded corners=3pt, line width=0.8pt] (#1,#2-0.21) rectangle (#1+3.5,#2+0.21);
+  \node[anchor=west, font=\sffamily\scriptsize\bfseries, text=black!60] at (#1+0.1,#2) {#3};
+  \XX{#1+0.78,#2}{0.09}{rBad}
+  \node[anchor=west, text=rBad!70!black, font=\sffamily\scriptsize] at (#1+1.02,#2) {#4};}
+% mini email of a stage-3 batch: x, y, state (A available, W withheld), audited (1/0); the audit mark sits above the envelope
+\newcommand{\mini}[4]{%
+  \ifx#3A \env{#1}{#2-0.07}{0.36}{black!70, fill=white}\else \env{#1}{#2-0.07}{0.36}{iGrey!85!black, dashed, fill=white}\fi
+  \ifnum#4=1 \XX{#1,#2+0.26}{0.055}{rBad}\fi}
+
+% ---------- stage headers (one baseline, centred over each column) ----------------
+\tikzset{hd/.style={font=\sffamily\footnotesize\bfseries, anchor=south, align=center}}
+\node[hd] at (2.3,5.3) {1. Memory is written};
+\node[hd] at (5.6,5.3) {2. A few items\\are audited};
+\node[hd] at (12.2,5.3) {3. Distrust spreads};
+\node[hd] at (16.0,5.3) {4. Agent's answer};
+
+% ---------- stages 1 and 2 (shared by all three rows) ----------------------------
+\fill[iGrey!10, rounded corners=4pt] (0,0.05) rectangle (4.6,5.05);
+\fill[iGrey!10, rounded corners=4pt] (4.75,0.05) rectangle (6.45,5.05);
+% stage 1: vendor (envelope) -> the agent's memory store, zoomed into the two batches
+\env{0.95}{4.2}{0.5}{black!75, fill=white}
+\node[anchor=south, align=center, font=\sffamily\scriptsize] at (0.95,4.45) {Vendor contact\\(external)};
+\draw[->, black!70, line width=0.9pt] (1.28,4.2) -- (1.95,4.2);
+\store{2.35}{4.2}{1.0}
+\robot{3.6}{4.12}{1.0}
+\draw[<->, black!70, line width=0.9pt] (2.75,4.2) -- (3.22,4.2);
+\draw[iGrey, dashed, line width=0.7pt] (2.2,3.88) -- (0.1,3.58);
+\draw[iGrey, dashed, line width=0.7pt] (2.5,3.88) -- (4.5,3.58);
+\draw[black!30, rounded corners=3pt, fill=white] (0.1,0.12) rectangle (4.5,3.58);
+% Monday batch (poisoned): two audited emails, one never audited
+\draw[rBad!50, rounded corners=3pt, fill=rBad!7] (0.2,1.8) rectangle (4.4,3.48);
+\node[anchor=west, font=\sffamily\scriptsize\bfseries] at (0.32,3.33) {Monday's emails};
+\foreach \y in {3.0, 2.62}{
+  \env{0.65}{\y}{0.38}{black!70, fill=white}
+  \lensx{1.3,\y+0.02}  \XX{1.7,\y+0.02}{0.1}{rBad}}
+\env{0.65}{2.1}{0.38}{black!70, fill=white}
+\node[anchor=west, text width=2.45cm, font=\sffamily\scriptsize\itshape, align=left] at (1.0,2.1) {``Vendor payments now go to Halvex Ltd''};
+\node[draw=black!55, dashed, rounded corners=2pt, font=\sffamily\scriptsize, inner sep=2pt, fill=white] at (3.88,2.4) {not audited};
+% Thursday batch
+\draw[black!35, rounded corners=3pt, fill=white] (0.2,0.22) rectangle (4.4,1.68);
+\node[anchor=west, font=\sffamily\scriptsize\bfseries] at (0.32,1.53) {Thursday's emails};
+\env{0.65}{1.13}{0.38}{black!70, fill=white}
+\node[anchor=west, text width=3.1cm, font=\sffamily\scriptsize\itshape, align=left] at (1.0,1.13) {``Design review moved to Fri 10:00''};
+\env{0.65}{0.57}{0.38}{black!70, fill=white}  \env{1.25}{0.57}{0.38}{black!70, fill=white}
+
+% stage 2: the auditor marks the two Monday emails (arrows end at their audit marks)
+\person{5.6}{2.85}{1.0}
+\lensx{6.1,3.2}
+\draw[->, black!80, line width=0.9pt] (5.25,2.98) -- (1.95,3.02);
+\draw[->, black!80, line width=0.9pt] (5.25,2.74) -- (1.95,2.64);
+\ticket{5.25}{1.85} \ticket{5.8}{1.85}
+\node[align=center, font=\sffamily\scriptsize] at (5.6,1.3) {2 audits\\limited budget};
+
+% ---------- one connector from stage 2 that fans out into the three rows -----------
+\draw[black!80, line width=0.9pt] (6.45,4.2) -- (7.5,4.2) -- (7.5,1.035);
+\foreach \y in {3.375, 2.205, 1.035}{\draw[->, black!80, line width=0.9pt] (7.5,\y) -- (7.88,\y);}
+
+% ---------- gradient arrow beside the rows: how far distrust spreads -----------------
+\shade[top color=black!8, bottom color=black!80] (6.88,0.7) rectangle (7.06,3.75);
+\fill[black!80] (6.82,0.7) -- (7.12,0.7) -- (6.97,0.42) -- cycle;
+\node[font=\sffamily\scriptsize, text=black!70, anchor=south] at (6.97,3.8) {less};
+\node[font=\sffamily\scriptsize, text=black!70, anchor=north] at (6.97,0.4) {more};
+\node[font=\sffamily\scriptsize\bfseries, text=black!75, rotate=90] at (6.66,2.2) {How far distrust spreads};
+
+% ---------- questions (stage 4 header band) ----------------------------------------------
+\robot{14.5}{4.45}{0.85}
+\node[draw=black!45, rounded corners=3pt, fill=white, text width=2.7cm, font=\sffamily\scriptsize, inner sep=2pt, align=left, anchor=west] at (14.9,4.9) {\textbf{Q1} Where do I send the vendor payment?};
+\node[draw=black!45, rounded corners=3pt, fill=white, text width=2.7cm, font=\sffamily\scriptsize, inner sep=2pt, align=left, anchor=west] at (14.9,4.25) {\textbf{Q2} When is the design review?};
+
+\newcommand{\rowframe}[4]{% yc, line colour, fill colour, label
+  \draw[#2, fill=#3, rounded corners=4pt, line width=0.9pt] (7.9,#1-0.52) rectangle (10.3,#1+0.52);
+  \node[text=#2!85!black, font=\sffamily\scriptsize\bfseries, align=center] at (9.1,#1) {#4};
+  \draw[->, black!85, line width=0.9pt] (10.32,#1) -- (10.58,#1);
+  \draw[black!40, rounded corners=4pt, fill=white, line width=0.8pt] (10.6,#1-0.52) rectangle (13.85,#1+0.52);
+  \draw[->, black!85, line width=0.9pt] (13.87,#1) -- (14.12,#1);
+  \draw[black!40, rounded corners=4pt, fill=white, line width=0.8pt] (14.15,#1-0.52) rectangle (17.8,#1+0.52);}
+\newcommand{\minibox}[1]{% yc
+  \draw[rBad!40, fill=rBad!7, rounded corners=2pt] (10.7,#1-0.42) rectangle (12.15,#1+0.42);
+  \draw[black!30, rounded corners=2pt] (12.25,#1-0.42) rectangle (13.7,#1+0.42);}
+\newcommand{\threemini}[4]{% yc, states of the 3 Monday emails; Thursday emails follow in \thumini
+  \mini{10.98}{#1}{#2}{1} \mini{11.42}{#1}{#3}{1} \mini{11.86}{#1}{#4}{0}}
+\newcommand{\thumini}[4]{\mini{12.53}{#1}{#2}{0} \mini{12.97}{#1}{#3}{0} \mini{13.41}{#1}{#4}{0}}
+% ---- row 1: no propagation (only the two audited emails are withheld)
+\rowframe{3.375}{rNo}{rNoBg}{No propagation}
+\minibox{3.375} \threemini{3.375}{W}{W}{A} \thumini{3.375}{A}{A}{A}
+\chipbad{14.25}{3.62}{Q1}{Send it to Halvex Ltd}
+\chipok{14.25}{3.13}{Q2}{Fri 10:00}
+% ---- row 2: selective propagation (ours): the batch the incidents span
+\rowframe{2.205}{iOurs}{iOursBg}{Selective\\propagation (ours)}
+\minibox{2.205}
+\fill[iOurs, fill opacity=0.14, draw=iOurs, draw opacity=1, rounded corners=2pt, line width=1pt] (10.7,1.785) rectangle (12.15,2.625);
+\threemini{2.205}{W}{W}{W} \thumini{2.205}{A}{A}{A}
+\chipok{14.25}{2.45}{Q1}{attack blocked}
+\chipok{14.25}{1.96}{Q2}{Fri 10:00}
+% ---- row 3: distrust the whole contributor
+\rowframe{1.035}{rNo}{rNoBg}{Distrust whole\\contributor}
+\minibox{1.035} \threemini{1.035}{W}{W}{W} \thumini{1.035}{W}{W}{W}
+\chipok{14.25}{1.28}{Q1}{attack blocked}
+\chipbad{14.25}{0.79}{Q2}{note lost}
+% ---- legend under the stage 3 column
+\env{10.8}{0.2}{0.26}{black!70, fill=white}
+\node[anchor=west, font=\sffamily\scriptsize, text=black!65] at (10.98,0.2) {available to agent};
+\env{13.5}{0.2}{0.26}{iGrey!85!black, dashed, fill=white}
+\node[anchor=west, font=\sffamily\scriptsize, text=black!65] at (13.68,0.2) {withheld};
+\end{tikzpicture}
+\endgroup

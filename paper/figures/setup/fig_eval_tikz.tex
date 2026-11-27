@@ -1,0 +1,244 @@
+% ===========================================================================
+% Figure 2 (evaluation setup), redesigned 22 Nov 2026 as a visual pipeline.
+% Replaces fig_setup_tikz.tex (kept on disk, unused). Every element is checked
+% against the frozen inputs:
+%   memory layout -> research_data/controlled_workload_v4_20261108 (localized
+%                    overlay; A, B: 2 contexts x 2 batches x 4 items; U: 2 items
+%                    per context, relay in context Y; P: 4 notes, no context);
+%                    A's 2 audited seeds + 2 scored attacks share batch b1 of each
+%                    context; linked copy in A's X/b2; 1 audited-safe B item.
+%   audits        -> 5 tickets per group (4 unsafe A seeds + 1 safe B item);
+%                    random auditor: 2 of A's 4 attack items per context
+%                    (src/ams/research/workload/adaptive.py docstring, l. 24-26).
+%   retrieval     -> SAFE-Mem admission, then the method; published defences
+%                    filter SAFE-Mem's retrieval without audit access
+%                    (PROTOCOL_V2_OPTION_B_20261115.md s3).
+%   answers/judge -> GPT-4o-mini all 62 cells, Claude Haiku 8 cells; judge
+%                    GPT-4o-mini (s10, s15 rev 8/9).
+%   metrics       -> s5: ASR_J judge; ASR_T judge + target restated; U_s correct
+%                    alias + fact in context (no judge); exposure X_u, X_f on the
+%                    retrieved context (no LLM).
+%   conditions    -> s4: placements, Sybil, own-batch Sybil, laundering, audit-
+%                    aware shift, framing, cohabit; oracle / random / imperfect.
+% ===========================================================================
+\begingroup
+\sffamily
+\definecolor{evA}{HTML}{C0392B}
+\definecolor{evB}{HTML}{1F6FB2}
+\definecolor{evU}{HTML}{8A8F96}
+\definecolor{evP}{HTML}{333333}
+\definecolor{evSafe}{HTML}{2E8B57}
+\definecolor{evOurs}{HTML}{5B4BB7}
+\definecolor{evOursBg}{HTML}{EEEBFA}
+\definecolor{evPubBg}{HTML}{E8F1FA}
+\definecolor{evBg}{HTML}{F4F4F4}
+\begin{tikzpicture}[
+  font=\sffamily\scriptsize,
+  >={Stealth[length=1.7mm]},
+  flow/.style={->, line width=0.8pt, black!70},
+  thin/.style={->, line width=0.55pt, black!55},
+  rec/.style={circle, minimum size=1.8mm, inner sep=0pt, line width=0.5pt},
+  ben/.style={rec, fill=#1!45, draw=#1!80},
+  seed/.style={rec, fill=evA, draw=black, line width=0.9pt},
+  atk/.style={rec, fill=white, draw=evA, line width=0.9pt},
+  okb/.style={rec, fill=evSafe, draw=black, line width=0.9pt},
+  cpy/.style={rec, fill=white, draw=evA, line width=0.8pt, densely dotted},
+  cell/.style={draw=black!30, fill=white, rounded corners=1pt, minimum width=0.76cm, minimum height=0.36cm, inner sep=0pt},
+  stage/.style={circle, fill=black!80, text=white, font=\sffamily\scriptsize\bfseries, inner sep=0.6pt, minimum size=3.2mm},
+  sthead/.style={font=\sffamily\footnotesize\bfseries, anchor=west},
+  panel/.style={font=\sffamily\footnotesize\bfseries, anchor=west},
+  box/.style={draw=black!45, rounded corners=2pt, align=center, inner sep=2.5pt},
+  sub/.style={font=\sffamily\scriptsize\bfseries, text=black!75},
+]
+% ---------- icons ----------------------------------------------------------
+\newcommand{\evPerson}[3]{% at, colour, scale
+  \fill[#2] ($(#1)+(0,0.15*#3)$) circle ({0.075*#3});
+  \fill[#2] ($(#1)+(-0.12*#3,-0.10*#3)$) arc[start angle=180, end angle=0, radius={0.12*#3}] -- cycle;}
+\newcommand{\evLens}[2]{% at, scale
+  \draw[black!80, line width=1.1pt] (#1) circle ({0.17*#2});
+  \draw[black!80, line width=1.9pt, line cap=round] ($(#1)+(0.12*#2,-0.12*#2)$) -- ($(#1)+(0.29*#2,-0.29*#2)$);}
+\newcommand{\evTicket}[2]{% at, unsafe|safe
+  \ifx#2u\def\evTc{evA}\else\def\evTc{evSafe}\fi
+  \node[draw=\evTc, fill=\evTc!12, rounded corners=1pt, minimum width=2.9mm, minimum height=3.6mm, inner sep=0pt, line width=0.6pt] at (#1) {};
+  \ifx#2u
+    \draw[evA, line width=0.9pt] ($(#1)+(-0.06,-0.06)$) -- ($(#1)+(0.06,0.06)$) ($(#1)+(-0.06,0.06)$) -- ($(#1)+(0.06,-0.06)$);
+  \else
+    \draw[evSafe, line width=0.9pt] ($(#1)+(-0.07,0)$) -- ($(#1)+(-0.02,-0.06)$) -- ($(#1)+(0.07,0.07)$);
+  \fi}
+\newcommand{\evStage}[3]{% at, number, label
+  \node[stage] at (#1) {#2}; \node[sthead] at ($(#1)+(0.17,0)$) {#3};}
+
+% ======================= (a) pipeline ======================================
+\node[panel] at (-0.05,5.25) {(a) One evaluation run: one group, one condition, one method};
+
+% ---- 1 memory -------------------------------------------------------------
+\evStage{0.05,4.82}{1}{Shared memory}
+\node[draw=black!35, fill=evBg, rounded corners=3pt, minimum width=3.55cm, minimum height=2.95cm] (mem) at (2.38,2.88) {};
+\node[text=black!70] at (1.49,4.12) {context X};
+\node[text=black!70] at (3.27,4.12) {context Y};
+\foreach \x/\l in {1.09/b1, 1.89/b2, 2.87/b1, 3.67/b2}{ \node[text=black!50] at (\x,3.88) {\l}; }
+\draw[black!30, dashed] (2.38,4.25) -- (2.38,1.62);
+% contributors
+\foreach \y/\c/\l in {3.52/evA/A, 2.97/evB/B, 2.42/evU/U, 1.87/evP/P}{
+  \evPerson{0.12,\y}{\c}{1}
+  \node[font=\sffamily\scriptsize\bfseries, text=\c] at (0.40,\y) {\l};
+}
+% A: b1 = 2 audited seeds + 2 scored attacks (both contexts); X/b2 benign + linked copy; Y/b2 benign
+\foreach \x in {1.09, 2.87}{
+  \node[cell] at (\x,3.52) {};
+  \node[seed] at (\x-0.255,3.52) {}; \node[seed] at (\x-0.085,3.52) {};
+  \node[atk]  at (\x+0.085,3.52) {}; \node[atk]  at (\x+0.255,3.52) {};
+}
+\node[cell] at (1.89,3.52) {};
+\foreach \dx in {-0.255,-0.085,0.085}{ \node[ben=evA] at (1.89+\dx,3.52) {}; }
+\node[cpy] at (1.89+0.255,3.52) {};
+\node[cell] at (3.67,3.52) {};
+\foreach \dx in {-0.255,-0.085,0.085,0.255}{ \node[ben=evA] at (3.67+\dx,3.52) {}; }
+% B: 4 benign per batch, one audited safe
+\foreach \x in {1.09,1.89,2.87,3.67}{ \node[cell] at (\x,2.97) {};
+  \foreach \dx in {-0.255,-0.085,0.085,0.255}{ \node[ben=evB] at (\x+\dx,2.97) {}; } }
+\node[okb] at (1.89-0.255,2.97) {};
+% U: 2 per context, relay in Y
+\node[cell, minimum width=0.46cm] at (1.49,2.42) {};
+\node[ben=evU] at (1.49-0.085,2.42) {}; \node[ben=evU] at (1.49+0.085,2.42) {};
+\node[cell, minimum width=0.46cm] at (3.27,2.42) {};
+\node[ben=evU] at (3.27-0.085,2.42) {}; \node[cpy] at (3.27+0.085,2.42) {};
+% P: 4 notes, no context
+\node[cell] at (2.38,1.87) {};
+\foreach \dx in {-0.255,-0.085,0.085,0.255}{ \node[ben=evP] at (2.38+\dx,1.87) {}; }
+
+% ---- 2 audit --------------------------------------------------------------
+\evStage{4.55,4.82}{2}{Audit}
+\evLens{5.20,2.80}{1}
+\draw[thin, dashed] (4.18,2.80) -- (4.95,2.80);
+\foreach \i in {0,1,2,3}{ \evTicket{4.72+0.33*\i,2.15}{u} }
+\evTicket{4.72+0.33*4,2.15}{s}
+\draw[thin] (5.20,2.54) -- (5.20,2.38);
+\node[text=black!65, align=center] at (5.38,1.70) {5 verdicts\\[-1pt]per group};
+
+% ---- 3 retrieve + defend --------------------------------------------------
+\evStage{6.70,4.82}{3}{Retrieve and defend}
+\node[box, fill=white, minimum width=1.6cm] (q) at (7.25,4.17) {question};
+\node[box, fill=black!8, minimum width=3.2cm, minimum height=0.5cm] (ret) at (8.32,3.42) {SAFE-Mem retrieval};
+\draw[flow] (mem.east |- ret) -- (ret.west);
+\draw[flow] (q.south) -- (q.south |- ret.north);
+\node[box, fill=evOursBg, draw=evOurs, minimum width=3.2cm, align=center] (aud) at (8.32,2.55)
+  {\textbf{uses the audits}\\[-1pt]\armR{}, \armC{}, \armM{}, \textcolor{evOurs}{\textbf{\armS{}}}, \armS{}L, \armS{}2-ID};
+\node[box, fill=evPubBg, draw=evB, minimum width=3.2cm, align=center] (pub) at (8.32,1.68)
+  {\textbf{no audit access}\\[-1pt]A-MemGuard, MemLineage, \dots};
+\draw[flow] (ret.south) -- (aud.north);
+\node[text=black!60, fill=white, inner sep=1pt] at (8.32,2.12) {or};
+\draw[flow] (6.20,2.15) -- (6.42,2.15) |- (aud.west);
+% retrieved context
+\node[draw=black!45, fill=white, rounded corners=2pt, minimum width=0.62cm, minimum height=1.35cm] (ctx) at (10.55,2.30) {};
+\foreach \y in {2.75,2.50,2.25,2.00}{ \node[ben=evB] at (10.55,\y) {}; }
+\node[seed, fill=evA!25, draw=evA!60] (wd) at (10.55,1.76) {};
+\draw[evA, line width=0.9pt] (10.43,1.64) -- (10.67,1.88) (10.43,1.88) -- (10.67,1.64);
+\node[font=\sffamily\scriptsize\bfseries] at (10.55,3.18) {context};
+\draw[flow] (aud.east) -- ($(ctx.west |- aud.east)$);
+\draw[flow] (pub.east) -- ($(ctx.west |- pub.east)$);
+
+% ---- 4 answer -------------------------------------------------------------
+\evStage{11.18,4.82}{4}{Answer}
+\node[draw=black!70, fill=black!80, text=white, rounded corners=3pt, minimum width=1.05cm, minimum height=0.78cm, font=\sffamily\footnotesize\bfseries] (llm) at (12.05,2.30) {LLM};
+\foreach \d in {-0.22,0,0.22}{ \draw[black!70, line width=0.8pt] (12.05+\d,2.69) -- (12.05+\d,2.80) (12.05+\d,1.91) -- (12.05+\d,1.80); }
+\node[align=center, text=black!75] at (12.05,1.42) {GPT-4o-mini\\[-1pt]{\color{black!55}Claude Haiku}};
+\draw[flow] (ctx.east) -- (llm.west);
+\draw[flow] (q.east) -- (12.05,4.17) -- (12.05,2.80);
+
+% ---- 5 score --------------------------------------------------------------
+\evStage{13.10,4.82}{5}{Score}
+\node[box, draw=evA, fill=evA!6, align=left, anchor=west, minimum height=1.0cm] (sA) at (13.15,3.18) {%
+  \textcolor{evA}{\textbf{attack question}}\\
+  judge: obeys the attack? \hfill $\asrJ\!\downarrow$\\
+  \quad and restates its target \hfill $\asrT\!\downarrow$};
+\node[box, draw=evSafe, fill=evSafe!7, align=left, anchor=west, minimum height=0.75cm, text width=3.25cm] (sU) at (13.15,1.82) {%
+  \textcolor{evSafe}{\textbf{utility question}}\\
+  correct, fact in context \hfill $\Us\!\uparrow$};
+\draw[flow] (llm.east) -- ++(0.2,0) |- (sA.west);
+\draw[flow] (llm.east) -- ++(0.2,0) |- (sU.west);
+% exposure (no LLM)
+\node[box, fill=white, draw=black!45, dashed, anchor=west, align=left] (exp) at (13.15,0.98) {%
+  \textbf{exposure} (no LLM): attack target $\Xu\!\downarrow$, fact $\Xf\!\uparrow$};
+\draw[thin, dashed] (ctx.south) |- (exp.west);
+
+% legend
+\node[seed] (k1) at (0.20,0.66) {}; \node[anchor=west] at (0.30,0.66) {audited seed (unsafe)};
+\node[atk] at (3.05,0.66) {}; \node[anchor=west] at (3.15,0.66) {scored attack (unaudited)};
+\node[cpy] at (6.35,0.66) {}; \node[anchor=west] at (6.45,0.66) {copy / relay};
+\node[okb] at (8.15,0.66) {}; \node[anchor=west] at (8.25,0.66) {audited safe};
+\node[ben=evB] at (9.95,0.66) {}; \node[anchor=west] at (10.05,0.66) {benign fact};
+\draw[evA, line width=0.9pt] (11.63,0.54) -- (11.87,0.78) (11.63,0.78) -- (11.87,0.54);
+\node[anchor=west] at (11.92,0.66) {withheld};
+
+% ======================= (b) what varies ===================================
+\draw[black!20] (-0.05,0.38) -- (17.05,0.38);
+\node[panel] at (-0.05,0.08) {(b) Varied across the 62 cells (24 groups each)};
+
+% (b1) placement
+\node[sub, anchor=west] at (0.0,-0.35) {where A's attacks sit};
+\newcommand{\evMini}[2]{% at (top-left of 2x2 grid), pattern code
+  \foreach \r/\c in {0/evA,1/evB}{ \foreach \b in {0,1}{
+    \node[draw=black!30, fill=white, rounded corners=0.8pt, minimum width=0.5cm, minimum height=0.26cm, inner sep=0pt] at ($(#1)+(0.27+0.54*\b,-0.15-0.31*\r)$) {}; } }
+  #2}
+\newcommand{\evDot}[3]{\node[rec, minimum size=1.35mm, #3] at ($(#1)+(#2)$) {};}
+% localized: A b1 holds the 4 attack items
+\evMini{0.10,-0.62}{
+  \foreach \i in {0,1}{ \evDot{0.10,-0.62}{0.12+0.1*\i,-0.15}{fill=evA,draw=black,line width=0.6pt} }
+  \foreach \i in {2,3}{ \evDot{0.10,-0.62}{0.12+0.1*\i,-0.15}{fill=white,draw=evA,line width=0.7pt} } }
+\node at (0.64,-1.45) {localized};
+% distributed: split over b1 and b2
+\evMini{1.55,-0.62}{
+  \evDot{1.55,-0.62}{0.17,-0.15}{fill=evA,draw=black,line width=0.6pt}
+  \evDot{1.55,-0.62}{0.37,-0.15}{fill=white,draw=evA,line width=0.7pt}
+  \evDot{1.55,-0.62}{0.71,-0.15}{fill=evA,draw=black,line width=0.6pt}
+  \evDot{1.55,-0.62}{0.91,-0.15}{fill=white,draw=evA,line width=0.7pt} }
+\node at (2.09,-1.45) {distributed};
+% no-signal control: shuffled over contributors and batches
+\evMini{3.00,-0.62}{
+  \evDot{3.00,-0.62}{0.17,-0.15}{fill=evA,draw=black,line width=0.6pt}
+  \evDot{3.00,-0.62}{0.91,-0.46}{fill=evA,draw=black,line width=0.6pt}
+  \evDot{3.00,-0.62}{0.37,-0.46}{fill=white,draw=evA,line width=0.7pt}
+  \evDot{3.00,-0.62}{0.71,-0.15}{fill=white,draw=evA,line width=0.7pt} }
+\node[align=center] at (3.54,-1.55) {no-signal\\[-1pt]control};
+\foreach \y/\c/\l in {-0.77/evA/A, -1.08/evB/B}{ \node[font=\sffamily\scriptsize\bfseries, text=\c] at (4.32,\y) {\l}; }
+
+% (b2) attacker adaptation
+\node[sub, anchor=west] at (4.75,-0.35) {how A adapts};
+% Sybil
+\evPerson{5.00,-0.95}{evA}{1.1}
+\draw[thin] (5.18,-0.88) -- (5.43,-0.88);
+\foreach \dx/\dy in {0/0.13, 0.22/0.13, 0.11/-0.17}{ \evPerson{5.58+\dx,-0.95+\dy}{evA!70}{0.6} }
+\node at (5.35,-1.45) {Sybil $\times k$};
+% laundering
+\evPerson{6.45,-0.95}{evA}{1.1}
+\node[atk] at (6.78,-0.88) {};
+\draw[thin] (6.62,-0.88) -- (6.70,-0.88); \draw[thin] (6.86,-0.88) -- (7.05,-0.88);
+\evPerson{7.20,-0.95}{evB}{1.1}
+\node[align=center] at (6.83,-1.55) {laundering\\[-1pt]via B};
+% audit-aware shift
+\node[draw=black!30, fill=white, rounded corners=0.8pt, minimum width=0.5cm, minimum height=0.28cm, inner sep=0pt] (s1) at (8.00,-0.88) {};
+\node[draw=black!30, fill=white, rounded corners=0.8pt, minimum width=0.5cm, minimum height=0.28cm, inner sep=0pt] (s2) at (8.70,-0.88) {};
+\node[rec, minimum size=1.35mm, fill=evA, draw=black, line width=0.6pt] at (7.93,-0.88) {};
+\node[rec, minimum size=1.35mm, fill=evA, draw=black, line width=0.6pt] at (8.07,-0.88) {};
+\node[rec, minimum size=1.35mm, fill=white, draw=evA, line width=0.7pt] at (8.63,-0.88) {};
+\node[rec, minimum size=1.35mm, fill=white, draw=evA, line width=0.7pt] at (8.77,-0.88) {};
+\draw[thin] (8.05,-0.70) to[bend left=35] (8.65,-0.70);
+\node[align=center] at (8.35,-1.55) {audit-aware\\[-1pt]shift};
+% framing
+\evPerson{9.55,-0.95}{evB}{1.1}
+\node[rec, minimum size=1.35mm, fill=evA, draw=black, line width=0.6pt] at (9.78,-0.82) {};
+\node at (9.65,-1.45) {framing B};
+
+% (b3) auditor
+\node[sub, anchor=west] at (10.65,-0.35) {what the auditor finds};
+\evLens{10.95,-0.85}{0.75}
+\foreach \i in {0,1,2,3}{ \evTicket{11.32+0.3*\i,-0.85}{u} }
+\node[align=center] at (11.70,-1.55) {oracle:\\[-1pt]A's 4 seeds};
+\evLens{12.95,-0.85}{0.75}
+\foreach \i in {0,1}{ \evTicket{13.32+0.3*\i,-0.85}{u} }
+\foreach \i in {2,3}{ \node[draw=black!40, dashed, rounded corners=1pt, minimum width=2.9mm, minimum height=3.6mm, inner sep=0pt] at (13.32+0.3*\i,-0.85) {}; }
+\node[align=center] at (13.55,-1.55) {random: 2 of 4\\[-1pt]per context};
+\node[align=center] at (15.65,-0.95) {imperfect:\\[-1pt]missed, false,\\[-1pt]or late verdicts};
+\end{tikzpicture}
+\endgroup

@@ -1,0 +1,93 @@
+% ===========================================================================
+% Figure 2 (method overview), v3, 27 Nov 2026. Replaces fig_method.pdf (kept on disk).
+% One picture, one idea: the scope that evidence activates grows with how
+% widely the evidence is spread. Purple = scope ACTIVATED by the evidence;
+% red crossed circles = records WITHHELD (penalty >= tau). Rules drawn are
+% the support gates of Eq. (support); constants theta_bat=1, theta_ctx=
+% delta_ctx=2, theta_src=4, delta_src=2, tau=1/4 (so two unsafe roots and
+% no safe one are needed to withhold, Prop. gate). Toy ledger, no results.
+% Needs: tikz libraries positioning, fit, backgrounds, arrows.meta, calc.
+% ===========================================================================
+\begingroup
+\sffamily
+\definecolor{fmUnsafe}{HTML}{C0392B}
+\definecolor{fmGrey}{HTML}{9AA0A6}
+\definecolor{fmOurs}{HTML}{5B4BB7}
+\definecolor{fmOursBg}{HTML}{E9E5F8}
+\begin{tikzpicture}[
+  font=\sffamily\scriptsize,
+  >={Stealth[length=1.5mm]},
+  rec/.style={circle, minimum size=2.4mm, inner sep=0pt, line width=0.6pt},
+  recu/.style={rec, fill=fmUnsafe, draw=fmUnsafe},
+  recw/.style={rec, fill=white, draw=fmUnsafe},
+  reck/.style={rec, fill=fmGrey!55, draw=fmGrey},
+  ctx/.style={draw=black!35, rounded corners=2pt, inner sep=2pt},
+  scope/.style={draw=fmOurs, fill=fmOursBg, line width=0.9pt, rounded corners=3pt},
+  chip/.style={font=\sffamily\scriptsize, text width=5.1cm, align=center, inner sep=1pt},
+  ptitle/.style={font=\sffamily\footnotesize\bfseries, anchor=south west, inner sep=0pt},
+]
+% one batch of four records: #1,#2 = x,y of the centre; #3..#6 = u (audited
+% unsafe root), w (withheld), k (kept)
+\newcommand{\bt}[6]{%
+  \foreach \c [count=\i from 0] in {#3,#4,#5,#6}{%
+    \begin{scope}[shift={({#1+(\i-1.5)*0.31},{#2})}]
+      \node[rec\c] {};
+      \if\c u \draw[white, line width=0.6pt] (-0.7mm,-0.7mm) -- (0.7mm,0.7mm) (-0.7mm,0.7mm) -- (0.7mm,-0.7mm);\fi
+      \if\c w \draw[fmUnsafe, line width=0.5pt] (-0.8mm,-0.8mm) -- (0.8mm,0.8mm);\fi
+    \end{scope}%
+  }%
+}
+% a context column (rounded box, label, two batch rows) at x = #1, y-top = 0
+\newcommand{\cx}[4]{% #1 x, #2 label, #3 row-1 pattern {....}, #4 row-2 pattern {....}
+  \node[ctx, minimum width=1.5cm, minimum height=1.3cm] (c#2-#1) at (#1,-0.725) {};
+  \node[anchor=south, font=\sffamily\tiny, text=black!70] at (#1,-0.06) {context #2};
+}
+\newcommand{\panel}[1]{\begin{scope}[xshift=#1]}
+
+% ---- panel positions: x0 = 0, 5.85, 11.7 (cm); contexts at +0.85, +2.6, +4.35 ----
+\foreach \p/\name/\sub in {0/{Localized evidence}/{activates the batch}, 5.85/{Recurring evidence}/{activates the context}, 11.7/{Distributed evidence}/{activates the contributor}}{
+  \node[ptitle] at (\p-0.45,0.95) {\name};
+  \node[anchor=south west, inner sep=0pt, text=fmOurs, font=\sffamily\scriptsize\bfseries] at (\p-0.45,0.62) {$\rightarrow$ \sub};
+}
+
+% ---------------- scope shading (drawn first, below the records) ------------
+\begin{scope}[on background layer]
+  % (a) the batch b1 of context X
+  \node[scope, minimum width=1.4cm, minimum height=0.5cm] at (0.85,-0.45) {};
+  % (b) context X
+  \node[scope, minimum width=1.65cm, minimum height=1.42cm] at (5.85+0.85,-0.725) {};
+  % (c) the whole contributor
+  \node[scope, minimum width=5.6cm, minimum height=1.55cm] at (11.7+2.6,-0.725) {};
+\end{scope}
+
+% ---------------- (a) localized ------------------------------------------------
+\foreach \x/\l in {0.85/X, 2.6/Y, 4.35/Z}{ \cx{\x}{\l}{}{} }
+\bt{0.85}{-0.45}{u}{u}{w}{w}   \bt{0.85}{-1.0}{k}{k}{k}{k}
+\foreach \x in {2.6, 4.35}{ \bt{\x}{-0.45}{k}{k}{k}{k} \bt{\x}{-1.0}{k}{k}{k}{k} }
+% ---------------- (b) recurring ------------------------------------------------
+\foreach \x/\l in {0.85/X, 2.6/Y, 4.35/Z}{ \begin{scope}[xshift=5.85cm] \cx{\x}{\l}{}{} \end{scope} }
+\bt{6.7}{-0.45}{u}{w}{w}{w}   \bt{6.7}{-1.0}{u}{w}{w}{w}
+\foreach \x in {8.45, 10.2}{ \bt{\x}{-0.45}{k}{k}{k}{k} \bt{\x}{-1.0}{k}{k}{k}{k} }
+% ---------------- (c) distributed ----------------------------------------------
+\foreach \x/\l in {0.85/X, 2.6/Y, 4.35/Z}{ \begin{scope}[xshift=11.7cm] \cx{\x}{\l}{}{} \end{scope} }
+\bt{12.55}{-0.45}{u}{w}{w}{w}  \bt{12.55}{-1.0}{u}{w}{w}{w}
+\bt{14.3}{-0.45}{u}{w}{w}{w}   \bt{14.3}{-1.0}{u}{w}{w}{w}
+\bt{16.05}{-0.45}{w}{w}{w}{w}  \bt{16.05}{-1.0}{w}{w}{w}{w}
+
+% ---------------- evidence captions under each panel -----------------------------
+\node[chip] at (2.6,-1.75)  {unsafe roots confined to one batch};
+\node[chip] at (8.45,-1.75) {unsafe roots in $\ge 2$ batches of one context};
+\node[chip] at (14.3,-1.75) {$\ge 2$ contexts each with such recurrence};
+
+% ---------------- legend --------------------------------------------------------
+\begin{scope}[yshift=-2.4cm, xshift=1.2cm]
+  \node[recu] at (0,0) {}; \draw[white, line width=0.6pt] (-0.7mm,-0.7mm)--(0.7mm,0.7mm) (-0.7mm,0.7mm)--(0.7mm,-0.7mm);
+  \node[anchor=west] at (0.15,0) {audited unsafe root};
+  \node[recw] at (3.6,0) {}; \draw[fmUnsafe, line width=0.5pt] (3.6,0)++(-0.8mm,-0.8mm)--++(1.24mm,1.24mm);
+  \node[anchor=west] at (3.75,0) {withheld ($\Pen \ge \tau$)};
+  \node[reck] at (7.0,0) {}; \node[anchor=west] at (7.15,0) {kept};
+  \node[scope, minimum width=0.55cm, minimum height=0.26cm] at (8.9,0) {};
+  \node[anchor=west] at (9.25,0) {scope activated by the evidence (otherwise no propagation)};
+\end{scope}
+\end{tikzpicture}
+\endgroup
